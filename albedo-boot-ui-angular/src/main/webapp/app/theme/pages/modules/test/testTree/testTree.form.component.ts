@@ -4,9 +4,9 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { CTX } from "../../../../../app.constants";
 import { ActivatedRoute } from "@angular/router";
-import {TestTree} from "./testTree.model";
-import {TestTreeService} from "./testTree.service";
-import {PublicService} from "../../../../../shared/base/service/public.service"
+import { TestTree } from "./testTree.model";
+import { TestTreeService } from "./testTree.service";
+import { PublicService } from "../../../../../shared/base/service/public.service"
 
 @Component({
     selector: ".test-testTree-form.page-form",
@@ -52,15 +52,15 @@ export class TestTreeFormComponent implements AfterViewInit {
     initForm() {
         if (!this.afterViewInit || !this.afterLoad) return;
 
-        var testTreeId = this.testTree.id,thisCtx =this.ctx
+        var testTreeId = this.testTree.id, thisCtx = this.ctx
         albedoForm.initValidate($("#testTree-save-form"), {
             // define validation rules
-            rules:{
-				name: {remote: thisCtx + '/test/testTree/checkByProperty?id=' + testTreeId},
-			},
-            messages:{
-				name: {remote: 'name_已存在'},
-			}
+            rules: {
+                name: { remote: thisCtx + '/test/testTree/checkByProperty?id=' + testTreeId },
+            },
+            messages: {
+                name: { remote: 'name_已存在' },
+            }
         })
         albedoForm.init();
         albedoForm.initSave();

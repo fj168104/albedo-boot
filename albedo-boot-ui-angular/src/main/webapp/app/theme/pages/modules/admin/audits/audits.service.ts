@@ -3,7 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { Audit } from './audit.model';
 import { createRequestOption, createRequestParams } from "../../../../../shared/base/request.util";
-import {PageModel} from "../../../../../shared/base/model/page.model";
+import { PageModel } from "../../../../../shared/base/model/page.model";
 
 @Injectable()
 export class AuditsService {
