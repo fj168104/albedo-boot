@@ -23,7 +23,7 @@ public class LoginVo {
     private String username;
 
     @NotNull
-    @Size(min = 6, max = UserVo.PASSWORD_MAX_LENGTH)
+    @Size(min = 1, max = UserVo.PASSWORD_MAX_LENGTH)
     private String password;
 
     private Boolean rememberMe;
