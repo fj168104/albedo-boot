@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>albedo-boot-ui-angular</artifactId>
+    <artifactId>albedo-boot-ui-vue</artifactId>
     <profiles>    <!--考虑到window 和linux环境 npm命令格式的问题，使用maven的profile实现动态指定命令-->
         <profile>
             <id>window</id>
