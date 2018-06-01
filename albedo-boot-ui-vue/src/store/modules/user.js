@@ -5,7 +5,7 @@ const user = {
   state: {
     token: getToken(),
     name: '',
-    avatar: '',
+    avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
     authorities: []
   },
 
@@ -56,7 +56,7 @@ const user = {
             reject('getAS: authorities must be a non-null array !')
           }
           commit('SET_NAME', data.name)
-          commit('SET_AVATAR', data.avatar)
+          data.avatar && commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)
@@ -85,7 +85,20 @@ const user = {
         removeToken()
         resolve()
       })
-    }
+    },
+
+    //获取系统菜单
+    GetMenu({ commit }, parentId) {
+      parentId
+      return new Promise(resolve => {
+        getMenu(parentId).then((res) => {
+          const data = res.data;
+          commit('SET_MENU', data);
+          resolve(data);
+        })
+      })
+    },
+
   }
 }
 

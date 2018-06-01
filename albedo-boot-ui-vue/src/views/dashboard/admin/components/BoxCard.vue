@@ -46,7 +46,7 @@ export default {
     ...mapGetters([
       'name',
       'avatar',
-      'roles'
+      'authorities'
     ])
   },
   filters: {

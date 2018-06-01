@@ -20,8 +20,8 @@
     <logger name="org.bson" level="WARN"/>
     <logger name="com.baomidou" level="DEBUG"/>
     <logger name="org.springframework" level="INFO"/>
-    <logger name="org.springframework.web" level="INFO"/>
-    <logger name="org.springframework.security" level="INFO"/>
+    <logger name="org.springframework.web" level="DEBUG"/>
+    <logger name="org.springframework.security" level="DEBUG"/>
     <logger name="org.springframework.cache" level="INFO"/>
     <logger name="org.thymeleaf" level="WARN"/>
     <logger name="org.xnio" level="WARN"/>
