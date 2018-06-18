@@ -116,7 +116,7 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     @Scheduled(cron = "0 0 0 * * ?")
     public void removeOldPersistentTokens() {
         LocalDate now = LocalDate.now();
-        persistentTokenRepository.findByTokenDateBefore(now.minusMonths(1)).stream().forEach(token -> {
+        persistentTokenRepository.findByTokenDateBefore(DateUtil.addMonths(PublicUtil.getCurrentDate(), -1)).stream().forEach(token -> {
             log.debug("Deleting token {}", token.getSeries());
             User user = token.getUser();
             user.getPersistentTokens().remove(token);
