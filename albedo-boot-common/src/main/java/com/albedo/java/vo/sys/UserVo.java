@@ -29,6 +29,8 @@ public class UserVo extends DataEntityVo<String> {
     /*** F_LOGINID */
     public static final String F_EMAIL = "email";
     private static final long serialVersionUID = 1L;
+    /*** 头像 */
+    private String avatar;
     private String loginId;
     @Size(max = PASSWORD_MAX_LENGTH)
     private String password;
