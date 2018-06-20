@@ -140,7 +140,7 @@ public class UserResourceIntTest {
         int databaseSizeBeforeCreate = userService.findAll().size();
 
         // Create the User
-        UserVo managedUserVM = new UserVo(
+        UserVo managedUserVM = new UserVo(null,
                 DEFAULT_LOGIN,
                 DEFAULT_PASSWORD,
                 DEFAULT_PASSWORD,
@@ -178,7 +178,7 @@ public class UserResourceIntTest {
         int databaseSizeBeforeCreate = userService.findAll().size();
 
         // Create the User
-        UserVo managedUserVM = new UserVo(
+        UserVo managedUserVM = new UserVo(null,
                 DEFAULT_ANOTHER_LOGIN,
                 DEFAULT_PASSWORD,
                 DEFAULT_PASSWORD,
@@ -259,7 +259,7 @@ public class UserResourceIntTest {
         // Update the user
         User updatedUser = userService.findOne(user.getId());
 
-        UserVo managedUserVM = new UserVo(
+        UserVo managedUserVM = new UserVo(null,
                 UPDATED_LOGIN,
                 UPDATED_PASSWORD,
                 UPDATED_PASSWORD,
@@ -303,7 +303,7 @@ public class UserResourceIntTest {
         User updatedUser = userService.findOne(user.getId());
 
 
-        UserVo managedUserVM = new UserVo(
+        UserVo managedUserVM = new UserVo(null,
                 UPDATED_LOGIN,
                 UPDATED_PASSWORD,
                 UPDATED_PASSWORD,
@@ -337,7 +337,7 @@ public class UserResourceIntTest {
         // Update the user
         User updatedUser = userService.findOne(user.getId());
 
-        UserVo managedUserVM = new UserVo(
+        UserVo managedUserVM = new UserVo(null,
                 DEFAULT_ANOTHER_LOGIN,
                 UPDATED_PASSWORD,
                 UPDATED_PASSWORD,
