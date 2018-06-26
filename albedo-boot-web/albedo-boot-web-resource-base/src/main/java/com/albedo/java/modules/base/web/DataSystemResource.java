@@ -12,6 +12,7 @@ import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.ComboData;
 import com.albedo.java.util.domain.ComboSearch;
+import com.albedo.java.util.domain.ComboVueData;
 import com.albedo.java.vo.base.SelectResult;
 import com.albedo.java.vo.sys.ModuleVo;
 import com.albedo.java.vo.sys.query.*;
@@ -81,7 +82,6 @@ public class DataSystemResource {
     }
     @GetMapping(value = "dict/codes")
     public ResponseEntity codes(DictQuery dictQuery, ComboSearch comboSearch) {
-
         List<ComboData> dataList = Lists.newArrayList();
         if(dictQuery!=null && PublicUtil.isNotEmpty(dictQuery.getCode())){
             List<Dict> dictList = DictUtil.getDictListFilterVal(dictQuery.getCode(),
@@ -93,6 +93,19 @@ public class DataSystemResource {
             }
         }else if(comboSearch !=null){
             dataList.addAll(dictService.findJson(comboSearch));
+        }
+        return ResultBuilder.buildOk(dataList);
+    }
+    @GetMapping(value = "dict/vue/codes")
+    public ResponseEntity vueCodes(DictQuery dictQuery) {
+        List<ComboVueData> dataList = Lists.newArrayList();
+        if(dictQuery!=null && PublicUtil.isNotEmpty(dictQuery.getCode())){
+            List<Dict> dictList = DictUtil.getDictListFilterVal(dictQuery.getCode(),
+                dictQuery.getFilter());
+            if (PublicUtil.isNotEmpty(dictList)) {
+                dictList.forEach(item -> dataList.add(Reflections.createObj(ComboVueData.class,
+                    Lists.newArrayList(ComboVueData.F_VALUE, ComboVueData.F_LABEL), item.getVal(), item.getName())));
+            }
         }
         return ResultBuilder.buildOk(dataList);
     }
