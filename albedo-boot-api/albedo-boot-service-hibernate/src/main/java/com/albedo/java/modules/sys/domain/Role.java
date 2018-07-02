@@ -62,6 +62,7 @@ public class Role extends IdEntity<String> {
     private Integer sysData;
     /*** 可查看的数据范围 */
     @Column(name = "data_scope")
+    @DictType(name = "sys_role_scope")
     private Integer dataScope;
     @Column(name = "sort_")
     private Integer sort;

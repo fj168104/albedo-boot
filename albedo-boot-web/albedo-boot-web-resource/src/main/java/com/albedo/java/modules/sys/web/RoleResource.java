@@ -48,7 +48,8 @@ public class RoleResource extends DataVoResource<RoleService, RoleVo> {
      */
     @GetMapping(value = "/")
     public ResponseEntity getPage(PageModel pm) {
-        service.findPage(pm, SecurityUtil.dataScopeFilter(SecurityUtil.getCurrentUserId(), "org", "creator"));
+        service.findPage(pm, SecurityUtil.dataScopeFilter(SecurityUtil.getCurrentUserId(), "org",
+            "creator"));
         JSON rs = JsonUtil.getInstance().setRecurrenceStr("org_name").toJsonObject(pm);
         return ResultBuilder.buildObject(rs);
     }
