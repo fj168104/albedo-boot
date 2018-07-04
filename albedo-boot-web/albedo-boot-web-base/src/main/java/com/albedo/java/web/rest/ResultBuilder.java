@@ -61,7 +61,7 @@ public class ResultBuilder {
             msg = new String[errorsList.size()];
             msg = errorsList.toArray(msg);
         } else {
-            msg = new String[]{"ok"};
+            msg = new String[0];
         }
         return buildOk(data, msg);
     }
