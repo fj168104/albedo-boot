@@ -1,28 +1,60 @@
+
+
 import Vue from 'vue'
-
-import 'normalize.css/normalize.css'// A modern alternative to CSS resets
-
+import VueAxios from 'vue-axios'
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en' // lang i18n
-
-import '@/styles/index.scss' // global css
-
-import App from './App'
-import router from './router'
+import VueMoment from 'vue-moment'
+import AVUE from '@/packages/index.js';
+import App from './App';
+import "babel-polyfill";
+import axios from './router/axios'
+import './permission' // 权限
+import './errorLog' // 错误日志
+import router from './router/router'
 import store from './store'
+import {
+  loadStyle
+} from './util/util'
+import * as urls from '@/config/env'
+import {
+  iconfontUrl,
+  iconfontVersion
+} from '@/config/env'
+import * as filters from './filters' // 全局filter
+import './styles/common.scss'
 
-import '@/icons' // icon
-import '@/permission' // permission control
-
-Vue.use(ElementUI, { locale })
-
+import locale from 'element-ui/lib/locale/lang/en'
+locale
 Vue.config.productionTip = false
+Vue.use(ElementUI)
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  template: '<App/>',
-  components: { App }
+Vue.use(VueMoment)
+Vue.use(VueAxios, axios)
+Vue.use(AVUE);
+
+
+Object.keys(urls).forEach(key => {
+  Vue.prototype[key] = urls[key]
 })
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})
+
+iconfontVersion.forEach(ele => {
+  loadStyle(iconfontUrl.replace('$key', ele))
+})
+
+
+export function createApp() {
+  const app = new Vue({
+    router,
+    store,
+    render: h => h(App)
+  })
+  return {
+    app,
+    router,
+    store
+  }
+}

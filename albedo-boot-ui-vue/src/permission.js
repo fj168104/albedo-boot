@@ -1,25 +1,70 @@
-import router from './router'
-import store from './store'
-import NProgress from 'nprogress' // Progress 进度条
-import 'nprogress/nprogress.css'// Progress 进度条样式
-import { Message } from 'element-ui'
-import { getToken } from '@/utils/auth' // 验权
 
-const whiteList = ['/login'] // 不重定向白名单
+
+import router from './router/router'
+import store from './store'
+import NProgress from 'nprogress' // progress bar
+import 'nprogress/nprogress.css' // progress bar style
+import {
+  getToken
+} from '@/util/auth'
+import {
+  setTitle
+} from '@/util/util'
+import {
+  validateNull
+} from '@/util/validate'
+
+// NProgress Configuration
+NProgress.configure({
+  showSpinner: false
+})
+
+function hasPermission(roles, permissionRoles) {
+  if (!permissionRoles) return true
+  return roles.some(role => permissionRoles.indexOf(role) >= 0)
+}
+const whiteList = ['/login', '/404', '/401', '/lock']
+const lockPage = '/lock'
+
 router.beforeEach((to, from, next) => {
+  // start progress bar
   NProgress.start()
-  if (getToken()) {
-    if (to.path === '/login') {
-      next({ path: '/' })
-      NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
+  const value = to.query.src ? to.query.src : to.path
+  const label = to.query.name ? to.query.name : to.name
+  if (whiteList.indexOf(value) === -1) {
+    store.commit('ADD_TAG', {
+      label: label,
+      value: value,
+      query: to.query
+    })
+  }
+  if (store.getters.access_token) { // determine if there has token
+    /* has token*/
+    if (store.getters.isLock && to.path !== lockPage) {
+      next({
+        path: lockPage
+      })
+      NProgress.done()
+    } else if (to.path === '/login') {
+      next({
+        path: '/'
+      })
+      NProgress.done()
     } else {
-      if (store.getters.authorities.length === 0) {
-        store.dispatch('GetAccout').then(res => { // 拉取用户信息
-          next()
-        }).catch((err) => {
+      // console.log(store.getters.authorities.length)
+      if (validateNull(store.getters.authorities)) {
+        store.dispatch('GetUserInfo').then(res => {
+          const authorities = res.authorities
+          console.log(authorities)
+          next({ ...to,
+            replace: true
+          })
+        }).catch(() => {
           store.dispatch('FedLogOut').then(() => {
-            Message.error(err || 'Verification failed, please login again')
-            next({ path: '/' })
+            next({
+              path: '/login'
+            })
+            NProgress.done()
           })
         })
       } else {
@@ -27,6 +72,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
+    /* has no token*/
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
@@ -36,6 +82,50 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-router.afterEach(() => {
-  NProgress.done() // 结束Progress
+// 寻找子菜单的父类
+function findMenuParent(tag) {
+  let tagCurrent = []
+  const menu = store.getters.menu
+  tagCurrent.push(tag)
+  return tagCurrent
+  // //如果是一级菜单直接返回
+  // for (let i = 0, j = menu.length; i < j; i++) {
+  //     if (menu[i].href == tag.value) {
+  //         tagCurrent.push(tag);
+  //         return tagCurrent;
+  //     }
+  // }
+
+  // let currentPathObj = menu.filter(item => {
+  //     if (item.children.length == 1) {
+  //         return item.children[0].href === tag.value;
+  //     } else {
+  //         let i = 0;
+  //         let childArr = item.children;
+  //         let len = childArr.length;
+  //         while (i < len) {
+  //             if (childArr[i].href === tag.value) {
+  //                 return true;
+  //                 break;
+  //             }
+  //             i++;
+  //         }
+  //         return false;
+  //     }
+  // })[0];
+  // tagCurrent.push({
+  //     label: currentPathObj.label,
+  //     value: currentPathObj.href
+  // });
+  // tagCurrent.push(tag);
+  // return tagCurrent;
+}
+
+router.afterEach((to, from) => {
+  NProgress.done()
+  setTimeout(() => {
+    const tag = store.getters.tag
+    setTitle(tag.label)
+    store.commit('SET_TAG_CURRENT', findMenuParent(tag))
+  }, 0)
 })
