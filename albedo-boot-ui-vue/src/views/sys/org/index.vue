@@ -44,7 +44,7 @@
               <AvueCrudSelect v-model="form.grade" :dic="gradeOptions" :disabled="formEdit"></AvueCrudSelect>
             </el-form-item>
             <el-form-item label="排序" prop="sort" :rules="[{type: 'number',message: '序号必须为数字'}]">
-              <el-input v-model="form.sort" placeholder="请输入排序" :disabled="formEdit"></el-input>
+              <el-input-number v-model="form.sort" :step="5"></el-input-number>
             </el-form-item>
             <el-form-item label="状态" prop="status" :rules="[{required: true,message: '请选择状态'}]">
               <AvueCrudRadio v-model="form.status" :dic="statusOptions" :disabled="formEdit"></AvueCrudRadio>

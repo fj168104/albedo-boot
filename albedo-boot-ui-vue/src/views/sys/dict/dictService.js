@@ -1,16 +1,22 @@
-
-
 import request from '@/router/axios'
 
-export function fetchList(query) {
+export function fetchDictTree(query) {
   return request({
-    url: '/sys/dict/dictPage',
+    url: '/dataSystem/dict/findTreeData',
     method: 'get',
     params: query
   })
 }
 
-export function addObj(obj) {
+export function pageDict(query) {
+  return request({
+    url: '/sys/dict/',
+    method: 'get',
+    params: query
+  })
+}
+
+export function saveDict(obj) {
   return request({
     url: '/sys/dict/',
     method: 'post',
@@ -18,31 +24,16 @@ export function addObj(obj) {
   })
 }
 
-export function getObj(id) {
+export function findDict(id) {
   return request({
     url: '/sys/dict/' + id,
     method: 'get'
   })
 }
 
-export function delObj(row) {
+export function removeDict(id) {
   return request({
-    url: '/sys/dict/' + row.id + '/' + row.type,
+    url: '/sys/dict/' + id,
     method: 'delete'
-  })
-}
-
-export function putObj(obj) {
-  return request({
-    url: '/sys/dict/',
-    method: 'put',
-    data: obj
-  })
-}
-
-export function remote(type) {
-  return request({
-    url: '/sys/dict/type/' + type,
-    method: 'get'
   })
 }

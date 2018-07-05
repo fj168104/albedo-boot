@@ -242,3 +242,56 @@ table {
   padding: 20px;
   box-sizing: border-box;
 }
+
+.pagination-container{
+  margin-top: 10px;
+}
+.el-loading-spinner .el-loading-text{text-align: center;}
+
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+.icon_lists{
+  width: 100% !important;
+  overflow: hidden;
+}
+.icon_lists li{
+  float:left;
+  width: 100px;
+  height:180px;
+  text-align: center;
+  list-style: none !important;
+}
+.icon_lists .icon{
+  font-size: 42px;
+  line-height: 100px;
+  margin: 10px 0;
+  color:#333;
+  -webkit-transition: font-size 0.25s ease-out 0s;
+  -moz-transition: font-size 0.25s ease-out 0s;
+  transition: font-size 0.25s ease-out 0s;
+
+}
+.icon_lists .icon:hover{
+  font-size: 100px;
+}

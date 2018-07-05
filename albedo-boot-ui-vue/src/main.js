@@ -32,7 +32,6 @@ Vue.use(VueMoment)
 Vue.use(VueAxios, axios)
 Vue.use(AVUE);
 
-
 Object.keys(urls).forEach(key => {
   Vue.prototype[key] = urls[key]
 })

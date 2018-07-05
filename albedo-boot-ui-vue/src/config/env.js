@@ -12,9 +12,8 @@
  *
  */
 
-
 let baseUrl = '';
-let iconfontVersion = ['567566_r22zi6t8noas8aor', '599693_0b5sleso3f1j1yvi', '667895_xte3dcfrvbo6r'];
+let iconfontVersion = ['567566_r22zi6t8noas8aor', '599693_0b5sleso3f1j1yvi', '667895_xte3dcfrvbo6r', '734853_92rosgw0m1e'];
 let iconfontUrl = `//at.alicdn.com/t/font_$key.css`;
 let codeUrl = `/sys/code`
 if (process.env.NODE_ENV == 'development') {

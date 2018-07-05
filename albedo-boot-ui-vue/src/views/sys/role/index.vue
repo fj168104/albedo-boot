@@ -286,7 +286,7 @@
       this.getList();
     },
     handleEdit(row) {
-      this.resetTemp();
+      this.resetForm();
       this.dialogStatus = row && validateNotNull(row.id)? "update" : "create";
       if(this.dialogStatus == "create"){
         this.dialogFormVisible = true;
@@ -369,7 +369,7 @@
         }
       });
     },
-    resetTemp() {
+    resetForm() {
       this.form = {
         name: undefined,
         en: undefined,

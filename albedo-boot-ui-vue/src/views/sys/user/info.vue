@@ -17,7 +17,7 @@
             <el-form-item label="确认密码" prop="newpassword2">
               <el-input type="password" v-model="ruleForm2.newpassword2" auto-complete="off" ></el-input>
             </el-form-item>
-            <el-form-item label="手机号" prop="phone">
+            <el-form-item label="手机号" prop="phonecropUploadSuccess">
               <el-input v-model="ruleForm2.phone" placeholder="验证码登录使用"></el-input>
             </el-form-item>
             <el-form-item label="头像">

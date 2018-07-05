@@ -1,7 +1,8 @@
 
+import request from '@/router/axios'
 
 /**
- * Created by jiachenpan on 16/11/18.
+ * Created by somewhere on 17/11/18.
  */
 
 export function isvalidUsername(str) {
@@ -56,7 +57,31 @@ export function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     return re.test(email)
 }
-
+export function validateUniqueField(url){
+  return request({
+    url: url,
+    method: 'get'
+  })
+}
+var beforeValue={};
+export function isValidateUnique(rule, value, callback, url){
+  if(validateNotNull(value) && value != beforeValue[rule.field]){
+    if(validateNull(url)){
+      url = rule.url;
+    }
+    url += '&'+rule.field+'='+value
+    validateUniqueField(url).then(rs => {
+      beforeValue[rule.field] = value;
+      if(!rs){
+        callback(new Error(validateNotNull(rule.message) ? rule.message : "已存在，请修正"))
+      }else{
+        callback()
+      }
+    });
+  }else{
+    callback()
+  }
+}
 /**
  * 判断身份证号码
  */
@@ -142,6 +167,19 @@ export function cardid(code) {
     list.push(msg);
     return list;
 }
+
+
+export function isValidateMobile(rule, value, callback){
+  if(validateNotNull(value)){
+    var rs = isvalidatemobile(value);
+    if(rs&&rs[0]){
+      callback(new Error(rs[1]));
+      return;
+    }
+  }
+  callback()
+}
+
 /**
  * 判断手机号码是否正确
  */
@@ -227,4 +265,8 @@ export function validateNotNull(val) {
 
 export function objectToString(val) {
   return validateNotNull(val) ? val.toString() : val;
+};
+
+export function toStr(val) {
+  return validateNotNull(val) ? val.toString() : '';
 };

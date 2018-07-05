@@ -8,6 +8,14 @@ export function fetchModuleTree(query) {
   })
 }
 
+export function pageModule(query) {
+  return request({
+    url: '/sys/module/',
+    method: 'get',
+    params: query
+  })
+}
+
 export function saveModule(obj) {
   return request({
     url: '/sys/module/',

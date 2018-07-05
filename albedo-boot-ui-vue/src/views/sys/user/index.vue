@@ -90,6 +90,14 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" label-width="100px">
+        <el-form-item label="头像" prop="avatar">
+          <my-upload field="uploadFile" @crop-upload-success="cropUploadSuccess" v-model="showUpload"
+                     :width="300" :height="300" :url="ctx+'/file/upload'" :headers="headers" img-format="png"></my-upload>
+          <img :src="form.avatar" />
+          <el-button type="primary" @click="showUpload = !showUpload" size="mini">选择
+            <i class="el-icon-upload el-icon--right"></i>
+          </el-button>
+        </el-form-item>
         <el-form-item label="所属部门" prop="orgName" :rules="[{required: true,message: '请选择部门'}]">
           <el-input v-model="form.orgName" placeholder="选择部门" @focus="handleOrg()" readonly></el-input>
           <input type="hidden" v-model="form.orgId" />
@@ -97,7 +105,8 @@
 
         <el-form-item label="用户名" prop="loginId" :rules="[
           {required: true,message: '请输入账户'},
-          {min: 3,max: 20,message: '长度在 3 到 20 个字符'}
+          {min: 3,max: 20,message: '长度在 3 到 20 个字符'},
+          {validator:validateUnique}
         ]">
           <el-input v-model="form.loginId" placeholder="请输用户名"></el-input>
         </el-form-item>
@@ -146,6 +155,7 @@
 <script>
 import { pageUser, findUser, saveUser, removeUser } from "./userService";
 import waves from "@/directive/waves/index.js";
+import myUpload from "vue-image-crop-upload";
 // import { parseTime } from '@/utils'
 import { mapGetters } from "vuex";
 import ElRadioGroup from "element-ui/packages/radio/src/radio-group";
@@ -153,22 +163,35 @@ import ElOption from "element-ui/packages/select/src/option";
 import {DATA_STATUS} from "@/const/common";
 import {fetchOrgTree} from "../org/orgService";
 import {comboRoleList} from "../role/roleService";
-import {isvalidatemobile, objectToString, validateNull} from "../../../util/validate";
+import {
+  isValidateMobile,
+  isValidateUnique,
+  objectToString, toStr,
+  validateNull
+} from "../../../util/validate";
 import {dictCodes} from "../../../api/dataSystem";
 import {MSG_TYPE_SUCCESS} from "../../../const/common";
 import {parseJsonItemForm, parseTreeData} from "../../../util/util";
+import {baseUrl} from "../../../config/env";
+import {getToken} from "../../../util/auth";
 
 export default {
   components: {
     ElOption,
-    ElRadioGroup
+    ElRadioGroup,
+    'my-upload': myUpload
   },
   name: "table_sys_user",
   directives: {
     waves
   },
   data() {
-    return {
+    return{
+      ctx:baseUrl,
+      showUpload:false,
+      headers: {
+        Authorization: getToken()
+      },
       treeOrgData: [],
       checkedKeys: [],
       defaultProps: {
@@ -183,6 +206,7 @@ export default {
         limit: 20
       },
       form: {
+        avatar: undefined,
         loginId: undefined,
         password: undefined,
         confirmPassword: undefined,
@@ -193,12 +217,11 @@ export default {
         email: undefined,
         description: undefined
       },
+      validateUnique: (rule, value, callback) => {
+        isValidateUnique(rule, value, callback, '/sys/user/checkByProperty?id='+toStr(this.form.id))
+      },
       validatePhone: (rule, value, callback) => {
-        if (isvalidatemobile(value)[0]) {
-          callback(new Error(isvalidatemobile(value)[1]));
-        } else {
-          callback();
-        }
+        isValidateMobile(rule, value, callback)
       },
       validatePass: (rule, value, callback) => {
         if(validateNull(this.form.id)){
@@ -298,7 +321,7 @@ export default {
       this.getList();
     },
     handleEdit(row) {
-      this.resetTemp();
+      this.resetForm();
       this.dialogStatus = row && !validateNull(row.id)? "update" : "create";
       if(this.dialogStatus == "create"){
         this.dialogFormVisible = true;
@@ -348,7 +371,7 @@ export default {
           });
       });
     },
-    resetTemp() {
+    resetForm() {
       this.form = {
         id: undefined,
         loginId: "",
@@ -361,6 +384,17 @@ export default {
         description: undefined
       };
       this.$refs['form']&&this.$refs['form'].resetFields();
+    },
+    /**
+     * upload success
+     *
+     * [param] jsonData   服务器返回数据，已进行json转码
+     * [param] field
+     */
+    cropUploadSuccess(rs, field) {
+      console.log(rs)
+      this.$store.commit('SET_AVATAR', rs.data);
+      this.form.avatar=rs.data;
     }
   }
 };

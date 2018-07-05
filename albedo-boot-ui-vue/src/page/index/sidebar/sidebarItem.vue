@@ -21,7 +21,7 @@
       <el-menu-item v-if="validateNull(item.children)"
                     :index="filterPath(item.href,index)" :class="(item.menuTop && item.href=='')? 'is-active section-text':''"
                     @click="open(item)" :key="item.name">
-        <i :class="item.iconCls"></i>
+        <i :class="item.iconCls" v-show="!item.menuTop"></i>
         <span slot="title">{{item.name}}</span>
       </el-menu-item>
       <el-submenu v-else :index="filterPath(item.name,index)" :key="item.name">
@@ -79,6 +79,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .section-text{line-height: 32px;height: 32px;}
+  .section-text{line-height: 32px;height: 32px;color:#909399 !important;}
 </style>
 

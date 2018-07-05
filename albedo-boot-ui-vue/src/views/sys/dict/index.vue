@@ -1,305 +1,344 @@
-<!--
-  -    Copyright (c) 2018-2025, lengleng All rights reserved.
-  -
-  - Redistribution and use in source and binary forms, with or without
-  - modification, are permitted provided that the following conditions are met:
-  -
-  - Redistributions of source code must retain the above copyright notice,
-  - this list of conditions and the following disclaimer.
-  - Redistributions in binary form must reproduce the above copyright
-  - notice, this list of conditions and the following disclaimer in the
-  - documentation and/or other materials provided with the distribution.
-  - Neither the name of the pig4cloud.com developer nor the names of its
-  - contributors may be used to endorse or promote products derived from
-  - this software without specific prior written permission.
-  - Author: lengleng (wangiegie@gmail.com)
-  -->
 
 <template>
   <div class="app-container calendar-list-container">
-    <div class="filter-container">
-      <el-input @keyup.enter.native="handleFilter" style="width: 200px;" class="filter-item" placeholder="类型" v-model="listQuery.type">
+    <el-row :gutter="20">
+      <el-col :span="4">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span>字典</span>
+            <el-button type="text" style="float: right; padding: 3px 0" @click="searchTree=(searchTree ? false:true)">搜索</el-button>
+          </div>
+          <el-input v-show="searchTree"
+                    placeholder="输入关键字进行过滤"
+                    v-model="filterText">
+          </el-input>
+          <el-tree
+            class="filter-tree"
+            :data="treeData"
+            ref="leftTree"
+            node-key="id"
+            highlight-current
+            :expand-on-click-node="false"
+            :filter-node-method="filterNode"
+            @node-click="getNodeData"
+            default-expand-all >
+          </el-tree>
+        </el-card>
+      </el-col>
+      <el-col :span="20">
+        <div class="filter-container">
+          <el-form :inline="true">
+            <el-form-item label="名称">
+              <el-input style="width: 200px;" class="filter-item" v-model="listQuery.name"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+              <el-button v-if="sys_dict_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+            </el-form-item>
+          </el-form>
+        </div>
+        <el-table :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
+          <el-table-column align="center" label="名称">
+            <template slot-scope="scope">
+              <span><i :class="scope.row.iconCls"></i>{{scope.row.name}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="编码">
+            <template slot-scope="scope">
+              <span>{{scope.row.code}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="键">
+            <template slot-scope="scope">
+              <span>{{scope.row.key}}</span>
+            </template>
+          </el-table-column>
+
+          <el-table-column align="center" label="值">
+            <template slot-scope="scope">
+              <span>{{scope.row.val}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="序号">
+            <template slot-scope="scope">
+              <span>{{scope.row.sort}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" class-name="status-col" label="状态">
+            <template slot-scope="scope">
+              <el-tag>{{scope.row.status}}</el-tag>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="更新时间">
+            <template slot-scope="scope">
+              <span>{{scope.row.lastModifiedDate}}</span>
+            </template>
+          </el-table-column>
+          <el-table-column align="center" label="操作" width="200">
+            <template slot-scope="scope">
+              <el-button v-if="sys_dict_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+              </el-button>
+              <el-button v-if="sys_dict_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+              </el-button>
+            </template>
+          </el-table-column>
+
+        </el-table>
+        <div v-show="!listLoading" class="pagination-container">
+          <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+          </el-pagination>
+        </div>
+      </el-col>
+    </el-row>
+    <el-dialog title="选择字典" :visible.sync="dialogDictVisible">
+      <el-input placeholder="输入关键字进行过滤"
+                v-model="filterFormText">
       </el-input>
-      <el-button class="filter-item" type="primary" v-waves icon="search" @click="handleFilter">搜索</el-button>
-      <el-button v-if="sys_dict_add" class="filter-item" style="margin-left: 10px;" @click="handleCreate" type="primary" icon="edit">添加
-      </el-button>
-    </div>
-    <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
-      <el-table-column align="center" label="编号">
-        <template slot-scope="scope">
-          <span>{{ scope.row.id }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="类型">
-        <template slot-scope="scope">
-          <span>{{ scope.row.type }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="描述">
-        <template slot-scope="scope">
-          <span>{{ scope.row.description }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="数据值">
-        <template slot-scope="scope">
-          <span>{{ scope.row.value }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="标签名">
-        <template slot-scope="scope">
-          <span>{{ scope.row.label }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="排序">
-        <template slot-scope="scope">
-          <span>{{ scope.row.sort }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="创建时间">
-        <template slot-scope="scope">
-          <span>{{ scope.row.createTime | parseTime('{y}-{m}-{d}') }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" label="备注信息">
-        <template slot-scope="scope">
-          <span>{{ scope.row.remarks }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作" width="200">
-        <template slot-scope="scope">
-          <el-button v-if="sys_dict_upd" size="small" type="success" @click="handleUpdate(scope.row)">编辑
-          </el-button>
-          <el-button v-if="sys_dict_del" size="mini" type="danger" @click="handleDelete(scope.row)">删除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <div v-show="!listLoading" class="pagination-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
-      </el-pagination>
-    </div>
+      <el-tree class="filter-tree" ref="formTree" :data="treeDictData"
+               check-strictly node-key="id" highlight-current @node-click="getNodeFormData"
+               :filter-node-method="filterNode" default-expand-all>
+      </el-tree>
+    </el-dialog>
+
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :model="form" :rules="rules" ref="form" label-width="100px">
-        <el-form-item label="编号" prop="id" v-if="dialogStatus == 'update'">
-          <el-input v-model="form.id" placeholder="编号" :disabled="true"></el-input>
+      <el-form :label-position="labelPosition" label-width="80px" :model="form" ref="form">
+        <el-form-item label="上级字典" prop="parentName">
+          <el-input v-model="form.parentName" placeholder="选择字典" @focus="handleDict()" readonly></el-input>
+          <input type="hidden" v-model="form.parentId" />
         </el-form-item>
-        <el-form-item label="数据值" prop="value">
-          <el-input v-model="form.value" placeholder="数据值"></el-input>
+        <el-form-item label="名称" prop="name" :rules="[{required: true,message: '请输入名称'}]">
+          <el-input v-model="form.name" ></el-input>
         </el-form-item>
-        <el-form-item label="标签名" prop="label">
-          <el-input v-model="form.label" placeholder="标签名"></el-input>
+        <el-form-item label="编码" prop="code" :rules="[{required: true,message: '请输入编码'}]">
+          <el-input v-model="form.code" ></el-input>
         </el-form-item>
-        <el-form-item label="类型" prop="type">
-          <el-input v-model="form.type" placeholder="类型"></el-input>
+        <el-form-item label="键" prop="key">
+          <el-input v-model="form.key"></el-input>
+        </el-form-item>
+        <el-form-item label="值" prop="val">
+          <el-input v-model="form.val"></el-input>
+        </el-form-item>
+        <el-form-item label="是否显示" prop="isShow" :rules="[{required: true,message: '请选择是否显示'}]">
+          <AvueCrudRadio v-model="form.isShow" :dic="isShowOptions"></AvueCrudRadio>
+        </el-form-item>
+        <el-form-item label="排序" prop="sort" :rules="[{type: 'number',message: '序号必须为数字'}]">
+          <el-input-number v-model="form.sort" :step="5"></el-input-number>
+        </el-form-item>
+        <el-form-item label="状态" prop="status" :rules="[{required: true,message: '请选择状态'}]">
+          <AvueCrudRadio v-model="form.status" :dic="statusOptions"></AvueCrudRadio>
         </el-form-item>
         <el-form-item label="描述" prop="description">
-          <el-input v-model="form.description" placeholder="描述"></el-input>
-        </el-form-item>
-        <el-form-item label="排序" prop="sort">
-          <el-input v-model="form.sort" placeholder="排序（升序）"></el-input>
-        </el-form-item>
-        <el-form-item label="备注信息" prop="remarks">
-          <el-input v-model="form.remarks" placeholder="备注信息"></el-input>
+          <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="cancel('form')">取 消</el-button>
-        <el-button v-if="dialogStatus=='create'" type="primary" @click="create('form')">确 定</el-button>
-        <el-button v-else type="primary" @click="update('form')">修 改</el-button>
+        <el-button @click="cancel()">取 消</el-button>
+        <el-button type="primary" @click="save()">保 存</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { fetchList, addObj, putObj, delObj } from "@/api/dict";
-import waves from "@/directive/waves/index.js"; // 水波纹指令
-import { mapGetters } from "vuex";
+  import {fetchDictTree, findDict, saveDict, removeDict, pageDict} from "./dictService";
+  import { mapGetters } from 'vuex'
+  import {parseJsonItemForm, parseTreeData} from "../../../util/util";
+  import {dictCodes} from "../../../api/dataSystem";
+  import {isValidateUnique, objectToString, toStr, validateNotNull} from "../../../util/validate";
+  import {MSG_TYPE_SUCCESS} from "../../../const/common";
+  export default {
+    name: 'dict',
+    data() {
+      return {
+        treeDictData: [],
+        dialogDictVisible: false,
+        dialogFormVisible: false,
+        list: null,
+        total: null,
+        listLoading: true,
+        listQuery: {
+          page: 1,
+          limit: 20
+        },
+        formEdit: true,
+        filterText: '',
+        filterFormText: '',
+        formStatus: '',
+        statusOptions: [],
+        isShowOptions: [],
+        searchTree: false,
+        treeData: [],
+        labelPosition: 'right',
+        form: {
+          name: undefined,
+          parentId: undefined,
+          parentName: undefined,
+          code: undefined,
+          key: undefined,
+          val: undefined,
+          isShow: undefined,
+          sort: undefined,
+          status: undefined,
+          description: undefined
+        },
+        validateUnique: (rule, value, callback) => {
+          isValidateUnique(rule, value, callback, '/sys/dict/checkByProperty?id='+toStr(this.form.id))
+        },
+        dialogStatus: 'create',
+        textMap: {
+          update: '编辑',
+          create: '创建'
+        },
+        sys_dict_edit: false,
+        sys_dict_delete: false,
+        currentNode: {}
+      }
+    },
+    watch: {
+      filterText(val) {
+        this.$refs['leftTree'].filter(val);
+      },
+      filterFormText(val) {
+        this.$refs['formTree'].filter(val);
+      }
+    },
+    created() {
+      this.getTree()
+      this.getList()
+      this.sys_dict_edit = this.authorities.indexOf("sys_dict_edit") !== -1;
+      this.sys_dict_delete = this.authorities.indexOf("sys_dict_delete") !== -1;
 
-export default {
-  name: "table_sys_dict",
-  directives: {
-    waves
-  },
-  data() {
-    return {
-      list: null,
-      total: null,
-      listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 20
-      },
-      rules: {
-        value: [
-          {
-            required: true,
-            message: "数据值",
-            trigger: "blur"
-          }
-        ],
-        label: [
-          {
-            required: true,
-            message: "标签名",
-            trigger: "blur"
-          }
-        ],
-        type: [
-          {
-            required: true,
-            message: "类型",
-            trigger: "blur"
-          }
-        ],
-        description: [
-          {
-            required: true,
-            message: "描述",
-            trigger: "blur"
-          }
-        ],
-        sort: [
-          {
-            required: true,
-            message: "排序",
-            trigger: "blur"
-          }
-        ],
-        remarks: [
-          {
-            required: true,
-            message: "备注信息",
-            trigger: "blur"
-          }
-        ]
-      },
-      form: {},
-      dialogFormVisible: false,
-      dialogStatus: "",
-      sys_dict_add: false,
-      sys_dict_upd: false,
-      sys_dict_del: false,
-      textMap: {
-        update: "编辑",
-        create: "创建"
-      },
-      tableKey: 0
-    };
-  },
-  computed: {
-    ...mapGetters(["permissions"])
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        0: "有效",
-        1: "无效"
-      };
-      return statusMap[status];
-    }
-  },
-  created() {
-    this.getList();
-    this.sys_dict_add = this.permissions["sys_dict_add"];
-    this.sys_dict_upd = this.permissions["sys_dict_upd"];
-    this.sys_dict_del = this.permissions["sys_dict_del"];
-  },
-  methods: {
-    getList() {
-      this.listLoading = true;
-      this.listQuery.orderByField = "create_time";
-      this.listQuery.isAsc = false;
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.records;
-        this.total = response.data.total;
-        this.listLoading = false;
+      dictCodes({codes:'sys_status,sys_yes_no'}).then(rs => {
+        this.statusOptions = rs.data[0];
+        this.isShowOptions = rs.data[1];
       });
     },
-    handleFilter() {
-      this.listQuery.page = 1;
-      this.getList();
+    computed: {
+      ...mapGetters([
+        'authorities'
+      ])
     },
-    handleSizeChange(val) {
-      this.listQuery.limit = val;
-      this.getList();
-    },
-    handleCurrentChange(val) {
-      this.listQuery.page = val;
-      this.getList();
-    },
-    handleDelete(row) {
-      delObj(row).then(response => {
-        this.dialogFormVisible = false;
-        this.getList();
-        this.$notify({
-          title: "成功",
-          message: "删除成功",
-          type: "success",
-          duration: 2000
+    methods: {
+      getList() {
+        this.listLoading = true;
+        this.listQuery.isAsc = false;
+        this.listQuery.queryConditionJson = parseJsonItemForm([{
+          fieldName: 'name',value:this.listQuery.name
+        },{
+          fieldName: 'parentId',value:this.listQuery.parentId
+        }])
+        pageDict(this.listQuery).then(response => {
+          this.list = response.data;
+          this.total = response.total;
+          this.listLoading = false;
         });
-      });
-    },
-    handleUpdate(row) {
-      this.dialogStatus = "update";
-      this.dialogFormVisible = true;
-      this.form.id = row.id;
-      this.form.type = row.type;
-      this.form.value = row.value;
-      this.form.label = row.label;
-      this.form.description = row.description;
-      this.form.sort = row.sort;
-      this.form.remarks = row.remarks;
-    },
-    handleCreate() {
-      this.dialogStatus = "create";
-      this.dialogFormVisible = true;
-    },
-    create(formName) {
-      const set = this.$refs;
-      set[formName].validate(valid => {
-        if (valid) {
-          addObj(this.form).then(() => {
-            this.dialogFormVisible = false;
-            this.getList();
-            this.$notify({
-              title: "成功",
-              message: "创建成功",
-              type: "success",
-              duration: 2000
-            });
+      },
+      getTree() {
+        fetchDictTree({all:true}).then(response => {
+          this.treeData = parseTreeData(response.data);
+        })
+      },
+      filterNode(value, data) {
+        if (!value) return true
+        return data.label.indexOf(value) !== -1
+      },
+      getNodeData(data) {
+        this.listQuery.parentId = data.id
+        this.currentNode = data;
+        this.getList()
+      },
+      getNodeFormData(data){
+        this.dialogDictVisible = false;
+        this.form.parentId = data.id;
+        this.form.parentName = data.label;
+      },
+
+      handleFilter() {
+        this.listQuery.page = 1;
+        this.getList();
+      },
+      handleSizeChange(val) {
+        this.listQuery.limit = val;
+        this.getList();
+      },
+      handleCurrentChange(val) {
+        this.listQuery.page = val;
+        this.getList();
+      },
+      handleEdit(row) {
+        this.resetForm();
+        this.dialogStatus = row && validateNotNull(row.id)? "update" : "create";
+        if(this.dialogStatus == "create"){
+          this.dialogFormVisible = true;
+          this.form.parentId = this.currentNode.id
+          this.form.parentName = this.currentNode.label;
+        }else{
+          findDict(row.id).then(response => {
+            this.form = response.data;
+            this.form.status=objectToString(this.form.status)
+            this.form.isShow=objectToString(this.form.isShow)
+            this.dialogFormVisible = true;
           });
-        } else {
-          return false;
         }
-      });
-    },
-    cancel(formName) {
-      this.dialogFormVisible = false;
-      const set = this.$refs;
-      set[formName].resetFields();
-    },
-    update(formName) {
-      const set = this.$refs;
-      set[formName].validate(valid => {
-        if (valid) {
-          this.dialogFormVisible = false;
-          this.form.password = undefined;
-          putObj(this.form).then(() => {
-            this.dialogFormVisible = false;
-            this.getList();
-            this.$notify({
-              title: "成功",
-              message: "修改成功",
-              type: "success",
-              duration: 2000
-            });
-          });
-        } else {
-          return false;
+      },
+      handleDict() {
+        fetchDictTree({extId: this.form.id}).then(response => {
+          this.treeDictData = parseTreeData(response.data);
+          this.dialogDictVisible = true;
+        })
+      },
+      handleDelete(row) {
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          removeDict(row.id).then(() => {
+            if (data.status == MSG_TYPE_SUCCESS) {
+              this.getList();
+              this.getTree();
+            }
+          })
+        })
+      },
+      save() {
+        const set = this.$refs;
+        set['form'].validate(valid => {
+          if (valid) {
+            saveDict(this.form).then(() => {
+              this.getList()
+              this.getTree();
+              this.dialogFormVisible = false;
+            })
+          } else {
+            return false;
+          }
+        });
+      },
+      cancel() {
+        this.dialogFormVisible = false;
+        this.$refs['form'].resetFields();
+      },
+      resetForm() {
+        this.form = {
+          permission: undefined,
+          name: undefined,
+          menuId: undefined,
+          parentId: undefined,
+          url: undefined,
+          icon: undefined,
+          sort: undefined,
+          component: undefined,
+          type: undefined,
+          method: undefined
         }
-      });
+        if(this.$refs['form']){
+          this.$refs['form'].resetFields();
+        }
+      }
     }
   }
-};
 </script>
+

@@ -4,9 +4,6 @@ import {
   validateNull
 } from './validate'
 import {
-  $
-} from 'jquery'
-import {
   baseUrl
 } from '@/config/env'
 import {validateNotNull} from "../packages/utils/validate";
