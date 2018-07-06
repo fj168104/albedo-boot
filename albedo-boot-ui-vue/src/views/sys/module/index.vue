@@ -92,7 +92,7 @@
 
         </el-table>
         <div v-show="!listLoading" class="pagination-container">
-            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+            <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.size" layout="total, sizes, prev, pager, next, jumper" :total="total">
             </el-pagination>
           </div>
       </el-col>
@@ -1396,7 +1396,7 @@
         listLoading: true,
         listQuery: {
           page: 1,
-          limit: 20
+          size: 20
         },
         formEdit: true,
         filterText: '',
@@ -1501,7 +1501,7 @@
         this.getList();
       },
       handleSizeChange(val) {
-        this.listQuery.limit = val;
+        this.listQuery.size = val;
         this.getList();
       },
       handleCurrentChange(val) {

@@ -5,7 +5,7 @@
       <el-col :span="4">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
-            <span>字典</span>
+            <span>区域</span>
             <el-button type="text" style="float: right; padding: 3px 0" @click="searchTree=(searchTree ? false:true)">搜索</el-button>
           </div>
           <el-input v-show="searchTree"
@@ -33,11 +33,12 @@
             </el-form-item>
             <el-form-item>
               <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
-              <el-button v-if="sys_dict_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+              <el-button v-if="sys_area_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
             </el-form-item>
           </el-form>
         </div>
-        <el-table :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
+        <el-table :data="list" :default-sort = "{prop: 'lastModifiedDate', order: 'descending'}" v-loading="listLoading" element-loading-text="加载中..."
+                  border fit highlight-current-row style="width: 99%">
           <el-table-column align="center" label="名称">
             <template slot-scope="scope">
               <span><i :class="scope.row.iconCls"></i>{{scope.row.name}}</span>
@@ -50,15 +51,15 @@
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="键">
+          <el-table-column align="center" label="简称">
             <template slot-scope="scope">
-              <span>{{scope.row.key}}</span>
+              <span>{{scope.row.shortName}}</span>
             </template>
           </el-table-column>
 
-          <el-table-column align="center" label="值">
+          <el-table-column align="center" label="等级">
             <template slot-scope="scope">
-              <span>{{scope.row.val}}</span>
+              <span>{{scope.row.level}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="序号">
@@ -71,16 +72,16 @@
               <el-tag>{{scope.row.status}}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="更新时间">
+          <el-table-column prop="lastModifiedDate" align="center" label="更新时间" :sortable="true">
             <template slot-scope="scope">
               <span>{{scope.row.lastModifiedDate}}</span>
             </template>
           </el-table-column>
           <el-table-column align="center" label="操作" width="200">
             <template slot-scope="scope">
-              <el-button v-if="sys_dict_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+              <el-button v-if="sys_area_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
               </el-button>
-              <el-button v-if="sys_dict_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+              <el-button v-if="sys_area_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
               </el-button>
             </template>
           </el-table-column>
@@ -92,11 +93,11 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="选择字典" :visible.sync="dialogDictVisible">
+    <el-dialog title="选择区域" :visible.sync="dialogAreaVisible">
       <el-input placeholder="输入关键字进行过滤"
                 v-model="filterFormText">
       </el-input>
-      <el-tree class="filter-tree" ref="formTree" :data="treeDictData"
+      <el-tree class="filter-tree" ref="formTree" :data="treeAreaData"
                check-strictly node-key="id" highlight-current @node-click="getNodeFormData"
                :filter-node-method="filterNode" default-expand-all>
       </el-tree>
@@ -104,24 +105,21 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :label-position="labelPosition" label-width="80px" :model="form" ref="form">
-        <el-form-item label="上级字典" prop="parentName">
-          <el-input v-model="form.parentName" placeholder="选择字典" @focus="handleDict()" readonly></el-input>
+        <el-form-item label="上级区域" prop="parentName">
+          <el-input v-model="form.parentName" placeholder="选择区域" @focus="handleArea()" readonly></el-input>
           <input type="hidden" v-model="form.parentId" />
         </el-form-item>
         <el-form-item label="名称" prop="name" :rules="[{required: true,message: '请输入名称'}]">
           <el-input v-model="form.name" ></el-input>
         </el-form-item>
-        <el-form-item label="编码" prop="code" :rules="[{required: true,message: '请输入编码'}]">
+        <el-form-item label="简称" prop="shortName">
+          <el-input v-model="form.shortName" ></el-input>
+        </el-form-item>
+        <el-form-item label="编码" prop="code">
           <el-input v-model="form.code" ></el-input>
         </el-form-item>
-        <el-form-item label="键" prop="key">
-          <el-input v-model="form.key"></el-input>
-        </el-form-item>
-        <el-form-item label="值" prop="val">
-          <el-input v-model="form.val"></el-input>
-        </el-form-item>
-        <el-form-item label="是否显示" prop="isShow" :rules="[{required: true,message: '请选择是否显示'}]">
-          <AvueCrudRadio v-model="form.isShow" :dic="isShowOptions"></AvueCrudRadio>
+        <el-form-item label="等级" prop="level">
+          <AvueCrudSelect v-model="form.level" :dic="levelOptions"></AvueCrudSelect>
         </el-form-item>
         <el-form-item label="排序" prop="sort" :rules="[{type: 'number',message: '序号必须为数字'}]">
           <el-input-number v-model="form.sort" :step="5"></el-input-number>
@@ -142,18 +140,18 @@
 </template>
 
 <script>
-  import {fetchDictTree, findDict, saveDict, removeDict, pageDict} from "./dictService";
+  import {fetchAreaTree, findArea, saveArea, removeArea, pageArea} from "./areaService";
   import { mapGetters } from 'vuex'
   import {parseJsonItemForm, parseTreeData} from "../../../util/util";
-  import {dictCodes} from "../../../api/dataSystem";
+  import {areaCodes, dictCodes} from "../../../api/dataSystem";
   import {isValidateUnique, objectToString, toStr, validateNotNull} from "../../../util/validate";
   import {MSG_TYPE_SUCCESS} from "../../../const/common";
   export default {
-    name: 'dict',
+    name: 'area',
     data() {
       return {
-        treeDictData: [],
-        dialogDictVisible: false,
+        treeAreaData: [],
+        dialogAreaVisible: false,
         dialogFormVisible: false,
         list: null,
         total: null,
@@ -167,7 +165,7 @@
         filterFormText: '',
         formStatus: '',
         statusOptions: [],
-        isShowOptions: [],
+        levelOptions: [],
         searchTree: false,
         treeData: [],
         labelPosition: 'right',
@@ -175,24 +173,23 @@
           name: undefined,
           parentId: undefined,
           parentName: undefined,
+          shortName: undefined,
+          level: undefined,
           code: undefined,
-          key: undefined,
-          val: undefined,
-          isShow: undefined,
           sort: undefined,
           status: undefined,
           description: undefined
         },
         validateUnique: (rule, value, callback) => {
-          isValidateUnique(rule, value, callback, '/sys/dict/checkByProperty?id='+toStr(this.form.id))
+          isValidateUnique(rule, value, callback, '/sys/area/checkByProperty?id='+toStr(this.form.id))
         },
         dialogStatus: 'create',
         textMap: {
           update: '编辑',
           create: '创建'
         },
-        sys_dict_edit: false,
-        sys_dict_delete: false,
+        sys_area_edit: false,
+        sys_area_delete: false,
         currentNode: {}
       }
     },
@@ -207,12 +204,12 @@
     created() {
       this.getTree()
       this.getList()
-      this.sys_dict_edit = this.authorities.indexOf("sys_dict_edit") !== -1;
-      this.sys_dict_delete = this.authorities.indexOf("sys_dict_delete") !== -1;
+      this.sys_area_edit = this.authorities.indexOf("sys_area_edit") !== -1;
+      this.sys_area_delete = this.authorities.indexOf("sys_area_delete") !== -1;
 
-      dictCodes({codes:'sys_status,sys_yes_no'}).then(rs => {
+      dictCodes({codes:'sys_status,sys_area_type'}).then(rs => {
         this.statusOptions = rs.data[0];
-        this.isShowOptions = rs.data[1];
+        this.levelOptions = rs.data[1];
       });
     },
     computed: {
@@ -229,14 +226,14 @@
         },{
           fieldName: 'parentId',value:this.listQuery.parentId
         }])
-        pageDict(this.listQuery).then(response => {
+        pageArea(this.listQuery).then(response => {
           this.list = response.data;
           this.total = response.total;
           this.listLoading = false;
         });
       },
       getTree() {
-        fetchDictTree({all:true}).then(response => {
+        fetchAreaTree({all:true,ltLevel:2}).then(response => {
           this.treeData = parseTreeData(response.data);
         })
       },
@@ -250,7 +247,7 @@
         this.getList()
       },
       getNodeFormData(data){
-        this.dialogDictVisible = false;
+        this.dialogAreaVisible = false;
         this.form.parentId = data.id;
         this.form.parentName = data.label;
       },
@@ -275,7 +272,7 @@
           this.form.parentId = this.currentNode.id
           this.form.parentName = this.currentNode.label;
         }else{
-          findDict(row.id).then(response => {
+          findArea(row.id).then(response => {
             this.form = response.data;
             this.form.status=objectToString(this.form.status)
             this.form.isShow=objectToString(this.form.isShow)
@@ -283,10 +280,10 @@
           });
         }
       },
-      handleDict() {
-        fetchDictTree({extId: this.form.id}).then(response => {
-          this.treeDictData = parseTreeData(response.data);
-          this.dialogDictVisible = true;
+      handleArea() {
+        fetchAreaTree({extId: this.form.id}).then(response => {
+          this.treeAreaData = parseTreeData(response.data);
+          this.dialogAreaVisible = true;
         })
       },
       handleDelete(row) {
@@ -295,7 +292,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          removeDict(row.id).then(() => {
+          removeArea(row.id).then(() => {
             if (data.status == MSG_TYPE_SUCCESS) {
               this.getList();
               this.getTree();
@@ -307,7 +304,7 @@
         const set = this.$refs;
         set['form'].validate(valid => {
           if (valid) {
-            saveDict(this.form).then(() => {
+            saveArea(this.form).then(() => {
               this.getList()
               this.getTree();
               this.dialogFormVisible = false;

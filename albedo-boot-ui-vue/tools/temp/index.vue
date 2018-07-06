@@ -85,7 +85,7 @@ export default {
       this.tableLoading = true;
       getList({
         page: this.page.currentPage,
-        limit: this.page.pageSize
+        size: this.page.pageSize
       }).then(response => {
         this.tableData = response.data.records;
         this.page.total = response.data.total;

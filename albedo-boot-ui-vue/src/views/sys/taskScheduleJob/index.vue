@@ -11,7 +11,7 @@
         </el-form-item>
         <el-form-item>
           <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
-          <el-button v-if="sys_user_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+          <el-button v-if="sys_taskScheduleJob_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -27,7 +27,7 @@
       <el-table-column align="center" label="用户名">
         <template slot-scope="scope">
           <span>
-            <img v-if="scope.row.avatar" class="user-avatar" style="width: 20px; height: 20px; border-radius: 50%;" :src="scope.row.avatar+'?imageView2/1/w/20/h/20'">
+            <img v-if="scope.row.avatar" class="taskScheduleJob-avatar" style="width: 20px; height: 20px; border-radius: 50%;" :src="scope.row.avatar+'?imageView2/1/w/20/h/20'">
             {{scope.row.loginId}}
           </span>
         </template>
@@ -67,9 +67,9 @@
 
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button v-if="sys_user_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+          <el-button v-if="sys_taskScheduleJob_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
           </el-button>
-          <el-button v-if="sys_user_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+          <el-button v-if="sys_taskScheduleJob_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import { pageUser, findUser, saveUser, removeUser } from "./userService";
+import { pageTaskScheduleJob, findTaskScheduleJob, saveTaskScheduleJob, removeTaskScheduleJob } from "./taskScheduleJobService";
 import waves from "@/directive/waves/index.js";
 import myUpload from "vue-image-crop-upload";
 // import { parseTime } from '@/utils'
@@ -181,7 +181,7 @@ export default {
     ElRadioGroup,
     'my-upload': myUpload
   },
-  name: "table_sys_user",
+  name: "table_sys_taskScheduleJob",
   directives: {
     waves
   },
@@ -218,7 +218,7 @@ export default {
         description: undefined
       },
       validateUnique: (rule, value, callback) => {
-        isValidateUnique(rule, value, callback, '/sys/user/checkByProperty?id='+toStr(this.form.id))
+        isValidateUnique(rule, value, callback, '/sys/taskScheduleJob/checkByProperty?id='+toStr(this.form.id))
       },
       validatePhone: (rule, value, callback) => {
         isValidateMobile(rule, value, callback)
@@ -248,9 +248,9 @@ export default {
       rolesOptions: [],
       dialogFormVisible: false,
       dialogOrgVisible: false,
-      userAdd: false,
-      userUpd: false,
-      userDel: false,
+      taskScheduleJobAdd: false,
+      taskScheduleJobUpd: false,
+      taskScheduleJobDel: false,
       dialogStatus: 'create',
       textMap: {
         update: '编辑',
@@ -273,8 +273,8 @@ export default {
   },
   created() {
     this.getList();
-    this.sys_user_edit = this.authorities.indexOf("sys_user_edit") !== -1;
-    this.sys_user_delete = this.authorities.indexOf("sys_user_delete") !== -1;
+    this.sys_taskScheduleJob_edit = this.authorities.indexOf("sys_taskScheduleJob_edit") !== -1;
+    this.sys_taskScheduleJob_delete = this.authorities.indexOf("sys_taskScheduleJob_delete") !== -1;
     comboRoleList().then(response => {
       this.rolesOptions = response.data;
     });
@@ -291,7 +291,7 @@ export default {
       },{
         fieldName: 'email',value:this.listQuery.email
       }])
-      pageUser(this.listQuery).then(response => {
+      pageTaskScheduleJob(this.listQuery).then(response => {
         this.list = response.data;
         this.total = response.total;
         this.listLoading = false;
@@ -326,7 +326,7 @@ export default {
       if(this.dialogStatus == "create"){
         this.dialogFormVisible = true;
       }else{
-        findUser(row.id).then(response => {
+        findTaskScheduleJob(row.id).then(response => {
           this.form = response.data;
           this.form.password="";
           this.form.status=objectToString(this.form.status)
@@ -343,7 +343,7 @@ export default {
       set['form'].validate(valid => {
         if (valid) {
           // this.form.password = undefined;
-          saveUser(this.form).then((data) => {
+          saveTaskScheduleJob(this.form).then((data) => {
             if (data.status == MSG_TYPE_SUCCESS) {
               this.getList();
               this.cancel('form')
@@ -364,7 +364,7 @@ export default {
           type: "warning"
         }
       ).then(() => {
-        removeUser(row.id).then((data) => {
+        removeTaskScheduleJob(row.id).then((data) => {
             if (data.status == MSG_TYPE_SUCCESS) {
               this.getList();
             }

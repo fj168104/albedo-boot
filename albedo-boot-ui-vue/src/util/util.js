@@ -19,6 +19,8 @@ export const formatRoutes = (aMenu) => {
   console.log(aMenu)
   const aRouter = []
   aMenu.forEach(oMenu => {
+    console.log(oMenu.name)
+    console.log(oMenu)
     const {
       href,
       component,
@@ -38,7 +40,6 @@ export const formatRoutes = (aMenu) => {
           } else {
             componentPath = component
           }
-          console.log(componentPath)
           require([`../${componentPath}.vue`], resolve)
         },
         name: name,

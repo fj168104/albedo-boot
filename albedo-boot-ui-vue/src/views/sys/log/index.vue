@@ -84,7 +84,7 @@
       </el-table-column>
     </el-table>
     <div v-show="!listLoading" class="pagination-container">
-      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.limit" layout="total, sizes, prev, pager, next, jumper" :total="total">
+      <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.size" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
   </div>
@@ -110,7 +110,7 @@ export default {
       dicts: [],
       listQuery: {
         page: 1,
-        limit: 20,
+        size: 20,
         type: undefined
       },
       tableKey: 0
@@ -137,7 +137,7 @@ export default {
   },
   methods: {
     getSerialNumber(index) {
-      return index + 1 + (this.listQuery.page - 1) * this.listQuery.limit;
+      return index + 1 + (this.listQuery.page - 1) * this.listQuery.size;
     },
     getList() {
       this.listLoading = true;
@@ -150,7 +150,7 @@ export default {
       });
     },
     handleSizeChange(val) {
-      this.listQuery.limit = val;
+      this.listQuery.size = val;
       this.getList();
     },
     handleCurrentChange(val) {
