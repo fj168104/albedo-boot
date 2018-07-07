@@ -46,6 +46,9 @@ public class User extends IdEntity<String> {
     @SearchField
     private String loginId;
 
+    @Column(name = "avatar_", length = 225)
+    private String avatar;
+
     @JSONField(serialize = false)
     @NotBlank
     @Size(min = 60, max = 60)
@@ -272,4 +275,11 @@ public class User extends IdEntity<String> {
     }
 
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
 }

@@ -99,13 +99,17 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<TreeResult> findTreeData(ModuleTreeQuery moduleTreeQuery, List<Module> moduleList) {
-        String type = moduleTreeQuery != null ? moduleTreeQuery.getType() : null,
+
+        String extId = moduleTreeQuery != null ? moduleTreeQuery.getExtId() : null,
+         type = moduleTreeQuery != null ? moduleTreeQuery.getType() : null,
                 all = moduleTreeQuery != null ? moduleTreeQuery.getAll() : null;
         Collections.sort(moduleList, Comparator.comparing(Module::getSort));
         List<TreeResult> mapList = Lists.newArrayList();
         for (Module e : moduleList) {
-            TreeResult treeResult = null;
-            if ((all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
+            TreeResult treeResult;
+            if ((PublicUtil.isEmpty(extId)
+                || PublicUtil.isEmpty(e.getParentIds()) || (PublicUtil.isNotEmpty(extId) && !extId.equals(e.getId()) && e.getParentIds() != null && e.getParentIds().indexOf("," + extId + ",") == -1))
+                && (all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
 
                 if ("menu".equals(type) && !Module.TYPE_MENU.equals(e.getType())) {
                     continue;

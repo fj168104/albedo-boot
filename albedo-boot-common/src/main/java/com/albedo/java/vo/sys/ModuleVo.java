@@ -21,8 +21,6 @@ public class ModuleVo extends TreeEntityVo {
     public static final String F_PERMISSION = "permission";
     public static final String ROOT_ID = "4d32c49cc7f448dcbfb92ce9c4dde058";
 
-
-
     private static final long serialVersionUID = 1L;
 
     /*** 菜单模块 MENUFLAG = 0 */
@@ -33,14 +31,14 @@ public class ModuleVo extends TreeEntityVo {
     private String type;
 
     private String target;
-
-
     /*** 请求方法*/
     private String requestMethod;
     /*** 链接地址 */
     private String url;
     /*** 图标class */
     private String iconCls;
+    /*** 前端组件 */
+    private String component;
     /*** 权限标识 */
     private String permission;
     /*** 针对顶层菜单，0 普通展示下级菜单， 1以树形结构展示 */

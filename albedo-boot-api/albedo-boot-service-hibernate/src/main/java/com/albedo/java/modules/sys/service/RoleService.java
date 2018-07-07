@@ -26,12 +26,12 @@ public class RoleService extends DataVoService<RoleRepository, Role, String, Rol
 
     @Override
     public RoleVo copyBeanToVo(Role role) {
-        RoleVo userResult = new RoleVo();
-        BeanUtils.copyProperties(role, userResult);
+        RoleVo roleResult = new RoleVo();
+        BeanUtils.copyProperties(role, roleResult);
         if (role.getOrg() != null) {
-            userResult.setOrgName(role.getOrg().getName());
+            roleResult.setOrgName(role.getOrg().getName());
         }
-        return userResult;
+        return roleResult;
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

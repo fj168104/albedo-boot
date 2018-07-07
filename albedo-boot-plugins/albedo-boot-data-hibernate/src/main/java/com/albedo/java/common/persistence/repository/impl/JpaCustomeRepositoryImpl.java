@@ -208,7 +208,6 @@ public class JpaCustomeRepositoryImpl<T extends GeneralEntity> implements JpaCus
                 ComboData data = new ComboData();
                 data.setId(PublicUtil.toStrString(o[0]));
                 data.setName(PublicUtil.toStrString(o[1]));
-                Map<String, Object> map = Maps.newHashMap();
                 if (flag)
                     data.setPId(PublicUtil.toStrString(o[2]));
                 mapList.add(data);

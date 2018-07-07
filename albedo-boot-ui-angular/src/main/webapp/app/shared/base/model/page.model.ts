@@ -1,5 +1,5 @@
 import { General } from "./general.model"
-import {Audit} from "../../../theme/pages/modules/admin/audits/audit.model";
+import { Audit } from "../../../theme/pages/modules/admin/audits/audit.model";
 
 export class PageModel<T extends General>{
 

@@ -69,21 +69,21 @@
                     <!--</execution>-->
                     <!--end-->
 
-                    <!--<execution>-->
-                        <!--<id>exec-npm-run-build</id>-->
-                        <!--<phase>prepare-package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>exec</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<executable>${npm}</executable>-->
-                            <!--<arguments>-->
-                                <!--<argument>run</argument>-->
-                                <!--<argument>build</argument>-->
-                            <!--</arguments>-->
-                            <!--<workingDirectory>${basedir}/src/main/webapp</workingDirectory>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
+                    <execution>
+                        <id>exec-npm-run-build</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>exec</goal>
+                        </goals>
+                        <configuration>
+                            <executable>${npm}</executable>
+                            <arguments>
+                                <argument>run</argument>
+                                <argument>build</argument>
+                            </arguments>
+                            <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
