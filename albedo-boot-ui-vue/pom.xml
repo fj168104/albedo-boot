@@ -81,7 +81,7 @@
                                 <argument>run</argument>
                                 <argument>build</argument>
                             </arguments>
-                            <workingDirectory>${basedir}/src/main/webapp</workingDirectory>
+                            <workingDirectory>${basedir}</workingDirectory>
                         </configuration>
                     </execution>
                 </executions>

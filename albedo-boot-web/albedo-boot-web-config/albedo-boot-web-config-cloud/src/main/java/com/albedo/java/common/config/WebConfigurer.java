@@ -188,6 +188,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
         if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
             log.debug("Registering CORS filter");
             source.registerCorsConfiguration(albedoProperties.getAdminPath("/**"), config);
+            source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v2/api-docs", config);
         }
         return new CorsFilter(source);
