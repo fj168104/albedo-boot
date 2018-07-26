@@ -1,7 +1,7 @@
 package com.albedo.java.common.audit;
 
 import com.albedo.java.common.config.audit.AuditEventConverter;
-import com.albedo.java.common.persistence.DynamicSpecifications;
+import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.modules.sys.domain.PersistentAuditEvent;
 import com.albedo.java.modules.sys.service.PersistenceAuditEventService;
 import com.albedo.java.util.domain.PageModel;
@@ -39,12 +39,15 @@ public class AuditEventService {
         return persistenceAuditEventService.findPage(pm)
             .map(auditEventConverter::convertToAuditEvent);
     }
-    //findAllByAuditEventDateBetween
     public PageModel<AuditEvent> findByDates(Date fromDate, Date toDate, PageModel<PersistentAuditEvent> pm) {
-        return persistenceAuditEventService.findPage(pm, DynamicSpecifications.bySearchQueryCondition(
-            QueryCondition.between(PersistentAuditEvent.F_AUDITEVENTDATE,
-                fromDate, toDate
-            ))).map(auditEventConverter::convertToAuditEvent);
+        SpecificationDetail<PersistentAuditEvent> specificationDetail = new SpecificationDetail();
+        if(fromDate!=null && toDate!=null){
+            specificationDetail.and(
+                QueryCondition.between(PersistentAuditEvent.F_AUDITEVENTDATE,
+                    fromDate, toDate
+                ));
+        }
+        return persistenceAuditEventService.findPage(pm, specificationDetail).map(auditEventConverter::convertToAuditEvent);
     }
 
     public Optional<AuditEvent> find(Long id) {

@@ -20,8 +20,7 @@
             highlight-current
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
-            @node-click="getNodeData"
-            default-expand-all >
+            @node-click="getNodeData">
           </el-tree>
         </el-card>
       </el-col>
