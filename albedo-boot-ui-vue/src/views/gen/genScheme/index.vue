@@ -84,12 +84,13 @@
     </div>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form :model="form" ref="form" label-width="100px">
-        <el-form-item label="方案名称" prop="name" :rules="[{required: true,message: '请输入方案名称'}]">
+      <el-form :model="form" ref="form" label-width="120px">
+        <el-form-item label="方案名称"
+                      inline-message="生成结构：(包名)/(模块名)/(分层(dao,entity,service,web))/(子模块名)/(java类)"
+                      prop="name" :rules="[{required: true,message: '请输入方案名称'}]">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="模块分类" prop="category"
-                      inline-message="生成结构：(包名)/(模块名)/(分层(dao,entity,service,web))/(子模块名)/(java类)"
                       :rules="[{required: true,message: '请选择模块分类'}]">
           <AvueCrudSelect v-model="form.category" :dic="categoryList" ></AvueCrudSelect>
         </el-form-item>
@@ -101,8 +102,7 @@
                       :rules="[{required: true,message: '请输入生成模块名'}]">
           <el-input v-model="form.moduleName"></el-input>
         </el-form-item>
-        <el-form-item label="生成子模块名" prop="subModuleName"
-                      :rules="[{required: true,message: '请输入生成子模块名'}]">
+        <el-form-item label="生成子模块名" prop="subModuleName">
           <el-input v-model="form.subModuleName"></el-input>
         </el-form-item>
         <el-form-item label="生成功能描述" prop="functionName"
@@ -121,14 +121,17 @@
                       :rules="[{required: true,message: '请选择业务表名'}]">
           <AvueCrudSelect v-model="form.genTableId" :dic="tableList" ></AvueCrudSelect>
         </el-form-item>
-        <el-form-item label="生成选项" prop="genCode">
-          <el-checkbox v-model="form.genCode" label="是否生成代码"></el-checkbox>
-          <el-checkbox v-model="form.replaceFile" label="是否替换现有文件"></el-checkbox>
+        <el-form-item label="生成选项">
+          <el-switch v-model="form.genCode" active-text="是否生成代码">
+          </el-switch>
+          <el-switch v-model="form.replaceFile" active-text="是否替换现有文件">
+          </el-switch>
         </el-form-item>
         <el-form-item label="同步模块" prop="syncModule">
-          <el-checkbox v-model="form.syncModule" label="是否同步模块数据"></el-checkbox>
+          <el-switch v-model="form.syncModule" @change="showModuleVisible = form.syncModule" active-text="是否同步模块数据">
+          </el-switch>
         </el-form-item>
-        <el-form-item label="同步模块" prop="parentModuleId">
+        <el-form-item label="功能模块" prop="parentModuleId" v-show="showModuleVisible">
           <el-input v-model="form.parentModuleName" placeholder="选择模块" @focus="handleModule()" readonly></el-input>
           <input type="hidden" v-model="form.parentModuleId" />
         </el-form-item>
@@ -150,7 +153,7 @@
                 v-model="filterFormText">
       </el-input>
       <el-tree class="filter-tree" ref="formTree" :data="treeModuleData"
-               check-strictly node-key="id" highlight-current @node-click="getNodeFormData"
+               check-strictly node-key="id" highlight-current @node-click="getNodeData"
                :filter-node-method="filterNode" default-expand-all>
       </el-tree>
     </el-dialog>
@@ -169,6 +172,7 @@
   import {baseUrl} from "../../../config/env";
   import {getToken} from "../../../util/auth";
   import {fetchModuleMenu} from "../../sys/module/service";
+  import {validateNotNull} from "../../../packages/utils/validate";
 
   export default {
   components: {
@@ -219,6 +223,7 @@
       filterFormText: '',
       dialogFormVisible: false,
       dialogModuleVisible: false,
+      showModuleVisible: false,
       genSchemeAdd: false,
       genSchemeUpd: false,
       genSchemeDel: false,
@@ -260,9 +265,13 @@
       this.listLoading = true;
       this.listQuery.isAsc = false;
       this.listQuery.queryConditionJson = parseJsonItemForm([{
-        fieldName: 'loginId',value:this.listQuery.loginId
+        fieldName: 'name',value:this.listQuery.name
       },{
-        fieldName: 'email',value:this.listQuery.email
+        fieldName: 'genTable.name',value:this.listQuery.genTableName
+      },{
+        fieldName: 'functionName',value:this.listQuery.functionName
+      },{
+        fieldName: 'functionAuthor',value:this.listQuery.functionAuthor
       }])
       pageGenScheme(this.listQuery).then(response => {
         this.list = response.data;
@@ -272,10 +281,13 @@
     },
     getNodeData(data) {
       this.dialogModuleVisible = false;
-      this.form.orgId = data.id;
-      this.form.orgName = data.label;
+      this.form.parentModuleId = data.id;
+      this.form.parentModuleName = data.label;
     },
-
+    filterNode(value, data) {
+      if (!value) return true
+      return data.label.indexOf(value) !== -1
+    },
     handleModule() {
       fetchModuleMenu({extId: this.form.id}).then(response => {
         this.treeModuleData = parseTreeData(response.data);
@@ -295,25 +307,30 @@
       this.getList();
     },
     handleEdit(row) {
-      this.resetForm();
+      this.showModuleVisible=false
       this.dialogStatus = row && !validateNull(row.id)? "update" : "create";
-      if(this.dialogStatus == "create"){
-        this.dialogFormVisible = true;
-      }else{
-        findGenScheme({id:row.id}).then(response => {
-          if(response.status==MSG_TYPE_SUCCESS) {
-            var data = response.data;
-            this.viewTypeList = data.viewTypeList
-            this.categoryList = data.categoryList
-            this.tableList = data.tableList
-            this.form = response.data;
-            this.form = data.genSchemeVo;
-            this.form.password = "";
-            this.form.status = objectToString(this.form.status)
-            this.dialogFormVisible = true;
-          }
-        });
+      var params;
+      if(this.dialogStatus == "update"){
+        params ={id:row.id};
       }
+      findGenScheme(params).then(response => {
+        if(response.status==MSG_TYPE_SUCCESS) {
+          var data = response.data;
+          this.viewTypeList = data.viewTypeList
+          this.categoryList = data.categoryList
+          this.tableList = data.tableList
+          if(validateNotNull(data.genSchemeVo)){
+            this.resetForm();
+            this.form = data.genSchemeVo;
+            this.form.status = objectToString(this.form.status)
+            console.log(this.form)
+            // this.form.genCode = true
+            // this.form.replaceFile= false
+            // this.form.syncModule=  false
+          }
+          this.dialogFormVisible = true;
+        }
+      });
     },
     cancel() {
       this.dialogFormVisible = false;
@@ -363,26 +380,15 @@
         functionNameSimple: undefined,
         functionAuthor: undefined,
         genTableId: undefined,
-        genCode: undefined,
-        replaceFile: undefined,
-        syncModule: undefined,
+        genCode: false,
+        replaceFile: false,
+        syncModule: false,
         parentModuleName: undefined,
         parentModuleId: undefined,
         status: undefined,
         description: undefined
       };
       this.$refs['form']&&this.$refs['form'].resetFields();
-    },
-    /**
-     * upload success
-     *
-     * [param] jsonData   服务器返回数据，已进行json转码
-     * [param] field
-     */
-    cropUploadSuccess(rs, field) {
-      console.log(rs)
-      this.$store.commit('SET_AVATAR', rs.data);
-      this.form.avatar=rs.data;
     }
   }
 };

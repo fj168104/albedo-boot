@@ -324,10 +324,10 @@ export default {
           this.javaTypeList = data.javaTypeList
           this.queryTypeList = data.queryTypeList
           this.showTypeList = data.showTypeList
-          console.log(data.tableList)
           this.tableList = data.tableList
           this.columnList = data.columnList
           this.form.status=objectToString(this.form.status)
+          this.dialogBeforeFormVisible = false;
           this.dialogFormVisible = true;
         }
       });
@@ -336,7 +336,6 @@ export default {
       const set = this.$refs;
       set['formSelect'].validate(valid => {
         if (valid) {
-          this.dialogBeforeFormVisible = false;
           this.showEditForm({name: this.formSelect.name})
         }
       });
