@@ -28,7 +28,7 @@
         <div class="filter-container">
             <el-form :inline="true">
               <el-form-item label="名称">
-                <el-input style="width: 200px;" class="filter-item" v-model="listQuery.name"></el-input>
+                <el-input class="filter-item input-normal" v-model="listQuery.name"></el-input>
               </el-form-item>
               <el-form-item>
                 <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>

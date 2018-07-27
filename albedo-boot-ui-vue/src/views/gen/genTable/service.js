@@ -17,9 +17,17 @@ export function saveGenTable(obj) {
   })
 }
 
-export function findGenTable(id) {
+export function findGenTable(query) {
   return request({
-    url: '/gen/genTable/' + id,
+    url: '/gen/genTable/formData',
+    method: 'get',
+    params: query
+  })
+}
+
+export function findSelectTable() {
+  return request({
+    url: '/gen/genTable/tableList',
     method: 'get'
   })
 }

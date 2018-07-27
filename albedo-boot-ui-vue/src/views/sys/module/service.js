@@ -7,6 +7,14 @@ export function fetchModuleTree(query) {
     params: query
   })
 }
+export function fetchModuleMenu() {
+  return request({
+    url: '/dataSystem/module/findTreeData?all&type=menu',
+    method: 'get'
+  })
+}
+
+
 
 export function pageModule(query) {
   return request({

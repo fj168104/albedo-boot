@@ -43,7 +43,7 @@ public class GenTableResource extends DataVoResource<GenTableService, GenTableVo
     @GetMapping(value = "/tableList")
     @Timed
     public ResponseEntity tableList() {
-        return ResultBuilder.buildOk(FormDirective.convertComboDataList(service.findTableListFormDb(null), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
+        return ResultBuilder.buildOk(PublicUtil.convertSelectDataList(service.findTableListFormDb(null), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
     }
 
     @GetMapping(value = "/formData")

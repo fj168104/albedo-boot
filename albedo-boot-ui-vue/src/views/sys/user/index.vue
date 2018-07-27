@@ -4,10 +4,10 @@
     <div class="filter-container">
       <el-form :inline="true">
         <el-form-item label="用户名">
-          <el-input style="width: 200px;" class="filter-item" v-model="listQuery.loginId"></el-input>
+          <el-input class="filter-item input-normal" v-model="listQuery.loginId"></el-input>
         </el-form-item>
         <el-form-item label="邮箱">
-          <el-input style="width: 200px;" class="filter-item" v-model="listQuery.email"></el-input>
+          <el-input class="filter-item input-normal" v-model="listQuery.email"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>

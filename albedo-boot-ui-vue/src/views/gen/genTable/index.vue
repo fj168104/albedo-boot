@@ -4,10 +4,10 @@
     <div class="filter-container">
       <el-form :inline="true">
         <el-form-item label="表名">
-          <el-input style="width: 200px;" class="filter-item" v-model="listQuery.name"></el-input>
+          <el-input class="filter-item input-normal" v-model="listQuery.name"></el-input>
         </el-form-item>
         <el-form-item label="说明">
-          <el-input style="width: 200px;" class="filter-item" v-model="listQuery.comments"></el-input>
+          <el-input class="filter-item input-normal" v-model="listQuery.comments"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
@@ -77,23 +77,33 @@
       </el-pagination>
     </div>
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <el-dialog :title="'选择表'" :visible.sync="dialogBeforeFormVisible">
+      <el-form :model="formSelect" ref="formSelect" label-width="100px">
+        <el-form-item label="表名" prop="name" :rules="[{required: true,message: '请选择表名'}]">
+            <AvueCrudSelect v-model="formSelect.name" :filterable="true" :dic="selectTableList"></AvueCrudSelect>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="this.dialogBeforeFormVisible = false;">取 消</el-button>
+        <el-button type="primary" @click="showNextForm()">下一步</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible" :fullscreen="true">
       <el-form :model="form" ref="form" label-width="100px">
-        <el-tabs>
-          <el-tab-pane label="基本信息">
-            <el-form-item label="名称" prop="loginId" :rules="[{required: true,message: '请输入名称'}]">
+            <el-form-item label="名称" prop="name" :rules="[{required: true,message: '请输入名称'}]">
               <el-input v-model="form.name" placeholder="请输名称"></el-input>
             </el-form-item>
-            <el-form-item label="说明" prop="phone" :rules="[{required: true,message: '请输入说明'}]">
+            <el-form-item label="说明" prop="comments" :rules="[{required: true,message: '请输入说明'}]">
               <el-input v-model="form.comments"></el-input>
             </el-form-item>
-            <el-form-item label="类名" prop="phone" :rules="[{required: true,message: '请输入类名'}]">
+            <el-form-item label="类名" prop="className" :rules="[{required: true,message: '请输入类名'}]">
               <el-input v-model="form.className"></el-input>
             </el-form-item>
-            <el-form-item label="父表表名" prop="phone" :rules="[{required: true,message: '请选择父表表名'}]">
+            <el-form-item label="父表表名" prop="parentTable">
               <AvueCrudSelect v-model="form.parentTable" :dic="tableList"></AvueCrudSelect>
             </el-form-item>
-            <el-form-item label="当前表外键" prop="phone" :rules="[{required: true,message: '请输入说明'}]">
+            <el-form-item label="当前表外键" prop="parentTableFk">
               <AvueCrudSelect v-model="form.parentTableFk" :dic="columnList"></AvueCrudSelect>
             </el-form-item>
             <el-form-item label="状态" prop="status" :rules="[{required: true,message: '请选择状态' }]">
@@ -102,10 +112,6 @@
             <el-form-item label="备注" prop="description">
               <el-input type="textarea" v-model="form.description"></el-input>
             </el-form-item>
-
-
-          </el-tab-pane>
-          <el-tab-pane label="字段列表">
             <table id="contentTable" class="el-table">
               <thead>
               <tr>
@@ -132,55 +138,59 @@
               <tbody>
               <tr v-for=" (column,i) in form.columnFormList" :class="column.status=='-1'? 'error':''" :title="column.status=='-1'? '已删除的列，保存之后消失！':''">
                 <td>
-                  <el-input v-model="form.columnFormList[i].title"></el-input>
+                  <el-input v-model="form.columnFormList[i].name" readonly="readonly" class="input-small"></el-input>
                 </td>
                 <td>
-                  <el-input v-model="form.columnFormList[i].comments"></el-input>
+                  <el-input v-model="form.columnFormList[i].title" class="input-small"></el-input>
                 </td>
                 <td>
-                  <AvueCrudSelect v-model="form.columnFormList[i].javaType" :dic="javaTypeList"></AvueCrudSelect>
+                  <el-input v-model="form.columnFormList[i].comments" class="input-small"></el-input>
                 </td>
                 <td>
-                  <el-input v-model="form.columnFormList[i].javaField"></el-input>
+                  <el-input v-model="form.columnFormList[i].jdbcType" class="input-small"></el-input>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isPk" ></el-checkbox>
+                  <AvueCrudSelect v-model="form.columnFormList[i].javaType" class="input-mini" :dic="javaTypeList"></AvueCrudSelect>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isNull" ></el-checkbox>
+                  <el-input v-model="form.columnFormList[i].javaField" class="input-small"></el-input>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isUnique" ></el-checkbox>
+                  <el-checkbox v-model="form.columnFormList[i].isPk" :checked="form.columnFormList[i].isPk==1" ></el-checkbox>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isInsert" ></el-checkbox>
+                  <el-checkbox v-model="form.columnFormList[i].isNull" :checked="form.columnFormList[i].isNull==1" ></el-checkbox>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isEdit" ></el-checkbox>
+                  <el-checkbox v-model="form.columnFormList[i].isUnique" :checked="form.columnFormList[i].isUnique==1" ></el-checkbox>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isList" ></el-checkbox>
+                  <el-checkbox v-model="form.columnFormList[i].isInsert" :checked="form.columnFormList[i].isInsert==1" ></el-checkbox>
                 </td>
                 <td>
-                  <el-checkbox v-model="form.columnFormList[i].isQuery" ></el-checkbox>
+                  <el-checkbox v-model="form.columnFormList[i].isEdit" :checked="form.columnFormList[i].isEdit==1" ></el-checkbox>
                 </td>
                 <td>
-                  <AvueCrudSelect v-model="form.columnFormList[i].queryType" :dic="queryTypeList"></AvueCrudSelect>
+                  <el-checkbox v-model="form.columnFormList[i].isList" :checked="form.columnFormList[i].isList==1" ></el-checkbox>
                 </td>
                 <td>
-                  <AvueCrudSelect v-model="form.columnFormList[i].showType" :dic="showTypeList"></AvueCrudSelect>
+                  <el-checkbox v-model="form.columnFormList[i].isQuery" :checked="form.columnFormList[i].isQuery==1" ></el-checkbox>
                 </td>
                 <td>
-                  <el-input v-model="form.columnFormList[i].dictType"></el-input>
+                  <AvueCrudSelect v-model="form.columnFormList[i].queryType" class="input-mini" :dic="queryTypeList"></AvueCrudSelect>
                 </td>
                 <td>
-                  <el-input v-model="form.columnFormList[i].sort"></el-input>
+                  <AvueCrudSelect v-model="form.columnFormList[i].showType" class="input-mini" :dic="showTypeList"></AvueCrudSelect>
+                </td>
+                <td>
+                  <el-input v-model="form.columnFormList[i].dictType" class="input-small"></el-input>
+                </td>
+                <td>
+                  <el-input v-model="form.columnFormList[i].sort" class="input-small"></el-input>
                 </td>
               </tr>
               </tbody>
             </table>
-          </el-tab-pane>
-        </el-tabs>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="cancel()">取 消</el-button>
@@ -191,22 +201,18 @@
 </template>
 
 <script>
-import { pageGenTable, findGenTable, saveGenTable, removeGenTable } from "./service";
+  import {pageGenTable, findGenTable, saveGenTable, removeGenTable, findSelectTable} from "./service";
 import { mapGetters } from "vuex";
 import ElRadioGroup from "element-ui/packages/radio/src/radio-group";
 import ElOption from "element-ui/packages/select/src/option";
 import {DATA_STATUS} from "@/const/common";
 import {
-  isValidateMobile,
-  isValidateUnique,
-  objectToString, toStr,
+  objectToString,
   validateNull
 } from "../../../util/validate";
 import {dictCodes} from "../../../api/dataSystem";
 import {MSG_TYPE_SUCCESS} from "../../../const/common";
-import {parseJsonItemForm, parseTreeData} from "../../../util/util";
-import {baseUrl} from "../../../config/env";
-import {getToken} from "../../../util/auth";
+import {parseJsonItemForm} from "../../../util/util";
 
 export default {
   components: {
@@ -223,11 +229,13 @@ export default {
         page: 1,
         size: 20
       },
-      javaTypeList:{},
-      queryTypeList:{},
-      showTypeList:{},
-      tableList:{},
-      columnList:{},
+      javaTypeList:[],
+      queryTypeList:[],
+      showTypeList:[],
+      tableList:[],
+      selectTableList:[],
+      columnList:[],
+      formSelect:{name:null},
       form: {
         name: undefined,
         comments: undefined,
@@ -240,10 +248,11 @@ export default {
       },
       statusOptions: [],
       dialogFormVisible: false,
+      dialogBeforeFormVisible: false,
       dialogStatus: 'create',
       textMap: {
-        update: '编辑',
-        create: '创建'
+        update: '编辑表',
+        create: '创建表'
       },
       isDisabled: {
         0: false,
@@ -299,20 +308,38 @@ export default {
       this.resetForm();
       this.dialogStatus = row && !validateNull(row.id)? "update" : "create";
       if(this.dialogStatus == "create"){
-        this.dialogFormVisible = true;
+        findSelectTable().then(response => {
+          this.selectTableList = response.data;
+          this.dialogBeforeFormVisible=true;
+        });
       }else{
-        findGenTable(row.id).then(response => {
-          this.form = response.data;
-          this.javaTypeList = response.javaTypeList
-          this.queryTypeList = response.queryTypeList
-          this.showTypeList = response.showTypeList
-          console.log(response.tableList)
-          this.tableList = response.tableList
-          this.columnList = response.columnList
+        this.showEditForm({id:row.id})
+      }
+    },
+    showEditForm(params){
+      findGenTable(params).then(response => {
+        if(response.status==MSG_TYPE_SUCCESS){
+          var data = response.data;
+          this.form = data.genTableVo;
+          this.javaTypeList = data.javaTypeList
+          this.queryTypeList = data.queryTypeList
+          this.showTypeList = data.showTypeList
+          console.log(data.tableList)
+          this.tableList = data.tableList
+          this.columnList = data.columnList
           this.form.status=objectToString(this.form.status)
           this.dialogFormVisible = true;
-        });
-      }
+        }
+      });
+    },
+    showNextForm(){
+      const set = this.$refs;
+      set['formSelect'].validate(valid => {
+        if (valid) {
+          this.dialogBeforeFormVisible = false;
+          this.showEditForm({name: this.formSelect.name})
+        }
+      });
     },
     cancel() {
       this.dialogFormVisible = false;
@@ -353,14 +380,13 @@ export default {
     },
     resetForm() {
       this.form = {
-        id: undefined,
-        loginId: "",
-        password: "",
-        roleIdList: [],
-        status: "",
-        orgId: "",
-        phone: "",
-        email: "",
+        name: undefined,
+        comments: undefined,
+        className: undefined,
+        parentTable: undefined,
+        parentTableFk: undefined,
+        columnFormList: [],
+        status: undefined,
         description: undefined
       };
       this.$refs['form']&&this.$refs['form'].resetFields();
