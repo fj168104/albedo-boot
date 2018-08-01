@@ -206,8 +206,8 @@ public class JpaCustomeRepositoryImpl<T extends GeneralEntity> implements JpaCus
             List<Object[]> rsList = (List<Object[]>) findListByHQL(sb.toString());
             for (Object[] o : rsList) {
                 ComboData data = new ComboData();
-                data.setId(PublicUtil.toStrString(o[0]));
-                data.setName(PublicUtil.toStrString(o[1]));
+                data.setValue(PublicUtil.toStrString(o[0]));
+                data.setLabel(PublicUtil.toStrString(o[1]));
                 if (flag)
                     data.setPId(PublicUtil.toStrString(o[2]));
                 mapList.add(data);

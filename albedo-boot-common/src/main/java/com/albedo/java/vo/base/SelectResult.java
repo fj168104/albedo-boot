@@ -15,5 +15,4 @@ public class SelectResult {
     private String value;
     private String label;
 
-
 }

@@ -64,7 +64,7 @@ public class FormDirective implements TemplateDirectiveModel {
                 List<ComboData> dataList = Lists.newArrayList();
                 dictList.forEach(item -> {
                     dataList.add(Reflections.createObj(ComboData.class,
-                            Lists.newArrayList(ComboData.F_ID, ComboData.F_NAME), item.getVal(), item.getName()));
+                            Lists.newArrayList(ComboData.F_VALUE, ComboData.F_LABEL), item.getVal(), item.getName()));
                 });
                 sb = convertMapListToString(params, dataList);
             }
@@ -120,7 +120,7 @@ public class FormDirective implements TemplateDirectiveModel {
             if (PublicUtil.isNotEmpty(dataList)) {
 
                 dataList.forEach(item -> {
-                    String valLabel = item.getId(), nameLabel = item.getName();
+                    String valLabel = item.getValue(), nameLabel = item.getLabel();
                     sb.append("<option value=\"").append(valLabel).append("\"")
                             .append(valLabel.equals(value) || value.contains(valLabel) ? "selected=\"selected\"" : "")
                             .append(">").append(nameLabel).append("</option>");
@@ -133,7 +133,7 @@ public class FormDirective implements TemplateDirectiveModel {
             if (PublicUtil.isNotEmpty(dataList)) {
                 for (int i = 0; i < dataList.size(); i++) {
                     ComboData item = dataList.get(i);
-                    String valLabel = item.getId(), nameLabel = item.getName();
+                    String valLabel = item.getValue(), nameLabel = item.getLabel();
                     sb.append("<label class=\"").append(boxType).append("-inline\"><input id=\"")
                             .append(PublicUtil.isEmpty(id) ? name : id).append(i + 1).append("\" name=\"").append(name)
                             .append("\" searchItem=\"").append(searchItem).append("\" attrType=\"").append(attrType)

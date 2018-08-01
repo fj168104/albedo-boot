@@ -17,7 +17,7 @@ export function moduleData(){
 
 export function dictCodes(params){
   return request({
-    url: '/dataSystem/dict/vue/codes',
+    url: '/dataSystem/dict/codes',
     method: 'get',
     params: params
   });

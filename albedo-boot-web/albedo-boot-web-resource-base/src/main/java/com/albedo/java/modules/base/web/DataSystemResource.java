@@ -11,8 +11,6 @@ import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.ComboData;
-import com.albedo.java.util.domain.ComboSearch;
-import com.albedo.java.util.domain.ComboVueData;
 import com.albedo.java.vo.base.SelectResult;
 import com.albedo.java.vo.sys.ModuleVo;
 import com.albedo.java.vo.sys.query.*;
@@ -81,33 +79,17 @@ public class DataSystemResource {
         return ResultBuilder.buildOk(map);
     }
     @GetMapping(value = "dict/codes")
-    public ResponseEntity codes(DictQuery dictQuery, ComboSearch comboSearch) {
-        List<ComboData> dataList = Lists.newArrayList();
-        if(dictQuery!=null && PublicUtil.isNotEmpty(dictQuery.getCode())){
-            List<Dict> dictList = DictUtil.getDictListFilterVal(dictQuery.getCode(),
-                dictQuery.getFilter());
-            if (PublicUtil.isNotEmpty(dictList)) {
+    public ResponseEntity codes(String codes) {
 
-                dictList.forEach(item -> dataList.add(Reflections.createObj(ComboData.class,
-                    Lists.newArrayList(ComboData.F_ID, ComboData.F_NAME), item.getVal(), item.getName())));
-            }
-        }else if(comboSearch !=null){
-            dataList.addAll(dictService.findJson(comboSearch));
-        }
-        return ResultBuilder.buildOk(dataList);
-    }
-    @GetMapping(value = "dict/vue/codes")
-    public ResponseEntity vueCodes(String codes) {
-
-        List<List<ComboVueData>> rsList = Lists.newArrayList();
+        List<List<ComboData>> rsList = Lists.newArrayList();
         if(PublicUtil.isNotEmpty(codes)){
             String[] codeArray = codes.split(",");
             for(String code : codeArray){
                 List<Dict> dictList = DictUtil.getDictListFilterVal(code, null);
-                List<ComboVueData> dataList = Lists.newArrayList();
+                List<ComboData> dataList = Lists.newArrayList();
                 if (PublicUtil.isNotEmpty(dictList)) {
-                    dictList.forEach(item -> dataList.add(Reflections.createObj(ComboVueData.class,
-                        Lists.newArrayList(ComboVueData.F_VALUE, ComboVueData.F_LABEL), item.getVal(), item.getName())));
+                    dictList.forEach(item -> dataList.add(Reflections.createObj(ComboData.class,
+                        Lists.newArrayList(ComboData.F_VALUE, ComboData.F_LABEL), item.getVal(), item.getName())));
                 }
                 if(PublicUtil.isNotEmpty(dataList)){
                     rsList.add(dataList);
