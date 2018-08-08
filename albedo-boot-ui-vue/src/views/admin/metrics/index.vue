@@ -349,10 +349,8 @@
     },
     filters: {
       numFilter(value) {
-        if(isNaN(value))return 0
-// 截取当前数据到小数点后两位
+        if(isNaN(value)) return 0
         let realVal = Number(value).toFixed(2)
-// num.toFixed(2)获取的是字符串
         return Number(realVal)
       },
       filterNaN(input) {
@@ -367,11 +365,16 @@
 
     },
     methods: {
+      numFilter(value) {
+        if(isNaN(value))return 0
+        let realVal = Number(value).toFixed(2)
+        return Number(realVal)
+      },
       getVal(val){
-        return val && val.value;
+        return this.numFilter(val && val.value);
       },
       getValByKey(val, key){
-        return val && val[key];
+        return this.numFilter(val && val[key]);
       },
       showDialog(){
         this.dialogVisible=true

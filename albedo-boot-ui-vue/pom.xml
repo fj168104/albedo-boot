@@ -28,7 +28,19 @@
         </profile>
     </profiles>
     <build>
-
+      <resources>
+        <resource>
+          <directory>${basedir}/resources</directory>
+          <!--注意此次必须要放在此目录下才能被访问到 -->
+          <!--<targetPath>META-INF/resources</targetPath>-->
+          <!--<includes>-->
+            <!--<include>swagger-ui/**</include>-->
+          <!--</includes>-->
+          <!--<excludes>-->
+            <!--<exclude>**/*.jar</exclude>-->
+          <!--</excludes>-->
+        </resource>
+      </resources>
         <plugins>
             <plugin>
                 <artifactId>maven-deploy-plugin</artifactId>

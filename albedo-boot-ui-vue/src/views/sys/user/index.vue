@@ -65,11 +65,13 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="操作" width="200">
+      <el-table-column align="center" fixed="right" label="操作" width="200" v-if="sys_user_edit || sys_user_lock || sys_user_delete">
         <template slot-scope="scope">
-          <el-button v-if="sys_user_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+          <el-button v-if="sys_user_edit" size="mini" type="text" @click="handleEdit(scope.row)">编辑
           </el-button>
-          <el-button v-if="sys_user_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+          <el-button v-if="sys_user_lock" size="mini" type="text" @click="handleLock(scope.row)">锁定
+          </el-button>
+          <el-button v-if="sys_user_delete" size="mini" type="text" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -80,14 +82,12 @@
       <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="listQuery.page" :page-sizes="[10,20,30, 50]" :page-size="listQuery.size" layout="total, sizes, prev, pager, next, jumper" :total="total">
       </el-pagination>
     </div>
-
     <el-dialog title="选择机构" :visible.sync="dialogOrgVisible">
       <el-tree class="filter-tree" :data="treeOrgData" :default-checked-keys="checkedKeys"
                check-strictly node-key="id" highlight-current
                :props="defaultProps" @node-click="getNodeData" default-expand-all>
       </el-tree>
     </el-dialog>
-
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" label-width="100px">
         <el-form-item label="头像" prop="avatar">
@@ -109,6 +109,7 @@
           {validator:validateUnique}
         ]">
           <el-input v-model="form.loginId" placeholder="请输用户名"></el-input>
+          ddd
         </el-form-item>
 
         <el-form-item label="密码" prop="password" :rules="[{validator: validatePass}]">
@@ -153,7 +154,7 @@
 </template>
 
 <script>
-import { pageUser, findUser, saveUser, removeUser } from "./service";
+  import {pageUser, findUser, saveUser, removeUser, lockUser} from "./service";
 import waves from "@/directive/waves/index.js";
 import myUpload from "vue-image-crop-upload";
 // import { parseTime } from '@/utils'
@@ -256,10 +257,6 @@ export default {
         update: '编辑',
         create: '创建'
       },
-      isDisabled: {
-        0: false,
-        1: true
-      },
       tableKey: 0
     };
   },
@@ -267,19 +264,17 @@ export default {
     ...mapGetters(['authorities'])
   },
   filters: {
-    statusFilter(status) {
-      return '<span class="m-badge ' + DATA_STATUS[status].class + ' m-badge--wide">' + status + '</span>';
-    }
   },
   created() {
     this.getList();
     this.sys_user_edit = this.authorities.indexOf("sys_user_edit") !== -1;
+    this.sys_user_lock = this.authorities.indexOf("sys_user_lock") !== -1;
     this.sys_user_delete = this.authorities.indexOf("sys_user_delete") !== -1;
     comboRoleList().then(response => {
       this.rolesOptions = response.data;
     });
     dictCodes({codes:'sys_status'}).then(response => {
-      this.statusOptions = response.data;
+      this.statusOptions = response.data[0];
     });
   },
   methods: {
@@ -369,6 +364,13 @@ export default {
               this.getList();
             }
           });
+      });
+    },
+    handleLock(row) {
+      lockUser(row.id).then((data) => {
+        if (data.status == MSG_TYPE_SUCCESS) {
+          this.getList();
+        }
       });
     },
     resetForm() {

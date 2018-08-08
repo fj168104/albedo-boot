@@ -30,5 +30,12 @@ export function removeUser(id) {
     method: 'delete'
   })
 }
+export function lockUser(id) {
+  return request({
+    url: '/sys/user/' + id,
+    method: 'put'
+  })
+}
+
 
 

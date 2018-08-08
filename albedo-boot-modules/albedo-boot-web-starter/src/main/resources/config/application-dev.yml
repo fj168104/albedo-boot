@@ -51,7 +51,7 @@ spring:
 #       port: 6379
     web:
         root:
-            prefix: albedo-boot-ui-angular/target/www/app/
+            prefix: albedo-boot-ui-vue/target/dist/
 
 
 server:

@@ -279,7 +279,7 @@ export default {
       this.rolesOptions = response.data;
     });
     dictCodes({codes:'sys_status'}).then(response => {
-      this.statusOptions = response.data;
+      this.statusOptions = response.data[0];
     });
   },
   methods: {

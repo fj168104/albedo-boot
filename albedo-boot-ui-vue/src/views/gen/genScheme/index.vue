@@ -257,7 +257,7 @@
     this.gen_genScheme_edit = this.authorities.indexOf("gen_genScheme_edit") !== -1;
     this.gen_genScheme_delete = this.authorities.indexOf("gen_genScheme_delete") !== -1;
     dictCodes({codes:'sys_status'}).then(response => {
-      this.statusOptions = response.data;
+      this.statusOptions = response.data[0];
     });
   },
   methods: {

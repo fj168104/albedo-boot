@@ -96,7 +96,7 @@ public class DataSystemResource {
                 }
             }
         }
-        return ResultBuilder.buildOk(rsList.size()==1? rsList.get(0): rsList);
+        return ResultBuilder.buildOk(rsList);
     }
     @GetMapping(value = "org/findTreeData")
     public ResponseEntity findTreeData(OrgTreeQuery orgTreeQuery) {

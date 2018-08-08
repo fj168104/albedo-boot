@@ -3,7 +3,10 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.common.persistence.service.DataVoService;
+import com.albedo.java.modules.sys.domain.Org;
+import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.User;
+import com.albedo.java.modules.sys.repository.OrgRepository;
 import com.albedo.java.modules.sys.repository.PersistentTokenRepository;
 import com.albedo.java.modules.sys.repository.RoleRepository;
 import com.albedo.java.modules.sys.repository.UserRepository;
@@ -12,14 +15,18 @@ import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.RandomUtil;
 import com.albedo.java.util.domain.PageModel;
 import com.albedo.java.util.domain.QueryCondition;
-import com.albedo.java.util.spring.SpringContextHolder;
+import com.albedo.java.util.exception.RuntimeMsgException;
+import com.albedo.java.vo.sys.UserExcelVo;
 import com.albedo.java.vo.sys.UserVo;
+import com.google.common.collect.Lists;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cache.CacheManager;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -35,12 +42,13 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     private final PersistentTokenRepository persistentTokenRepository;
 
     private final RoleRepository roleRepository;
-
+    private final OrgRepository orgRepository;
     private final CacheManager cacheManager;
 
-    public UserService(PersistentTokenRepository persistentTokenRepository, RoleRepository roleRepository, CacheManager cacheManager) {
+    public UserService(PersistentTokenRepository persistentTokenRepository, RoleRepository roleRepository, OrgRepository orgRepository, CacheManager cacheManager) {
         this.persistentTokenRepository = persistentTokenRepository;
         this.roleRepository = roleRepository;
+        this.orgRepository = orgRepository;
         this.cacheManager = cacheManager;
     }
 
@@ -197,5 +205,20 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
             user = repository.findOneByLoginId(loginId);
         }
         return user;
+    }
+
+    public void save(@Valid UserExcelVo userExcelVo) {
+        User user = new User();
+        BeanUtils.copyProperties(userExcelVo, user);
+        Org org = orgRepository.findOne(DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Org.F_NAME, userExcelVo.getOrgName())));
+        if(org!=null){
+            user.setOrgId(org.getId());
+        }
+        Role role = roleRepository.findOne(DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Role.F_NAME, userExcelVo.getRoleNames())));
+        if(role==null){
+            throw new RuntimeMsgException("无法获取角色"+userExcelVo.getRoleNames()+"信息");
+        }
+        user.setRoleIdList(Lists.newArrayList(role.getId()));
+        save(user);
     }
 }

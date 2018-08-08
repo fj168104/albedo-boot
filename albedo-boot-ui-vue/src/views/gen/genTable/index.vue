@@ -274,7 +274,7 @@ export default {
     this.gen_genTable_edit = this.authorities.indexOf("gen_genTable_edit") !== -1;
     this.gen_genTable_delete = this.authorities.indexOf("gen_genTable_delete") !== -1;
     dictCodes({codes:'sys_status'}).then(response => {
-      this.statusOptions = response.data;
+      this.statusOptions = response.data[0];
     });
   },
   methods: {
