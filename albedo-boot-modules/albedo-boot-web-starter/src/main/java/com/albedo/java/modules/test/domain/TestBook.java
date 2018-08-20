@@ -28,7 +28,7 @@ import java.util.Objects;
 /**
  * 测试书籍Entity 测试书籍
  * @author admin
- * @version 2018-03-23
+ * @version 2018-08-20
  */
 @Entity
 @Table(name = "test_book")

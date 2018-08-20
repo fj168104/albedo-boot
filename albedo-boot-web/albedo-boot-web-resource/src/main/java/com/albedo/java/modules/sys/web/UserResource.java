@@ -1,6 +1,7 @@
 package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.security.SecurityUtil;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.service.ModuleService;
 import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.util.JsonUtil;
@@ -226,7 +227,10 @@ public class UserResource extends DataVoResource<UserService, UserVo> {
         response.setCharacterEncoding("utf-8");
 
         ExportExcel exportExcel = new ExportExcel("用户信息", UserExcelVo.class);
-
+        UserVo userVo = service.findExcelOneVo();
+        if(userVo!=null){
+            exportExcel.setDataList(Lists.newArrayList(userVo));
+        }
         exportExcel.write(response.getOutputStream()).dispose();
     }
 

@@ -11,7 +11,7 @@ import com.albedo.java.modules.test.domain.TestBook;
 /**
  * 测试书籍Repository 测试书籍
  * @author admin
- * @version 2018-03-23
+ * @version 2018-08-20
  */
 public interface TestBookRepository extends DataRepository<TestBook, String> {
 

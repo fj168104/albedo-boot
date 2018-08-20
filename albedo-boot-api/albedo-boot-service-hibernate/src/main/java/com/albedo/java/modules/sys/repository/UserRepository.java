@@ -25,4 +25,5 @@ public interface UserRepository extends DataRepository<User, String> {
     @Cacheable(cacheNames = USERS_BY_LOGIN_CACHE)
     Optional<User> findOneByLoginId(String loginId);
 
+    User findOneByIdNotAndStatus(String s, Integer flagNormal);
 }

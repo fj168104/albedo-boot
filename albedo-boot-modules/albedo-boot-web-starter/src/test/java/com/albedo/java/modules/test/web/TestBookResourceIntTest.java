@@ -81,9 +81,9 @@ public class TestBookResourceIntTest {
 	/** UPDATED_PHONE phone_  :  手机 */
     private static final String UPDATED_PHONE = "B";
 	/** DEFAULT_ACTIVATED activated_  :  activated_ */
-	private static final int DEFAULT_ACTIVATED = 0;
+	private static final int DEFAULT_ACTIVATED = -2;
 	/** UPDATED_ACTIVATED activated_  :  activated_ */
-    private static final int UPDATED_ACTIVATED = 1;
+    private static final int UPDATED_ACTIVATED = -1;
 	/** DEFAULT_LANGKEY lang_key  :  key */
 	private static final String DEFAULT_LANGKEY = "A";
 	/** UPDATED_LANGKEY lang_key  :  key */

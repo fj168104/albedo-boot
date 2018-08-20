@@ -10,6 +10,7 @@ import com.albedo.java.modules.sys.repository.OrgRepository;
 import com.albedo.java.modules.sys.repository.PersistentTokenRepository;
 import com.albedo.java.modules.sys.repository.RoleRepository;
 import com.albedo.java.modules.sys.repository.UserRepository;
+import com.albedo.java.util.BeanVoUtil;
 import com.albedo.java.util.DateUtil;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.RandomUtil;
@@ -220,5 +221,10 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
         }
         user.setRoleIdList(Lists.newArrayList(role.getId()));
         save(user);
+    }
+
+    public UserVo findExcelOneVo() {
+        User user = repository.findOneByIdNotAndStatus("1", User.FLAG_NORMAL);
+        return BeanVoUtil.copyPropertiesByClass(user, UserVo.class);
     }
 }

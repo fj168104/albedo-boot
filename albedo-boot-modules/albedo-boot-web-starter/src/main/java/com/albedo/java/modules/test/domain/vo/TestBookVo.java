@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * 测试书籍EntityVo 测试书籍
  * @author admin
- * @version 2018-03-23
+ * @version 2018-08-20
  */
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
 public class TestBookVo extends DataEntityVo<String> {

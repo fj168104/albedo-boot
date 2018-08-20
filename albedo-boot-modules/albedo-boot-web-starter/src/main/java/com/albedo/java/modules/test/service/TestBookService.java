@@ -20,7 +20,7 @@ import com.google.common.collect.Lists;
 /**
  * 测试书籍Service 测试书籍
  * @author admin
- * @version 2018-03-23
+ * @version 2018-08-20
  */
 @Service
 @Transactional(rollbackFor=Exception.class)

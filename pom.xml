@@ -8,12 +8,12 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.albedo.java</groupId>
     <artifactId>albedo-boot</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>albedo-boot</name>
     <!-- 项目属性 -->
     <properties>
-        <project.release.version>1.1.0-SNAPSHOT</project.release.version>
+        <project.release.version>1.2.0-SNAPSHOT</project.release.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <assertj-core.version>3.5.2</assertj-core.version>
         <lombok.version>1.16.6</lombok.version>
@@ -47,7 +47,7 @@
         <module>albedo-boot-api</module>
         <module>albedo-boot-web</module>
         <module>albedo-boot-plugins</module>
-        <module>albedo-boot-ui-angular</module>
+        <!--<module>albedo-boot-ui-angular</module>-->
         <module>albedo-boot-ui-vue</module>
     </modules>
     <repositories>

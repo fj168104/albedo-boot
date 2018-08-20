@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.albedo.java</groupId>
         <artifactId>albedo-boot-modules</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.2.0-SNAPSHOT</version>
     </parent>
     <artifactId>albedo-boot-web-starter</artifactId>
     <packaging>war</packaging>
@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>com.albedo.java</groupId>
-            <artifactId>albedo-boot-ui-angular</artifactId>
+            <artifactId>albedo-boot-ui-vue</artifactId>
             <version>${project.release.version}</version>
         </dependency>
         <dependency>
@@ -62,7 +62,7 @@
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
             <configuration>
-                <warSourceDirectory>${basedir}/../../albedo-boot-ui-angular/target/www/app/</warSourceDirectory>
+                <warSourceDirectory>${basedir}/../../albedo-boot-ui-vue/target/dist/</warSourceDirectory>
             </configuration>
         </plugin>
         <plugin>
