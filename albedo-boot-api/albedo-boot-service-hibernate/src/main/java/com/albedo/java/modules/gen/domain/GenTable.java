@@ -61,11 +61,11 @@ public class GenTable extends IdEntity<String> {
     @NotFound(action = NotFoundAction.IGNORE)
     @JSONField(serialize = false)
     private GenTable parent; // 父表对象
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "parent", targetEntity = GenTable.class)
-    @Where(clause = "status_ = 0")
-    @Fetch(FetchMode.SUBSELECT)
-    @JSONField(serialize = false)
-    private List<GenTable> childList; // 子表列表
+//    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY, mappedBy = "parent", targetEntity = GenTable.class)
+//    @Where(clause = "status_ = 0")
+//    @Fetch(FetchMode.SUBSELECT)
+//    @JSONField(serialize = false)
+//    private List<GenTable> childList = Lists.newArrayList(); // 子表列表
 
     @Transient
     private String nameAndTitle;
@@ -144,8 +144,9 @@ public class GenTable extends IdEntity<String> {
 
     public List<GenTableColumn> getPkColumnList() {
         if (PublicUtil.isEmpty(pkColumnList) && PublicUtil.isNotEmpty(columnList)) {
-            if (pkColumnList == null)
+            if (pkColumnList == null) {
                 pkColumnList = Lists.newArrayList();
+            }
             for (GenTableColumn column : getColumnList()) {
                 if (column.getPk()) {
                     pkColumnList.add(column);
@@ -197,8 +198,9 @@ public class GenTable extends IdEntity<String> {
     }
 
     public List<GenTableColumn> getColumnList() {
-        if (columnList == null)
+        if (columnList == null) {
             columnList = Lists.newArrayList();
+        }
         return columnList;
     }
 
@@ -206,13 +208,6 @@ public class GenTable extends IdEntity<String> {
         this.columnList = columnList;
     }
 
-    public List<GenTable> getChildList() {
-        return childList;
-    }
-
-    public void setChildList(List<GenTable> childList) {
-        this.childList = childList;
-    }
 
     /**
      * 获取列名和说明
@@ -220,8 +215,9 @@ public class GenTable extends IdEntity<String> {
      * @return
      */
     public String getNameAndTitle() {
-        if (PublicUtil.isEmpty(nameAndTitle))
+        if (PublicUtil.isEmpty(nameAndTitle)) {
             nameAndTitle = getName() + (comments == null ? "" : "  :  " + comments);
+        }
         return nameAndTitle;
     }
 
@@ -278,10 +274,10 @@ public class GenTable extends IdEntity<String> {
                 }
             }
             // 如果有子表，则需要导入List相关引用
-            if (getChildList() != null && getChildList().size() > 0) {
-                addNoRepeatList(importList, "javax.persistence.CascadeType", "javax.persistence.OneToMany", "java.util.List", "com.google.common.collect.Lists", "org.hibernate.annotations.FetchMode", "org.hibernate.annotations.Fetch",
-                        "org.hibernate.annotations.Where");
-            }
+//            if (getChildList() != null && getChildList().size() > 0) {
+//                addNoRepeatList(importList, "javax.persistence.CascadeType", "javax.persistence.OneToMany", "java.util.List", "com.google.common.collect.Lists", "org.hibernate.annotations.FetchMode", "org.hibernate.annotations.Fetch",
+//                        "org.hibernate.annotations.Where");
+//            }
             if (getParentExists()) {
                 addNoRepeatList(importList, "javax.persistence.FetchType", "javax.persistence.JoinColumn", "javax.persistence.ManyToOne", "org.hibernate.annotations.NotFound", "org.hibernate.annotations.NotFoundAction");
             }
@@ -321,10 +317,10 @@ public class GenTable extends IdEntity<String> {
                 }
             }
             // 如果有子表，则需要导入List相关引用
-            if (getChildList() != null && getChildList().size() > 0) {
-                addNoRepeatList(importList, "javax.persistence.CascadeType", "javax.persistence.OneToMany", "java.util.List", "com.google.common.collect.Lists", "org.hibernate.annotations.FetchMode", "org.hibernate.annotations.Fetch",
-                        "org.hibernate.annotations.Where");
-            }
+//            if (getChildList() != null && getChildList().size() > 0) {
+//                addNoRepeatList(importList, "javax.persistence.CascadeType", "javax.persistence.OneToMany", "java.util.List", "com.google.common.collect.Lists", "org.hibernate.annotations.FetchMode", "org.hibernate.annotations.Fetch",
+//                        "org.hibernate.annotations.Where");
+//            }
             if (getPkJavaType().equals(SystemConfig.TYPE_STRING)) {
                 addNoRepeatList(importList, "IdGen");
             }
@@ -360,14 +356,14 @@ public class GenTable extends IdEntity<String> {
         return parent != null && StringUtil.isNotBlank(parentTable) && StringUtil.isNotBlank(parentTableFk);
     }
 
-    /**
-     * 是否存在子类
-     *
-     * @return
-     */
-    public Boolean getChildeExists() {
-        return PublicUtil.isNotEmpty(childList);
-    }
+//    /**
+//     * 是否存在子类
+//     *
+//     * @return
+//     */
+//    public Boolean getChildeExists() {
+//        return PublicUtil.isNotEmpty(childList);
+//    }
 
     /**
      * 是否存在create_time列

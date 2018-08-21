@@ -178,7 +178,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         Module moduleEdit = new Module();
         moduleEdit.setParent(module);
         moduleEdit.setName("编辑");
-        moduleEdit.setIconCls("fa-pencil");
+//        moduleEdit.setIconCls("icon-edit-fill");
         moduleEdit.setPermission(permission + "edit");
         moduleEdit.setParentId(module.getId());
         moduleEdit.setType(Module.TYPE_OPERATE);
@@ -189,7 +189,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         Module moduleLock = new Module();
         moduleLock.setParent(module);
         moduleLock.setName("锁定");
-        moduleLock.setIconCls("fa-lock");
+//        moduleLock.setIconCls("fa-lock");
         moduleLock.setPermission(permission + "lock");
         moduleLock.setParentId(module.getId());
         moduleLock.setType(Module.TYPE_OPERATE);
@@ -200,7 +200,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         Module moduleDelete = new Module();
         moduleDelete.setParent(module);
         moduleDelete.setName("删除");
-        moduleDelete.setIconCls("fa-trash-o");
+//        moduleDelete.setIconCls("fa-trash-o");
         moduleDelete.setPermission(permission + "delete");
         moduleDelete.setParentId(module.getId());
         moduleDelete.setType(Module.TYPE_OPERATE);

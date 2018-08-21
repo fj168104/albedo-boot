@@ -68,6 +68,7 @@ export default {
       return validateNull(val);
     },
     open(item) {
+      console.log(item)
       if(item.href){
         this.$router.push({
           path: resolveUrlPath(item.href, item.name),

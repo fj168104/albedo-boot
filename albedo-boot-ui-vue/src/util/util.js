@@ -40,6 +40,7 @@ export const formatRoutes = (aMenu) => {
           } else {
             componentPath = component
           }
+          console.log(componentPath);
           if(validateNotNull(componentPath)){
             require([`../${componentPath}.vue`], resolve)
           }

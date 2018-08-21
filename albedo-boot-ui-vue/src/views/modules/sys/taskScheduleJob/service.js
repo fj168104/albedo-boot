@@ -1,4 +1,3 @@
-
 import request from '@/router/axios'
 
 export function pageTaskScheduleJob(query) {
@@ -30,5 +29,9 @@ export function removeTaskScheduleJob(id) {
     method: 'delete'
   })
 }
-
-
+export function lockTaskScheduleJob(id) {
+  return request({
+    url: '/sys/taskScheduleJob/' + id,
+    method: 'put'
+  })
+}
