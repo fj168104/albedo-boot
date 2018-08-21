@@ -165,14 +165,13 @@
   // import { parseTime } from '@/utils'
   import {mapGetters} from "vuex";
   import {DATA_STATUS} from "@/const/common";
-  import {objectToString, validateNull} from "../../../util/validate";
-  import {dictCodes} from "../../../api/dataSystem";
-  import {MSG_TYPE_SUCCESS} from "../../../const/common";
-  import {parseJsonItemForm, parseTreeData} from "../../../util/util";
-  import {baseUrl} from "../../../config/env";
-  import {getToken} from "../../../util/auth";
+  import {objectToString, validateNull, validateNotNull} from "@/util/validate";
+  import {dictCodes} from "@/api/dataSystem";
+  import {MSG_TYPE_SUCCESS} from "@/const/common";
+  import {parseJsonItemForm, parseTreeData} from "@/util/util";
+  import {baseUrl} from "@/config/env";
+  import {getToken} from "@/util/auth";
   import {fetchModuleMenu} from "../../sys/module/service";
-  import {validateNotNull} from "../../../packages/utils/validate";
 
   export default {
   components: {

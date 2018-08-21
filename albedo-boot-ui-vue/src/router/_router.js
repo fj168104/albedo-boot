@@ -43,7 +43,7 @@ export default [{
   children: [{
     path: 'index',
     name: '修改信息',
-    component: _import('sys/user/info', 'views')
+    component: _import('modules/sys/user/info', 'views')
   }]
 }, {
   path: '/404',

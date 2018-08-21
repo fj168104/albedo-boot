@@ -61,7 +61,7 @@
 
 <script>
   import {findAllAudits, findHealth, getBaseName, getSubSystemName, transformHealthData} from "./service";
-  import {validateNull} from "../../../util/validate";
+  import {validateNull} from "@/util/validate";
   export default {
     name: "admin_audits",
     data() {

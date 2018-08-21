@@ -142,10 +142,10 @@
 <script>
   import {fetchAreaTree, findArea, saveArea, removeArea, pageArea} from "./service";
   import { mapGetters } from 'vuex'
-  import {parseJsonItemForm, parseTreeData} from "../../../util/util";
-  import {areaCodes, dictCodes} from "../../../api/dataSystem";
-  import {isValidateUnique, objectToString, toStr, validateNotNull} from "../../../util/validate";
-  import {MSG_TYPE_SUCCESS} from "../../../const/common";
+  import {parseJsonItemForm, parseTreeData} from "@/util/util";
+  import {dictCodes} from "@/api/dataSystem";
+  import {isValidateUnique, objectToString, toStr, validateNotNull} from "@/util/validate";
+  import {MSG_TYPE_SUCCESS} from "@/const/common";
   export default {
     name: 'area',
     data() {

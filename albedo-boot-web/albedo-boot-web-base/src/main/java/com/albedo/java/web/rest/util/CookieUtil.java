@@ -123,6 +123,7 @@ public class CookieUtil {
                     if (isRemove) {
                         cookie.setValue(null);
                         cookie.setMaxAge(0);
+                        cookie.setPath("/");
                         response.addCookie(cookie);
                     }
                 }

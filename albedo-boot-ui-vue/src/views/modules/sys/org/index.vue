@@ -71,10 +71,10 @@
 <script>
   import { fetchOrgTree, findOrg, saveOrg, removeOrg } from "./service";
   import { mapGetters } from 'vuex'
-  import {parseTreeData} from "../../../util/util";
-  import {dictCodes} from "../../../api/dataSystem";
-  import {objectToString} from "../../../util/validate";
-  import {MSG_TYPE_SUCCESS} from "../../../const/common";
+  import {parseTreeData} from "@/util/util";
+  import {dictCodes} from "@/api/dataSystem";
+  import {objectToString} from "@/util/validate";
+  import {MSG_TYPE_SUCCESS} from "@/const/common";
   export default {
     name: 'menu',
     data() {

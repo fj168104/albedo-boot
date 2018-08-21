@@ -169,12 +169,12 @@ import {
   isValidateUnique,
   objectToString, toStr,
   validateNull
-} from "../../../util/validate";
-import {dictCodes} from "../../../api/dataSystem";
-import {MSG_TYPE_SUCCESS} from "../../../const/common";
-import {parseJsonItemForm, parseTreeData} from "../../../util/util";
-import {baseUrl} from "../../../config/env";
-import {getToken} from "../../../util/auth";
+} from "@/util/validate";
+import {dictCodes} from "@/api/dataSystem";
+import {MSG_TYPE_SUCCESS} from "@/const/common";
+import {parseJsonItemForm, parseTreeData} from "@/util/util";
+import {baseUrl} from "@/config/env";
+import {getToken} from "@/util/auth";
 
 export default {
   components: {

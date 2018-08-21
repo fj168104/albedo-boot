@@ -34,7 +34,7 @@
 
 <script>
   import {changeLevelLogs, findAllLogs, getMetrics, threadDump} from "./service";
-  import {validateNull} from "../../../util/validate";
+  import {validateNull} from "@/util/validate";
 
   export default {
     components: {

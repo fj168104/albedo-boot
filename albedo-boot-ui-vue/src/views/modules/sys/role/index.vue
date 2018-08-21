@@ -135,12 +135,11 @@
   import {mapGetters} from "vuex";
   import waves from "@/directive/waves/index.js";
   import {fetchOrgTree} from "../org/service";
-  import {objectToString, validateNotNull} from "../../../util/validate";
-  import {parseTreeData} from "../../../util/util";
-  import {MSG_TYPE_SUCCESS} from "../../../const/common";
-  import {dictCodes} from "../../../api/dataSystem";
+  import {objectToString, validateNull, validateNotNull} from "@/util/validate";
+  import {parseTreeData} from "@/util/util";
+  import {MSG_TYPE_SUCCESS} from "@/const/common";
+  import {dictCodes} from "@/api/dataSystem";
   import {fetchModuleTree} from "../module/service";
-  import {validateNull} from "../../../packages/utils/validate"; // 水波纹指令
 
   export default {
   name: "table_sys_role",

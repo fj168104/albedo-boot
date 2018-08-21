@@ -51,8 +51,8 @@
 
 <script>
   import {findAllAudits} from "./service";
-  import {objectToString, validateNull} from "../../../util/validate";
-  import {formatDate, formatDateDay} from "../../../util/util";
+  import {objectToString, validateNull} from "@/util/validate";
+  import {formatDate, formatDateDay} from "@/util/util";
   export default {
     name: "admin_audits",
     data() {

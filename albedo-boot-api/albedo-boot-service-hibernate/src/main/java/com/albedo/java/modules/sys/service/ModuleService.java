@@ -159,8 +159,9 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         module.setParentId(parentModule.getId());
         module.setType(Module.TYPE_MENU);
         module.setRequestMethod(RequestMethod.GET);
-        module.setIconCls("fa-file");
+        module.setIconCls("icon-right-square");
         module.setUrl(url + "list");
+        module.setComponent("views/modules/"+url+"index");
         save(module);
 
         Module moduleView = new Module();

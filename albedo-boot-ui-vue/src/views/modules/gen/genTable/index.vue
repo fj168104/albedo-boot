@@ -209,10 +209,10 @@ import {DATA_STATUS} from "@/const/common";
 import {
   objectToString,
   validateNull
-} from "../../../util/validate";
-import {dictCodes} from "../../../api/dataSystem";
-import {MSG_TYPE_SUCCESS} from "../../../const/common";
-import {parseJsonItemForm} from "../../../util/util";
+} from "@/util/validate";
+import {dictCodes} from "@/api/dataSystem";
+import {MSG_TYPE_SUCCESS} from "@/const/common";
+import {parseJsonItemForm} from "@/util/util";
 
 export default {
   components: {
