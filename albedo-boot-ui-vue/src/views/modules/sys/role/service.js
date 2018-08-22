@@ -31,6 +31,13 @@ export function removeRole(id) {
   })
 }
 
+export function lockRole(id) {
+  return request({
+    url: '/sys/role/' + id,
+    method: 'put'
+  })
+}
+
 export function comboRoleList() {
   return request({
     url: '/sys/role/comboData',

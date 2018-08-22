@@ -16,7 +16,7 @@
           <el-input class="filter-item input-normal" v-model="listQuery.functionAuthor"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
           <el-button v-if="gen_genScheme_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
         </el-form-item>
       </el-form>
@@ -69,9 +69,9 @@
 
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
-          <el-button v-if="gen_genScheme_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+          <el-button v-if="gen_genScheme_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
-          <el-button v-if="gen_genScheme_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+          <el-button v-if="gen_genScheme_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
           </el-button>
         </template>
       </el-table-column>

@@ -6,7 +6,8 @@
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>字典</span>
-            <el-button type="text" style="float: right; padding: 3px 0" @click="searchTree=(searchTree ? false:true)">搜索</el-button>
+            <el-button type="text" class="card-heard-btn" icon="icon-filesearch" title="搜索" @click="searchTree=(searchTree ? false:true)"></el-button>
+            <el-button type="text" class="card-heard-btn" icon="icon-reload" title="刷新" @click="getTree()"></el-button>
           </div>
           <el-input v-show="searchTree"
                     placeholder="输入关键字进行过滤"
@@ -32,7 +33,7 @@
               <el-input class="filter-item input-normal" v-model="listQuery.name"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+              <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
               <el-button v-if="sys_dict_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
             </el-form-item>
           </el-form>
@@ -78,9 +79,11 @@
           </el-table-column>
           <el-table-column align="center" label="操作" width="200">
             <template slot-scope="scope">
-              <el-button v-if="sys_dict_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+              <el-button v-if="sys_dict_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
               </el-button>
-              <el-button v-if="sys_dict_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+              <el-button v-if="sys_dict_lock" :icon="scope.row.status=='正常' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.status=='正常' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
+              </el-button>
+              <el-button v-if="sys_dict_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
               </el-button>
             </template>
           </el-table-column>
@@ -104,7 +107,7 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :label-position="labelPosition" label-width="80px" :model="form" ref="form">
-        <el-form-item label="上级字典" prop="parentName">
+        <el-form-item label="上级字典" prop="parentName" v-show="(form.id==null || form.parentId!=null)" :rules="(form.id==null || form.parentId!=null)?[{required: true,message: '请选择上级字典'}]:[]">
           <el-input v-model="form.parentName" placeholder="选择字典" @focus="handleDict()" readonly></el-input>
           <input type="hidden" v-model="form.parentId" />
         </el-form-item>
@@ -142,7 +145,7 @@
 </template>
 
 <script>
-  import {fetchDictTree, findDict, saveDict, removeDict, pageDict} from "./service";
+  import {fetchDictTree, findDict, saveDict, removeDict, pageDict, lockDict} from "./service";
   import { mapGetters } from 'vuex'
   import {parseJsonItemForm, parseTreeData} from "@/util/util";
   import {dictCodes} from "@/api/dataSystem";
@@ -192,6 +195,7 @@
           create: '创建'
         },
         sys_dict_edit: false,
+        sys_dict_lock: false,
         sys_dict_delete: false,
         currentNode: {}
       }
@@ -208,8 +212,8 @@
       this.getTree()
       this.getList()
       this.sys_dict_edit = this.authorities.indexOf("sys_dict_edit") !== -1;
+      this.sys_dict_lock = this.authorities.indexOf("sys_dict_lock") !== -1;
       this.sys_dict_delete = this.authorities.indexOf("sys_dict_delete") !== -1;
-
       dictCodes({codes:'sys_status,sys_yes_no'}).then(rs => {
         this.statusOptions = rs.data[0];
         this.isShowOptions = rs.data[1];
@@ -227,7 +231,7 @@
         this.listQuery.queryConditionJson = parseJsonItemForm([{
           fieldName: 'name',value:this.listQuery.name
         },{
-          fieldName: 'parentId',value:this.listQuery.parentId
+          fieldName: 'parentId',value:this.listQuery.parentId,operate:'eq'
         }])
         pageDict(this.listQuery).then(response => {
           this.list = response.data;
@@ -282,6 +286,13 @@
             this.dialogFormVisible = true;
           });
         }
+      },
+      handleLock(row) {
+        lockDict(row.id).then((data) => {
+          if (data.status == MSG_TYPE_SUCCESS) {
+            this.getList();
+          }
+        });
       },
       handleDict() {
         fetchDictTree({extId: this.form.id}).then(response => {

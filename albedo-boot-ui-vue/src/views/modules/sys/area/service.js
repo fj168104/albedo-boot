@@ -37,3 +37,9 @@ export function removeArea(id) {
     method: 'delete'
   })
 }
+export function lockArea(id) {
+  return request({
+    url: '/sys/area/' + id,
+    method: 'put'
+  })
+}

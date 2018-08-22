@@ -2,11 +2,12 @@
 <template>
   <div class="app-container calendar-list-container">
     <el-row :gutter="20">
-      <el-col :span="4">
+      <el-col :span="5">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
             <span>区域</span>
-            <el-button type="text" style="float: right; padding: 3px 0" @click="searchTree=(searchTree ? false:true)">搜索</el-button>
+            <el-button type="text" class="card-heard-btn" icon="icon-filesearch" title="搜索" @click="searchTree=(searchTree ? false:true)"></el-button>
+            <el-button type="text" class="card-heard-btn" icon="icon-reload" title="刷新" @click="getTree()"></el-button>
           </div>
           <el-input v-show="searchTree"
                     placeholder="输入关键字进行过滤"
@@ -25,14 +26,14 @@
           </el-tree>
         </el-card>
       </el-col>
-      <el-col :span="20">
+      <el-col :span="19">
         <div class="filter-container">
           <el-form :inline="true">
             <el-form-item label="名称">
               <el-input class="filter-item input-normal" v-model="listQuery.name"></el-input>
             </el-form-item>
             <el-form-item>
-              <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">搜索</el-button>
+              <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
               <el-button v-if="sys_area_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
             </el-form-item>
           </el-form>
@@ -79,9 +80,11 @@
           </el-table-column>
           <el-table-column align="center" label="操作" width="200">
             <template slot-scope="scope">
-              <el-button v-if="sys_area_edit" size="small" type="success" @click="handleEdit(scope.row)">编辑
+              <el-button v-if="sys_area_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
               </el-button>
-              <el-button v-if="sys_area_delete" size="small" type="danger" @click="handleDelete(scope.row)">删除
+              <el-button v-if="sys_area_lock" :icon="scope.row.status=='正常' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.status=='正常' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
+              </el-button>
+              <el-button v-if="sys_area_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
               </el-button>
             </template>
           </el-table-column>
@@ -140,7 +143,7 @@
 </template>
 
 <script>
-  import {fetchAreaTree, findArea, saveArea, removeArea, pageArea} from "./service";
+  import {fetchAreaTree, findArea, saveArea, removeArea, pageArea, lockArea} from "./service";
   import { mapGetters } from 'vuex'
   import {parseJsonItemForm, parseTreeData} from "@/util/util";
   import {dictCodes} from "@/api/dataSystem";
@@ -205,6 +208,7 @@
       this.getTree()
       this.getList()
       this.sys_area_edit = this.authorities.indexOf("sys_area_edit") !== -1;
+      this.sys_area_lock = this.authorities.indexOf("sys_area_lock") !== -1;
       this.sys_area_delete = this.authorities.indexOf("sys_area_delete") !== -1;
 
       dictCodes({codes:'sys_status,sys_area_type'}).then(rs => {
@@ -279,6 +283,13 @@
             this.dialogFormVisible = true;
           });
         }
+      },
+      handleLock(row) {
+        lockArea(row.id).then((data) => {
+          if (data.status == MSG_TYPE_SUCCESS) {
+            this.getList();
+          }
+        });
       },
       handleArea() {
         fetchAreaTree({extId: this.form.id}).then(response => {

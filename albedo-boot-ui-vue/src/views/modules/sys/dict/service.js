@@ -37,3 +37,9 @@ export function removeDict(id) {
     method: 'delete'
   })
 }
+export function lockDict(id) {
+  return request({
+    url: '/sys/dict/' + id,
+    method: 'put'
+  })
+}

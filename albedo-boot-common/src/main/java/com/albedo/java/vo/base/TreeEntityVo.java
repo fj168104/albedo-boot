@@ -1,5 +1,6 @@
 package com.albedo.java.vo.base;
 
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.annotation.BeanField;
 import lombok.Data;
 import org.hibernate.validator.constraints.NotBlank;

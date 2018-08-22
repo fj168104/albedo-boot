@@ -7,6 +7,14 @@
 
 import request from '@/router/axios'
 
+
+export function fetch${ClassName}Tree(query) {
+  return request({
+    url: '/${urlPrefix}/findTreeData',
+    method: 'get',
+    params: query
+  })
+}
 export function page${ClassName}(query) {
   return request({
     url: '/${urlPrefix}/',

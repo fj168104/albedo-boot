@@ -10,7 +10,7 @@
           <el-input class="filter-item input-normal" v-model="listQuery.email"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
+          <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查询</el-button>
           <el-button v-if="sys_user_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
         </el-form-item>
       </el-form>
@@ -67,11 +67,11 @@
 
       <el-table-column align="center" fixed="right" label="操作" width="200" v-if="sys_user_edit || sys_user_lock || sys_user_delete">
         <template slot-scope="scope">
-          <el-button v-if="sys_user_edit" size="mini" type="text" @click="handleEdit(scope.row)">编辑
+          <el-button v-if="sys_user_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
-          <el-button v-if="sys_user_lock" size="mini" type="text" @click="handleLock(scope.row)">锁定
+          <el-button v-if="sys_user_lock" :icon="scope.row.status=='正常' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.status=='正常' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
           </el-button>
-          <el-button v-if="sys_user_delete" size="mini" type="text" @click="handleDelete(scope.row)">删除
+          <el-button v-if="sys_user_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
           </el-button>
         </template>
       </el-table-column>

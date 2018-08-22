@@ -29,3 +29,9 @@ export function removeOrg(id) {
     method: 'delete'
   })
 }
+export function lockOrg(id) {
+  return request({
+    url: '/sys/org/' + id,
+    method: 'put'
+  })
+}

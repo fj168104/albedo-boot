@@ -13,7 +13,7 @@
           <el-input class="filter-item input-normal" v-model="listQuery.name"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">搜索</el-button>
+          <el-button class="filter-item" type="primary" v-waves icon="el-icon-search" @click="handleFilter">查询</el-button>
           <el-button class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit" v-if="sys_role_edit">添加
           </el-button>
         </el-form-item>
@@ -60,9 +60,11 @@
 
       <el-table-column label="操作" width="220">
         <template slot-scope="scope">
-          <el-button size="mini" type="success" v-if="sys_role_edit" @click="handleEdit(scope.row)">编辑
+          <el-button v-if="sys_role_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
-          <el-button size="mini" type="danger" v-if="sys_role_delete" @click="handleDelete(scope.row)">删除
+          <el-button v-if="sys_role_lock" :icon="scope.row.status=='正常' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.status=='正常' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
+          </el-button>
+          <el-button v-if="sys_role_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
           </el-button>
         </template>
       </el-table-column>
@@ -131,7 +133,7 @@
 </template>
 
 <script>
-  import {pageRole, findRole, saveRole, removeRole} from "./service";
+  import {pageRole, findRole, saveRole, removeRole, lockRole} from "./service";
   import {mapGetters} from "vuex";
   import waves from "@/directive/waves/index.js";
   import {fetchOrgTree} from "../org/service";
@@ -246,6 +248,7 @@
   created() {
     this.getList();
     this.sys_role_edit = this.authorities.indexOf("sys_role_edit") !== -1;
+    this.sys_role_lock = this.authorities.indexOf("sys_role_lock") !== -1;
     this.sys_role_delete = this.authorities.indexOf("sys_role_delete") !== -1;
 
     fetchModuleTree().then(rs => {
@@ -306,6 +309,13 @@
           }
         });
       }
+    },
+    handleLock(row) {
+      lockRole(row.id).then((data) => {
+        if (data.status == MSG_TYPE_SUCCESS) {
+          this.getList();
+        }
+      });
     },
     handleOrg() {
       fetchOrgTree().then(response => {

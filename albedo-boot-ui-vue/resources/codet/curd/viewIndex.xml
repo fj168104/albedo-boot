@@ -28,7 +28,11 @@
           </#if>
         </el-form-item>
       </#if>
-  </#list>
+      </#list>
+        <el-form-item>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+          <el-button v-if="${permissionPrefix}_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+        </el-form-item>
       </el-form>
     </div>
 
@@ -38,21 +42,21 @@
       <el-table-column align="center" label="${column.title}">
         <template slot-scope="scope">
         <#if column.simpleJavaField = 'status'>
-          <el-tag>{{scope.${column.simpleJavaField}}}</el-tag>
+          <el-tag>{{scope.row.${column.simpleJavaField}}}</el-tag>
         <#else>
-          <span>{{scope.${column.simpleJavaField}}}</span>
+          <span>{{scope.row.${column.simpleJavaField}}}</span>
          </#if>
         </template>
       </el-table-column>
       </#if>
       </#list>
-      <el-table-column align="center" fixed="right" label="操作" width="200" v-if="${permissionPrefix}_edit || ${permissionPrefix}_delete">
+      <el-table-column align="center" fixed="right" label="操作" width="200" v-if="${permissionPrefix}_edit || ${permissionPrefix}_lock || ${permissionPrefix}_delete">
         <template slot-scope="scope">
-          <el-button v-if="${permissionPrefix}_edit" type="text" @click="handleEdit(scope.row)">编辑
+          <el-button v-if="${permissionPrefix}_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
-          <el-button v-if="${permissionPrefix}_lock" type="text" @click="handleLock(scope.row)">编辑
+          <el-button v-if="${permissionPrefix}_lock" :icon="scope.row.status=='正常' ? 'icon-lock' : 'icon-unlock'" :title="scope.row.status=='正常' ? '锁定' : '解锁'" type="text" @click="handleLock(scope.row)">
           </el-button>
-          <el-button v-if="${permissionPrefix}_delete" type="text" @click="handleDelete(scope.row)">删除
+          <el-button v-if="${permissionPrefix}_delete" icon="icon-delete" title="删除" type="text" @click="handleDelete(scope.row)">
           </el-button>
         </template>
       </el-table-column>
@@ -96,7 +100,7 @@
 </template>
 
 <script>
-import { page${ClassName}, find${ClassName}, save${ClassName}, remove${ClassName} } from "./service";
+import { page${ClassName}, find${ClassName}, save${ClassName}, lock${ClassName}, remove${ClassName} } from "./service";
 import { mapGetters } from "vuex";
 import {DATA_STATUS} from "@/const/common";
 import {
@@ -133,14 +137,14 @@ export default {
       },
       <#list table.columnList as c>
         <#if c.dictType??&& c.dictType != ''>
-       ${c.javaFieldId}Options: undefined,
+      ${c.javaFieldId}Options: undefined,
         </#if>
        </#list>
       dialogFormVisible: false,
       dialogStatus: 'create',
       textMap: {
-        update: '编辑',
-        create: '创建'
+        update: '编辑${functionNameSimple}',
+        create: '创建${functionNameSimple}'
       },
       tableKey: 0
     };
@@ -202,6 +206,13 @@ export default {
           this.dialogFormVisible = true;
         });
       }
+    },
+    handleLock: function (row) {
+      lock${ClassName}(row.id).then((data) => {
+        if (data.status == MSG_TYPE_SUCCESS) {
+          this.getList();
+        }
+      });
     },
     cancel() {
       this.dialogFormVisible = false;

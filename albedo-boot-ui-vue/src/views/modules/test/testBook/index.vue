@@ -8,58 +8,62 @@
         <el-form-item label="名称">
               <el-input class="filter-item input-normal" v-model="listQuery.name"></el-input>
         </el-form-item>
+        <el-form-item>
+          <el-button class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">查询</el-button>
+          <el-button v-if="test_testBook_edit" class="filter-item" style="margin-left: 10px;" @click="handleEdit" type="primary" icon="edit">添加</el-button>
+        </el-form-item>
       </el-form>
     </div>
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="加载中..." border fit highlight-current-row style="width: 99%">
       <el-table-column align="center" label="标题">
         <template slot-scope="scope">
-          <span>{{scope.title}}</span>
+          <span>{{scope.row.title}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="作者">
         <template slot-scope="scope">
-          <span>{{scope.author}}</span>
+          <span>{{scope.row.author}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="名称">
         <template slot-scope="scope">
-          <span>{{scope.name}}</span>
+          <span>{{scope.row.name}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="邮箱">
         <template slot-scope="scope">
-          <span>{{scope.email}}</span>
+          <span>{{scope.row.email}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="手机">
         <template slot-scope="scope">
-          <span>{{scope.phone}}</span>
+          <span>{{scope.row.phone}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="activated_">
         <template slot-scope="scope">
-          <span>{{scope.activated}}</span>
+          <span>{{scope.row.activated}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="key">
         <template slot-scope="scope">
-          <span>{{scope.langKey}}</span>
+          <span>{{scope.row.langKey}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="activation_key">
         <template slot-scope="scope">
-          <span>{{scope.activationKey}}</span>
+          <span>{{scope.row.activationKey}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="reset_key">
         <template slot-scope="scope">
-          <span>{{scope.resetKey}}</span>
+          <span>{{scope.row.resetKey}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="reset_date">
         <template slot-scope="scope">
-          <span>{{scope.resetDate}}</span>
+          <span>{{scope.row.resetDate}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" fixed="right" label="操作" width="200" v-if="test_testBook_edit || test_testBook_delete">
@@ -82,71 +86,38 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form :model="form" ref="form" label-width="100px">
 
-        <el-form-item label="标题" prop="title" :rules="[
-          
-          {min: 0,max: 32,message: '长度在 0 到 32 个字符'},
-          ]">
+        <el-form-item label="标题" prop="title" :rules="[{min: 0,max: 32,message: '长度在 0 到 32 个字符'},]">
                 <el-input v-model="form.title"></el-input>
         </el-form-item>
-        <el-form-item label="作者" prop="author" :rules="[
-          {required: true,message: '请输入作者'},
-          {min: 0,max: 50,message: '长度在 0 到 50 个字符'},
-          ]">
+        <el-form-item label="作者" prop="author" :rules="[{required: true,message: '请输入作者'},{min: 0,max: 50,message: '长度在 0 到 50 个字符'},]">
                 <el-input v-model="form.author"></el-input>
         </el-form-item>
-        <el-form-item label="名称" prop="name" :rules="[
-          
-          {min: 0,max: 50,message: '长度在 0 到 50 个字符'},
-          ]">
+        <el-form-item label="名称" prop="name" :rules="[{min: 0,max: 50,message: '长度在 0 到 50 个字符'},]">
                 <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email" :rules="[
-          
-          {min: 0,max: 100,message: '长度在 0 到 100 个字符'},
-          {validator:validateUnique}]">
+        <el-form-item label="邮箱" prop="email" :rules="[{min: 0,max: 100,message: '长度在 0 到 100 个字符'},{validator:validateUnique}]">
                 <el-input v-model="form.email"></el-input>
         </el-form-item>
-        <el-form-item label="手机" prop="phone" :rules="[
-          
-          {min: 0,max: 32,message: '长度在 0 到 32 个字符'},
-          ]">
+        <el-form-item label="手机" prop="phone" :rules="[{min: 0,max: 32,message: '长度在 0 到 32 个字符'},]">
                 <el-input v-model="form.phone"></el-input>
         </el-form-item>
-        <el-form-item label="activated_" prop="activated" :rules="[
-          {required: true,message: '请输入activated_'},
-          {min: 0,max: 1,message: '长度在 0 到 1 个字符'},
-          ]">
+        <el-form-item label="activated_" prop="activated" :rules="[{required: true,message: '请输入activated_'},{min: 0,max: 1,message: '长度在 0 到 1 个字符'},]">
                 <el-input v-model="form.activated"></el-input>
         </el-form-item>
-        <el-form-item label="key" prop="langKey" :rules="[
-          
-          {min: 0,max: 5,message: '长度在 0 到 5 个字符'},
-          ]">
+        <el-form-item label="key" prop="langKey" :rules="[{min: 0,max: 5,message: '长度在 0 到 5 个字符'},]">
                 <el-input v-model="form.langKey"></el-input>
         </el-form-item>
-        <el-form-item label="activation_key" prop="activationKey" :rules="[
-          
-          {min: 0,max: 20,message: '长度在 0 到 20 个字符'},
-          ]">
+        <el-form-item label="activation_key" prop="activationKey" :rules="[{min: 0,max: 20,message: '长度在 0 到 20 个字符'},]">
                 <el-input v-model="form.activationKey"></el-input>
         </el-form-item>
-        <el-form-item label="reset_key" prop="resetKey" :rules="[
-          
-          {min: 0,max: 20,message: '长度在 0 到 20 个字符'},
-          ]">
+        <el-form-item label="reset_key" prop="resetKey" :rules="[{min: 0,max: 20,message: '长度在 0 到 20 个字符'},]">
                 <el-input v-model="form.resetKey"></el-input>
         </el-form-item>
-        <el-form-item label="reset_date" prop="resetDate" :rules="[
-          
-          
-          ]">
+        <el-form-item label="reset_date" prop="resetDate" :rules="[]">
               <el-date-picker v-model="form.resetDate" type="datetime" >
               </el-date-picker>
         </el-form-item>
-        <el-form-item label="description_" prop="description" :rules="[
-          
-          {min: 0,max: 255,message: '长度在 0 到 255 个字符'},
-          ]">
+        <el-form-item label="description_" prop="description" :rules="[{min: 0,max: 255,message: '长度在 0 到 255 个字符'},]">
                 <el-input type="textarea" v-model="form.description"></el-input>
         </el-form-item>
       </el-form>

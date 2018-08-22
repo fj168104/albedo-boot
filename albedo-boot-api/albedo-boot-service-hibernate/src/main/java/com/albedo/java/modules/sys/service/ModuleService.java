@@ -107,8 +107,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         List<TreeResult> mapList = Lists.newArrayList();
         for (Module e : moduleList) {
             TreeResult treeResult;
-            if ((PublicUtil.isEmpty(extId)
-                || PublicUtil.isEmpty(e.getParentIds()) || (PublicUtil.isNotEmpty(extId) && !extId.equals(e.getId()) && e.getParentIds() != null && e.getParentIds().indexOf("," + extId + ",") == -1))
+            if ((PublicUtil.isEmpty(extId)|| PublicUtil.isEmpty(e.getParentIds()) || (PublicUtil.isNotEmpty(extId) && !extId.equals(e.getId()) && e.getParentIds() != null && e.getParentIds().indexOf("," + extId + ",") == -1))
                 && (all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
 
                 if ("menu".equals(type) && !Module.TYPE_MENU.equals(e.getType())) {
@@ -161,7 +160,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         module.setRequestMethod(RequestMethod.GET);
         module.setIconCls("icon-right-square");
         module.setUrl(url + "list");
-        module.setComponent("views/modules/"+url+"index");
+        module.setComponent("views/modules"+url+"index");
         save(module);
 
         Module moduleView = new Module();

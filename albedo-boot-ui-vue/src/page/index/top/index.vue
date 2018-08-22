@@ -19,7 +19,7 @@
   <div class="top">
     <div class="top-button is-left">
       <div class="tags-breadcrumb">
-        <i class="icon-navicon tag-collapse" :class="[{ 'tag-collapse_right': isCollapse }]" @click="showCollapse"></i>
+        <i class="icon-menu tag-collapse" :class="[{ 'tag-collapse_right': isCollapse }]" @click="showCollapse"></i>
       </div>
     </div>
     <h1 class="top-title">

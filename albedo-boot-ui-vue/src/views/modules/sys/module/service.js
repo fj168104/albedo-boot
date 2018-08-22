@@ -14,7 +14,12 @@ export function fetchModuleMenu() {
   })
 }
 
-
+export function lockModule(id) {
+  return request({
+    url: '/sys/module/' + id,
+    method: 'put'
+  })
+}
 
 export function pageModule(query) {
   return request({

@@ -19,8 +19,6 @@ export const formatRoutes = (aMenu) => {
   console.log(aMenu)
   const aRouter = []
   aMenu.forEach(oMenu => {
-    console.log(oMenu.name)
-    console.log(oMenu)
     const {
       href,
       component,
@@ -40,8 +38,8 @@ export const formatRoutes = (aMenu) => {
           } else {
             componentPath = component
           }
-          console.log(componentPath);
-          if(validateNotNull(componentPath)){
+          console.log(componentPath)
+          if(validateNotNull(componentPath) && componentPath!='Layout'){
             require([`../${componentPath}.vue`], resolve)
           }
         },
@@ -73,12 +71,11 @@ export const parseTreeData = (dataList) => {
     }
   }
   dataList.forEach(item => {
-    if (item.id==1 || validateNull(item.pid)) {
+    if (item.id==1 || validateNull(item.pid)|| item.pid==0) {
       parseData(item)
       treeData.push(item)
     }
   })
-  console.log(treeData)
   return treeData;
 }
 
