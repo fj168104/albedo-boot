@@ -171,7 +171,7 @@ export function cardid(code) {
 
 export function isValidateMobile(rule, value, callback){
   if(validateNotNull(value)){
-    var rs = isvalidatemobile(value);
+    var rs = validateMobile(value);
     if(rs&&rs[0]){
       callback(new Error(rs[1]));
       return;
@@ -179,11 +179,10 @@ export function isValidateMobile(rule, value, callback){
   }
   callback()
 }
-
 /**
  * 判断手机号码是否正确
  */
-export function isvalidatemobile(phone) {
+export function validateMobile(phone) {
     let list = [];
     let result = true;
     let msg = '';
@@ -210,35 +209,46 @@ export function isvalidatemobile(phone) {
 /**
  * 判断姓名是否正确
  */
-export function validatename(name) {
+export function validateName(name) {
     var regName = /^[\u4e00-\u9fa5]{2,4}$/;
     if (!regName.test(name)) return false;
     return true;
 };
+
+export function isValidateDigits(rule, value, callback){
+  if(validateNotNull(value)){
+    var rs = validateDigits(value);
+    if(rs&&rs[0]){
+      callback(new Error(rs[1]));
+      return;
+    }
+  }
+  callback()
+}
 /**
  * 判断是否为整数
  */
-export function validatenum(num, type) {
-    let regName = /[^\d.]/g;
-    if (type == 1) {
-        if (!regName.test(num)) return false;
-    } else if (type == 2) {
-        regName = /[^\d]/g;
-        if (!regName.test(num)) return false;
-    }
-    return true;
+export function validateDigits(num) {
+  let  regName = /[^\d]/g;
+  if (!regName.test(num)) return false;
+  return true;
 };
+export function isValidateNumber(rule, value, callback){
+  if(validateNotNull(value)){
+    var rs = validateNumber(value);
+    if(rs&&rs[0]){
+      callback(new Error(rs[1]));
+      return;
+    }
+  }
+  callback()
+}
 /**
  * 判断是否为小数
  */
-export function validatenumord(num, type) {
+export function validateNumber(num) {
     let regName = /[^\d.]/g;
-    if (type == 1) {
-        if (!regName.test(num)) return false;
-    } else if (type == 2) {
-        regName = /[^\d.]/g;
-        if (!regName.test(num)) return false;
-    }
+    if (!regName.test(num)) return false;
     return true;
 };
 /**

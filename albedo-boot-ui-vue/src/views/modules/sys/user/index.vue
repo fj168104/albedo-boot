@@ -109,7 +109,6 @@
           {validator:validateUnique}
         ]">
           <el-input v-model="form.loginId" placeholder="请输用户名"></el-input>
-          ddd
         </el-form-item>
 
         <el-form-item label="密码" prop="password" :rules="[{validator: validatePass}]">
@@ -218,7 +217,9 @@ export default {
         email: undefined,
         description: undefined
       },
-      validateUnique: (rule, value, callback) => {
+      validateUnique: (rule, value, callback,test) => {
+        console.log(test)
+        console.log(rule)
         isValidateUnique(rule, value, callback, '/sys/user/checkByProperty?id='+toStr(this.form.id))
       },
       validatePhone: (rule, value, callback) => {

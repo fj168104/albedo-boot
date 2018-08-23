@@ -111,7 +111,9 @@
           <input type="hidden" v-model="form.parentId" />
         </el-form-item>
         <#elseif c.isEdit?? && c.isEdit == 1 && (c.isNotBaseTreeField || c.simpleJavaField == 'name' || c.simpleJavaField == 'sort') && (c.isNotBaseField || c.simpleJavaField == 'description')>
-        <el-form-item label="${c.title}" prop="${c.javaFieldId}" :rules="[<#if !c.nullable>{required: true,message: '请输入${c.title}'},</#if><#if c.dataLength != "0">{min: 0,max: ${c.dataLength},message: '长度在 0 到 ${c.dataLength} 个字符'},</#if><#if c.unique && !c.pk>{validator:validateUnique}</#if>]">
+        ,
+
+        <el-form-item label="${c.title}" prop="${c.javaFieldId}" :rules="[<#if !c.nullable>{required: true,message: '请输入${c.title}'},</#if><#if c.javaType == "Long" || c.javaType == "Integer">{validator:validateDigits},</#if><#if c.javaType == "java.math.BigDecimal" || c.javaType == "Double">{ validator:validateNumber},</#if><#if c.dataLength != "0">{min: 0,max: ${c.dataLength},message: '长度在 0 到 ${c.dataLength} 个字符'},</#if><#if c.unique && !c.pk>{validator:validateUnique}</#if>]">
             <#if c.showType == "input">
                 <el-input v-model="form.${c.javaFieldId}"></el-input>
             <#elseif c.showType == "textarea">
@@ -143,7 +145,7 @@
   import { mapGetters } from 'vuex'
   import {parseJsonItemForm, parseTreeData} from "@/util/util";
   import {dictCodes} from "@/api/dataSystem";
-  import {isValidateUnique, objectToString, toStr, validateNotNull} from "@/util/validate";
+  import {isValidateUnique, isValidateNumber, isValidateDigits, objectToString, toStr, validateNotNull} from "@/util/validate";
   import {MSG_TYPE_SUCCESS} from "@/const/common";
   export default {
     name: 'module',
@@ -176,8 +178,14 @@
         </#if>
         </#list>
         },
-        validateUnique: (rule, value, callback) => {
+        validate: validateUnique(rule, value, callback) => {
           isValidateUnique(rule, value, callback, '/${urlPrefix}/checkByProperty?id='+toStr(this.form.id))
+        },
+        validate: validateNumber(rule, value, callback) => {
+          isValidateNumber(rule, value, callback)
+        },
+        validate: validateDigits(rule, value, callback) => {
+          isValidateDigits(rule, value, callback)
         },
         dialogStatus: 'create',
         textMap: {
