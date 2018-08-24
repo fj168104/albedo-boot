@@ -168,13 +168,15 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     }
 
 
-    public void changePassword(String loginId, String newPassword) {
+    public void changePassword(String loginId, String newPassword, String avatar) {
         Optional.of(loginId)
             .flatMap(repository::findOneByLoginId)
             .ifPresent(user -> {
                 user.setPassword(newPassword);
+                user.setAvatar(avatar);
                 cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLoginId());
                 log.debug("Changed password for User: {}", user);
+                save(user);
             });
     }
 

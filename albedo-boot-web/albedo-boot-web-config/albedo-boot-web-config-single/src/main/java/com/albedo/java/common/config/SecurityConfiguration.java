@@ -108,6 +108,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         SecurityConstants.authorize = new String[authorizes.size()];
         authorizes.toArray(SecurityConstants.authorize);
 
+        String adminPath = albedoProperties.getAdminPath();
+
+        String[] permissAll = new String[SecurityConstants.authorizePermitAll.length+SecurityConstants.authorizeAdminPermitAll.length];
+
+        for (int i = 0; i < SecurityConstants.authorizePermitAll.length; i++) {
+            permissAll[i] = SecurityConstants.authorizePermitAll[i];
+        }
+        for (int i = SecurityConstants.authorizePermitAll.length,j=0; i < permissAll.length; i++,j++) {
+            permissAll[i] = adminPath+SecurityConstants.authorizeAdminPermitAll[j];
+        }
+
         http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
             .and()
@@ -124,7 +135,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers(albedoProperties.getAdminPath(SecurityConstants.loginUrl)).permitAll()
             .antMatchers(albedoProperties.getAdminPath(SecurityConstants.authLogin)).permitAll()
             .antMatchers(albedoProperties.getAdminPath(SecurityConstants.logoutUrl)).permitAll()
-            .antMatchers(SecurityConstants.authorizePermitAll).permitAll()
+            .antMatchers(permissAll).permitAll()
             .antMatchers(SecurityConstants.authorize).authenticated()
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override

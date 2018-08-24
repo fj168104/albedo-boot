@@ -37,5 +37,12 @@ export function lockUser(id) {
   })
 }
 
+export function changePassword(obj) {
+  return request({
+    url: '/account/change-password',
+    method: 'post',
+    data: obj
+  })
+}
 
 

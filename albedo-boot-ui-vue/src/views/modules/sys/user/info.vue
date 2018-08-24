@@ -4,32 +4,38 @@
     <el-row>
       <el-col :span="12">
         <div class="grid-content bg-purple">
-          <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-width="100px" class="demo-ruleForm">
-            <el-form-item label="用户名" prop="username">
-              <el-input type="text" :value="userInfo.username" disabled></el-input>
-            </el-form-item>
-            <el-form-item label="原密码" prop="password">
-              <el-input type="password" v-model="ruleForm2.password" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="密码" prop="newpassword1">
-              <el-input type="password" v-model="ruleForm2.newpassword1" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="确认密码" prop="newpassword2">
-              <el-input type="password" v-model="ruleForm2.newpassword2" auto-complete="off" ></el-input>
-            </el-form-item>
-            <el-form-item label="手机号" prop="phonecropUploadSuccess">
-              <el-input v-model="ruleForm2.phone" placeholder="验证码登录使用"></el-input>
-            </el-form-item>
+          <el-form :model="form" ref="form" label-width="100px" class="demo-ruleForm">
             <el-form-item label="头像">
-              <my-upload field="uploadFile" @crop-upload-success="cropUploadSuccess" v-model="show" :width="300" :height="300" url="/file/upload" :headers="headers" img-format="png"></my-upload>
-              <img :src="ruleForm2.avatar">
-              <el-button type="primary" @click="toggleShow" size="mini">选择
-                <i class="el-icon-upload el-icon--right"></i>
-              </el-button>
+              <el-upload
+                class="avatar-uploader"
+                :headers="headers"
+                name="uploadFile"
+                :action="ctx+'/file/upload'"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :before-upload="beforeAvatarUpload">
+                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
             </el-form-item>
+            <el-form-item label="用户名" prop="username">
+              <el-input type="text" :value="userInfo.loginId" disabled></el-input>
+            </el-form-item>
+            <el-form-item label="原密码" prop="oldPassword" :rules="[{validator: validatePass}]">
+              <el-input type="password" v-model="form.oldPassword" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="newPassword" :rules="[{validator: validatePass}]">
+              <el-input type="password" v-model="form.newPassword" auto-complete="off"></el-input>
+            </el-form-item>
+            <el-form-item label="确认密码" prop="confirmPassword" :rules="[{validator: validateConfirmPass}]">
+              <el-input type="password" v-model="form.confirmPassword" auto-complete="off" ></el-input>
+            </el-form-item>
+            <!--<el-form-item label="手机号" prop="phonecropUploadSuccess">-->
+              <!--<el-input v-model="form.phone" placeholder="验证码登录使用"></el-input>-->
+            <!--</el-form-item>-->
             <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-              <el-button @click="resetForm('ruleForm2')">重置</el-button>
+              <el-button type="primary" @click="submitForm('form')">提交</el-button>
+              <el-button @click="resetForm('form')">重置</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -44,62 +50,59 @@ import { mapState } from "vuex";
 import myUpload from "vue-image-crop-upload";
 import { getToken } from "@/util/auth";
 import ElFormItem from "element-ui/packages/form/src/form-item.vue";
-import request from "@/router/axios";
+import {MSG_TYPE_SUCCESS} from "@/const/common";
+import {isValidateMobile, validateNull} from "@/util/validate";
+import {getCtxFile} from "@/util/util";
+import {changePassword} from "./service";
+import {baseUrl} from "@/config/env";
 
 export default {
   components: {
     ElFormItem,
     'my-upload': myUpload
   },
-  data() {
-    var validatePass = (rule, value, callback) => {
-      if (this.ruleForm2.password !== '') {
-        if (value === '') {
-          callback(new Error('请输入密码'))
-        } else if (value.length < 6) {
-          callback(new Error('密码不能小于6位'))
-        } else {
-          callback()
-        }
-      } else {
-        callback()
-      }
-    }
-    var validatePass2 = (rule, value, callback) => {
-      if (this.ruleForm2.password !== '') {
-        if (value === '') {
-          callback(new Error('请再次输入密码'))
-        } else if (value !== this.ruleForm2.newpassword1) {
-          callback(new Error('两次输入密码不一致!'))
-        } else {
-          callback()
-        }
-      } else {
-        callback()
-      }
-    }
+  data: function () {
     return {
+      ctx: baseUrl,
+      headers: {
+        Authorization: getToken()
+      },
       fileList: [],
       show: false,
-      headers: {
-        Authorization: 'Bearer ' + getToken()
+      imageUrl: undefined,
+      form: {
+        oldPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+        avatar: ''
       },
-      ruleForm2: {
-        password: '',
-        newpassword1: '',
-        newpassword2: '',
-        avatar: '',
-        phone: ''
+      validatePhone: (rule, value, callback) => {
+        isValidateMobile(rule, value, callback)
       },
-      rules2: {
-        newpassword1: [{ validator: validatePass, trigger: 'blur' }],
-        newpassword2: [{ validator: validatePass2, trigger: 'blur' }]
+      validatePass: (rule, value, callback) => {
+        console.log(value)
+        if (value === '') {
+          callback(new Error('请输入密码'));
+          return;
+        }
+        callback();
+      },
+      validateConfirmPass: (rule, value, callback) => {
+        console.log(this.form.newPassword)
+        if (value === '') {
+          callback(new Error('请再次输入密码'));
+          return;
+        } else if (value !== this.form.newPassword) {
+          callback(new Error('两次输入密码不一致!'));
+          return;
+        }
+        callback();
       }
     }
   },
   created() {
-    this.ruleForm2.avatar = this.userInfo.avatar
-    this.ruleForm2.phone = this.userInfo.phone
+    this.form.avatar = this.userInfo.avatar
+    this.imageUrl = getCtxFile(this.form.avatar);
   },
   computed: {
     ...mapState({
@@ -107,56 +110,53 @@ export default {
     })
   },
   methods: {
+    handleAvatarSuccess(rs, file) {
+      console.log(rs)
+      console.log(file)
+      if(rs.status == MSG_TYPE_SUCCESS){
+        this.imageUrl = getCtxFile(rs.data[0].id);
+        this.form.avatar=rs.data[0].id;
+      }
+    },
+    beforeAvatarUpload(file) {
+      console.log(file)
+        const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG/PNG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+    },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          request({
-            url: '/sys/user/editInfo',
-            method: 'put',
-            data: this.ruleForm2
-          })
-            .then(response => {
-              if (response.data.data) {
-                this.userInfo.phone = this.ruleForm2.phone
-                this.userInfo.avatar = this.ruleForm2.avatar
-                this.$notify({
-                  title: '成功',
-                  message: '修改成功',
-                  type: 'success',
-                  duration: 2000
-                });
-                // 修改密码之后强制重新登录
-                if (this.ruleForm2.newpassword1 !== '') {
-                  this.$store.dispatch('LogOut').then(() => {
-                    location.reload() // 为了重新实例化vue-router对象 避免bug
-                  });
-                } else {
-                  this.$router.push({ path: '/' })
+          changePassword(this.form).then((data) => {
+            if (data.status == MSG_TYPE_SUCCESS) {
+              this.$confirm(
+                "修改成功，建议您重新登录",
+                "提示",
+                {
+                  confirmButtonText: "确定",
+                  // cancelButtonText: "取消",
+                  type: "warning"
                 }
-              } else {
-                this.$notify({
-                  title: '失败',
-                  message: response.data.msg,
-                  type: 'error',
-                  duration: 2000
-                })
-              }
-            })
-            .catch(() => {
-              this.$notify({
-                title: '失败',
-                message: '修改失败',
-                type: 'error',
-                duration: 2000
+              ).then(() => {
+                this.$store.dispatch('LogOut').then(() => {
+                  location.reload() // 为了重新实例化vue-router对象 避免bug
+                });
               });
-            });
+            }
+          });
         } else {
           return false;
         }
       });
     },
     resetForm(formName) {
-      console.log(formName)
       this.$refs[formName].resetFields()
     },
     toggleShow() {
@@ -168,8 +168,10 @@ export default {
      * [param] jsonData   服务器返回数据，已进行json转码
      * [param] field
      */
-    cropUploadSuccess(jsonData, field) {
-      this.$store.commit('SET_AVATAR', jsonData.filename);
+    cropUploadSuccess(rs, field) {
+      if(rs.status == MSG_TYPE_SUCCESS){
+        this.$store.commit('SET_AVATAR', rs.data[0].id);
+      }
     }
   }
 };

@@ -3418,7 +3418,7 @@
     },
     computed: {
       ...mapGetters([
-        'authorities'
+        "menu",  "authorities"
       ])
     },
     methods: {
@@ -3456,7 +3456,6 @@
         this.form.parentId = data.id;
         this.form.parentName = data.label;
       },
-
       handleFilter() {
         this.listQuery.page = 1;
         this.getList();
@@ -3507,8 +3506,8 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          removeModule(row.id).then(() => {
-            if (data.status == MSG_TYPE_SUCCESS) {
+          removeModule(row.id).then((rs) => {
+            if (rs.status == MSG_TYPE_SUCCESS) {
               this.getList();
             }
           })

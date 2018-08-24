@@ -190,7 +190,6 @@ const user = {
           //     if (!validateNull(child.component)) child.path = `${ele.path}/${child.path}`
           //   });
           // });
-          console.log(menusData)
           commit('SET_MENU', menusData)
           resolve(menusData)
         })
@@ -216,6 +215,14 @@ const user = {
     },
     SET_USER_INFO: (state, userInfo) => {
       state.userInfo = userInfo
+      setStore({
+        name: 'userInfo',
+        content: state.userInfo,
+        type: 'session'
+      })
+    },
+    SET_AVATAR: (state, avatar) => {
+      state.userInfo.avatar = avatar
       setStore({
         name: 'userInfo',
         content: state.userInfo,

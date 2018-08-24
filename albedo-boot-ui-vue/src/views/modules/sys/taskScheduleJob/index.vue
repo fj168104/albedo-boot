@@ -63,7 +63,7 @@
           <span>{{scope.row.methodParams}}</span>
         </template>
       </el-table-column>
-      <el-table-column align="center" fixed="right" label="操作" width="200" v-if="sys_taskScheduleJob_edit || sys_taskScheduleJob_delete">
+      <el-table-column align="center" fixed="right" label="操作" v-if="sys_taskScheduleJob_edit || sys_taskScheduleJob_delete">
         <template slot-scope="scope">
           <el-button v-if="sys_taskScheduleJob_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>

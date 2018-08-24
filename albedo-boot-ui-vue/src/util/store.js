@@ -31,7 +31,6 @@ export const getStore = (params) => {
   let obj = {}
   let content
   obj = window.localStorage.getItem(name)
-  console.log(obj)
   if (validateNull(obj)) obj = window.sessionStorage.getItem(name)
   if (validateNull(obj)) return
   obj = JSON.parse(obj)

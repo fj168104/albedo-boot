@@ -12,11 +12,10 @@ export const initMenu = (router, menu) => {
   if (menu.length === 0) {
     return
   }
-  router.addRoutes(formatRoutes(menu))
+  router.addRoutes(formatRoutes(menu, false))
 }
 
-export const formatRoutes = (aMenu) => {
-  console.log(aMenu)
+export const formatRoutes = (aMenu, isChild) => {
   const aRouter = []
   aMenu.forEach(oMenu => {
     const {
@@ -26,33 +25,36 @@ export const formatRoutes = (aMenu) => {
       iconCls,
       children
     } = oMenu
+    let componentPath = component, nullChild = validateNull(children)
+    let notNullPath = validateNotNull(componentPath) && componentPath!='Layout'
     // if (!validateNull(component)) {
-      let filePath;
       const oRouter = {
-        path: href,
+        path: nullChild && notNullPath && !isChild ? "" : href,
         component(resolve) {
-          let componentPath = ''
-          if (validateNull(href)) {
+          if ((validateNull(href) || nullChild) && !isChild) {
             require(['../page/index'], resolve)
             return
-          } else {
-            componentPath = component
           }
-          console.log(componentPath)
-          if(validateNotNull(componentPath) && componentPath!='Layout'){
+          if(notNullPath){
             require([`../${componentPath}.vue`], resolve)
           }
         },
-        name: name,
+        name: nullChild && notNullPath && !isChild ? undefined : name,
         icon: iconCls,
-        children: validateNull(children) ? [] : formatRoutes(children)
+        children: nullChild ? notNullPath && !isChild ? [{
+            path: href,
+            name: name,
+            component(resolve) {
+              require([`../${componentPath}.vue`], resolve)
+            }
+          }] : [] : formatRoutes(children, true)
       }
-      aRouter.push(oRouter)
+      if(oRouter.children.length>0 || notNullPath){
+        aRouter.push(oRouter)
+      }
     // }
 
   })
-  console.log("aRouter:")
-  console.log(aRouter)
   return aRouter
 }
 
@@ -212,6 +214,7 @@ export const resolveUrlPath = (url, name) => {
   } else {
     reqUrl = `${reqUrl}`
   }
+  console.log(reqUrl)
   return reqUrl
 }
 
@@ -356,4 +359,8 @@ export function formatDate(date,fmt){
 
 function padLeftZero(str){
   return ('00'+str).substr(str.length);
+}
+
+export function getCtxFile(path){
+  return validateNull(path) ? '' : (baseUrl+'/file/get/'+path)
 }

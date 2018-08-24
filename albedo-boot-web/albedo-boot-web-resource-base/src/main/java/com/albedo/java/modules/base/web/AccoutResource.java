@@ -152,7 +152,8 @@ public class AccoutResource extends BaseResource {
         Assert.assertIsTrue(passwordEncoder.matches(passwordChangeVo.getOldPassword(), SecurityUtil.getCurrentUser().getPassword()),
             "输入原密码有误");
 
-        userService.changePassword(SecurityAuthUtil.getCurrentUserLogin(), passwordEncoder.encode(passwordChangeVo.getNewPassword()));
+        userService.changePassword(SecurityAuthUtil.getCurrentUserLogin(),
+            passwordEncoder.encode(passwordChangeVo.getNewPassword()), passwordChangeVo.getAvatar());
         return ResultBuilder.buildOk("修改成功");
     }
 

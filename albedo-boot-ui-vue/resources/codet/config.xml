@@ -3,8 +3,13 @@
     <!-- 生成分类 -->
     <category>
       <category val="curd" name="增删改查（单表）">
-        <template>category-ref:curd_modal</template>
+        <template>category-ref:curd_back</template>
         <template>category-ref:curd_front</template>
+      </category>
+      <category val="curd_back" name="增删改查（单表）- 后端">
+        <template>curd/resource.xml</template>
+        <template>curd/resourceIntTest.xml</template>
+        <template>category-ref:service</template>
       </category>
         <category val="curd_front" name="增删改查（单表）- 前端">
             <template>curd/viewIndex.xml</template>
@@ -40,21 +45,19 @@
             <!--<template>entity/entityId.xml</template>-->
             <template>entity/entity.xml</template>
         </category>
-        <!--<category val="treeTable" name="树结构表（一体）">-->
-            <!--<template>category-ref:treeTable_modal</template>-->
-            <!--<template>treetable/viewFormComponentHtml.xml</template>-->
-            <!--<template>treetable/viewFormComponentTs.xml</template>-->
-        <!--</category>-->
-        <category val="treeTable_modal" name="树结构表（一体）">
-            <template>treetable/resource.xml</template>
-            <template>treetable/resourceIntTest.xml</template>
-            <template>treetable/repository.xml</template>
-            <template>treetable/service.xml</template>
-            <template>treetable/vo/entityVo.xml</template>
-            <template>treetable/entity.xml</template>
-            <template>category-ref:treeTable_front</template>
-        </category>
+      <category val="treeTable" name="树结构表（一体）">
+        <template>category-ref:treeTable_back</template>
+        <template>category-ref:treeTable_front</template>
+      </category>
 
+      <category val="treeTable_back" name="树结构表（一体）- 前端">
+        <template>treetable/resource.xml</template>
+        <template>treetable/resourceIntTest.xml</template>
+        <template>treetable/repository.xml</template>
+        <template>treetable/service.xml</template>
+        <template>treetable/vo/entityVo.xml</template>
+        <template>treetable/entity.xml</template>
+      </category>
       <category val="treeTable_front" name="树结构表（一体）- 前端">
         <template>treetable/viewIndex.xml</template>
         <template>treetable/viewService.xml</template>

@@ -19,6 +19,8 @@ import javax.validation.constraints.Size;
 public class PasswordChangeVo {
 
     @NotBlank
+    private String avatar;
+    @NotBlank
     private String oldPassword;
 
     @NotBlank

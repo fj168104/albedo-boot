@@ -8,9 +8,11 @@ public class SecurityConstants {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    public static String[] authorizePermitAll = {"/management/**",
-        "/profile-info","/v2/api-docs/**", "/swagger-resources/configuration/ui", "/swagger-ui/index.html"};
 
+    public static String[] authorizePermitAll = {"/management/health",
+        "/profile-info",
+        "/v2/api-docs/**", "/swagger-resources/configuration/ui", "/swagger-ui/index.html"};
+    public static String[] authorizeAdminPermitAll = {"/file/get/**"};
     public static String[] authorize = {};
     /**
      * 线程变量绑定

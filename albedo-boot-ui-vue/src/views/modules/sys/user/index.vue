@@ -27,7 +27,7 @@
       <el-table-column align="center" label="用户名">
         <template slot-scope="scope">
           <span>
-            <img v-if="scope.row.avatar" class="user-avatar" style="width: 20px; height: 20px; border-radius: 50%;" :src="scope.row.avatar+'?imageView2/1/w/20/h/20'">
+            <img v-if="scope.row.avatar" class="user-avatar" style="width: 20px; height: 20px; border-radius: 50%;" :src="getFilePath(scope.row.avatar)">
             {{scope.row.loginId}}
           </span>
         </template>
@@ -65,7 +65,7 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" fixed="right" label="操作" width="200" v-if="sys_user_edit || sys_user_lock || sys_user_delete">
+      <el-table-column align="center" fixed="right" label="操作" v-if="sys_user_edit || sys_user_lock || sys_user_delete">
         <template slot-scope="scope">
           <el-button v-if="sys_user_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
@@ -93,7 +93,8 @@
         <el-form-item label="头像" prop="avatar">
           <my-upload field="uploadFile" @crop-upload-success="cropUploadSuccess" v-model="showUpload"
                      :width="300" :height="300" :url="ctx+'/file/upload'" :headers="headers" img-format="png"></my-upload>
-          <img :src="form.avatar" />
+          <img :src="getFilePath(form.avatar)" class="header-img" />
+          <input type="hidden" v-model="form.avatar" />
           <el-button type="primary" @click="showUpload = !showUpload" size="mini">选择
             <i class="el-icon-upload el-icon--right"></i>
           </el-button>
@@ -171,7 +172,7 @@ import {
 } from "@/util/validate";
 import {dictCodes} from "@/api/dataSystem";
 import {MSG_TYPE_SUCCESS} from "@/const/common";
-import {parseJsonItemForm, parseTreeData} from "@/util/util";
+import {parseJsonItemForm, parseTreeData, getCtxFile} from "@/util/util";
 import {baseUrl} from "@/config/env";
 import {getToken} from "@/util/auth";
 
@@ -216,6 +217,9 @@ export default {
         phone: undefined,
         email: undefined,
         description: undefined
+      },
+      getFilePath(path){
+        return getCtxFile(path)
       },
       validateUnique: (rule, value, callback,test) => {
         console.log(test)
@@ -395,9 +399,9 @@ export default {
      * [param] field
      */
     cropUploadSuccess(rs, field) {
-      console.log(rs)
-      this.$store.commit('SET_AVATAR', rs.data);
-      this.form.avatar=rs.data;
+      if(rs.status == MSG_TYPE_SUCCESS){
+        this.form.avatar=rs.data[0].id;
+      }
     }
   }
 };

@@ -41,8 +41,8 @@
           <i :class="isFullScren?'icon-tuichuquanping':'icon-quanping'" @click="handleScreen"></i>
         </span>
       </el-tooltip>
-      <el-tooltip class="item" effect="dark" content="用户头像" placement="bottom">
-        <img class="top-userImg" :src="userInfo.avatar">
+      <el-tooltip class="item" effect="dark" :content="'欢迎'+userInfo.loginId" placement="bottom">
+        <img class="top-userImg" :src="getFilePath(userInfo.avatar)">
       </el-tooltip>
       <el-dropdown>
         <span class="el-dropdown-link">
@@ -51,7 +51,7 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>
-            <router-link to="/">首页</router-link>
+            <router-link to="/wel/index">首页</router-link>
           </el-dropdown-item>
           <el-dropdown-item>
             <router-link to="/info/index">修改信息</router-link>
@@ -65,7 +65,7 @@
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
-import { fullscreenToggel, listenfullscreen } from "@/util/util";
+import { fullscreenToggel, listenfullscreen, getCtxFile } from "@/util/util";
 import topLock from "./top-lock";
 import topMenu from "./top-menu";
 import topTheme from "./top-theme";
@@ -98,6 +98,9 @@ export default {
     },
     clearLog() {
       this.$store.commit("CLEAR_ALL_LOG");
+    },
+    getFilePath(path){
+      return getCtxFile(path)
     },
     logout() {
       this.$confirm("是否退出系统, 是否继续?", "提示", {

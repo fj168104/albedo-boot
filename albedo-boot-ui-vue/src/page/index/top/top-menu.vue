@@ -40,16 +40,16 @@ export default {
           href: "/wel/index",
           parentId: 0
         },
-        {
-          label: "文档",
-          href: "https://www.kancloud.cn/lengleng/pig-guide/550709",
-          parentId: 1
-        },
-        {
-          label: "crud实例",
-          href: "/crud/index",
-          parentId: 2
-        }
+        // {
+        //   label: "文档",
+        //   href: "https://www.kancloud.cn/lengleng/pig-guide/550709",
+        //   parentId: 1
+        // },
+        // {
+        //   label: "crud实例",
+        //   href: "/crud/index",
+        //   parentId: 2
+        // }
       ]
     };
   },

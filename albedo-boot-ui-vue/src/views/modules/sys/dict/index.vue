@@ -77,7 +77,7 @@
               <span>{{scope.row.lastModifiedDate}}</span>
             </template>
           </el-table-column>
-          <el-table-column align="center" label="操作" width="200">
+          <el-table-column align="center" label="操作">
             <template slot-scope="scope">
               <el-button v-if="sys_dict_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
               </el-button>

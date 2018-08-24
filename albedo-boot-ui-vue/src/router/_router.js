@@ -37,15 +37,6 @@ export default [{
     component: _import('crud/index', 'views')
   }]
 }, {
-  path: '/info',
-  component: Layout,
-  redirect: '/info/index',
-  children: [{
-    path: 'index',
-    name: '修改信息',
-    component: _import('modules/sys/user/info', 'views')
-  }]
-}, {
   path: '/404',
   component: _import('error-page/404', 'components'),
   name: '404'

@@ -50,7 +50,7 @@
       </el-table-column>
       </#if>
       </#list>
-      <el-table-column align="center" fixed="right" label="操作" width="200" v-if="${permissionPrefix}_edit || ${permissionPrefix}_lock || ${permissionPrefix}_delete">
+      <el-table-column align="center" fixed="right" label="操作" v-if="${permissionPrefix}_edit || ${permissionPrefix}_lock || ${permissionPrefix}_delete">
         <template slot-scope="scope">
           <el-button v-if="${permissionPrefix}_edit" icon="icon-edit" title="编辑" type="text" @click="handleEdit(scope.row)">
           </el-button>
@@ -128,15 +128,15 @@ export default {
         </#if>
         </#list>
       },
-      validate: validateUnique(rule, value, callback) => {
-        isValidateUnique(rule, value, callback, '/${urlPrefix}/checkByProperty?id='+toStr(this.form.id))
-      },
-      validate: validateNumber(rule, value, callback) => {
-        isValidateNumber(rule, value, callback)
-      },
-      validate: validateDigits(rule, value, callback) => {
-        isValidateDigits(rule, value, callback)
-      },
+      validateUnique: (rule, value, callback) => {
+          isValidateUnique(rule, value, callback, '/test/testTree/checkByProperty?id='+toStr(this.form.id))
+        },
+        validateNumber: (rule, value, callback) => {
+          isValidateNumber(rule, value, callback)
+        },
+        validateDigits: (rule, value, callback) => {
+          isValidateDigits(rule, value, callback)
+        },
       <#list table.columnList as c>
         <#if c.dictType??&& c.dictType != ''>
       ${c.javaFieldId}Options: undefined,

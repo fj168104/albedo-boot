@@ -31,5 +31,5 @@ export default new VueRouter({
       }
     }
   },
-  routes: [].concat(...formatRoutes(store.state.user.menu), baseRouter)
+  routes: [].concat(...formatRoutes(store.state.user.menu, false), baseRouter)
 })

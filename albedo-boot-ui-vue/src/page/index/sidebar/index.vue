@@ -38,11 +38,13 @@ export default {
     return {};
   },
   created() {
-    if (validateNull(this.menu)) {
+    // console.log(this.menu)
+    // if (validateNull(this.menu)) {
       this.$store.dispatch("GetMenu").then(data => {
-        initMenu(this.$router, data);
+        // initMenu(this.$router, data);
       });
-    }
+    // }
+    console.log(this.$router)
   },
   computed: {
     ...mapGetters(["menu", "tag", "isCollapse"]),
