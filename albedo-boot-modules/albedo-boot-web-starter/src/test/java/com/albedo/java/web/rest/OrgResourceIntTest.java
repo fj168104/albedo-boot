@@ -387,7 +387,7 @@ public class OrgResourceIntTest {
         long databaseSizeBeforeUpdate = orgService.findCount();
 
         // Update the org
-        Org updatedOrg = orgService.findOne(org.getId());
+        Org updatedOrg = orgService.findOneById(org.getId());
         // Disconnect from session so that the updates on updatedOrg are not directly saved in db
 //        em.detach(updatedOrg);
         Reflections.updateObj(updatedOrg, Lists.newArrayList(

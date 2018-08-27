@@ -87,7 +87,8 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     public void save(UserVo userVo) {
         User user = copyVoToBean(userVo);
         if (user.getLangKey() == null) {
-            user.setLangKey("zh-cn"); // default language
+            // default language
+            user.setLangKey("zh-cn");
         } else {
             user.setLangKey(user.getLangKey());
         }
@@ -110,7 +111,7 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public UserVo getUserWithAuthorities(String id) {
-        User user = repository.findOne(id);
+        User user = repository.findOneById(id);
         user.getRoles().size(); // eagerly load the association
         return copyBeanToVo(user);
     }
@@ -154,10 +155,11 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public UserVo findResult(String id) {
-        User user = repository.findOne(id);
+        User user = repository.findOneById(id);
         return copyBeanToVo(user);
     }
 
+    @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel findPage(PageModel<User> pm, List<QueryCondition> queryConditions) {
         SpecificationDetail<User> spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(), queryConditions,
@@ -183,41 +185,30 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     @Override
     public void lockOrUnLock(List<String> idList) {
         super.lockOrUnLock(idList);
-        repository.findAll(idList).forEach(user ->
+        repository.findAllById(idList).forEach(user ->
             cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLoginId()));
     }
 
     @Override
     public void delete(List<String> idList) {
         super.delete(idList);
-        repository.findAll(idList).forEach(user ->
+        repository.findAllById(idList).forEach(user ->
             cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLoginId()));
     }
 
     public Optional<User> findOneByLoginId(String loginId) {
-        Optional<User> user = null;
-        try {
-            user = repository.findOneByLoginId(loginId);
-            if(PublicUtil.isEmpty(user.get().getId())){
-                cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(loginId);
-                user = repository.findOneByLoginId(loginId);
-            }
-        }catch (Exception e){
-            log.error("{}",e);
-            cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(loginId);
-            user = repository.findOneByLoginId(loginId);
-        }
-        return user;
+        return repository.findOneByLoginId(loginId);
     }
 
     public void save(@Valid UserExcelVo userExcelVo) {
         User user = new User();
         BeanUtils.copyProperties(userExcelVo, user);
-        Org org = orgRepository.findOne(DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Org.F_NAME, userExcelVo.getOrgName())));
+        Org org = orgRepository.findOne(
+            DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Org.F_NAME, userExcelVo.getOrgName()))).get();
         if(org!=null){
             user.setOrgId(org.getId());
         }
-        Role role = roleRepository.findOne(DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Role.F_NAME, userExcelVo.getRoleNames())));
+        Role role = roleRepository.findOne(DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Role.F_NAME, userExcelVo.getRoleNames()))).get();
         if(role==null){
             throw new RuntimeMsgException("无法获取角色"+userExcelVo.getRoleNames()+"信息");
         }

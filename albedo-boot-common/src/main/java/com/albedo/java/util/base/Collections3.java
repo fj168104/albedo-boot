@@ -5,7 +5,6 @@ package com.albedo.java.util.base;
 
 import com.albedo.java.util.PublicUtil;
 import com.google.common.collect.Lists;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -32,7 +31,7 @@ public class Collections3 {
 
         try {
             for (Object obj : collection) {
-                map.put(PropertyUtils.getProperty(obj, keyPropertyName), PropertyUtils.getProperty(obj, valuePropertyName));
+                map.put(Reflections.getFieldValue(obj, keyPropertyName), Reflections.getFieldValue(obj, valuePropertyName));
             }
         } catch (Exception e) {
             throw Reflections.convertReflectionExceptionToUnchecked(e);
@@ -57,10 +56,11 @@ public class Collections3 {
                     if (obj instanceof Map) {
                         item = ((Map) obj).get(propertyName);
                     } else {
-                        item = PropertyUtils.getProperty(obj, propertyName);
+                        item = Reflections.getFieldValue(obj, propertyName);
                     }
-                    if (item != null)
+                    if (item != null) {
                         list.add(item);
+                    }
                 }
             }
         } catch (Exception e) {
@@ -188,13 +188,14 @@ public class Collections3 {
      */
     public static <T> T checkCollectionProperty(List<T> targetList, String propertyName, Object val) {
         T t = null;
-        if (PublicUtil.isNotEmpty(targetList))
+        if (PublicUtil.isNotEmpty(targetList)) {
             for (T item : targetList) {
                 if (Reflections.getFieldValue(item, propertyName).equals(val)) {
                     t = item;
                     break;
                 }
             }
+        }
         return t;
     }
 

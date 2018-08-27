@@ -13,8 +13,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -104,87 +104,87 @@ public class LoggingEvent {
      * formattedMessage 内容
      */
     @NotBlank
-    @Length(max = 65535)
+    @Size(max = 65535)
     @Column(name = "formatted_message", unique = false, nullable = false, length = 65535)
     private String formattedMessage;
     /**
      * loggerName 名称
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "logger_name", unique = false, nullable = false, length = 254)
     private String loggerName;
     /**
      * levelString 级别
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "level_string", unique = false, nullable = false, length = 254)
     @DictType(name = "sys_log_level")
     private String levelString;
     /**
      * threadName 线程
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "thread_name", unique = false, nullable = true, length = 254)
     private String threadName;
     /**
      * referenceFlag 引用标识
      */
-    @Length(max = 6)
+    @Size(max = 6)
     @Column(name = "reference_flag", unique = false, nullable = true, length = 6)
     @DictType(name = "sys_yes_no")
     private String referenceFlag;
     /**
      * arg0 参数0
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "arg0", unique = false, nullable = true, length = 254)
     private String arg0;
     /**
      * arg1 参数1
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "arg1", unique = false, nullable = true, length = 254)
     private String arg1;
     /**
      * arg2 参数2
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "arg2", unique = false, nullable = true, length = 254)
     private String arg2;
     /**
      * arg3 参数3
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "arg3", unique = false, nullable = true, length = 254)
     private String arg3;
     /**
      * callerFilename 操作文件
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "caller_filename", unique = false, nullable = false, length = 254)
     private String callerFilename;
     /**
      * callerClass 操作类名
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "caller_class", unique = false, nullable = false, length = 254)
     private String callerClass;
     /**
      * callerMethod 操作方法
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @Column(name = "caller_method", unique = false, nullable = false, length = 254)
     private String callerMethod;
     /**
      * callerLine 操作行
      */
     @NotBlank
-    @Length(max = 4)
+    @Size(max = 4)
     @Column(name = "caller_line", unique = false, nullable = false, length = 4)
     private String callerLine;
 

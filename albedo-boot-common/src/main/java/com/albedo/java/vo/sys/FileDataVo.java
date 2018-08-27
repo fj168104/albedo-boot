@@ -9,9 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 文件管理EntityVo 文件管理
@@ -33,16 +33,16 @@ public class FileDataVo extends DataEntityVo<String> {
 
 	//columns START
 	/** name 名称 */
- @Length(max=32)
+ @Size(max=32)
 	private String name;
 	/** path 路径 */
- @Length(max=255)
+ @Size(max=255)
 	private String path;
 	/** size 大小 */
  @NotNull
 	private Long size;
 	/** type 类型 */
- @Length(max=60)
+ @Size(max=60)
 	private String type;
 	//columns END
 

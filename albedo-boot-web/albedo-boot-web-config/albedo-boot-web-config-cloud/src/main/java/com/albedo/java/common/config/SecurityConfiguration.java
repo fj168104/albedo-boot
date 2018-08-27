@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -35,7 +36,7 @@ import org.springframework.security.web.access.intercept.FilterSecurityIntercept
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.annotation.Resource;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 
@@ -46,6 +47,7 @@ import java.util.List;
 @ComponentScan(basePackages = { "com.albedo.java.*"})
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final CustomizeAccessDecisionManager customizeAccessDecisionManager;
     private final InvocationSecurityMetadataSourceService invocationSecurityMetadataSourceService;
     private final AlbedoProperties albedoProperties;
@@ -53,11 +55,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final CorsFilter corsFilter;
 
-    public SecurityConfiguration(CustomizeAccessDecisionManager customizeAccessDecisionManager,
+    public SecurityConfiguration(AuthenticationManagerBuilder authenticationManagerBuilder, CustomizeAccessDecisionManager customizeAccessDecisionManager,
                                  InvocationSecurityMetadataSourceService invocationSecurityMetadataSourceService,
                                  AlbedoProperties albedoProperties,
                                  UserDetailsService userDetailsService,
                                  TokenProvider tokenProvider, CorsFilter corsFilter) {
+        this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.customizeAccessDecisionManager = customizeAccessDecisionManager;
         this.invocationSecurityMetadataSourceService = invocationSecurityMetadataSourceService;
         this.albedoProperties = albedoProperties;
@@ -71,15 +74,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Resource
-    public void configureGlobal(AuthenticationManagerBuilder auth) {
+    @PostConstruct
+    public void init() {
         try {
-            auth
+            authenticationManagerBuilder
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
         } catch (Exception e) {
             throw new BeanInitializationException("Security configuration failed", e);
         }
+    }
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 
     @Override

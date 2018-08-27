@@ -9,7 +9,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.Length;
+
+import javax.validation.constraints.Size;
 
 /**
  * 区域Entity 区域
@@ -41,7 +42,7 @@ public class AreaVo extends TreeEntityVo {
     /**
      * shortName 区域简称
      */
-    @Length(max = 32)
+    @Size(max = 32)
     private String shortName;
     /**
      * level 区域等级(1省/2市/3区县)
@@ -51,7 +52,7 @@ public class AreaVo extends TreeEntityVo {
     /**
      * code 区域编码
      */
-    @Length(max = 32)
+    @Size(max = 32)
     private String code;
 
     public AreaVo(String id) {

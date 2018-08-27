@@ -6,8 +6,7 @@ import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.spring.SpringContextHolder;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +23,7 @@ public class TaskUtils {
     public static void invokMethod(TaskScheduleJob scheduleJob) {
         Object object = null;
         Class clazz = null;
-        if (StringUtils.isNotBlank(scheduleJob.getSpringId())) {
+        if (PublicUtil.isNotEmpty(scheduleJob.getSpringId())) {
             object = SpringContextHolder.getBean(scheduleJob.getSpringId());
             if (object != null && object.getClass().getName().contains("$Proxy")) {
                 try {
@@ -33,7 +32,7 @@ public class TaskUtils {
                     logger.warn("msg : {}", e.getMessage());
                 }
             }
-        } else if (StringUtils.isNotBlank(scheduleJob.getBeanClass())) {
+        } else if (PublicUtil.isNotEmpty(scheduleJob.getBeanClass())) {
             try {
                 clazz = Class.forName(scheduleJob.getBeanClass());
                 object = clazz.newInstance();

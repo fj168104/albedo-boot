@@ -1,5 +1,6 @@
 package com.albedo.java.web.rest.util;
 
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.base.Encodes;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.Globals;
@@ -42,7 +43,8 @@ public class RequestUtil {
 
         }
         // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
-        if (ipAddress != null && ipAddress.length() > 15) { // "***.***.***.***".length()
+        // "***.***.***.***".length()
+        if (ipAddress != null && ipAddress.length() > 15) {
             // = 15
             if (ipAddress.indexOf(",") > 0) {
                 ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));
@@ -53,15 +55,17 @@ public class RequestUtil {
 
     public static String getIpAddr(HttpServletRequest request) {
         String ip = request.getHeader("X-Real-IP");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip))
+        if (PublicUtil.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
             return ip;
+        }
         ip = request.getHeader("X-Forwarded-For");
-        if (!StringUtils.isBlank(ip) && !"unknown".equalsIgnoreCase(ip)) {
+        if (PublicUtil.isNotEmpty(ip) && !"unknown".equalsIgnoreCase(ip)) {
             int index = ip.indexOf(',');
-            if (index != -1)
+            if (index != -1) {
                 return ip.substring(0, index);
-            else
+            } else {
                 return ip;
+            }
         } else {
             return request.getRemoteAddr();
         }
@@ -69,22 +73,24 @@ public class RequestUtil {
 
     public static String getUserAgent(HttpServletRequest request) {
         String userAgent = request.getHeader("User-Agent");
-        if (!StringUtils.isBlank(userAgent))
+        if (PublicUtil.isNotEmpty(userAgent)) {
             return userAgent;
-        else
+        } else {
             return null;
+        }
     }
 
     public static String getRequestBrowser(HttpServletRequest request) {
         String userAgent = getUserAgent(request);
-        String agent = null;
+        String agent;
         String agents[] = userAgent.split(";");
         if (agents.length > 1) {
             agent = agents[1].trim();
-            if (StringUtils.isNotBlank(agent))
+            if (PublicUtil.isNotEmpty(agent)) {
                 return agent;
-            else
+            } else {
                 return agent;
+            }
         } else {
             agent = userAgent.substring(0, userAgent.lastIndexOf(" "));
             agent = userAgent.substring(agent.lastIndexOf(" "), userAgent.length());
@@ -133,10 +139,11 @@ public class RequestUtil {
     public String getRequestOs(HttpServletRequest request) {
         String userAgent = getUserAgent(request);
         String agents[] = userAgent.split(";");
-        if (agents.length > 2)
+        if (agents.length > 2) {
             return agents[2].trim();
-        else
+        } else {
             return null;
+        }
     }
 
 }

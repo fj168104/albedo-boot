@@ -18,9 +18,7 @@ import java.util.Map;
  * Properties are configured in the application.yml file.
  * </p>
  */
-@ConfigurationProperties(prefix = "albedo",
-    ignoreInvalidFields = true,
-    exceptionIfInvalid = false)
+@ConfigurationProperties(prefix = "albedo", ignoreInvalidFields = true)
 @Data
 public class AlbedoProperties {
 

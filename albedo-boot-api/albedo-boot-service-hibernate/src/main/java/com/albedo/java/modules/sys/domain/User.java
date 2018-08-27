@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.CascadeType;
 import javax.persistence.*;
@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Set;
 /**
  * A user.
+ * @author somewhere
  */
 @Entity
 @Table(name = "sys_user_t")
@@ -33,12 +34,11 @@ import java.util.Set;
 @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class User extends IdEntity<String> {
-
+    private static final long serialVersionUID = 1L;
     /*** F_LOGINID */
     public static final String F_LOGINID = "loginId";
     /*** F_LOGINID */
     public static final String F_EMAIL = "email";
-    private static final long serialVersionUID = 1L;
     @NotBlank
     @Pattern(regexp = Globals.LOGIN_REGEX)
     @Size(min = 1, max = 50)

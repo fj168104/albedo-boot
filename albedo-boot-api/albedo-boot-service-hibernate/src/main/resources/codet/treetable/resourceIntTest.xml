@@ -429,7 +429,7 @@ public class ${ClassName}ResourceIntTest {
         int databaseSizeBeforeUpdate = ${className}Repository.findAll().size();
 
         // Update the ${className}
-        ${ClassName} updated${ClassName} = ${className}Repository.findOne(${className}.getId());
+        ${ClassName} updated${ClassName} = ${className}Repository.findOneById(${className}.getId());
         // Disconnect from session so that the updates on updated${ClassName} are not directly saved in db
         em.detach(updated${ClassName});
         Reflections.updateObj(updated${ClassName}, Lists.newArrayList(

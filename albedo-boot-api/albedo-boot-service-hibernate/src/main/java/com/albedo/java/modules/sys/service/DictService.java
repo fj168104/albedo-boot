@@ -49,10 +49,9 @@ public class DictService extends TreeVoService<DictRepository, Dict, String, Dic
         return mapList;
     }
 
-    @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public Dict findOne(String id) {
-        return repository.findOne(id);
+        return repository.findOneById(id);
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

@@ -257,7 +257,7 @@ public class UserResourceIntTest {
         int databaseSizeBeforeUpdate = userService.findAll().size();
 
         // Update the user
-        User updatedUser = userService.findOne(user.getId());
+        User updatedUser = userService.findOneById(user.getId());
 
         UserVo managedUserVM = new UserVo(null,
                 UPDATED_LOGIN,
@@ -285,7 +285,7 @@ public class UserResourceIntTest {
         // Validate the User in the database
         List<User> userList = userService.findAll();
         assertThat(userList).hasSize(databaseSizeBeforeUpdate);
-        User testUser = userService.findOne(updatedUser.getId());
+        User testUser = userService.findOneById(updatedUser.getId());
         assertThat(testUser.getLoginId()).isEqualTo(UPDATED_LOGIN);
         assertThat(testUser.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testUser.getEmail()).isEqualTo(UPDATED_EMAIL);
@@ -300,7 +300,7 @@ public class UserResourceIntTest {
 
         userService.save(user);
         // Update the user
-        User updatedUser = userService.findOne(user.getId());
+        User updatedUser = userService.findOneById(user.getId());
 
 
         UserVo managedUserVM = new UserVo(null,
@@ -335,7 +335,7 @@ public class UserResourceIntTest {
 
         userService.save(user);
         // Update the user
-        User updatedUser = userService.findOne(user.getId());
+        User updatedUser = userService.findOneById(user.getId());
 
         UserVo managedUserVM = new UserVo(null,
                 DEFAULT_ANOTHER_LOGIN,

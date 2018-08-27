@@ -17,5 +17,5 @@ import java.util.Optional;
  */
 public interface LoggingEventRepository extends JpaRepository<LoggingEvent, String>, JpaSpecificationExecutor<LoggingEvent> {
 
-    Optional<LoggingEvent> findOneById(String id);
+    LoggingEvent findOneById(String id);
 }

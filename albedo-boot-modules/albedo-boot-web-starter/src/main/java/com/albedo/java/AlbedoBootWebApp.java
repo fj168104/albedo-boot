@@ -1,20 +1,14 @@
 package com.albedo.java;
 
 import com.albedo.java.common.config.AlbedoProperties;
-import com.albedo.java.common.config.CacheConfiguration;
-import com.albedo.java.common.config.SchedulerConfiguration;
 import com.albedo.java.util.domain.Globals;
 import com.albedo.java.util.spring.DefaultProfileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.MetricFilterAutoConfiguration;
-import org.springframework.boot.actuate.autoconfigure.MetricRepositoryAutoConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
 import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
@@ -27,10 +21,9 @@ import java.util.Collection;
 /**
  * @author somewhere
  */
-@ComponentScan
-@EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
+
+@SpringBootApplication
 @EnableConfigurationProperties({AlbedoProperties.class})
-@Import({CacheConfiguration.class})
 public class AlbedoBootWebApp {
 
     private static final Logger log = LoggerFactory.getLogger(AlbedoBootWebApp.class);

@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -29,7 +29,7 @@ public class GenTemplate extends IdEntity<GenTemplate, String> {
 
     public static final String F_NAME = "name";
     private static final long serialVersionUID = 1L;
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     @TableField("name_")
     private String name; // 名称
     @TableField("category_")

@@ -8,9 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 /**
@@ -31,18 +31,18 @@ public class FileDataResultVo implements Serializable {
 
 	//columns START
     /** name 名称 */
-    @Length(max=32)
+    @Size(max=32)
     @BeanField(writeProperty = "id")
     private String id;
 	/** name 名称 */
- @Length(max=32)
+ @Size(max=32)
 	private String name;
 	/** size 大小 */
  @NotBlank
- @Length(max=50)
+ @Size(max=50)
 	private Long size;
 	/** type 类型 */
- @Length(max=60)
+ @Size(max=60)
 	private String type;
 	//columns END
 

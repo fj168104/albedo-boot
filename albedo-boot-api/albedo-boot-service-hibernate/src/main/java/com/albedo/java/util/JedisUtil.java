@@ -2,12 +2,9 @@ package com.albedo.java.util;
 
 import com.albedo.java.common.config.AlbedoProperties;
 import com.albedo.java.util.spring.SpringContextHolder;
-import com.google.common.collect.Maps;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.data.redis.cache.RedisCacheManager;
-
-import java.util.Map;
 
 /**
  * Jedis Cache 工具类
@@ -46,11 +43,6 @@ public class JedisUtil {
         // MemcacheUtil.set(key, value);
     }
 
-    public static void putUser(String key, Object value, int timeToLiveSeconds) {
-        put(CACHE_USER, key, value, timeToLiveSeconds);
-        // MemcacheUtil.set(key, value);
-    }
-
     /**
      * 清空指定Key的系统缓存对象
      *
@@ -77,11 +69,6 @@ public class JedisUtil {
 
     public static void putSys(String key, Object value) {
         put(CACHE_SYS, key, value);
-        // MemcacheUtil.set(key, value);
-    }
-
-    public static void putSys(String key, Object value, int timeToLiveSeconds) {
-        put(CACHE_SYS, key, value, timeToLiveSeconds);
         // MemcacheUtil.set(key, value);
     }
 
@@ -126,11 +113,7 @@ public class JedisUtil {
     }
 
     public static void put(String cacheName, String key, Object value) {
-        putNormal(cacheName, getKey(key), value, 0);
-    }
-
-    public static void put(String cacheName, String key, Object value, long timeToLiveSeconds) {
-        putNormal(cacheName, getKey(key), value, timeToLiveSeconds);
+        putNormal(cacheName, getKey(key), value);
     }
 
     public static void remove(String cacheName, String key) {
@@ -143,15 +126,6 @@ public class JedisUtil {
     }
 
     public static void putNormal(String cacheName, String key, Object value) {
-        put(cacheName, getKey(key), value, 0);
-    }
-
-    public static void putNormal(String cacheName, String key, Object value, long timeToLiveSeconds) {
-        if (timeToLiveSeconds > 0) {
-            Map<String, Long> map = Maps.newHashMap();
-            map.put(cacheName, timeToLiveSeconds);
-            cacheManager.setExpires(map);
-        }
 
         getCache(cacheName).put(key, value);
     }

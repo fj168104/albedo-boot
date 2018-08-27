@@ -12,7 +12,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Lists;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.persistence.CascadeType;
 import javax.persistence.*;
@@ -97,7 +97,7 @@ public class GenTable extends IdEntity<String> {
         this.comments = comments;
     }
 
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     public String getName() {
         return StringUtil.lowerCase(name);
     }

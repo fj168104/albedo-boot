@@ -12,7 +12,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,13 +52,13 @@ public class FileData extends IdEntity<String> {
 	public static final String F_SQL_TYPE = "type_";
 
 	//columns START
-	/** name 名称 */@Length(max=32)@Column(name = "name_", unique = false, nullable = true, length = 32)
+	/** name 名称 */@Size(max=32)@Column(name = "name_", unique = false, nullable = true, length = 32)
 	private String name;
-	/** path 路径 */@Length(max=255)@Column(name = "path_", unique = false, nullable = true, length = 255)
+	/** path 路径 */@Size(max=255)@Column(name = "path_", unique = false, nullable = true, length = 255)
 	private String path;
 	/** size 大小 */@NotNull @Column(name = "size_", unique = false, nullable = false)
 	private Long size;
-	/** type 类型 */@Length(max=60)@Column(name = "type_", unique = false, nullable = true, length = 60)
+	/** type 类型 */@Size(max=60)@Column(name = "type_", unique = false, nullable = true, length = 60)
 	private String type;
 	//columns END
 

@@ -19,7 +19,7 @@ public interface PersistentTokenRepository extends JpaRepository<PersistentToken
 
     List<PersistentToken> findByTokenDateBefore(Date localDate);
 
-    Optional<PersistentToken> findOneById(String id);
+    PersistentToken findOneById(String id);
 
     PersistentToken findOneBySeries(String presentedSeries);
 

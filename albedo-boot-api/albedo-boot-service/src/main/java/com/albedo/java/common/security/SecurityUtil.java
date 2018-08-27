@@ -106,7 +106,7 @@ public final class SecurityUtil {
         }
         if (user == null || isSearch || PublicUtil.isEmpty(user.getRoles()) ||
                 user.getRoles().size() != user.getRoleIdList().size()) {
-            user = userService.findOne(userId);
+            user = userService.findOneById(userId);
 
             if (user == null) {
                 throw new UsernameNotFoundException("User " + userId + " was not found in the database");

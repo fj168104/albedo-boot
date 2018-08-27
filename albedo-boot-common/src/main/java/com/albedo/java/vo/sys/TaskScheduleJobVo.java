@@ -9,8 +9,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 /**
  * 任务调度EntityVo 任务调度
@@ -70,28 +71,28 @@ public class TaskScheduleJobVo extends DataEntityVo<String> {
     /**
      * name 名称
      */
-    @Length(max = 255)
+    @Size(max = 255)
     private String name;
     /**
      * group 分组
      */
-    @Length(max = 255)
+    @Size(max = 255)
     private String group;
     /**
      * jobStatus 任务状态
      */
-    @Length(max = 255)
+    @Size(max = 255)
     private String jobStatus;
     /**
      * cronExpression cron表达式
      */
     @NotBlank
-    @Length(max = 255)
+    @Size(max = 255)
     private String cronExpression;
     /**
      * beanClass 类名
      */
-    @Length(max = 255)
+    @Size(max = 255)
     private String beanClass;
     /**
      * isConcurrent 任务是否有状态
@@ -100,23 +101,23 @@ public class TaskScheduleJobVo extends DataEntityVo<String> {
     /**
      * springId springBean
      */
-    @Length(max = 255)
+    @Size(max = 255)
     private String springId;
     /**
      * sourceId 业务编号
      */
-    @Length(max = 32)
+    @Size(max = 32)
     private String sourceId;
     /**
      * methodName 任务调用的方法名
      */
     @NotBlank
-    @Length(max = 255)
+    @Size(max = 255)
     private String methodName;
     /**
      * methodParams 方法参数
      */
-    @Length(max = 512)
+    @Size(max = 512)
     private String methodParams;
     //columns END
 

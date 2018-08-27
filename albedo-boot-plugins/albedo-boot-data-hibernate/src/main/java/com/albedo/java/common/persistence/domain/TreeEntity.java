@@ -4,8 +4,8 @@ import com.albedo.java.util.annotation.SearchField;
 import com.albedo.java.util.domain.QueryCondition.Operator;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 
@@ -17,6 +17,7 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class TreeEntity<T extends TreeEntity> extends IdEntity<String> {
 
+    private static final long serialVersionUID = 1L;
     public static final String ROOT = "1";
     public static final String F_NAME = "name";
     public static final String F_PARENTID = "parentId";
@@ -24,20 +25,19 @@ public abstract class TreeEntity<T extends TreeEntity> extends IdEntity<String> 
     public static final String F_ISLEAF = "isLeaf";
     public static final String F_SORT = "sort";
     public static final String F_PARENT = "parent";
-    private static final long serialVersionUID = 1L;
     /*** 组织名称 */
-    @Length(min = 1, max = 100)
+    @Size(min = 1, max = 100)
     @Column(name = "name_")
     @SearchField
     @NotBlank
     protected String name;
     /*** 上级组织 */
-    @Length( max = 64)
+    @Size( max = 64)
     @Column(name = "parent_id")
     @SearchField
     protected String parentId;
     /*** 所有父编号 */
-    @Length(max = 2000)
+    @Size(max = 2000)
     @Column(name = "parent_ids")
     @SearchField(op = Operator.like)
     protected String parentIds;

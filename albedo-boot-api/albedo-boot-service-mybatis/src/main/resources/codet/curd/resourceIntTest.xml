@@ -424,7 +424,7 @@ public class ${ClassName}ResourceIntTest {
         int databaseSizeBeforeUpdate = ${className}Service.findAll().size();
 
         // Update the ${className}
-        ${ClassName} updated${ClassName} = ${className}Service.findOne(${className}.getId());
+        ${ClassName} updated${ClassName} = ${className}Service.findOneById(${className}.getId());
         // Disconnect from session so that the updates on updated${ClassName} are not directly saved in db
         Reflections.updateObj(updated${ClassName}, Lists.newArrayList(
     <#assign firstListField = true>

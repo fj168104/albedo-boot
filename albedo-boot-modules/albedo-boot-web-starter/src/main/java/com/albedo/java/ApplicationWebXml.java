@@ -1,10 +1,8 @@
 package com.albedo.java;
 
-import com.albedo.java.util.DateUtil;
-import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.spring.DefaultProfileUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
  * This is a helper Java class that provides an alternative to creating a web.xml.

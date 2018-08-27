@@ -93,7 +93,7 @@ public class FileResource extends BaseResource {
      */
     @RequestMapping(value = "/get/{id}", method = RequestMethod.GET)
     public void get(HttpServletResponse response, @PathVariable String id) {
-        FileData fileData = fileDataService.findOne(id);
+        FileData fileData = fileDataService.findOneById(id);
         Assert.assertIsTrue(fileData!=null, "无法获取文件信息");
         try {
             String path = albedoProperties.getStaticFileDirectory(fileData.getPath());

@@ -4,7 +4,7 @@ import com.albedo.java.util.PublicUtil;
 import com.alibaba.fastjson.annotation.JSONField;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.envers.Audited;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 import org.springframework.data.annotation.*;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -24,8 +24,6 @@ import java.util.Date;
 public abstract class DataEntity extends BaseEntity {
 
     private static final long serialVersionUID = 1L;
-
-
     @CreatedBy
     @Column(name = "created_by", nullable = false, length = 50, updatable = false)
     @JSONField(serialize = false)
@@ -56,7 +54,7 @@ public abstract class DataEntity extends BaseEntity {
     protected Integer version = 0;
 
     /*** 备注 */
-    @Length(min = 0, max = 255)
+    @Size(min = 0, max = 255)
     @Column(name = "description_")
     @XmlTransient
     protected String description;

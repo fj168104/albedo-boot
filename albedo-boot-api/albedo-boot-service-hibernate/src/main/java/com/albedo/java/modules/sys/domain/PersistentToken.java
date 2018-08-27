@@ -7,7 +7,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -52,7 +52,7 @@ public class PersistentToken implements Serializable {
     private String userAgent;
 
     /*** 用户 */
-    @Length(min = 0, max = 2000)
+    @Size(min = 0, max = 2000)
     @Column(name = "user_id")
     private String userId;
     /*** 用户  */

@@ -57,7 +57,7 @@ public class ModuleResource extends TreeVoResource<ModuleService, ModuleVo> {
             throw new RuntimeMsgException(PublicUtil.toAppendStr("查询模块失败，原因：无法查找到编号区域"));
         }
         if (PublicUtil.isEmpty(moduleVo.getId()) && PublicUtil.isNotEmpty(moduleVo.getParentId())) {
-            service.findOneById(moduleVo.getParentId()).ifPresent(item -> moduleVo.setParentName(item.getName()));
+            service.findById(moduleVo.getParentId()).ifPresent(item -> moduleVo.setParentName(item.getName()));
             service.findOptionalTopByParentId(moduleVo.getParentId()).ifPresent(item -> moduleVo.setSort(item.getSort() + 30));
         }
         if (moduleVo.getSort() == null) {

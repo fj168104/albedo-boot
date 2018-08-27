@@ -148,7 +148,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
                 baseRepository.execute("update Module set status=:p1 where (id=:p2 or parentId=:p2) and permission like :p3", Module.FLAG_DELETE, currentModule.getId(), permissionLike);
             }
         }
-        Module parentModule = repository.findOne(parentModuleId);
+        Module parentModule = repository.findOneById(parentModuleId);
         Assert.assertIsTrue(parentModule != null, PublicUtil.toAppendStr("根据模块id[", parentModuleId, "无法查询到模块信息]"));
 
 

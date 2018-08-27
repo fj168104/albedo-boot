@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.validation.constraints.NotNull;
 
@@ -47,7 +47,7 @@ public class Area extends TreeEntity<Area> {
     /**
      * shortName 区域简称
      */
-    @Length(max = 32)
+    @Size(max = 32)
     @TableField("short_name")
     private String shortName;
     /**
@@ -59,7 +59,7 @@ public class Area extends TreeEntity<Area> {
     /**
      * code 区域编码
      */
-    @Length(max = 32)
+    @Size(max = 32)
     @TableField("code_")
     @SearchField
     @NotNull

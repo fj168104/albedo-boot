@@ -16,8 +16,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 /**
@@ -82,13 +82,13 @@ public class TaskScheduleJob extends DataEntity {
     /**
      * name 名称
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "name_", unique = false, nullable = true, length = 255)
     private String name;
     /**
      * group 分组
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "group_", unique = false, nullable = true, length = 255)
     private String group;
     /**
@@ -101,13 +101,13 @@ public class TaskScheduleJob extends DataEntity {
      * cronExpression cron表达式
      */
     @NotBlank
-    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "cron_expression", unique = false, nullable = false, length = 255)
     private String cronExpression;
     /**
      * beanClass 调用类名
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "bean_class", unique = false, nullable = true, length = 255)
     private String beanClass;
     /**
@@ -119,20 +119,20 @@ public class TaskScheduleJob extends DataEntity {
     /**
      * springId spring bean
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "spring_id", unique = false, nullable = true, length = 255)
     private String springId;
     /**
      * sourceId 业务编号
      */
-    @Length(max = 32)
+    @Size(max = 32)
     @Column(name = "source_id", unique = false, nullable = true, length = 32)
     private String sourceId;
     /**
      * methodName 调用方法名
      */
     @NotBlank
-    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "method_name", unique = false, nullable = false, length = 255)
     private String methodName;
     @Column(name = "method_params", unique = false, nullable = false, length = 255)

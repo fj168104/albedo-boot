@@ -16,11 +16,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @MappedSuperclass
 public abstract class BaseEntity extends GeneralEntity {
 
+    private static final long serialVersionUID = 1L;
     /**
      * 状态（-2：删除；-1：停用 0：正常 1:审核）
      */
     public static final String F_STATUS = "status";
-    private static final long serialVersionUID = 1L;
     /*** 状态（-2：删除；-1：停用 0：正常 1:审核） */
     @Column(name = "status_")
     @XmlTransient

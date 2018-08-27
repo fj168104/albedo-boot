@@ -1,7 +1,6 @@
 package com.albedo.java.common.persistence.service;
 
 import com.albedo.java.common.persistence.SpecificationDetail;
-import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.domain.GeneralEntity;
 import com.albedo.java.common.persistence.repository.BaseRepository;
 import com.albedo.java.common.persistence.repository.JpaCustomeRepository;
@@ -14,6 +13,7 @@ import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 public class BaseService<Repository extends BaseRepository<T, PK>, T extends GeneralEntity, PK extends Serializable> {
@@ -57,9 +57,6 @@ public class BaseService<Repository extends BaseRepository<T, PK>, T extends Gen
     public List<T> findAll(SpecificationDetail<T> specificationDetail){
         return repository.findAll(specificationDetail);
     }
-    public T findOne(PK id){
-        return repository.findOne(id);
-    }
 
     public long count(SpecificationDetail<T> specificationDetail){
         return repository.count(specificationDetail);
@@ -72,5 +69,9 @@ public class BaseService<Repository extends BaseRepository<T, PK>, T extends Gen
 
     public void setPersistentClass(Class<T> persistentClass) {
         this.persistentClass = persistentClass;
+    }
+
+    public Optional<T> findById(PK id) {
+      return  repository.findById(id);
     }
 }

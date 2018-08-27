@@ -12,8 +12,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 任务调度管理Entity 任务调度
@@ -83,13 +83,13 @@ public class TaskScheduleJob extends IdEntity<TaskScheduleJob, String> {
     /**
      * name 名称
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @TableField("name_")
     private String name;
     /**
      * group 分组
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @TableField("group_")
     private String group;
     /**
@@ -102,13 +102,13 @@ public class TaskScheduleJob extends IdEntity<TaskScheduleJob, String> {
      * cronExpression cron表达式
      */
     @NotBlank
-    @Length(max = 255)
+    @Size(max = 255)
     @TableField("cron_expression")
     private String cronExpression;
     /**
      * beanClass 调用类名
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @TableField("bean_class")
     private String beanClass;
     /**
@@ -120,20 +120,20 @@ public class TaskScheduleJob extends IdEntity<TaskScheduleJob, String> {
     /**
      * springId spring bean
      */
-    @Length(max = 255)
+    @Size(max = 255)
     @TableField("spring_id")
     private String springId;
     /**
      * sourceId 业务编号
      */
-    @Length(max = 32)
+    @Size(max = 32)
     @TableField(F_SQL_SOURCEID)
     private String sourceId;
     /**
      * methodName 调用方法名
      */
     @NotBlank
-    @Length(max = 255)
+    @Size(max = 255)
     @TableField("method_name")
     private String methodName;
     @TableField("method_params")

@@ -12,7 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 import org.springframework.data.annotation.Transient;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class GenTable extends IdEntity<GenTable, String> {
     private static final long serialVersionUID = 1L;
     @TableField("name_")
     @SearchField
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     private String name; // 名称
     @TableField("comments")
     private String comments; // 描述

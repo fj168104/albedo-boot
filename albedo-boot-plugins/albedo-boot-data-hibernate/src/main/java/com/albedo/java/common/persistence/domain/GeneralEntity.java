@@ -5,10 +5,12 @@ import java.io.Serializable;
 
 /**
  * 通常的数据基类 copyright 2014 albedo all right reserved author somewhere created on 2014年12月31日 下午1:57:09
+ * @author somewhere
  */
 @MappedSuperclass
 public abstract class GeneralEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     /*** 状态 审核 */
     public static final Integer FLAG_AUDIT = 1;
     /*** 状态 正常 */
@@ -31,7 +33,6 @@ public abstract class GeneralEntity implements Serializable {
     public static final String F_LASTMODIFIEDDATE = "lastModifiedDate";
     public static final String F_VERSION = "version";
     public static final String F_DESCRIPTION = "description";
-    private static final long serialVersionUID = 1L;
 
 
 }

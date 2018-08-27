@@ -7,7 +7,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,7 +31,7 @@ public class GenTemplate extends IdEntity<String> {
 
     private static final long serialVersionUID = 1L;
     public static final String F_NAME = "name";
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     @Column(name = "name_")
     private String name; // 名称
     @Column(name = "category_")

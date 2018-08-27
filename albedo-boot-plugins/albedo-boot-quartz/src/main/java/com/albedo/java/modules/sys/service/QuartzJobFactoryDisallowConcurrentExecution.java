@@ -2,11 +2,12 @@ package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.modules.sys.domain.TaskScheduleJob;
 import com.albedo.java.modules.sys.util.TaskUtils;
-import org.apache.log4j.Logger;
 import org.quartz.DisallowConcurrentExecution;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author somewhere
@@ -15,7 +16,7 @@ import org.quartz.JobExecutionException;
  */
 @DisallowConcurrentExecution
 public class QuartzJobFactoryDisallowConcurrentExecution implements Job {
-    public final Logger log = Logger.getLogger(this.getClass());
+    public final Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
