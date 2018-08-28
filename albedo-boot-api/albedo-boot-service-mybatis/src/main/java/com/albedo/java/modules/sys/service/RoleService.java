@@ -43,7 +43,7 @@ public class RoleService extends DataVoService<RoleRepository, Role, String, Rol
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     @Override
     public RoleVo findOneVo(String id) {
-        Role role = findOne(id);
+        Role role = findOneById(id);
         if(role!=null){
             role.setOrg(orgRepository.selectById(role.getOrgId()));
         }
@@ -74,7 +74,7 @@ public class RoleService extends DataVoService<RoleRepository, Role, String, Rol
     public void save(RoleVo roleVo) {
         Role role = PublicUtil.isNotEmpty(roleVo.getId()) ? repository.selectById(roleVo.getId()) : new Role();
         copyVoToBean(roleVo, role);
-        role = super.save(role);
+        super.saveOrUpdate(role);
         if (PublicUtil.isNotEmpty(role.getModuleIdList())) {
             repository.deleteRoleModules(role);
             repository.addRoleModules(role);
@@ -84,5 +84,9 @@ public class RoleService extends DataVoService<RoleRepository, Role, String, Rol
             repository.deleteRoleOrgs(role);
             repository.addRoleOrgs(role);
         }
+    }
+
+    public List<Role> selectListByUserId(String id) {
+        return repository.selectListByUserId(id);
     }
 }

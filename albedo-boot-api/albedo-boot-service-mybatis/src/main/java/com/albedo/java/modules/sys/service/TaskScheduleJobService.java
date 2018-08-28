@@ -6,12 +6,11 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.common.persistence.service.DataService;
-import com.albedo.java.modules.sys.domain.PersistentAuditEvent;
 import com.albedo.java.modules.sys.domain.TaskScheduleJob;
 import com.albedo.java.modules.sys.repository.TaskScheduleJobRepository;
 import com.albedo.java.util.domain.PageModel;
 import com.albedo.java.util.domain.QueryCondition;
-import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,33 +30,25 @@ public class TaskScheduleJobService extends DataService<TaskScheduleJobRepositor
 
     List<TaskScheduleJob> findByStatusAndJobStatus(Integer status, String jobStatus){
 
-        return selectList(Condition.create()
+        return findAll(new QueryWrapper<TaskScheduleJob>()
             .eq(TaskScheduleJob.F_SQL_STATUS, status)
             .eq(TaskScheduleJob.F_SQL_JOBSTATUS, jobStatus));
     }
 
     TaskScheduleJob findTopBySourceIdAndStatusNot(String sourceId, Integer status){
-        return selectOne(Condition.create()
+        return repository.selectOne(new QueryWrapper<TaskScheduleJob>()
             .ne(TaskScheduleJob.F_SQL_STATUS, status)
             .eq(TaskScheduleJob.F_SQL_SOURCEID, sourceId));
 
     }
 
     List<TaskScheduleJob> findAllBySourceId(String sourceId){
-        return selectList(Condition.create()
+        return findAll(new QueryWrapper<TaskScheduleJob>()
             .eq(TaskScheduleJob.F_SQL_SOURCEID, sourceId));
 
     }
 
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see
-     * com.albedo.java.modules.sys.service.ITaskScheduleJobService#findAll(com.
-     * albedo.java.common.domain.data.SpecificationDetail,
-     * com.albedo.java.util.domain.PageModel)
-     */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel<TaskScheduleJob> findAll(PageModel<TaskScheduleJob> pm, List<QueryCondition> queryConditions) {
         SpecificationDetail<TaskScheduleJob> spec = DynamicSpecifications.

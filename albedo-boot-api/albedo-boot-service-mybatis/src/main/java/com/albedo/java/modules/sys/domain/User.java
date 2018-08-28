@@ -6,20 +6,17 @@ import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.annotation.SearchField;
 import com.albedo.java.util.domain.Globals;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
+
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -39,6 +36,10 @@ public class User extends IdEntity<User, String> {
     /*** F_LOGINID */
     public static final String F_EMAIL = "email";
     private static final long serialVersionUID = 1L;
+
+    @TableField("avatar_")
+    private String avatar;
+
     @NotBlank
     @Pattern(regexp = Globals.LOGIN_REGEX)
     @Size(min = 1, max = 50)
@@ -210,7 +211,9 @@ public class User extends IdEntity<User, String> {
         if (PublicUtil.isEmpty(roleIdList) && PublicUtil.isNotEmpty(roles)) {
             roleIdList = Lists.newArrayList();
             roles.forEach(m -> {
-                if (PublicUtil.isNotEmpty(m)) roleIdList.add(m.getId());
+                if (PublicUtil.isNotEmpty(m)) {
+                    roleIdList.add(m.getId());
+                }
             });
         }
         return roleIdList;

@@ -6,16 +6,13 @@ import com.albedo.java.util.QueryUtil;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.Order;
 import com.albedo.java.util.domain.QueryCondition;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by lijie on 2018/3/8.
@@ -48,8 +45,9 @@ public class QueryWrapperUtil {
                 fieldPropery = column.value();
             }else{
                 TableId columnId = Reflections.getAnnotationByClazz(targetPersistentClass, fieldPropery, TableId.class);
-                if(columnId!=null)
-                fieldPropery = columnId.value();
+                if(columnId!=null) {
+                    fieldPropery = columnId.value();
+                }
             }
         }
 
@@ -57,16 +55,16 @@ public class QueryWrapperUtil {
     }
 
 
-    public static EntityWrapper convertSpecificationDetail(SpecificationDetail specificationDetail){
-        EntityWrapper entityWrapper = new EntityWrapper();
+    public static <T> QueryWrapper<T> convertSpecificationDetail(SpecificationDetail<T> specificationDetail){
+        QueryWrapper entityWrapper = new QueryWrapper();
         List<QueryCondition> andQueryConditions = specificationDetail.getAndQueryConditions();
         if(PublicUtil.isNotEmpty(specificationDetail.getAndQueryConditions())){
-            entityWrapper.andNew();
             for(QueryCondition queryCondition : andQueryConditions){
                 Object queryValue = QueryUtil.getQueryValue(queryCondition, null);
-
                 String fieldName = QueryWrapperUtil.getFieldRealColumnName(specificationDetail.getPersistentClass(), queryCondition.getFieldName());
-                if(specificationDetail.isRelationQuery()) fieldName = specificationDetail.getClassNameProfix() + fieldName;
+                if(specificationDetail.isRelationQuery()) {
+                    fieldName = specificationDetail.getClassNameProfix() + fieldName;
+                }
                 switch (queryCondition.getOperate()) {
                     case notIn:
                         entityWrapper.notIn(fieldName, handlerQueryConditionCollectionValue(queryCondition));
@@ -74,9 +72,11 @@ public class QueryWrapperUtil {
                     case in:
                         entityWrapper.in(fieldName, handlerQueryConditionCollectionValue(queryCondition));
                         break;
-                    case like:entityWrapper.like(fieldName, handlerQueryConditionLikeValue(queryCondition));
+                    case like:
+                        entityWrapper.like(fieldName, handlerQueryConditionLikeValue(queryCondition));
                         break;
-                    case notLike:entityWrapper.notLike(fieldName, handlerQueryConditionLikeValue(queryCondition));
+                    case notLike:
+                        entityWrapper.notLike(fieldName, handlerQueryConditionLikeValue(queryCondition));
                         break;
                     case between:
                         entityWrapper.between(fieldName
@@ -90,7 +90,7 @@ public class QueryWrapperUtil {
                         entityWrapper.isNotNull(fieldName);
                         break;
                         default:
-                            entityWrapper.where(PublicUtil.toAppendStr(
+                            entityWrapper.apply(PublicUtil.toAppendStr(
                                 fieldName," ",
                                 queryCondition.getOperate().getOperator(), " {0} "
                                 ), queryValue);
@@ -103,10 +103,16 @@ public class QueryWrapperUtil {
         if(PublicUtil.isNotEmpty(orders)){
             for (Order order : orders){
                 String fieldName = QueryWrapperUtil.getFieldRealColumnName(specificationDetail.getPersistentClass(), order.getProperty());
-                if(specificationDetail.isRelationQuery()) fieldName = specificationDetail.getClassNameProfix() + fieldName;
-                entityWrapper.orderBy(fieldName, Order.Direction.asc.equals(order.getDirection()));
+                if(specificationDetail.isRelationQuery()) {
+                    fieldName = specificationDetail.getClassNameProfix() + fieldName;
+                }
+                entityWrapper.orderBy(true, Order.Direction.asc.equals(order.getDirection()), fieldName);
             }
         }
         return entityWrapper;
+    }
+
+    public static <T> QueryWrapper<T> create() {
+        return new QueryWrapper();
     }
 }

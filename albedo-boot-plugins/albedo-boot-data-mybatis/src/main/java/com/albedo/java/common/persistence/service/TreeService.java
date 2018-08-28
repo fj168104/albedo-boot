@@ -5,11 +5,10 @@ import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.common.persistence.repository.TreeRepository;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.base.Assert;
-import com.albedo.java.util.exception.RuntimeMsgException;
 import com.albedo.java.vo.sys.query.TreeQuery;
 import com.albedo.java.vo.sys.query.TreeResult;
-import com.baomidou.mybatisplus.mapper.Condition;
-import com.baomidou.mybatisplus.mapper.SqlHelper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
 import com.google.common.collect.Lists;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,55 +23,56 @@ public abstract class TreeService<Repository extends TreeRepository<T, PK>, T ex
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public T findTreeOne(Serializable id) {
         List<T> treeList = repository.findRelationList(
-            Condition.create().eq(getClassNameProfix() + TreeEntity.F_SQL_ID, id));
+            new QueryWrapper<T>().eq(getClassNameProfix() + TreeEntity.F_SQL_ID, id));
         return SqlHelper.getObject(treeList);
     }
 
     public Integer countByParentId(String parentId){
        return repository.selectCount(
-           Condition.create().eq(TreeEntity.F_SQL_PARENTID, parentId)
+           new QueryWrapper<T>().eq(TreeEntity.F_SQL_PARENTID, parentId)
        );
     }
 
     public Integer countByParentIdAndStatusNot(String parentId, Integer status){
         return repository.selectCount(
-            Condition.create().eq(TreeEntity.F_SQL_PARENTID, parentId).ne(TreeEntity.F_STATUS, status)
+            new QueryWrapper<T>().eq(TreeEntity.F_SQL_PARENTID, parentId).ne(TreeEntity.F_STATUS, status)
         );
 
     }
 
     public List<T> findAllByParentIdsLike(String parentIds){
         return repository.findRelationList(
-            Condition.create().like(getClassNameProfix()+TreeEntity.F_SQL_PARENTIDS, parentIds));
+            new QueryWrapper<T>().like(getClassNameProfix()+TreeEntity.F_SQL_PARENTIDS, parentIds));
     }
 
     public List<T> findAllByParentIdAndStatusNot(String parentId, Integer status){
         return repository.findRelationList(
-            Condition.create().eq(getClassNameProfix()+TreeEntity.F_SQL_PARENTID, parentId).ne(getClassNameProfix()+TreeEntity.F_STATUS, status)
+            new QueryWrapper<T>().eq(getClassNameProfix()+TreeEntity.F_SQL_PARENTID, parentId).ne(getClassNameProfix()+TreeEntity.F_STATUS, status)
         );
 
     }
 
     public List<T> findAllByStatusNot(Integer status){
-        return repository.findRelationList(Condition.create().ne(getClassNameProfix()+TreeEntity.F_SQL_STATUS, status));
+        return repository.findRelationList(new QueryWrapper<T>().ne(getClassNameProfix()+TreeEntity.F_SQL_STATUS, status));
 
     }
 
     public List<T> findTop1ByParentIdAndStatusNotOrderBySortDesc(String parentId, Integer status){
 
         return repository.findRelationList(
-            Condition.create().eq(getClassNameProfix()+TreeEntity.F_SQL_PARENTID, parentId).ne(getClassNameProfix()+TreeEntity.F_SQL_STATUS, status)
+            new QueryWrapper<T>().eq(getClassNameProfix()+TreeEntity.F_SQL_PARENTID, parentId).ne(getClassNameProfix()+TreeEntity.F_SQL_STATUS, status)
         );
 
     }
     public List<T> findAllByStatusOrderBySort(Integer status) {
         return repository.findRelationList(
-            Condition.create().eq(getClassNameProfix()+TreeEntity.F_SQL_STATUS, status).orderBy(getClassNameProfix()+TreeEntity.F_SQL_SORT, true)
+            new QueryWrapper<T>().eq(getClassNameProfix()+TreeEntity.F_SQL_STATUS, status)
+                .orderByAsc(getClassNameProfix()+TreeEntity.F_SQL_SORT)
         );
     }
     public List<T> findAllByIdOrParentIdsLike(PK id, String likeParentIds){
         return repository.findRelationList(
-            Condition.create().eq(getClassNameProfix()+TreeEntity.F_SQL_PARENTIDS, likeParentIds).or()
+            new QueryWrapper<T>().eq(getClassNameProfix()+TreeEntity.F_SQL_PARENTIDS, likeParentIds).or()
                 .eq(getClassNameProfix()+TreeEntity.F_SQL_ID, id)
         );
     }
@@ -106,13 +106,14 @@ public abstract class TreeService<Repository extends TreeRepository<T, PK>, T ex
 
 
     @Override
-    public T save(T entity) {
-        String oldParentIds = entity.getParentIds(); // 获取修改前的parentIds，用于更新子节点的parentIds
+    public boolean saveOrUpdate(T entity) {
+        // 获取修改前的parentIds，用于更新子节点的parentIds
+        String oldParentIds = entity.getParentIds();
         if (entity.getParentId() != null) {
             T parent = repository.selectById(entity.getParentId());
             if (parent != null && PublicUtil.isNotEmpty(parent.getId())) {
                 parent.setLeaf(false);
-                insertOrUpdate(parent);
+                super.saveOrUpdate(parent);
                 entity.setParentIds(PublicUtil.toAppendStr(parent.getParentIds(), parent.getId(), ","));
             }
         }
@@ -124,7 +125,7 @@ public abstract class TreeService<Repository extends TreeRepository<T, PK>, T ex
             entity.setLeaf(true);
         }
 //        checkSave(entity);
-        insertOrUpdate(entity);
+        boolean flag = super.saveOrUpdate(entity);
         // 更新子节点 parentIds
         List<T> list = findAllByParentIdsLike((String) entity.getId());
         for (T e : list) {
@@ -133,10 +134,10 @@ public abstract class TreeService<Repository extends TreeRepository<T, PK>, T ex
             }
         }
         if(PublicUtil.isNotEmpty(list)){
-            insertOrUpdateBatch(list);
+            super.saveOrUpdateBatch(list);
         }
         log.debug("Save Information for T: {}", entity);
-        return entity;
+        return flag;
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

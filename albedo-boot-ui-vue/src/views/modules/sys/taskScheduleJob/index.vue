@@ -20,7 +20,7 @@
       </el-table-column>
       <el-table-column align="center" label="分组">
         <template slot-scope="scope">
-          <span>{{scope.row.group}}</span>
+          <span>{{scope.row.jobGroup}}</span>
         </template>
       </el-table-column>
       <el-table-column align="center" label="任务状态">
@@ -86,8 +86,8 @@
         <el-form-item label="名称" prop="name" :rules="[{required: true,message: '请输入名称'},{min: 0,max: 255,message: '长度在 0 到 255 个字符'},]">
                 <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="分组" prop="group" :rules="[{required: true,message: '请输入分组'},{min: 0,max: 255,message: '长度在 0 到 255 个字符'},]">
-                <el-input v-model="form.group"></el-input>
+        <el-form-item label="分组" prop="jobGroup" :rules="[{required: true,message: '请输入分组'},{min: 0,max: 255,message: '长度在 0 到 255 个字符'},]">
+                <el-input v-model="form.jobGroup"></el-input>
         </el-form-item>
         <el-form-item label="任务状态" prop="jobStatus" :rules="[{required: true,message: '请输入任务状态'},{min: 0,max: 255,message: '长度在 0 到 255 个字符'},]">
               <AvueCrudSelect v-model="form.jobStatus" :dic="jobStatusOptions"></AvueCrudSelect>
@@ -153,7 +153,7 @@ export default {
       },
       form: {
         name: undefined,
-        group: undefined,
+        jobGroup: undefined,
         jobStatus: undefined,
         cronExpression: undefined,
         beanClass: undefined,
@@ -288,7 +288,7 @@ export default {
     resetForm() {
       this.form = {
         name: "",
-        group: "",
+        jobGroup: "",
         jobStatus: "",
         cronExpression: "",
         beanClass: "",

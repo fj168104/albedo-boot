@@ -16,10 +16,9 @@ import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.base.Collections3;
 import com.albedo.java.util.domain.QueryCondition;
 import com.albedo.java.vo.gen.GenSchemeVo;
-import com.albedo.java.vo.gen.GenTableColumnVo;
 import com.albedo.java.vo.gen.GenTableVo;
 import com.albedo.java.vo.gen.GenTemplateVo;
-import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
@@ -62,10 +61,9 @@ public class GenSchemeService extends DataVoService<GenSchemeRepository, GenSche
 
         // 查询主表及字段列
         GenTableVo genTableVo = genTableService.findOneVo(genSchemeVo.getGenTableId());
-        genTableVo.setColumnList(
-            (List<GenTableColumnVo>) genTableColumnService.selectList(Condition.create().eq(GenTableColumn.F_SQL_GENTABLEID,
+        genTableVo.setColumnList(genTableColumnService.findAll(new QueryWrapper<GenTableColumn>().eq(GenTableColumn.F_SQL_GENTABLEID,
                 genTableVo.getId()))
-                .stream().map(item->genTableColumnService.copyBeanToVo((GenTableColumn) item)).collect(Collectors.toList())
+                .stream().map(item->genTableColumnService.copyBeanToVo( item)).collect(Collectors.toList())
         );
         Collections.sort(genTableVo.getColumnList());
 

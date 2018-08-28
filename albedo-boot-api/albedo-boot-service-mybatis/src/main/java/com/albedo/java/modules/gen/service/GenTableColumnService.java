@@ -5,7 +5,7 @@ import com.albedo.java.modules.gen.domain.GenTableColumn;
 import com.albedo.java.modules.gen.repository.GenTableColumnRepository;
 import com.albedo.java.util.base.Assert;
 import com.albedo.java.vo.gen.GenTableColumnVo;
-import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,15 +21,15 @@ public class GenTableColumnService extends
     DataVoService<GenTableColumnRepository, GenTableColumn, String, GenTableColumnVo> {
 
     List<GenTableColumn> findAllByGenTableIdOrderBySort(String id){
-        return selectList(Condition.create().eq(GenTableColumn.F_GENTABLEID,id)
-            .orderBy(GenTableColumn.F_SORT));
+        return findAll(new QueryWrapper<GenTableColumn>().eq(GenTableColumn.F_GENTABLEID,id)
+            .orderByAsc(GenTableColumn.F_SORT));
     }
 
 
     public void deleteByTableId(String id, String currentAuditor) {
         List<GenTableColumn> genTableColumnList = findAllByGenTableIdOrderBySort(id);
         Assert.assertNotNull(genTableColumnList, "id " + id + " genTableColumn 不能为空");
-        deleteById(genTableColumnList.stream().map(item->item.getId()).collect(Collectors.toList()));
+        super.deleteBatchIds(genTableColumnList.stream().map(item->item.getId()).collect(Collectors.toList()));
 
     }
 

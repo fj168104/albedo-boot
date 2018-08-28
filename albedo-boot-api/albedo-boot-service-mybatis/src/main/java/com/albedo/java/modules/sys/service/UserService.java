@@ -3,20 +3,25 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
 import com.albedo.java.common.persistence.service.DataVoService;
+import com.albedo.java.modules.sys.domain.Org;
+import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.User;
-import com.albedo.java.modules.sys.repository.OrgRepository;
-import com.albedo.java.modules.sys.repository.RoleRepository;
 import com.albedo.java.modules.sys.repository.UserRepository;
+import com.albedo.java.util.BeanVoUtil;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.RandomUtil;
 import com.albedo.java.util.domain.PageModel;
 import com.albedo.java.util.domain.QueryCondition;
+import com.albedo.java.util.exception.RuntimeMsgException;
+import com.albedo.java.vo.sys.UserExcelVo;
 import com.albedo.java.vo.sys.UserVo;
-import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.collect.Lists;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.validation.Valid;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -31,15 +36,15 @@ import java.util.Optional;
 public class UserService extends DataVoService<UserRepository, User, String, UserVo> {
 
 
-    private final OrgRepository orgRepository;
+    private final OrgService orgService;
 
-    private final RoleRepository roleRepository;
+    private final RoleService roleService;
 
     private final CacheManager cacheManager;
 
-    public UserService(OrgRepository orgRepository, RoleRepository roleRepository, CacheManager cacheManager) {
-        this.orgRepository = orgRepository;
-        this.roleRepository = roleRepository;
+    public UserService(OrgService orgService, RoleService roleService, CacheManager cacheManager) {
+        this.orgService = orgService;
+        this.roleService = roleService;
         this.cacheManager = cacheManager;
     }
 
@@ -64,7 +69,7 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     @Override
     public UserVo findOneVo(String id) {
         User relationOne = findRelationOne(id);
-        relationOne.setRoles(roleRepository.selectListByUserId(id));
+        relationOne.setRoles(roleService.selectListByUserId(id));
         return copyBeanToVo(relationOne);
     }
 
@@ -81,7 +86,7 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(PublicUtil.getCurrentDate());
         user.setActivated(true);
-        insertOrUpdate(user);
+        super.saveOrUpdate(user);
         if (PublicUtil.isNotEmpty(user.getRoleIdList())) {
             repository.deleteUserRoles(user.getId());
             repository.addUserRoles(user);
@@ -139,10 +144,11 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
         return pm;
     }
 
-    public void changePassword(String loginId, String newPassword) {
-        Optional.of(selectOne(Condition.create().eq(User.F_LOGINID, loginId))).ifPresent(
+    public void changePassword(String loginId, String newPassword, String avatar) {
+        Optional.of(repository.selectOne(new QueryWrapper<User>().eq(User.F_LOGINID, loginId))).ifPresent(
             user -> {
                 user.setPassword(newPassword);
+                user.setAvatar(avatar);
                 repository.updateById(user);
                 cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLoginId());
                 log.debug("Changed password for User: {}", user);
@@ -165,17 +171,36 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     @Override
     public void lockOrUnLock(List<String> idList) {
         super.lockOrUnLock(idList);
-        selectBatchIds(idList).forEach(user ->
+        repository.selectBatchIds(idList).forEach(user ->
             cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLoginId()));
     }
 
 
     @Override
-    public boolean deleteBatchIds(Collection<? extends Serializable> idList) {
-
-        boolean rs = super.deleteBatchIds(idList);
-        selectBatchIds(idList).forEach(user ->
+    public Integer deleteBatchIds(Collection<String> idList) {
+        repository.selectBatchIds(idList).forEach(user ->
                 cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(user.getLoginId()));
+        Integer rs = repository.deleteBatchIds(idList);
         return rs;
+    }
+
+    public void save(@Valid UserExcelVo userExcelVo) {
+        User user = new User();
+        BeanVoUtil.copyProperties(userExcelVo, user);
+        Org org = orgService.findOne(new QueryWrapper<Org>().eq(Org.F_SQL_NAME, userExcelVo.getOrgName()));
+        if(org!=null){
+            user.setOrgId(org.getId());
+        }
+        Role role = roleService.findOne(new QueryWrapper<Role>().eq(Role.F_SQL_NAME, userExcelVo.getRoleNames()));
+        if(role==null){
+            throw new RuntimeMsgException("无法获取角色"+userExcelVo.getRoleNames()+"信息");
+        }
+        user.setRoleIdList(Lists.newArrayList(role.getId()));
+        saveOrUpdate(user);
+    }
+
+    public UserVo findExcelOneVo() {
+        User user = findOne(new QueryWrapper<User>().ne(User.F_SQL_ID, "1"));
+        return BeanVoUtil.copyPropertiesByClass(user, UserVo.class);
     }
 }

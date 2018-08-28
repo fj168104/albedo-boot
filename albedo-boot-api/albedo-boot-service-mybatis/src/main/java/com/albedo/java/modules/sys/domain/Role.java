@@ -6,8 +6,8 @@ import com.albedo.java.util.annotation.DictType;
 import com.albedo.java.util.annotation.SearchField;
 import com.albedo.java.util.base.Collections3;
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,9 +40,10 @@ public class Role extends IdEntity<Role, String> {
     public static final String F_SORT = "sort";
     public static final String F_NAME = "name";
     public static final String F_SYSDATA = "sysData";
+    public static final String F_SQL_NAME = "name_";
     private static final long serialVersionUID = 1L;
     /*** 角色名称 */
-    @TableField("name_")
+    @TableField(F_SQL_NAME)
     @SearchField
     private String name;
     /*** 名称全拼 */

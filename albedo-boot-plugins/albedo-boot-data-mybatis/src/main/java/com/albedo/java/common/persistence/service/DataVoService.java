@@ -114,7 +114,7 @@ public abstract class DataVoService<Repository extends BaseRepository<T, PK>,
         } catch (Exception e) {
             log.warn("{}", e);
         }
-        save(entity);
+        saveOrUpdate(entity);
     }
 
 }

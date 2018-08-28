@@ -5,10 +5,8 @@ package com.albedo.java.common.persistence.domain;
 
 import com.albedo.java.util.annotation.DictType;
 import com.albedo.java.util.annotation.SearchField;
-import com.baomidou.mybatisplus.activerecord.Model;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableLogic;
-import com.baomidou.mybatisplus.enums.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModelProperty;
 
 /**

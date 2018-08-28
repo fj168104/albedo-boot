@@ -61,12 +61,12 @@ public class TaskUtils {
                     logger.warn("msg {}", e);
                 }
             }
-            logger.info("任务 = [{}] [{}]---------------启动", scheduleJob.getGroup(), scheduleJob.getName());
+            logger.info("任务 = [{}] [{}]---------------启动", scheduleJob.getJobGroup(), scheduleJob.getName());
             Reflections.invokeMethodByName(object, scheduleJob.getMethodName(), paramsList.toArray());
         } catch (SecurityException e) {
             e.printStackTrace();
             logger.warn("msg : {}", e.getMessage());
         }
-        logger.info("任务 = [{}] [{}]---------------执行成功", scheduleJob.getGroup(), scheduleJob.getName());
+        logger.info("任务 = [{}] [{}]---------------执行成功", scheduleJob.getJobGroup(), scheduleJob.getName());
     }
 }

@@ -6,7 +6,7 @@ import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.domain.ComboData;
 import com.albedo.java.util.domain.ComboQuery;
 import com.albedo.java.util.domain.ComboSearch;
-import com.baomidou.mybatisplus.MybatisSqlSessionTemplate;
+import com.baomidou.mybatisplus.extension.MybatisSqlSessionTemplate;
 import com.google.common.collect.Lists;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.slf4j.Logger;

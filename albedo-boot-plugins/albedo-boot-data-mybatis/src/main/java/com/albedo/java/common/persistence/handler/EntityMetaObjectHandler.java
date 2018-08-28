@@ -3,13 +3,13 @@ package com.albedo.java.common.persistence.handler;
 import com.albedo.java.common.persistence.domain.DataEntity;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.base.Assert;
-import com.baomidou.mybatisplus.mapper.MetaObjectHandler;
+import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.data.domain.AuditorAware;
 
 import java.util.Date;
 
-public class EntityMetaObjectHandler extends MetaObjectHandler {
+public class EntityMetaObjectHandler implements MetaObjectHandler {
 
    private final AuditorAware auditorAware;
 
@@ -21,10 +21,10 @@ public class EntityMetaObjectHandler extends MetaObjectHandler {
 
     @Override
     public void insertFill(MetaObject metaObject) {
-        setFieldValByName(DataEntity.F_CREATEDBY, auditorAware.getCurrentAuditor(), metaObject);
+        setFieldValByName(DataEntity.F_CREATEDBY, auditorAware.getCurrentAuditor().get(), metaObject);
         Date date = PublicUtil.getCurrentDate();
         setFieldValByName(DataEntity.F_CREATEDDATE, date, metaObject);
-        setFieldValByName(DataEntity.F_LASTMODIFIEDBY, auditorAware.getCurrentAuditor(), metaObject);
+        setFieldValByName(DataEntity.F_LASTMODIFIEDBY, auditorAware.getCurrentAuditor().get(), metaObject);
         setFieldValByName(DataEntity.F_LASTMODIFIEDDATE, date, metaObject);
 
     }
@@ -32,7 +32,7 @@ public class EntityMetaObjectHandler extends MetaObjectHandler {
     @Override
     public void updateFill(MetaObject metaObject) {
         Date date = PublicUtil.getCurrentDate();
-        setFieldValByName(DataEntity.F_LASTMODIFIEDBY, auditorAware.getCurrentAuditor(), metaObject);
+        setFieldValByName(DataEntity.F_LASTMODIFIEDBY, auditorAware.getCurrentAuditor().get(), metaObject);
         setFieldValByName(DataEntity.F_LASTMODIFIEDDATE, date, metaObject);
     }
 }

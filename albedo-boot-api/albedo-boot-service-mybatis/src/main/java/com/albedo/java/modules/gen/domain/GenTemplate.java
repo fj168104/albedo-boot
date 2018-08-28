@@ -2,8 +2,8 @@ package com.albedo.java.modules.gen.domain;
 
 import com.albedo.java.common.persistence.domain.IdEntity;
 import com.albedo.java.util.StringUtil;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.google.common.collect.Lists;
 import lombok.AllArgsConstructor;
 import lombok.Data;

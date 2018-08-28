@@ -4,14 +4,14 @@
 package com.albedo.java.common.persistence.repository;
 
 import com.albedo.java.common.persistence.domain.GeneralEntity;
-import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.session.RowBounds;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * DAO支持类实现
@@ -40,6 +40,6 @@ public interface BaseRepository<T extends GeneralEntity, pk extends Serializable
      * @param wrapper   实体对象封装操作类（可以为 null）
      * @return List<T>
      */
-    List<T> findRelationPage(RowBounds rowBounds, @Param("ew") Wrapper<T> wrapper);
+    List<T> findRelationPage(IPage<T> rowBounds, @Param("ew") Wrapper<T> wrapper);
 
 }

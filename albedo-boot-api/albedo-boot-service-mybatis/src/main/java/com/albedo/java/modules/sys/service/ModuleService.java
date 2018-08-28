@@ -3,7 +3,6 @@ package com.albedo.java.modules.sys.service;
 import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.domain.Module;
-import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.repository.ModuleRepository;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.StringUtil;
@@ -12,11 +11,13 @@ import com.albedo.java.vo.sys.ModuleVo;
 import com.albedo.java.vo.sys.query.ModuleMenuTreeResult;
 import com.albedo.java.vo.sys.query.ModuleTreeQuery;
 import com.albedo.java.vo.sys.query.TreeResult;
-import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -58,13 +59,15 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<TreeResult> findTreeData(ModuleTreeQuery moduleTreeQuery, List<Module> moduleList) {
-        String type = moduleTreeQuery != null ? moduleTreeQuery.getType() : null,
-                all = moduleTreeQuery != null ? moduleTreeQuery.getAll() : null;
-
+        String extId = moduleTreeQuery != null ? moduleTreeQuery.getExtId() : null,
+            type = moduleTreeQuery != null ? moduleTreeQuery.getType() : null,
+            all = moduleTreeQuery != null ? moduleTreeQuery.getAll() : null;
+        Collections.sort(moduleList, Comparator.comparing(Module::getSort));
         List<TreeResult> mapList = Lists.newArrayList();
         for (Module e : moduleList) {
-            TreeResult treeResult = null;
-            if ((all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
+            TreeResult treeResult;
+            if ((PublicUtil.isEmpty(extId)|| PublicUtil.isEmpty(e.getParentIds()) || (PublicUtil.isNotEmpty(extId) && !extId.equals(e.getId()) && e.getParentIds() != null && e.getParentIds().indexOf("," + extId + ",") == -1))
+                && (all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
 
                 if ("menu".equals(type) && !Module.TYPE_MENU.equals(e.getType())) {
                     continue;
@@ -86,14 +89,12 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
 
 
     public void generatorModuleData(String moduleName, String parentModuleId, String url) {
-        Module currentModule = selectOne(Condition.create().eq(Module.F_NAME, moduleName));
+        Module currentModule = repository.selectOne(new QueryWrapper<Module>().eq(Module.F_NAME, moduleName));
         if (currentModule != null) {
-
-            repository.delete(Condition.create().eq(Module.F_ID, currentModule.getId()).or(Module.F_PARENTID, currentModule.getId()));
+            repository.delete(new QueryWrapper<Module>().eq(Module.F_ID, currentModule.getId()).or().eq(Module.F_PARENTID, currentModule.getId()));
         }
         Module parentModule = repository.selectById(parentModuleId);
         if (parentModule == null) {
-
             new Exception(PublicUtil.toAppendStr("根据模块id[", parentModuleId, "无法查询到模块信息]"));
         }
         String permission = url.replace("/", "_").substring(1);

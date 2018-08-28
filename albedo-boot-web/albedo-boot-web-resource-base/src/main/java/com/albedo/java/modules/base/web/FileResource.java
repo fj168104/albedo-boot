@@ -29,7 +29,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -82,7 +81,7 @@ public class FileResource extends BaseResource {
             fileDataList.add(fileData);
         }
         Assert.assertIsTrue(fileDataList.size()>0, "上传文件不能为空");
-        fileDataService.save(fileDataList);
+        fileDataService.saveOrUpdateBatch(fileDataList);
         return ResultBuilder.buildDataOk(fileDataList.stream()
             .map(item->BeanVoUtil.copyPropertiesByClass(item, FileDataResultVo.class)).collect(Collectors.toList()));
     }

@@ -18,11 +18,12 @@ import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.Order;
 import com.albedo.java.util.domain.PageModel;
 import com.albedo.java.util.domain.QueryCondition;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.SqlHelper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.sql.SqlHelper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,9 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Service基类
@@ -76,17 +75,18 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
     }
 
 
-    public EntityWrapper createEntityWrapper(List<Order> orders,QueryCondition... queryConditions){
+    public QueryWrapper<T> createEntityWrapper(List<Order> orders, QueryCondition... queryConditions){
+
         return DynamicSpecifications.
             bySearchQueryCondition(getPersistentClass(), queryConditions).setOrders(orders)
             .toEntityWrapper();
     }
-    public EntityWrapper createEntityWrapper(List<QueryCondition> queryConditions){
+    public QueryWrapper<T> createEntityWrapper(List<QueryCondition> queryConditions){
         return DynamicSpecifications.
             bySearchQueryCondition(getPersistentClass(), queryConditions)
             .toEntityWrapper();
     }
-    public EntityWrapper createEntityWrapper(QueryCondition... queryConditions){
+    public QueryWrapper<T> createEntityWrapper(QueryCondition... queryConditions){
        return createEntityWrapper(null, queryConditions);
     }
 
@@ -100,7 +100,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
 //                    null,
 //                    paramsMap, true, true);
 //            paramsMap.put(DynamicSpecifications.MYBITS_SEARCH_DSF, sqlConditionDsf);
-            EntityWrapper entityWrapper = createEntityWrapper(conditionList);
+            QueryWrapper<T> entityWrapper = createEntityWrapper(conditionList);
             Integer obj = countBasicAll(entityWrapper);
             if (obj == null || obj == 0) {
                 rs = true;
@@ -133,10 +133,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
         return doCheckWithEntity(entity, maps);
     }
 
-    public List<T> save(List<T> entitys) {
-        entitys.forEach(item -> save(item));
-        return entitys;
-    }
+
 
     //	public void checkSave(T entity){
 //		if(entity.isNew()){
@@ -145,24 +142,6 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
 //			entity.preUpdate();
 //		}
 //	}
-
-
-    public T save(T entity) {
-        insertOrUpdate(entity);
-        log.debug("Save Information for Entity: {}", entity);
-        return entity;
-    }
-
-
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public T findOne(pk id) {
-        return repository.selectById(id);
-    }
-
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Optional<T> findOneById(pk id) {
-        return Optional.of(findOne(id));
-    }
 
 
     public T findOne(Map<String, Object> paramsMap) {
@@ -176,10 +155,8 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
         return repository.selectByMap(paramsMap);
     }
 
-    public Page<T> findAll(Pageable pageable, Map<String, Object> paramsMap) {
-
-        return selectPage(new PageQuery<>(pageable, paramsMap), new EntityWrapper<>());
-
+    public IPage<T> findAll(Pageable pageable, Wrapper<T> queryWrapper) {
+        return super.page(new PageQuery(pageable), queryWrapper);
     }
 
     public Integer countBasicAll(Wrapper<T> wrapper) {
@@ -216,8 +193,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public Integer count(SpecificationDetail specificationDetail) {
         try {
-            specificationDetail.setPersistentClass(getPersistentClass());
-            return repository.selectCount(specificationDetail.toEntityWrapper());
+            return repository.selectCount(specificationDetail.toEntityWrapper(getPersistentClass()));
         } catch (Exception e) {
             log.error(e.getMessage());
             Assert.buildException(e.getMessage());
@@ -233,8 +209,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<T> findAll(SpecificationDetail specificationDetail) {
-        specificationDetail.setPersistentClass(getPersistentClass());
-        return findAll(specificationDetail.toEntityWrapper());
+        return findAll(specificationDetail.toEntityWrapper(getPersistentClass()));
     }
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<T> findAll(Wrapper<T> wrapper) {
@@ -259,8 +234,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel<T> findPage(PageModel<T> pm, SpecificationDetail<T> specificationDetail) {
         if(specificationDetail!=null){
-            specificationDetail.setPersistentClass(getPersistentClass());
-            return findPageWrapper(pm, specificationDetail.toEntityWrapper());
+            return findPageWrapper(pm, specificationDetail.toEntityWrapper(getPersistentClass()));
         }
         return findPageWrapper(pm, null);
 
@@ -277,7 +251,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
     public PageModel<T> findPageWrapper(PageModel<T> pm, Wrapper<T> wrapper) {
         try {
 
-            Page page = selectPage(new PageQuery<>(pm, null), wrapper);
+            IPage page = findAll(pm ,wrapper);
             pm.setData(page.getRecords());
             pm.setRecordsTotal(page.getTotal());
 
@@ -298,8 +272,8 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel<T> findRelationPage(PageModel<T> pm, SpecificationDetail<T> specificationDetail) {
         if(specificationDetail!=null){
-            specificationDetail.setPersistentClass(getPersistentClass()).setRelationQuery(true);
-            return findRelationPageWrapper(pm, specificationDetail.toEntityWrapper());
+            specificationDetail.setRelationQuery(true);
+            return findRelationPageWrapper(pm, specificationDetail.toEntityWrapper(getPersistentClass()));
         }
         return findRelationPageWrapper(pm, null);
 
@@ -315,7 +289,7 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PageModel<T> findRelationPageWrapper(PageModel<T> pm, Wrapper<T> wrapper) {
         try {
-            PageQuery<T> page = new PageQuery(pm, null);
+            PageQuery<T> page = new PageQuery(pm);
             page.setRecords(repository.findRelationPage(page, (Wrapper<T>) SqlHelper.fillWrapper(page, wrapper)));
             pm.setData(page.getRecords());
             pm.setRecordsTotal(page.getTotal());
@@ -325,5 +299,46 @@ public abstract class BaseService<Repository extends BaseRepository<T, pk>,
             Assert.buildException(e.getMessage());
         }
         return null;
+    }
+
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public Optional<T> findById(pk id){
+        return Optional.ofNullable(repository.selectById(id));
+    }
+    @Transactional(readOnly = true, rollbackFor = Exception.class)
+    public T findOneById(pk id){
+        return repository.selectById(id);
+    }
+
+    public long findCount() {
+        return repository.selectCount(null);
+    }
+    public long findCount(SpecificationDetail<T> specificationDetail) {
+        return repository.selectCount(specificationDetail.toEntityWrapper(persistentClass));
+    }
+    public T findOne(QueryWrapper<T> queryWrapper) {
+        return repository.selectOne(queryWrapper);
+    }
+
+    public List<T> findListByIds(Collection<pk> ids) {
+        return repository.selectBatchIds(ids);
+    }
+
+    public Integer deleteBatchIds(Collection<pk> ids){
+        return repository.deleteBatchIds(ids);
+    }
+
+    /**
+     * 逻辑删除
+     *
+     * @param id
+     * @return
+     */
+    public void deleteById(pk id) {
+        repository.deleteById(id);
+    }
+
+    public Integer deleteAll() {
+        return repository.delete(null);
     }
 }

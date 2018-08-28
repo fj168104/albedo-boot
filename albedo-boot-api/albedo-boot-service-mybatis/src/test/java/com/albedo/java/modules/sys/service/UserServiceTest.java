@@ -1,7 +1,6 @@
 package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.config.TestConfig;
-import com.albedo.java.modules.sys.domain.Module;
 import com.albedo.java.modules.sys.domain.Org;
 import com.albedo.java.modules.sys.domain.Role;
 import com.albedo.java.modules.sys.domain.User;
@@ -9,7 +8,6 @@ import com.albedo.java.modules.sys.repository.ModuleRepository;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.util.domain.PageModel;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
@@ -69,7 +66,7 @@ public class UserServiceTest {
     }
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         orgParent = new Org();
         orgParent.setName("nameParent1");
         orgParent.setCode("codeParent1");
@@ -121,31 +118,31 @@ public class UserServiceTest {
     }
 
     private void flushTestUsers() {
-        orgParent = orgService.save(orgParent);
+        orgService.save(orgParent);
         org.setParentId(orgParent.getId());
-        org = orgService.save(org);
-        roles =  roleService.save(roles);
+        orgService.saveOrUpdate(org);
+        roleService.saveBatch(roles);
 
         user1.setOrgId(org.getId());
         user1.setRoles(roles);
-        user1 = userService.save(user1);
+        userService.saveOrUpdate(user1);
         userRepository.deleteUserRoles(user1.getId());
         userRepository.addUserRoles(user1);
 
 
         user2.setOrgId(org.getId());
         user2.setRoles(roles);
-        userService.save(user2);
+        userService.saveOrUpdate(user2);
 
 
         user3.setOrgId(org.getId());
         user3.setRoles(roles);
-        userService.save(user3);
+        userService.saveOrUpdate(user3);
 
 
         user4.setOrgId(org.getId());
         user4.setRoles(roles);
-        userService.save(user4);
+        userService.saveOrUpdate(user4);
 
 
         id = user1.getId();
@@ -216,10 +213,9 @@ public class UserServiceTest {
     @Test
     public void savesCollectionCorrectly() throws Exception {
 
-        boolean b = userService.insertOrUpdateBatch(Arrays.asList(user1, user2, user3));
+        Boolean b = userService.saveOrUpdateBatch(Arrays.asList(user1, user2, user3));
         assertThat(b, is(true));
-//        assertThat(result.size(), is(3));
-        assertThat(userService.selectBatchIds(Lists.newArrayList(user1.getId(), user2.getId(), user3.getId())),
+        assertThat(userService.findListByIds(Lists.newArrayList(user1.getId(), user2.getId(), user3.getId())),
             hasItems(user1, user2, user3));
     }
 
@@ -363,7 +359,7 @@ public class UserServiceTest {
 //        User user = new User();
 //        user.setLoginId("tempLoginId");
 //        user.setEmail("gierke@synyx.de");
-//        userRepository.save(user);
+//        userRepository.saveOrUpdate(user);
 //
 //        assertThat(userRepository.count() == count + 1, is(true));
 //    }
@@ -392,7 +388,7 @@ public class UserServiceTest {
 ////
 ////        user1.addColleague(user2);
 ////        user3.addColleague(user1);
-////        userRepository.save(Arrays.asList(user1, user3));
+////        userRepository.saveOrUpdate(Arrays.asList(user1, user3));
 ////
 ////        List<User> result = userRepository.findByColleaguesLastname(user2.getLastname());
 ////

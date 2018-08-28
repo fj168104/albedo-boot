@@ -3,7 +3,7 @@ package com.albedo.java.web.rest.base;
 import com.albedo.java.util.DateUtil;
 import com.albedo.java.util.Json;
 import com.albedo.java.util.exception.RuntimeMsgException;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;

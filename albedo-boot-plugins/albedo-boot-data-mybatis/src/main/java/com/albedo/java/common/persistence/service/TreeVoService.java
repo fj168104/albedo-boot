@@ -105,7 +105,7 @@ public class TreeVoService<Repository extends TreeRepository<T, PK>,
         } catch (Exception e) {
             log.warn("{}", e);
         }
-        save(entity);
+        saveOrUpdate(entity);
         form.setId((String) entity.getId());
         return form;
     }
@@ -122,7 +122,7 @@ public class TreeVoService<Repository extends TreeRepository<T, PK>,
         List<T> tempList = super.findTop1ByParentIdAndStatusNotOrderBySortDesc(parentId, BaseEntity.FLAG_DELETE);
         if(PublicUtil.isNotEmpty(tempList)){
             T entity = tempList.get(0);
-            entity.setParent(selectById(entity.getParentId()));
+            entity.setParent(repository.selectById(entity.getParentId()));
             return Optional.of(copyBeanToVo(entity));
         }
         return  Optional.empty();

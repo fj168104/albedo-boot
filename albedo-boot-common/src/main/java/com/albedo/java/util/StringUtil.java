@@ -2,7 +2,7 @@ package com.albedo.java.util;
 
 import com.albedo.java.util.base.Encodes;
 import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 
 import java.io.File;

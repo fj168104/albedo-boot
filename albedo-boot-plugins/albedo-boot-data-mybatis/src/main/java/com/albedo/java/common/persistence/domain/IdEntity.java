@@ -1,20 +1,22 @@
 package com.albedo.java.common.persistence.domain;
 
-import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.annotation.SearchField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 
+/**
+ * @author somewhere
+ */
 public class IdEntity<T extends BaseEntity, PK extends Serializable> extends DataEntity<T> {
 
     private static final long serialVersionUID = 1L;
     @SearchField
     @TableId(value = GeneralEntity.F_SQL_ID, type = IdType.UUID)
-    protected PK id; // 编号
+    protected PK id;
 
     public IdEntity() {
         super();
@@ -30,7 +32,7 @@ public class IdEntity<T extends BaseEntity, PK extends Serializable> extends Dat
     }
 
     public void setId(PK id) {
-        if (PublicUtil.isNotEmpty(id)) this.id = id;
+        this.id = id;
     }
     @Override
     public boolean equals(Object o) {

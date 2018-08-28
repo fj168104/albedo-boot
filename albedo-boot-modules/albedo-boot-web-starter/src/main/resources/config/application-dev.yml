@@ -94,7 +94,7 @@ albedo:
             enabled: false
             host: localhost
             port: 2003
-            prefix: albedoBootCloudGateway
+            prefix: albedoBootWebStarter
         prometheus: # Use the "prometheus" Maven profile to have the Prometheus dependencies
             enabled: false
             endpoint: /prometheusMetrics

@@ -6,14 +6,12 @@ import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.domain.Order;
 import com.albedo.java.util.domain.QueryCondition;
 import com.alibaba.fastjson.JSONArray;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.Serializable;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -49,7 +47,6 @@ public class SpecificationDetail<T> implements Serializable {
         if(persistentClass!=null){
             this.persistentClass = persistentClass;
             this.classNameProfix = StringUtil.toFirstLowerCase(persistentClass.getSimpleName())+".";
-
         }
         return this;
     }
@@ -104,7 +101,9 @@ public class SpecificationDetail<T> implements Serializable {
                         "] is not json or other error", e.getMessage()));
             }
         }
-        if (list == null) list = Lists.newArrayList();
+        if (list == null) {
+            list = Lists.newArrayList();
+        }
         List<QueryCondition> rsList = Lists.newArrayList(list);
         this.andQueryConditions.addAll(rsList);
         return this;
@@ -149,8 +148,9 @@ public class SpecificationDetail<T> implements Serializable {
     }
 
     public SpecificationDetail<T> orAll(Collection<QueryCondition> conditions) {
-        if(PublicUtil.isNotEmpty(conditions))
-        this.orQueryConditions.addAll(conditions);
+        if(PublicUtil.isNotEmpty(conditions)) {
+            this.orQueryConditions.addAll(conditions);
+        }
         return this;
     }
 
@@ -164,7 +164,9 @@ public class SpecificationDetail<T> implements Serializable {
                         "] is not json or other error", e.getMessage()));
             }
         }
-        if (list == null) list = Lists.newArrayList();
+        if (list == null) {
+            list = Lists.newArrayList();
+        }
         List<QueryCondition> rsList = Lists.newArrayList(list);
         this.orQueryConditions.addAll(rsList);
         return this;
@@ -206,12 +208,15 @@ public class SpecificationDetail<T> implements Serializable {
      * @return 该实例
      */
     public SpecificationDetail<T> clearAll() {
-        if (!this.andQueryConditions.isEmpty())
+        if (!this.andQueryConditions.isEmpty()) {
             this.andQueryConditions.clear();
-        if (!this.orQueryConditions.isEmpty())
+        }
+        if (!this.orQueryConditions.isEmpty()) {
             this.orQueryConditions.clear();
-        if (!this.orders.isEmpty())
+        }
+        if (!this.orders.isEmpty()) {
             this.orders.clear();
+        }
         return this;
     }
 
@@ -221,8 +226,9 @@ public class SpecificationDetail<T> implements Serializable {
      * @return 该实例
      */
     public SpecificationDetail<T> clearAnd() {
-        if (!this.andQueryConditions.isEmpty())
+        if (!this.andQueryConditions.isEmpty()) {
             this.andQueryConditions.clear();
+        }
         return this;
     }
 
@@ -232,8 +238,9 @@ public class SpecificationDetail<T> implements Serializable {
      * @return 该实例
      */
     public SpecificationDetail<T> clearOr() {
-        if (!this.orQueryConditions.isEmpty())
+        if (!this.orQueryConditions.isEmpty()) {
             this.andQueryConditions.clear();
+        }
         return this;
     }
 
@@ -243,8 +250,9 @@ public class SpecificationDetail<T> implements Serializable {
      * @return 该实例
      */
     public SpecificationDetail<T> clearOrder() {
-        if (!this.orders.isEmpty())
+        if (!this.orders.isEmpty()) {
             this.orders.clear();
+        }
         return this;
     }
 
@@ -262,16 +270,14 @@ public class SpecificationDetail<T> implements Serializable {
     }
 
 
-    /**
-     * 连接条件
-     */
-    public enum Condition {
-        AND, OR
+
+    public QueryWrapper<T> toEntityWrapper(){
+       return QueryWrapperUtil.convertSpecificationDetail(this);
     }
 
-
-    public EntityWrapper toEntityWrapper(){
-       return QueryWrapperUtil.convertSpecificationDetail(this);
+    public QueryWrapper<T> toEntityWrapper(Class<T> persistentClass){
+        this.setPersistentClass(persistentClass);
+        return QueryWrapperUtil.convertSpecificationDetail(this);
     }
 
 }

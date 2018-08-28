@@ -3,7 +3,7 @@ package com.albedo.java.common.persistence.domain;
 import com.albedo.java.common.persistence.annotation.ManyToOne;
 import com.albedo.java.util.annotation.SearchField;
 import com.albedo.java.util.domain.QueryCondition.Operator;
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotation.TableField;
 
 /**
  * 数据TreeEntity类

@@ -11,7 +11,7 @@
 
     <artifactId>albedo-boot-data-mybatis</artifactId>
     <properties>
-        <mybatis-plus.version>2.1.9</mybatis-plus.version>
+        <mybatis-plus.version>3.0-RC1</mybatis-plus.version>
     </properties>
 <dependencies>
     <dependency>
