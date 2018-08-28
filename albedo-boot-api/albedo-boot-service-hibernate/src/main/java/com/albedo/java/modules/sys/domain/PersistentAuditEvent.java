@@ -1,5 +1,7 @@
 package com.albedo.java.modules.sys.domain;
 
+import com.albedo.java.common.persistence.domain.GeneralEntity;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -8,14 +10,14 @@ import java.util.Map;
 /**
  * Persist AuditEvent managed by the Spring Boot actuator
  *
- * @see org.springframework.boot.actuate.audit.AuditEvent
  */
 @Entity
 @Table(name = "jhi_persistent_audit_event")
-public class PersistentAuditEvent {
+public class PersistentAuditEvent extends GeneralEntity {
 
+    public static final String F_AUDITEVENTDATE = "auditEventDate";
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_id")
     private Long id;
 

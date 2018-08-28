@@ -4,7 +4,7 @@
     <parent>
         <groupId>com.albedo.java</groupId>
         <artifactId>albedo-boot-plugins</artifactId>
-        <version>1.1.0-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
     <artifactId>albedo-boot-quartz</artifactId>
     <dependencies>
@@ -17,6 +17,11 @@
             <groupId>org.quartz-scheduler</groupId>
             <artifactId>quartz</artifactId>
             <version>2.2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 </project>

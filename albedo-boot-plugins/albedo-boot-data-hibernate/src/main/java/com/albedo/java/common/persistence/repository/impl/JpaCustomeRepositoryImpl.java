@@ -30,7 +30,7 @@ import java.util.Map;
 
 @Component
 @Transactional
-public class JpaCustomeRepositoryImpl<T extends BaseEntity> implements JpaCustomeRepository<T> {
+public class JpaCustomeRepositoryImpl<T extends GeneralEntity> implements JpaCustomeRepository<T> {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     @PersistenceContext
@@ -206,11 +206,11 @@ public class JpaCustomeRepositoryImpl<T extends BaseEntity> implements JpaCustom
             List<Object[]> rsList = (List<Object[]>) findListByHQL(sb.toString());
             for (Object[] o : rsList) {
                 ComboData data = new ComboData();
-                data.setId(PublicUtil.toStrString(o[0]));
-                data.setName(PublicUtil.toStrString(o[1]));
-                Map<String, Object> map = Maps.newHashMap();
-                if (flag)
+                data.setValue(PublicUtil.toStrString(o[0]));
+                data.setLabel(PublicUtil.toStrString(o[1]));
+                if (flag) {
                     data.setPId(PublicUtil.toStrString(o[2]));
+                }
                 mapList.add(data);
             }
         }

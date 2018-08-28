@@ -14,6 +14,7 @@ import com.albedo.java.util.domain.QueryCondition;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,7 +33,7 @@ public class DataService<Repository extends DataRepository<T, PK>, T extends Dat
     }
 
     public void operateStatusById(PK id, Integer status) {
-        T entity = repository.findOne(id);
+        T entity = repository.findOneById(id);
         Assert.assertNotNull(entity, "无法查询到对象信息");
         entity.setStatus(status);
 //        entity.setLastModifiedBy(lastModifiedBy);
@@ -46,7 +47,7 @@ public class DataService<Repository extends DataRepository<T, PK>, T extends Dat
      * @param idList
      * @return
      */
-    public void deleteById(List<PK> idList) {
+    public void deleteBatchIds(List<PK> idList) {
         for (PK id : idList) {
             deleteById(id);
         }
@@ -55,7 +56,7 @@ public class DataService<Repository extends DataRepository<T, PK>, T extends Dat
     public void delete(List<PK> ids) {
         Assert.assertNotNull(ids, "ids 信息为空，操作失败");
         ids.forEach(id -> {
-            T entity = repository.findOne(id);
+            T entity = repository.findOneById(id);
             Assert.assertNotNull(entity, "对象 " + id + " 信息为空，删除失败");
             deleteById(id);
             log.debug("Deleted Entity: {}", entity);
@@ -65,7 +66,7 @@ public class DataService<Repository extends DataRepository<T, PK>, T extends Dat
     public void lockOrUnLock(List<PK> ids) {
         Assert.assertNotNull(ids, "ids 信息为空，操作失败");
         ids.forEach(id -> {
-            T entity = repository.findOne(id);
+            T entity = repository.findOneById(id);
             Assert.assertNotNull(entity, "对象 " + id + " 信息为空，操作失败");
             operateStatusById(id, BaseEntity.FLAG_NORMAL.equals(entity.getStatus()) ? BaseEntity.FLAG_UNABLE : BaseEntity.FLAG_NORMAL);
             log.debug("LockOrUnLock Entity: {}", entity);
@@ -74,11 +75,7 @@ public class DataService<Repository extends DataRepository<T, PK>, T extends Dat
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public T findOne(PK id) {
-        return repository.findOne(id);
-    }
-
-    public Optional<T> findOneById(String id){
+    public T findOneById(PK id){
         return  repository.findOneById(id);
     }
 
@@ -106,5 +103,12 @@ public class DataService<Repository extends DataRepository<T, PK>, T extends Dat
     }
     public List<ComboData> findJson(ComboSearch comboSearch) {
         return baseRepository.findJson(comboSearch);
+    }
+
+    public long findCount(SpecificationDetail<T> specificationDetail) {
+        return repository.count(specificationDetail);
+    }
+    public long findCount() {
+        return repository.count();
     }
 }

@@ -14,7 +14,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -52,7 +52,7 @@ public class Area extends TreeEntity<Area> {
     /**
      * shortName 区域简称
      */
-    @Length(max = 32)
+    @Size(max = 32)
     @Column(name = "short_name", unique = false, nullable = true, length = 32)
     private String shortName;
     /**
@@ -64,7 +64,7 @@ public class Area extends TreeEntity<Area> {
     /**
      * code 区域编码
      */
-    @Length(max = 32)
+    @Size(max = 32)
     @Column(name = "code_", unique = true, nullable = true, length = 32)
     @SearchField
     @NotNull

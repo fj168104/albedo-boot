@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 21/03/2018 22:01:43
+ Date: 24/08/2018 17:05:17
 */
 
 SET NAMES utf8mb4;
@@ -21,137 +21,149 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for gen_scheme_t
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_scheme_t`;
-CREATE TABLE `gen_scheme_t` (
-  `id_` varchar(64) NOT NULL COMMENT '编号',
-  `name_` varchar(200) DEFAULT NULL COMMENT '名称',
-  `category_` varchar(2000) DEFAULT NULL COMMENT '分类',
-  `view_type` char(2) DEFAULT NULL COMMENT '视图类型 0  普通表格 1  表格采用ajax刷新',
-  `package_name` varchar(500) DEFAULT NULL COMMENT '生成包路径',
-  `module_name` varchar(30) DEFAULT NULL COMMENT '生成模块名',
-  `sub_module_name` varchar(30) DEFAULT NULL COMMENT '生成子模块名',
-  `function_name` varchar(500) DEFAULT NULL COMMENT '生成功能名',
-  `function_name_simple` varchar(100) DEFAULT NULL COMMENT '生成功能名（简写）',
-  `function_author` varchar(100) DEFAULT NULL COMMENT '生成功能作者',
-  `gen_table_id` varchar(200) DEFAULT NULL COMMENT '生成表编号',
-  `status_` char(2) DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
-  `version_` int(11) DEFAULT '0' COMMENT '默认0，必填，离线乐观锁',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
+CREATE TABLE `gen_scheme_t`  (
+  `id_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `name_` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `category_` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类',
+  `view_type` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '视图类型 0  普通表格 1  表格采用ajax刷新',
+  `package_name` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成包路径',
+  `module_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成模块名',
+  `sub_module_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成子模块名',
+  `function_name` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能名',
+  `function_name_simple` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能名（简写）',
+  `function_author` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成功能作者',
+  `gen_table_id` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成表编号',
+  `status_` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
+  `version_` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='生成方案';
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '生成方案' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gen_scheme_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `gen_scheme_t` VALUES ('381d8ec93dcb48baae3dd53e25f8a2bf', '任务调度管理', 'curd', '0', 'com.albedo.java.modules', 'sys', '', '任务调度', '任务调度', 'admin', 'c95323a8b03144b3ba86fded558543d5', '0', 7, '', '1', '2017-11-09 16:01:57', '1', '2017-11-10 10:07:34');
-INSERT INTO `gen_scheme_t` VALUES ('43f6c7e1c46d4aeab198b511de83d115', '测试书籍管理', 'curd', NULL, 'com.albedo.java.modules', 'test', '', '测试书籍', '测试书籍', 'admin', '3f9bc3608aab4b4eb406d485ca0390cb', '0', 0, '', '1', '2018-03-02 17:10:10', '1', '2018-03-02 17:10:10');
+INSERT INTO `gen_scheme_t` VALUES ('381d8ec93dcb48baae3dd53e25f8a2bf', '任务调度管理', 'curd_front', '0', 'com.albedo.java.modules', 'sys', '', '任务调度', '任务调度', 'admin', '8c77be9ca17343c7b80b9c0edd9ff72c', '0', 7, '', '1', '2018-08-22 17:10:05', '1', '2018-08-22 17:10:06');
+INSERT INTO `gen_scheme_t` VALUES ('43f6c7e1c46d4aeab198b511de83d115', '测试书籍管理', 'curd', NULL, 'com.albedo.java.modules', 'test', '', '测试书籍', '测试书籍', 'admin', '3f9bc3608aab4b4eb406d485ca0390cb', '0', 25, '', '1', '2018-03-02 17:10:10', '1', '2018-03-21 13:30:53');
 INSERT INTO `gen_scheme_t` VALUES ('add9318001404c1d8763ddf2d1422d24', '任务调度管理', 'curd', '0', 'com.albedo.java.modules', 'sys', '', '任务调度', '任务调度', 'admin', 'c95323a8b03144b3ba86fded558543d5', '-2', 1, '', '1', '2017-11-09 15:56:18', '1', '2017-11-09 17:18:18');
 INSERT INTO `gen_scheme_t` VALUES ('b0f7ea3c529d40c989b2110d2f4cd9dc', '区域管理', 'treeTable_modal', '1', 'com.albedo.java.modules', 'sys', '', '区域', '区域', 'admin', '3d0ade4f56e5456b84491e77eb1e00c7', '0', 13, '', '1', '2018-02-06 16:14:29', '1', '2018-02-06 16:14:29');
-INSERT INTO `gen_scheme_t` VALUES ('d2481213fc7244118e51198594c5439b', '测试树管理', 'treeTable', NULL, 'com.albedo.java.modules', 'test', '', '测试树管理', '测试树管理', 'admin', 'fcff12cdacb148a39f0e840253c38c5d', '0', 0, '', '1', '2018-03-02 17:10:28', '1', '2018-03-02 17:10:28');
+INSERT INTO `gen_scheme_t` VALUES ('c1548ce101b5409a873c2e3485c44cbd', '文件管理', 'curd_back', NULL, 'com.albedo.java.modules', 'sys', '', '文件管理', '文件管理', 'somewhere', '9baf568209ad4536a371a81d8a485d18', '0', 0, '', '1', '2018-08-24 14:34:16', '1', '2018-08-24 14:34:17');
+INSERT INTO `gen_scheme_t` VALUES ('d2481213fc7244118e51198594c5439b', '测试树管理', 'treeTable', NULL, 'com.albedo.java.modules', 'test', '', '测试树管理', '测试树管理', 'admin', 'fcff12cdacb148a39f0e840253c38c5d', '0', 5, '', '1', '2018-08-24 14:14:37', '1', '2018-08-24 14:14:37');
 INSERT INTO `gen_scheme_t` VALUES ('d2b112b51d584b3b903ebb964f2b5d00', '任务调度管理', 'curd', '0', 'com.albedo.java.modules', 'sys', '', '任务调度', '任务调度', 'admin', 'c95323a8b03144b3ba86fded558543d5', '-2', 1, '', '1', '2017-11-09 16:00:54', '1', '2017-11-09 17:18:21');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for gen_table_column_t
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table_column_t`;
-CREATE TABLE `gen_table_column_t` (
-  `id_` varchar(64) NOT NULL COMMENT '编号',
-  `gen_table_id` varchar(64) DEFAULT NULL COMMENT '归属表编号',
-  `name_` varchar(200) DEFAULT NULL COMMENT '名称',
-  `title_` varchar(255) NOT NULL COMMENT '标题',
-  `comments` varchar(500) DEFAULT NULL COMMENT '描述备注',
-  `jdbc_type` varchar(100) DEFAULT NULL COMMENT '列的数据类型的字节长度',
-  `java_type` varchar(500) DEFAULT NULL COMMENT 'JAVA类型',
-  `java_field` varchar(200) DEFAULT NULL COMMENT 'JAVA字段名',
-  `is_pk` char(1) DEFAULT NULL COMMENT '是否主键',
-  `is_unique` char(1) DEFAULT '0' COMMENT '是否唯一（1：是；0：否）',
-  `is_null` char(1) DEFAULT NULL COMMENT '是否可为空',
-  `is_insert` char(1) DEFAULT NULL COMMENT '是否为插入字段',
-  `is_edit` char(1) DEFAULT NULL COMMENT '是否编辑字段',
-  `is_list` char(1) DEFAULT NULL COMMENT '是否列表字段',
-  `is_query` char(1) DEFAULT NULL COMMENT '是否查询字段',
-  `query_type` varchar(200) DEFAULT NULL COMMENT '查询方式（等于、不等于、大于、小于、范围、左LIKE、右LIKE、左右LIKE）',
-  `show_type` varchar(200) DEFAULT NULL COMMENT '字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）',
-  `dict_type` varchar(200) DEFAULT NULL COMMENT '字典类型',
-  `settings` varchar(2000) DEFAULT NULL COMMENT '其它设置（扩展字段JSON）',
-  `sort_` decimal(10,0) DEFAULT NULL COMMENT '排序（升序）',
-  `status_` char(2) DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
-  `version_` int(11) DEFAULT '0' COMMENT '默认0，必填，离线乐观锁',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
+CREATE TABLE `gen_table_column_t`  (
+  `id_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `gen_table_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '归属表编号',
+  `name_` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `title_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标题',
+  `comments` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述备注',
+  `jdbc_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '列的数据类型的字节长度',
+  `java_type` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JAVA类型',
+  `java_field` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JAVA字段名',
+  `is_pk` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否主键',
+  `is_unique` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '是否唯一（1：是；0：否）',
+  `is_null` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否可为空',
+  `is_insert` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否为插入字段',
+  `is_edit` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否编辑字段',
+  `is_list` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否列表字段',
+  `is_query` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否查询字段',
+  `query_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '查询方式（等于、不等于、大于、小于、范围、左LIKE、右LIKE、左右LIKE）',
+  `show_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）',
+  `dict_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典类型',
+  `settings` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它设置（扩展字段JSON）',
+  `sort_` decimal(10, 0) NULL DEFAULT NULL COMMENT '排序（升序）',
+  `status_` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
+  `version_` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `gen_table_column_table_id` (`gen_table_id`) USING BTREE,
-  KEY `gen_table_column_name` (`name_`) USING BTREE,
-  KEY `gen_table_column_sort` (`sort_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='业务表字段';
+  INDEX `gen_table_column_table_id`(`gen_table_id`) USING BTREE,
+  INDEX `gen_table_column_name`(`name_`) USING BTREE,
+  INDEX `gen_table_column_sort`(`sort_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '业务表字段' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gen_table_column_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `gen_table_column_t` VALUES ('012d7ab7cf0d4c7e8083b9857b447f1a', 'fcff12cdacb148a39f0e840253c38c5d', 'code_', '机构编码', '', 'varchar(64)', 'String', 'code', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('00f15299e74a438abcad0169621ade96', '8c77be9ca17343c7b80b9c0edd9ff72c', 'spring_id', 'spring bean', '', 'varchar(255)', 'String', 'springId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
+INSERT INTO `gen_table_column_t` VALUES ('012d7ab7cf0d4c7e8083b9857b447f1a', 'fcff12cdacb148a39f0e840253c38c5d', 'code_', '机构编码', '', 'varchar(64)', 'String', 'code', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('02a731264b7649348d24bf19192dc3ab', 'c95323a8b03144b3ba86fded558543d5', 'source_id', '', 'source_id', 'varchar(32)', 'String', 'sourceId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 90, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
-INSERT INTO `gen_table_column_t` VALUES ('03127ee1bb284adfb3993f3065310931', '3d0ade4f56e5456b84491e77eb1e00c7', 'code_', '区域编码', NULL, 'varchar(32)', 'String', 'code', '0', '1', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 80, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
-INSERT INTO `gen_table_column_t` VALUES ('04224d94759c4b9abb1dbf7d0d665bd3', 'fcff12cdacb148a39f0e840253c38c5d', 'grade_', '机构等级', '', 'varchar(255)', 'String', 'grade', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
-INSERT INTO `gen_table_column_t` VALUES ('081ae3bfd03f456c8e3593b2e3926061', '3f9bc3608aab4b4eb406d485ca0390cb', 'last_modified_by', 'last_modified_by', '', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 140, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
-INSERT INTO `gen_table_column_t` VALUES ('08695713c93d406da61d712c295ecc42', '3d0ade4f56e5456b84491e77eb1e00c7', 'parent_ids', '所有上级区域节点', NULL, 'text', 'String', 'parentIds', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 20, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('03127ee1bb284adfb3993f3065310931', '3d0ade4f56e5456b84491e77eb1e00c7', 'code_', '区域编码', '', 'varchar(32)', 'String', 'code', '0', '1', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 80, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('04224d94759c4b9abb1dbf7d0d665bd3', 'fcff12cdacb148a39f0e840253c38c5d', 'grade_', '机构等级', '', 'varchar(255)', 'String', 'grade', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
+INSERT INTO `gen_table_column_t` VALUES ('081ae3bfd03f456c8e3593b2e3926061', '3f9bc3608aab4b4eb406d485ca0390cb', 'last_modified_by', 'last_modified_by', '', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 140, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('08695713c93d406da61d712c295ecc42', '3d0ade4f56e5456b84491e77eb1e00c7', 'parent_ids', '所有上级区域节点', '', 'text', 'String', 'parentIds', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 20, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('0a8fddad28044a14b656f86e1ba74879', '9ff7a79eb69a47739c182fcdd3326d16', 'reset_date', '', 'reset_date', 'timestamp', 'java.util.Date', 'resetDate', '0', '0', '1', '1', '1', '1', '0', 'eq', 'dateselect', '', NULL, 120, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('0c39ee082243467cba1822e389c70cca', NULL, 'function_name', '', '生成功能名', 'varchar(500)', 'String', 'functionName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 80, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('0df42b7ecb034f128cd63d3bd5f0f11a', '9ff7a79eb69a47739c182fcdd3326d16', 'description_', '', 'description_', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 180, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
-INSERT INTO `gen_table_column_t` VALUES ('0f1d3d1cc405408ea52450173d5104f3', '3d0ade4f56e5456b84491e77eb1e00c7', 'description_', '描述', NULL, 'varchar(225)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', NULL, NULL, 140, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('0f1d3d1cc405408ea52450173d5104f3', '3d0ade4f56e5456b84491e77eb1e00c7', 'description_', '描述', '', 'varchar(225)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 140, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('12d2e7c54bac46978b1a2c43c616eb58', NULL, 'last_modified_by', '', 'last_modified_by', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 140, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('130fa48eb33a49c0b38739ae7fb71040', 'fcff12cdacb148a39f0e840253c38c5d', 'en_', '英文', '', 'varchar(255)', 'String', 'en', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('130fa48eb33a49c0b38739ae7fb71040', 'fcff12cdacb148a39f0e840253c38c5d', 'en_', '英文', '', 'varchar(255)', 'String', 'en', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('13c83b54457644d68677b9b5558afc5b', NULL, 'cron_expression', '', 'cron表达式', 'varchar(255)', 'String', 'cronExpression', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 50, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('1491dc9f00b74e0a8340bc3546cedb5e', '3f9bc3608aab4b4eb406d485ca0390cb', 'version_', 'version_', '', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 180, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('1491dc9f00b74e0a8340bc3546cedb5e', '3f9bc3608aab4b4eb406d485ca0390cb', 'version_', 'version_', '', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 180, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('19e15b56539c4f41b86299fa3ea68da7', NULL, 'created_by', '', 'created_by', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 150, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('1b5fea5662734b75bdfc0c7094c8bc1a', NULL, 'function_name_simple', '', '生成功能名（简写）', 'varchar(100)', 'String', 'functionNameSimple', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 90, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
+INSERT INTO `gen_table_column_t` VALUES ('1b63f4dc0b2a456bb095104a103fe3b4', '8c77be9ca17343c7b80b9c0edd9ff72c', 'cron_expression', 'cron表达式', '', 'varchar(255)', 'String', 'cronExpression', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('1c3e629813794c15af686ada0e28e851', 'c95323a8b03144b3ba86fded558543d5', 'created_by', '', 'created_by', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 120, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
-INSERT INTO `gen_table_column_t` VALUES ('1f5fec640d6f40cb888520e8cfed611d', '3d0ade4f56e5456b84491e77eb1e00c7', 'parent_id', '上级区域', NULL, 'int(11)', 'Long', 'parentId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 30, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('1f5fec640d6f40cb888520e8cfed611d', '3d0ade4f56e5456b84491e77eb1e00c7', 'parent_id', '上级区域', '', 'int(11)', 'Long', 'parentId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('1f7cd43d1a9f440089fb1e0c890a3d3b', '8c77be9ca17343c7b80b9c0edd9ff72c', 'name_', '名称', '', 'varchar(255)', 'String', 'name', '0', '0', '0', '1', '1', '1', '1', 'like', 'input', '', NULL, 20, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
+INSERT INTO `gen_table_column_t` VALUES ('25be633af5944106ad982bf7214943c7', '9baf568209ad4536a371a81d8a485d18', 'type_', '类型', '', 'varchar(60)', 'String', 'type', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('2b85eebf5957456193ac27b671411fa2', NULL, 'category_', '', '分类', 'varchar(2000)', 'String', 'category', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 30, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('2b913c00e7dc4b7390f1bd7f31c4790c', 'b83738d9645f4319b4d1d86a0b27635f', 'function_name', '', '生成功能名', 'varchar(500)', 'String', 'functionName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 80, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('2c473713a95e49d48b31ef933f26d1bf', '3f9bc3608aab4b4eb406d485ca0390cb', 'reset_key', 'reset_key', '', 'varchar(20)', 'String', 'resetKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 100, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
-INSERT INTO `gen_table_column_t` VALUES ('2c73149734f749558951e087504a6dfd', '3f9bc3608aab4b4eb406d485ca0390cb', 'phone_', '手机', '', 'varchar(32)', 'String', 'phone', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('2c473713a95e49d48b31ef933f26d1bf', '3f9bc3608aab4b4eb406d485ca0390cb', 'reset_key', 'reset_key', '', 'varchar(20)', 'String', 'resetKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 100, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('2c73149734f749558951e087504a6dfd', '3f9bc3608aab4b4eb406d485ca0390cb', 'phone_', '手机', '', 'varchar(32)', 'String', 'phone', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('2dbb855053be41e78f2f48129ab82469', '8c77be9ca17343c7b80b9c0edd9ff72c', 'last_modified_date', 'last_modified_date', '', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 150, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('2dc5ddec50124806b409ce39a70841e7', 'b83738d9645f4319b4d1d86a0b27635f', 'created_date', '', 'created_date', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 160, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('2f7acdb4a2244accbd1478a82099daaf', '3d0ade4f56e5456b84491e77eb1e00c7', 'status_', '状态', NULL, 'varchar(32)', 'String', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 150, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('2f7acdb4a2244accbd1478a82099daaf', '3d0ade4f56e5456b84491e77eb1e00c7', 'status_', '状态', '', 'varchar(32)', 'String', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 150, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('30aec7f7f63b437e85aca39d7f162a3f', NULL, 'gen_table_id', '', '生成表编号', 'varchar(200)', 'String', 'genTableId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 110, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
-INSERT INTO `gen_table_column_t` VALUES ('319c36d40e3b45cf8b3efcc7968e4305', 'fcff12cdacb148a39f0e840253c38c5d', 'type_', '组织类型', '', 'varchar(64)', 'String', 'type', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 100, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('30d9383cb1c94f3e91ec0302e9bba023', '8c77be9ca17343c7b80b9c0edd9ff72c', 'source_id', '源编号', '', 'varchar(32)', 'String', 'sourceId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 90, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
+INSERT INTO `gen_table_column_t` VALUES ('319c36d40e3b45cf8b3efcc7968e4305', 'fcff12cdacb148a39f0e840253c38c5d', 'type_', '组织类型', '', 'varchar(64)', 'String', 'type', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 100, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('337b544ac0d847d7b68abde443ecb272', '9ff7a79eb69a47739c182fcdd3326d16', 'id_', '', 'id_', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
-INSERT INTO `gen_table_column_t` VALUES ('337ec2237e4e443cbb10056be4053e7c', '3f9bc3608aab4b4eb406d485ca0390cb', 'lang_key', 'key', '建', 'varchar(5)', 'String', 'langKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('337ec2237e4e443cbb10056be4053e7c', '3f9bc3608aab4b4eb406d485ca0390cb', 'lang_key', 'key', '建', 'varchar(5)', 'String', 'langKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('340500b205f94be7b4dda7111fee98fc', '9baf568209ad4536a371a81d8a485d18', 'created_by', 'created_by', '', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 60, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('34a3396fdbb64b3a8cd5bce2e6dda8bc', NULL, 'name_', '', '名称', 'varchar(200)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 20, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
-INSERT INTO `gen_table_column_t` VALUES ('352a8e7266cb4c54b2bbbfbf928110e2', '3f9bc3608aab4b4eb406d485ca0390cb', 'reset_date', 'reset_date', '', 'timestamp', 'java.util.Date', 'resetDate', '0', '0', '1', '1', '1', '1', '0', 'eq', 'dateselect', '', NULL, 110, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('352a8e7266cb4c54b2bbbfbf928110e2', '3f9bc3608aab4b4eb406d485ca0390cb', 'reset_date', 'reset_date', '', 'timestamp', 'java.util.Date', 'resetDate', '0', '0', '1', '1', '1', '1', '0', 'eq', 'dateselect', '', NULL, 110, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('35a34323d94f441dbf4f1846bcc77e15', '8c77be9ca17343c7b80b9c0edd9ff72c', 'description_', '备注', '', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 170, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('36acaa9d5b61469988da27c24ca5caf2', 'c95323a8b03144b3ba86fded558543d5', 'bean_class', '', '任务执行时调用哪个类的方法 包名+类名', 'varchar(255)', 'String', 'beanClass', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 60, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
-INSERT INTO `gen_table_column_t` VALUES ('3b27c4acf8bf43dc8ea98651ed33e058', 'fcff12cdacb148a39f0e840253c38c5d', 'status_', 'status_', '', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '1', '0', 'eq', 'radio', 'sys_status', NULL, 110, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('3a59667db5364fb0a49c870ace29e97a', '9baf568209ad4536a371a81d8a485d18', 'name_', '名称', '', 'varchar(32)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 20, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
+INSERT INTO `gen_table_column_t` VALUES ('3b27c4acf8bf43dc8ea98651ed33e058', 'fcff12cdacb148a39f0e840253c38c5d', 'status_', 'status_', '', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '1', '0', 'eq', 'radio', 'sys_status', NULL, 110, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('3b330f8d69b646e1a9d178079ef55599', '86097ddda0de41249857ca43bef92587', 'name_', '', '区域名称', 'varchar(32)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 40, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
 INSERT INTO `gen_table_column_t` VALUES ('3cb96f12d8ed42269a9a889685132c3c', NULL, 'package_name', '', '生成包路径', 'varchar(500)', 'String', 'packageName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 50, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('3e5ce78421294b8a8cf9cbcd8b2e9640', 'c95323a8b03144b3ba86fded558543d5', 'name_', '', '名称', 'varchar(255)', 'String', 'name', '0', '1', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 20, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('43545d8d6c1c44dba3d9bd3d60986c8b', NULL, 'function_name', '', '生成功能名', 'varchar(500)', 'String', 'functionName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 80, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('456257195d424b3e81f7be5b0ad9ea4b', 'b83738d9645f4319b4d1d86a0b27635f', 'last_modified_by', '', 'last_modified_by', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 170, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_column_t` VALUES ('4758858f768b4594a9db40402aca9b3e', '9ff7a79eb69a47739c182fcdd3326d16', 'version_', '', 'version_', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 190, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
-INSERT INTO `gen_table_column_t` VALUES ('4820016ddbb54c7996a7760982c659d8', 'fcff12cdacb148a39f0e840253c38c5d', 'version_', 'version_', '', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 170, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('4820016ddbb54c7996a7760982c659d8', 'fcff12cdacb148a39f0e840253c38c5d', 'version_', 'version_', '', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 170, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('48dca05d7ff542068b1ed7a0f8d54dce', NULL, 'sub_module_name', '', '生成子模块名', 'varchar(30)', 'String', 'subModuleName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 70, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('4970ad69fcb24b92bcee1a4929d5ee48', 'b83738d9645f4319b4d1d86a0b27635f', 'module_name', '', '生成模块名', 'varchar(30)', 'String', 'moduleName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 60, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('4a9a0c063bda4a0f8cf20a7f40c866a8', 'fcff12cdacb148a39f0e840253c38c5d', 'last_modified_date', 'last_modified_date', '', 'datetime', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 160, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('4a9a0c063bda4a0f8cf20a7f40c866a8', 'fcff12cdacb148a39f0e840253c38c5d', 'last_modified_date', 'last_modified_date', '', 'datetime', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 160, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('4b59bb20acb84c7f873c945cd264ab89', '9ff7a79eb69a47739c182fcdd3326d16', 'created_date', '', 'created_date', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 140, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
+INSERT INTO `gen_table_column_t` VALUES ('4bcdd42eeaa94c57b7800653f8dde84b', '8c77be9ca17343c7b80b9c0edd9ff72c', 'group_', '分组', '', 'varchar(255)', 'String', 'group', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('4e59682252c74b8eb2dc0833a81aea60', 'c95323a8b03144b3ba86fded558543d5', 'last_modified_by', '', 'last_modified_by', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 140, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('50ffe6cf3770440e99fb8d0e9fe95208', NULL, 'bean_class', '', '类名', 'varchar(255)', 'String', 'beanClass', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 60, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('51072ff467f648768ef72ce0756bbb67', '3f9bc3608aab4b4eb406d485ca0390cb', 'last_modified_date', 'last_modified_date', '', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 150, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('51072ff467f648768ef72ce0756bbb67', '3f9bc3608aab4b4eb406d485ca0390cb', 'last_modified_date', 'last_modified_date', '', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 150, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('52dd85cc3f7d4042a5b2bed5f6f8a3ba', 'c95323a8b03144b3ba86fded558543d5', 'is_concurrent', '', '任务是否有状态', 'varchar(255)', 'String', 'isConcurrent', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', 'sys_yes_no', NULL, 70, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
+INSERT INTO `gen_table_column_t` VALUES ('556dda4238f145108b236ae0ffa5f111', '9baf568209ad4536a371a81d8a485d18', 'status_', 'status_', '', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 100, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('5614d53b2dc84ae08ce6a8235e5c47d7', NULL, 'status_', '', '状态 -2 已删除 -1停用 0 正常', 'char(2)', 'String', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', 'sys_status', NULL, 120, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('563679d6564e4beab0e58addff2cc45a', '86097ddda0de41249857ca43bef92587', 'short_name', '', '区域简称', 'varchar(32)', 'String', 'shortName', '0', '0', '1', '1', '1', '1', '1', 'eq', 'input', '', NULL, 50, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
+INSERT INTO `gen_table_column_t` VALUES ('5831671445f54d0a9e3bd7a5b6a83c4e', '9baf568209ad4536a371a81d8a485d18', 'size_', '大小', '', 'int(11)', 'Long', 'size', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 40, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('5ad7e80c10ff48da821d36133bde8ff4', 'b83738d9645f4319b4d1d86a0b27635f', 'category_', '', '分类', 'varchar(2000)', 'String', 'category', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 30, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
+INSERT INTO `gen_table_column_t` VALUES ('5c19c6e572944f3083d45ac303ce8f88', '8c77be9ca17343c7b80b9c0edd9ff72c', 'job_status', '任务状态', '', 'varchar(255)', 'String', 'jobStatus', '0', '0', '0', '1', '1', '1', '0', 'eq', 'select', 'sys_yes_no', NULL, 40, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('5d4c8e7d2eb1438296bd74f915422a3a', NULL, 'is_concurrent', '', '任务是否有状态', 'varchar(255)', 'Integer', 'isConcurrent', '0', '0', '1', '1', '1', '1', '1', 'eq', 'radio', 'sys_yes_no', NULL, 70, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('5de37740972e4a329de13c6cdc4bb3d1', '3f9bc3608aab4b4eb406d485ca0390cb', 'created_date', 'created_date', '', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 130, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('5de37740972e4a329de13c6cdc4bb3d1', '3f9bc3608aab4b4eb406d485ca0390cb', 'created_date', 'created_date', '', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 130, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('5def23a108624e2eaa9bc25831e5cbc0', '9ff7a79eb69a47739c182fcdd3326d16', 'phone_', '', 'phone_', 'varchar(32)', 'String', 'phone', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 70, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
-INSERT INTO `gen_table_column_t` VALUES ('64749d700ebf48e3ab74c85675817677', 'fcff12cdacb148a39f0e840253c38c5d', 'parent_id', '上级节点', '', 'varchar(32)', 'String', 'parentId', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
-INSERT INTO `gen_table_column_t` VALUES ('679f8fab32b247488b54e22df4478146', '3f9bc3608aab4b4eb406d485ca0390cb', 'status_', 'status_', '', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 160, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('64749d700ebf48e3ab74c85675817677', 'fcff12cdacb148a39f0e840253c38c5d', 'parent_id', '上级节点', '', 'varchar(32)', 'String', 'parentId', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
+INSERT INTO `gen_table_column_t` VALUES ('6661a207ea954752a0159404108835f0', '8c77be9ca17343c7b80b9c0edd9ff72c', 'method_params', '方法参数', '任务调用的方法参数', 'varchar(512)', 'String', 'methodParams', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 110, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
+INSERT INTO `gen_table_column_t` VALUES ('679f8fab32b247488b54e22df4478146', '3f9bc3608aab4b4eb406d485ca0390cb', 'status_', 'status_', '', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 160, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('6996d936e8384582bd98a854bbc1ad96', 'c95323a8b03144b3ba86fded558543d5', 'description_', '', 'description_', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', NULL, NULL, 170, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('6a0d93d209344640b4f97ce27c22e2c5', 'b83738d9645f4319b4d1d86a0b27635f', 'view_type', '', '视图类型 0  普通表格 1  表格采用ajax刷新', 'char(2)', 'String', 'viewType', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 40, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_column_t` VALUES ('6af2ae0b9f2a4490b1ba65a155635cf4', '86097ddda0de41249857ca43bef92587', 'created_date', '', '创建时间', 'datetime', 'java.util.Date', 'createdDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 110, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
@@ -164,17 +176,22 @@ INSERT INTO `gen_table_column_t` VALUES ('71f365df736e4d99b7771a6c5670a3b0', 'c9
 INSERT INTO `gen_table_column_t` VALUES ('725b61cd687447bda019c2f5d4093ecc', NULL, 'last_modified_date', '', 'last_modified_date', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 180, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('72d6ea06576f4d9dbb0129c0d5c5bc78', 'c95323a8b03144b3ba86fded558543d5', 'last_modified_date', '', 'last_modified_date', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 150, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('73b9f19004ac4b7a957c8e701d3aeec1', NULL, 'version_', '', '默认0，必填，离线乐观锁', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 130, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
+INSERT INTO `gen_table_column_t` VALUES ('747b5db90611480e8e6fb1c80db38c59', '9baf568209ad4536a371a81d8a485d18', 'description_', '备注', '', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 110, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('75304c3101f84221ace7ed7dc6cc518b', 'c95323a8b03144b3ba86fded558543d5', 'status_', '', 'status_', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', 'sys_status', NULL, 160, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('75bceeff84594c57b44fa0fe9ac3052e', 'c95323a8b03144b3ba86fded558543d5', 'id_', '', 'id_', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 10, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
+INSERT INTO `gen_table_column_t` VALUES ('7642a941d3af438bbb8d0e8f932a6edc', '9baf568209ad4536a371a81d8a485d18', 'last_modified_date', 'last_modified_date', '', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 90, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('77ea6d63a3fe48a0bd606ff5ee8d4d2a', NULL, 'created_date', '', 'created_date', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 130, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('78143c28bc8d4f818c5bba7513db5607', '3f9bc3608aab4b4eb406d485ca0390cb', 'id_', 'id_', '', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('78143c28bc8d4f818c5bba7513db5607', '3f9bc3608aab4b4eb406d485ca0390cb', 'id_', 'id_', '', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('7baf9d80357544e4b6e8377bb8006057', 'c95323a8b03144b3ba86fded558543d5', 'version_', '', 'version_', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 180, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('7d1efd87f1b14e3b9a26fcf635993ee2', 'b83738d9645f4319b4d1d86a0b27635f', 'function_name_simple', '', '生成功能名（简写）', 'varchar(100)', 'String', 'functionNameSimple', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 90, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('7d850ff6bf8f4970bdcbc3f8c4be94c7', 'fcff12cdacb148a39f0e840253c38c5d', 'description_', 'description_', '', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 180, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
-INSERT INTO `gen_table_column_t` VALUES ('7ff0e797466d4bdc886a140785bcfc61', '3f9bc3608aab4b4eb406d485ca0390cb', 'activated_', 'activated_', '标注', 'bit(1)', 'Integer', 'activated', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 70, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('7d24ef73d5924aa8b6ac2a89dd192a56', '9baf568209ad4536a371a81d8a485d18', 'version_', 'version_', '', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 120, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
+INSERT INTO `gen_table_column_t` VALUES ('7d850ff6bf8f4970bdcbc3f8c4be94c7', 'fcff12cdacb148a39f0e840253c38c5d', 'description_', 'description_', '', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 180, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
+INSERT INTO `gen_table_column_t` VALUES ('7daaaf3bfdf948e094d4bb98871dbf35', '9baf568209ad4536a371a81d8a485d18', 'last_modified_by', 'last_modified_by', '', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 80, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
+INSERT INTO `gen_table_column_t` VALUES ('7ff0e797466d4bdc886a140785bcfc61', '3f9bc3608aab4b4eb406d485ca0390cb', 'activated_', 'activated_', '标注', 'bit(1)', 'Integer', 'activated', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 70, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('80fcbcfcb5a14208a7c1174317d19a07', '8c77be9ca17343c7b80b9c0edd9ff72c', 'last_modified_by', 'last_modified_by', '', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 140, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('81baec3dc0ba482d9dea800adc404d57', '9ff7a79eb69a47739c182fcdd3326d16', 'reset_key', '', 'reset_key', 'varchar(20)', 'String', 'resetKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 110, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('85e43f875a1b4a9cb4cabe5e2c40394b', NULL, 'last_modified_by', '', 'last_modified_by', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 170, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
-INSERT INTO `gen_table_column_t` VALUES ('87da90fdc48849c7a9e209b13e8f7a9c', '3d0ade4f56e5456b84491e77eb1e00c7', 'name_', '区域名称', NULL, 'varchar(32)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 40, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('87da90fdc48849c7a9e209b13e8f7a9c', '3d0ade4f56e5456b84491e77eb1e00c7', 'name_', '区域名称', '', 'varchar(32)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 40, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('87f558c7d091486488fc61423253426d', NULL, 'created_by', '', 'created_by', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 150, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('88a721ccfe2940b1a9bb378b731dca68', 'b83738d9645f4319b4d1d86a0b27635f', 'package_name', '', '生成包路径', 'varchar(500)', 'String', 'packageName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 50, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_column_t` VALUES ('896636b9b8604b63b32189e7ae28d7ff', NULL, 'gen_table_id', '', '生成表编号', 'varchar(200)', 'String', 'genTableId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 110, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
@@ -184,35 +201,39 @@ INSERT INTO `gen_table_column_t` VALUES ('8dc7ca27520d4aaebd60fac3a8f4ecfd', NUL
 INSERT INTO `gen_table_column_t` VALUES ('8e528e1e4eb94479965d43f9570c3312', '9ff7a79eb69a47739c182fcdd3326d16', 'org_id', '', '机构', 'varchar(32)', 'com.albedo.java.modules.sys.domain.Org', 'org.id|name', '0', '0', '1', '1', '1', '1', '0', 'eq', 'orgselect', '', NULL, 20, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('8eadc86f5dc94fbfb3c49dd4ceb5a647', '9ff7a79eb69a47739c182fcdd3326d16', 'activation_key', '', 'activation_key', 'varchar(20)', 'String', 'activationKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 100, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('91c67eb6b61744fab9d04171eb00009b', NULL, 'name_', '', '名称', 'varchar(200)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 20, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
-INSERT INTO `gen_table_column_t` VALUES ('947abf326c754fc294fec30fca8fca7b', 'fcff12cdacb148a39f0e840253c38c5d', 'parent_ids', 'parent_ids', '', 'varchar(2000)', 'String', 'parentIds', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 40, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('947abf326c754fc294fec30fca8fca7b', 'fcff12cdacb148a39f0e840253c38c5d', 'parent_ids', 'parent_ids', '', 'varchar(2000)', 'String', 'parentIds', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 40, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('978cec654ad54d11a2fc535bdf440b57', NULL, 'description_', '', 'description_', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', NULL, NULL, 170, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
 INSERT INTO `gen_table_column_t` VALUES ('9795c96dc5794214b042e7ea5e014677', '86097ddda0de41249857ca43bef92587', 'version_', '', '版本', 'int(11)', 'Long', 'version', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 160, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
+INSERT INTO `gen_table_column_t` VALUES ('98856a4f04814ccfb05f6c7dc2cd13c2', '8c77be9ca17343c7b80b9c0edd9ff72c', 'status_', 'status_', '', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 160, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('9a6cb9aaeb1f4bce9489fc4404546399', '86097ddda0de41249857ca43bef92587', 'level_', '', '区域等级(1省/2市/3区县)', 'int(11)', 'Integer', 'level', '0', '0', '1', '1', '1', '1', '1', 'eq', 'select', 'sys_area_type', NULL, 70, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
-INSERT INTO `gen_table_column_t` VALUES ('9bf4cca2d1d5480bbf58b8c6bf8ee03d', '3d0ade4f56e5456b84491e77eb1e00c7', 'id_', '区域id', NULL, 'int(11)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 10, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('9bf4cca2d1d5480bbf58b8c6bf8ee03d', '3d0ade4f56e5456b84491e77eb1e00c7', 'id_', '区域id', '', 'int(11)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('9c48b1299d1d41f9b05859f095e9a31e', 'c95323a8b03144b3ba86fded558543d5', 'method_name', '', '任务调用的方法名', 'varchar(255)', 'String', 'methodName', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 100, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('9c87881a348a4b88a203abecd6025248', NULL, 'view_type', '', '视图类型 0  普通表格 1  表格采用ajax刷新', 'char(2)', 'String', 'viewType', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 40, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('9f084e93db6f4b09a6714946761da97f', NULL, 'created_by', '', 'created_by', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 120, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('9f288adb7b904b38a002aaa50f34a53c', '3d0ade4f56e5456b84491e77eb1e00c7', 'version_', '版本', NULL, 'int(11)', 'Long', 'version', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 160, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('9f288adb7b904b38a002aaa50f34a53c', '3d0ade4f56e5456b84491e77eb1e00c7', 'version_', '版本', '', 'int(11)', 'Long', 'version', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 160, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('9fa9b6e24bf641fba227f8c1dc0d313f', NULL, 'description_', '', '描述', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', NULL, NULL, 140, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('a003ea595e5b4de282c9634f0cfca9e0', 'b83738d9645f4319b4d1d86a0b27635f', 'name_', '', '名称', 'varchar(200)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 20, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_column_t` VALUES ('a02a72be72d24e859e81b6070573555d', 'b83738d9645f4319b4d1d86a0b27635f', 'version_', '', '默认0，必填，离线乐观锁', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 130, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('a0314c37d5a24a8e85b69011abadf204', '3d0ade4f56e5456b84491e77eb1e00c7', 'short_name', '区域简称', NULL, 'varchar(32)', 'String', 'shortName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 50, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('a0314c37d5a24a8e85b69011abadf204', '3d0ade4f56e5456b84491e77eb1e00c7', 'short_name', '区域简称', '', 'varchar(32)', 'String', 'shortName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('a1b94669cde241f08d72d409e6a6f289', '9ff7a79eb69a47739c182fcdd3326d16', 'status_', '', 'status_', 'int(11)', 'Long', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'radio', 'sys_status', NULL, 170, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
+INSERT INTO `gen_table_column_t` VALUES ('a31e9714f15d47adac223735a0f00e83', '8c77be9ca17343c7b80b9c0edd9ff72c', 'method_name', '方法名', '任务调用的方法名', 'varchar(255)', 'String', 'methodName', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 100, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('a5197c6a7c194554a89ebbcca85db8c8', '9ff7a79eb69a47739c182fcdd3326d16', 'last_modified_date', '', 'last_modified_date', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 160, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('aac82e21fd13417191c7e6e29cefb1dd', NULL, 'job_status', '', '任务状态', 'varchar(255)', 'String', 'jobStatus', '0', '0', '1', '1', '1', '1', '1', 'eq', 'radio', 'sys_yes_no', NULL, 40, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
 INSERT INTO `gen_table_column_t` VALUES ('ab948fb0b7184ea7bf632537c3074546', '86097ddda0de41249857ca43bef92587', 'parent_ids', '', '所有上级区域节点', 'text', 'String', 'parentIds', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 20, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
 INSERT INTO `gen_table_column_t` VALUES ('abb8081da6674916adacdfa624989be6', NULL, 'view_type', '', '视图类型 0  普通表格 1  表格采用ajax刷新', 'char(2)', 'String', 'viewType', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 40, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('ac23f02d47064ee1a66845dff23077f9', 'b83738d9645f4319b4d1d86a0b27635f', 'status_', '', '状态 -2 已删除 -1停用 0 正常', 'char(2)', 'String', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', 'sys_status', NULL, 120, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('ac6347cdb3894fa7baa63224a0d693f7', '3d0ade4f56e5456b84491e77eb1e00c7', 'created_by', '创建人', NULL, 'varchar(32)', 'String', 'createdBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 100, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
-INSERT INTO `gen_table_column_t` VALUES ('acd2fcdcc820412c9ff3bfa6b77f4211', '3d0ade4f56e5456b84491e77eb1e00c7', 'is_leaf', '叶子节点', '1 叶子节点 0 非叶子节点', 'bit(1)', 'Integer', 'isLeaf', '0', '0', '1', '1', '1', '1', '0', 'eq', 'radio', 'sys_yes_no', NULL, 90, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('ac6347cdb3894fa7baa63224a0d693f7', '3d0ade4f56e5456b84491e77eb1e00c7', 'created_by', '创建人', '', 'varchar(32)', 'String', 'createdBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 100, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('acd2fcdcc820412c9ff3bfa6b77f4211', '3d0ade4f56e5456b84491e77eb1e00c7', 'is_leaf', '叶子节点', '1 叶子节点 0 非叶子节点', 'bit(1)', 'Integer', 'isLeaf', '0', '0', '1', '1', '1', '1', '0', 'eq', 'radio', 'sys_yes_no', NULL, 90, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('ad309b94457947a0974eb6ee4a43bb79', '8c77be9ca17343c7b80b9c0edd9ff72c', 'version_', 'version_', '', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 180, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('ae21431247384036b3cf09ee44cff0b5', '9ff7a79eb69a47739c182fcdd3326d16', 'email_', '', 'email_', 'varchar(100)', 'String', 'email', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('b043e39c67b4406f8cf05344de79c566', NULL, 'last_modified_by', '', 'last_modified_by', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 170, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('b10f4049268e43e786953d54672e1884', 'b83738d9645f4319b4d1d86a0b27635f', 'created_by', '', 'created_by', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 150, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('b12095d138e4423e9c0809fccf2b2224', '3f9bc3608aab4b4eb406d485ca0390cb', 'activation_key', 'activation_key', '', 'varchar(20)', 'String', 'activationKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 90, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('b12095d138e4423e9c0809fccf2b2224', '3f9bc3608aab4b4eb406d485ca0390cb', 'activation_key', 'activation_key', '', 'varchar(20)', 'String', 'activationKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 90, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('b56151a134ac4dedbcb1eaa2424f13b7', NULL, 'last_modified_date', '', 'last_modified_date', 'timestamp', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 180, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
-INSERT INTO `gen_table_column_t` VALUES ('b71d393663d443c4ad00c28a471e58cc', '3f9bc3608aab4b4eb406d485ca0390cb', 'title_', '标题', '', 'varchar(32)', 'String', 'title', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 20, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('b71d393663d443c4ad00c28a471e58cc', '3f9bc3608aab4b4eb406d485ca0390cb', 'title_', '标题', '', 'varchar(32)', 'String', 'title', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 20, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('b9dfd8bfa2d34cf78d49292a51eef64f', '8c77be9ca17343c7b80b9c0edd9ff72c', 'bean_class', '包名+类名', '任务执行时调用哪个类的方法 包名+类名', 'varchar(255)', 'String', 'beanClass', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('ba7051639cb344f3b36ebd34b093ea0d', NULL, 'created_date', '', 'created_date', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 160, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
-INSERT INTO `gen_table_column_t` VALUES ('bad157cf48ff47569667c133c2cdfa3e', 'fcff12cdacb148a39f0e840253c38c5d', 'default_data', '默认日期', '', 'timestamp', 'java.util.Date', 'defaultData', '0', '0', '0', '1', '1', '1', '0', 'eq', 'dateselect', '', NULL, 120, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('bad157cf48ff47569667c133c2cdfa3e', 'fcff12cdacb148a39f0e840253c38c5d', 'default_data', '默认日期', '', 'timestamp', 'java.util.Date', 'defaultData', '0', '0', '0', '1', '1', '1', '0', 'eq', 'dateselect', '', NULL, 120, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('bbfe21e345fe4aa693f20d212eb5d948', '9ff7a79eb69a47739c182fcdd3326d16', 'last_modified_by', '', 'last_modified_by', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 150, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('bccec4fcc5174c55ab3a31ba2745960b', NULL, 'function_author', '', '生成功能作者', 'varchar(100)', 'String', 'functionAuthor', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 100, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('be4b874a299e468692a921f1aa2bb1dd', 'c95323a8b03144b3ba86fded558543d5', 'method_params', '', 'method_params', 'varchar(512)', 'String', 'methodParams', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 110, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
@@ -221,47 +242,52 @@ INSERT INTO `gen_table_column_t` VALUES ('bfb35e972a6e437f8a86aa5f07617633', NUL
 INSERT INTO `gen_table_column_t` VALUES ('c135048015a24ed9adaecc1895ca4057', 'c95323a8b03144b3ba86fded558543d5', 'job_status', '', '任务状态', 'varchar(255)', 'String', 'jobStatus', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 40, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('c2f36b5f795d42a181b9a37fc70f1b3c', NULL, 'id_', '', '编号', 'varchar(64)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 10, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('c3dcf8753a2c47e7981b812ee8f3ae0e', 'c95323a8b03144b3ba86fded558543d5', 'created_date', '', 'created_date', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 130, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
-INSERT INTO `gen_table_column_t` VALUES ('c3f4e1a501f64c4787acfb79cdad51d8', '3f9bc3608aab4b4eb406d485ca0390cb', 'name_', '名称', '', 'varchar(50)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 40, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
-INSERT INTO `gen_table_column_t` VALUES ('c4f559cb502548e79c2928fe214ed3c9', '3d0ade4f56e5456b84491e77eb1e00c7', 'last_modified_by', '修改人', NULL, 'varchar(32)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 120, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('c3f4e1a501f64c4787acfb79cdad51d8', '3f9bc3608aab4b4eb406d485ca0390cb', 'name_', '名称', '', 'varchar(50)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 40, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('c4f559cb502548e79c2928fe214ed3c9', '3d0ade4f56e5456b84491e77eb1e00c7', 'last_modified_by', '修改人', '', 'varchar(32)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 120, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('c690016c5a574870b9d5af0ec6515655', NULL, 'name_', '', '名称', 'varchar(255)', 'String', 'name', '0', '1', '1', '1', '1', '1', '1', 'like', 'input', NULL, NULL, 20, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
 INSERT INTO `gen_table_column_t` VALUES ('c70fbc5c79e640f2a12f85965e68e09c', '9ff7a79eb69a47739c182fcdd3326d16', 'lang_key', '', 'lang_key', 'varchar(5)', 'String', 'langKey', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 90, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('cbf2735fca9e4f3980d8c87fbef207c0', 'b83738d9645f4319b4d1d86a0b27635f', 'description_', '', '描述', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', NULL, NULL, 140, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_column_t` VALUES ('cc1825589fa74f278a4c0460ab9d2555', NULL, 'created_date', '', 'created_date', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 160, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('cc3690ba7c6b4d59b2202776eaa63160', '86097ddda0de41249857ca43bef92587', 'sort_', '', '序号', 'int(11)', 'Integer', 'sort', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
-INSERT INTO `gen_table_column_t` VALUES ('cd4266fb3dc74e60b260971166c077f8', 'fcff12cdacb148a39f0e840253c38c5d', 'is_leaf', '节点类型', ' 1 叶子节点 0 非叶子节点', 'bit(1)', 'Integer', 'isLeaf', '0', '0', '1', '1', '1', '1', '0', 'eq', 'radio', 'sys_yes_no', NULL, 70, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('cd4266fb3dc74e60b260971166c077f8', 'fcff12cdacb148a39f0e840253c38c5d', 'is_leaf', '节点类型', ' 1 叶子节点 0 非叶子节点', 'bit(1)', 'Integer', 'isLeaf', '0', '0', '1', '1', '1', '1', '0', 'eq', 'radio', 'sys_yes_no', NULL, 70, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('cd638cdb62504e4dacc745c5e913dac7', NULL, 'category_', '', '分类', 'varchar(2000)', 'String', 'category', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 30, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('cdf9e059da84499b8111e990d8b8306c', '86097ddda0de41249857ca43bef92587', 'code_', '', '区域编码', 'varchar(32)', 'String', 'code', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
 INSERT INTO `gen_table_column_t` VALUES ('cf5acfa1d579452f8da4f45394425df9', NULL, 'function_author', '', '生成功能作者', 'varchar(100)', 'String', 'functionAuthor', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 100, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
 INSERT INTO `gen_table_column_t` VALUES ('cfa8c9db79ea478cae75525d076aec2d', 'c95323a8b03144b3ba86fded558543d5', 'cron_expression', '', 'cron表达式', 'varchar(255)', 'String', 'cronExpression', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 50, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('d039b1030f8e40f5a4ab35d87ac736b0', '9ff7a79eb69a47739c182fcdd3326d16', 'login_id', '', 'login_id', 'varchar(50)', 'String', 'loginId', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
-INSERT INTO `gen_table_column_t` VALUES ('d0d9960b4c4d486c91217ff9616b2ced', 'fcff12cdacb148a39f0e840253c38c5d', 'sort_', '序号', '', 'int(11)', 'Long', 'sort', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 90, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
-INSERT INTO `gen_table_column_t` VALUES ('d18d13c486434d66a1cb11b9d06e49d1', 'fcff12cdacb148a39f0e840253c38c5d', 'last_modified_by', 'last_modified_by', '', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 150, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('d0d9960b4c4d486c91217ff9616b2ced', 'fcff12cdacb148a39f0e840253c38c5d', 'sort_', '序号', '', 'int(11)', 'Long', 'sort', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 90, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
+INSERT INTO `gen_table_column_t` VALUES ('d18d13c486434d66a1cb11b9d06e49d1', 'fcff12cdacb148a39f0e840253c38c5d', 'last_modified_by', 'last_modified_by', '', 'varchar(50)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 150, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('d29e1438afcc468ab207bfcb630e705d', '86097ddda0de41249857ca43bef92587', 'is_leaf', '', '1 叶子节点 0 非叶子节点', 'bit(1)', 'Boolean', 'isLeaf', '0', '0', '1', '1', '1', '1', '0', 'eq', 'radio', 'sys_yes_no', NULL, 90, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
-INSERT INTO `gen_table_column_t` VALUES ('d2b2bc5aed1d423aa718cef631db27fa', 'fcff12cdacb148a39f0e840253c38c5d', 'created_date', 'created_date', '', 'datetime', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 140, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('d2b2bc5aed1d423aa718cef631db27fa', 'fcff12cdacb148a39f0e840253c38c5d', 'created_date', 'created_date', '', 'datetime', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 140, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('d2ecaeed1243420fa13af189bd2b008e', '86097ddda0de41249857ca43bef92587', 'last_modified_date', '', '修改时间', 'datetime', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 130, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
-INSERT INTO `gen_table_column_t` VALUES ('d34c9faa53714b6eabe0a252971e094e', 'fcff12cdacb148a39f0e840253c38c5d', 'name_', 'name_', '', 'varchar(255)', 'String', 'name', '0', '1', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 20, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('d34c9faa53714b6eabe0a252971e094e', 'fcff12cdacb148a39f0e840253c38c5d', 'name_', 'name_', '', 'varchar(255)', 'String', 'name', '0', '1', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 20, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('d41c995138534292b8e5c3c0b6e910ec', 'b83738d9645f4319b4d1d86a0b27635f', 'gen_table_id', '', '生成表编号', 'varchar(200)', 'String', 'genTableId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 110, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_column_t` VALUES ('d55b48888fa840f787476663cf705835', NULL, 'method_name', '', '任务调用的方法名', 'varchar(255)', 'String', 'methodName', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 100, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-INSERT INTO `gen_table_column_t` VALUES ('d5718889fada4b9aa967ed51789a0fa4', '3d0ade4f56e5456b84491e77eb1e00c7', 'level_', '区域等级', '(1省/2市/3区县)', 'int(11)', 'Long', 'level', '0', '0', '1', '1', '1', '1', '1', 'eq', 'select', 'sys_area_type', NULL, 70, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
-INSERT INTO `gen_table_column_t` VALUES ('d5cf9c822f5d4172858ddd1a852b5608', '3d0ade4f56e5456b84491e77eb1e00c7', 'created_date', '创建时间', NULL, 'datetime', 'java.util.Date', 'createdDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 110, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('d5718889fada4b9aa967ed51789a0fa4', '3d0ade4f56e5456b84491e77eb1e00c7', 'level_', '区域等级', '(1省/2市/3区县)', 'int(11)', 'Long', 'level', '0', '0', '1', '1', '1', '1', '1', 'eq', 'select', 'sys_area_type', NULL, 70, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('d57bba96852c4b5aa62f0abd1b8e3653', '9baf568209ad4536a371a81d8a485d18', 'id_', 'id_', '', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, '', '1', '2018-08-24 14:24:39', '1', '2018-08-24 14:24:40');
+INSERT INTO `gen_table_column_t` VALUES ('d5cf9c822f5d4172858ddd1a852b5608', '3d0ade4f56e5456b84491e77eb1e00c7', 'created_date', '创建时间', '', 'datetime', 'java.util.Date', 'createdDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 110, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('d5eb6dfac68e40f49c1c80f0c146f6d7', '8c77be9ca17343c7b80b9c0edd9ff72c', 'is_concurrent', '当前任务', '任务是否有状态', 'varchar(255)', 'String', 'isConcurrent', '0', '0', '1', '1', '1', '1', '0', 'eq', 'radio', 'sys_yes_no', NULL, 70, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('d60fa52150b34e9690e7a07f56e32094', NULL, 'version_', '', 'version_', 'int(11)', 'Long', 'version', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 180, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
 INSERT INTO `gen_table_column_t` VALUES ('d7c56da1f6f74ff78ef929591f1edc4c', '86097ddda0de41249857ca43bef92587', 'description_', '', '描述', 'varchar(225)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 140, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
-INSERT INTO `gen_table_column_t` VALUES ('d88db23903814c8890126630026ca2cf', '3f9bc3608aab4b4eb406d485ca0390cb', 'email_', '邮箱', '', 'varchar(100)', 'String', 'email', '0', '1', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
-INSERT INTO `gen_table_column_t` VALUES ('d96b0ec1d57041dfbce76db32410141a', '3d0ade4f56e5456b84491e77eb1e00c7', 'last_modified_date', '修改时间', NULL, 'datetime', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', NULL, NULL, 130, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
+INSERT INTO `gen_table_column_t` VALUES ('d88db23903814c8890126630026ca2cf', '3f9bc3608aab4b4eb406d485ca0390cb', 'email_', '邮箱', '', 'varchar(100)', 'String', 'email', '0', '1', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 50, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('d96b0ec1d57041dfbce76db32410141a', '3d0ade4f56e5456b84491e77eb1e00c7', 'last_modified_date', '修改时间', '', 'datetime', 'java.util.Date', 'lastModifiedDate', '0', '0', '1', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 130, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
 INSERT INTO `gen_table_column_t` VALUES ('dbdd19c888bd411eb1c73a71d8458a05', '9ff7a79eb69a47739c182fcdd3326d16', 'activated_', '', 'activated_', 'bit(1)', 'String', 'activated', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 80, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('dc34a061de6145afa169a748eb59ba02', 'c95323a8b03144b3ba86fded558543d5', 'spring_id', '', 'spring bean', 'varchar(255)', 'String', 'springId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 80, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
 INSERT INTO `gen_table_column_t` VALUES ('dc81d0ac67de402ab2ecaecb80ff41a1', '9ff7a79eb69a47739c182fcdd3326d16', 'name_', '', 'name_', 'varchar(50)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'like', 'input', '', NULL, 50, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('e1cc397f08d44c478a3173a6bc3672ae', 'b83738d9645f4319b4d1d86a0b27635f', 'id_', '', '编号1', 'varchar(64)', 'Long', 'id2', '0', '1', '1', '0', '1', '1', '1', 'ne', 'textarea', '22', NULL, 10, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
-INSERT INTO `gen_table_column_t` VALUES ('e2c1071523f54793a338d53688c8d420', '3d0ade4f56e5456b84491e77eb1e00c7', 'sort_', '序号', NULL, 'int(11)', 'Long', 'sort', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 60, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
-INSERT INTO `gen_table_column_t` VALUES ('e5c6f35d83b74e78af81a75be6f25aff', '3f9bc3608aab4b4eb406d485ca0390cb', 'author_', '作者', '', 'varchar(50)', 'String', 'author', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('e2c1071523f54793a338d53688c8d420', '3d0ade4f56e5456b84491e77eb1e00c7', 'sort_', '序号', '', 'int(11)', 'Long', 'sort', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 60, '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_column_t` VALUES ('e5c6f35d83b74e78af81a75be6f25aff', '3f9bc3608aab4b4eb406d485ca0390cb', 'author_', '作者', '', 'varchar(50)', 'String', 'author', '0', '0', '0', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_column_t` VALUES ('e68d90bb6819499d87344a93ca04f9f1', NULL, 'status_', '', '状态 -2 已删除 -1停用 0 正常', 'char(2)', 'String', 'status', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', 'sys_status', NULL, 120, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('e7d2fc38f9e9445dacdbf7c91cab9ae9', NULL, 'module_name', '', '生成模块名', 'varchar(30)', 'String', 'moduleName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 60, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
+INSERT INTO `gen_table_column_t` VALUES ('e880cd17bb824f2c92a50a1d5ff07471', '9baf568209ad4536a371a81d8a485d18', 'path_', '路径', '', 'varchar(255)', 'String', 'path', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
+INSERT INTO `gen_table_column_t` VALUES ('e912afd957f947a2988057f3e2f6d25e', '9baf568209ad4536a371a81d8a485d18', 'created_date', 'created_date', '', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 70, '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_column_t` VALUES ('e93aeda5ee1243f69e20b4103fbfb491', '9ff7a79eb69a47739c182fcdd3326d16', 'created_by', '', 'created_by', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 130, '-2', 9, NULL, '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_column_t` VALUES ('ea512af4faba44329269ddde5c6a9d20', NULL, 'function_name_simple', '', '生成功能名（简写）', 'varchar(100)', 'String', 'functionNameSimple', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 90, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
-INSERT INTO `gen_table_column_t` VALUES ('ea9a1809c2e04ce09e77215b64df8151', '3f9bc3608aab4b4eb406d485ca0390cb', 'created_by', 'created_by', '', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 120, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
-INSERT INTO `gen_table_column_t` VALUES ('ece2d4e4a757460b8c660b0300846cba', '3f9bc3608aab4b4eb406d485ca0390cb', 'description_', 'description_', '', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 170, '0', 0, NULL, '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_column_t` VALUES ('ea9a1809c2e04ce09e77215b64df8151', '3f9bc3608aab4b4eb406d485ca0390cb', 'created_by', 'created_by', '', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 120, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('ece2d4e4a757460b8c660b0300846cba', '3f9bc3608aab4b4eb406d485ca0390cb', 'description_', 'description_', '', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', '', NULL, 170, '0', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
+INSERT INTO `gen_table_column_t` VALUES ('efcc98cbf5594e96981dcecd03dd6531', '8c77be9ca17343c7b80b9c0edd9ff72c', 'created_date', 'created_date', '', 'timestamp', 'java.util.Date', 'createdDate', '0', '0', '0', '1', '0', '0', '0', 'eq', 'dateselect', '', NULL, 130, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 INSERT INTO `gen_table_column_t` VALUES ('effb98a299c345af8655064fae449e2c', NULL, 'sub_module_name', '', '生成子模块名', 'varchar(30)', 'String', 'subModuleName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 70, '0', 0, NULL, '1', '2018-01-31 14:41:55', '1', '2018-01-31 14:41:55');
-INSERT INTO `gen_table_column_t` VALUES ('f125fddb52b3413bbadfc24e6218420a', 'fcff12cdacb148a39f0e840253c38c5d', 'created_by', 'created_by', '', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 130, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('f125fddb52b3413bbadfc24e6218420a', 'fcff12cdacb148a39f0e840253c38c5d', 'created_by', 'created_by', '', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 130, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('f468ab35a23741648ee20fad5b3e23dd', NULL, 'module_name', '', '生成模块名', 'varchar(30)', 'String', 'moduleName', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', NULL, NULL, 60, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('f4a8da419a2c418c90b96175e7c6c075', '86097ddda0de41249857ca43bef92587', 'id_', '', '区域id', 'int(11)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
 INSERT INTO `gen_table_column_t` VALUES ('f518e4107968433f90394fde0262de30', '86097ddda0de41249857ca43bef92587', 'parent_id', '', '上级区域', 'int(11)', 'String', 'parentId', '0', '0', '1', '1', '1', '1', '0', 'eq', 'input', '', NULL, 30, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
@@ -272,129 +298,129 @@ INSERT INTO `gen_table_column_t` VALUES ('f73fb0aa87894262a30d7879d840c6e8', NUL
 INSERT INTO `gen_table_column_t` VALUES ('f901d0e12e874aafa2b2875eb083aa24', NULL, 'description_', '', '描述', 'varchar(255)', 'String', 'description', '0', '0', '1', '1', '1', '0', '0', 'eq', 'textarea', NULL, NULL, 140, '0', 0, NULL, '1', '2018-01-31 14:44:02', '1', '2018-01-31 14:44:02');
 INSERT INTO `gen_table_column_t` VALUES ('f993ec78fc614ec2a438c161efc6ccd5', '86097ddda0de41249857ca43bef92587', 'created_by', '', '创建人', 'varchar(32)', 'String', 'createdBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 100, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
 INSERT INTO `gen_table_column_t` VALUES ('f9d1ac5dcbac43a29fb53de11b36705a', '86097ddda0de41249857ca43bef92587', 'last_modified_by', '', '修改人', 'varchar(32)', 'String', 'lastModifiedBy', '0', '0', '1', '1', '0', '0', '0', 'eq', 'input', '', NULL, 120, '-2', 4, NULL, '1', '2018-02-05 16:27:32', '1', '2018-02-05 16:27:31');
-INSERT INTO `gen_table_column_t` VALUES ('fcda20093e6a4d3cbe010d9178b17784', 'fcff12cdacb148a39f0e840253c38c5d', 'id_', 'id_', '', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, NULL, '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
+INSERT INTO `gen_table_column_t` VALUES ('fbd1f1d895ca4a9f904503d83c8355fe', '8c77be9ca17343c7b80b9c0edd9ff72c', 'id_', 'id_', '', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
+INSERT INTO `gen_table_column_t` VALUES ('fcda20093e6a4d3cbe010d9178b17784', 'fcff12cdacb148a39f0e840253c38c5d', 'id_', 'id_', '', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 10, '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 INSERT INTO `gen_table_column_t` VALUES ('fe0eb08b7e45412f863eb70b90284f5b', NULL, 'id_', '', 'id_', 'varchar(32)', 'String', 'id', '1', '0', '0', '1', '0', '0', '0', 'eq', 'input', NULL, NULL, 10, '0', 0, NULL, '1', '2018-02-05 13:52:55', '1', '2018-02-05 13:52:55');
-COMMIT;
+INSERT INTO `gen_table_column_t` VALUES ('ff77c992346e444da32d6fd7b7253c5d', '8c77be9ca17343c7b80b9c0edd9ff72c', 'created_by', 'created_by', '', 'varchar(50)', 'String', 'createdBy', '0', '0', '0', '1', '0', '0', '0', 'eq', 'input', '', NULL, 120, '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
 
 -- ----------------------------
 -- Table structure for gen_table_fk_t
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table_fk_t`;
-CREATE TABLE `gen_table_fk_t` (
-  `id_` varchar(64) NOT NULL COMMENT '编号',
-  `gen_table_id` varchar(64) DEFAULT NULL COMMENT '归属表编号',
-  `name_` varchar(200) DEFAULT NULL COMMENT '名称',
-  `comments` varchar(500) DEFAULT NULL COMMENT '描述',
-  `jdbc_type` varchar(100) DEFAULT NULL COMMENT '列的数据类型的字节长度',
-  `java_type` varchar(500) DEFAULT NULL COMMENT 'JAVA类型',
-  `java_field` varchar(200) DEFAULT NULL COMMENT 'JAVA字段名',
-  `is_pk` char(1) DEFAULT NULL COMMENT '是否主键',
-  `is_unique` char(1) DEFAULT '0' COMMENT '是否唯一（1：是；0：否）',
-  `is_null` char(1) DEFAULT NULL COMMENT '是否可为空',
-  `is_insert` char(1) DEFAULT NULL COMMENT '是否为插入字段',
-  `is_edit` char(1) DEFAULT NULL COMMENT '是否编辑字段',
-  `is_list` char(1) DEFAULT NULL COMMENT '是否列表字段',
-  `is_query` char(1) DEFAULT NULL COMMENT '是否查询字段',
-  `query_type` varchar(200) DEFAULT NULL COMMENT '查询方式（等于、不等于、大于、小于、范围、左LIKE、右LIKE、左右LIKE）',
-  `show_type` varchar(200) DEFAULT NULL COMMENT '字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）',
-  `dict_type` varchar(200) DEFAULT NULL COMMENT '字典类型',
-  `settings` varchar(2000) DEFAULT NULL COMMENT '其它设置（扩展字段JSON）',
-  `sort_` decimal(10,0) DEFAULT NULL COMMENT '排序（升序）',
-  `status_` char(2) DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
-  `version_` int(11) DEFAULT '0' COMMENT '默认0，必填，离线乐观锁',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
+CREATE TABLE `gen_table_fk_t`  (
+  `id_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `gen_table_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '归属表编号',
+  `name_` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `comments` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `jdbc_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '列的数据类型的字节长度',
+  `java_type` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JAVA类型',
+  `java_field` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'JAVA字段名',
+  `is_pk` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否主键',
+  `is_unique` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '是否唯一（1：是；0：否）',
+  `is_null` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否可为空',
+  `is_insert` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否为插入字段',
+  `is_edit` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否编辑字段',
+  `is_list` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否列表字段',
+  `is_query` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否查询字段',
+  `query_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '查询方式（等于、不等于、大于、小于、范围、左LIKE、右LIKE、左右LIKE）',
+  `show_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字段生成方案（文本框、文本域、下拉框、复选框、单选框、字典选择、人员选择、部门选择、区域选择）',
+  `dict_type` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典类型',
+  `settings` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '其它设置（扩展字段JSON）',
+  `sort_` decimal(10, 0) NULL DEFAULT NULL COMMENT '排序（升序）',
+  `status_` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
+  `version_` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `gen_table_column_table_id` (`gen_table_id`) USING BTREE,
-  KEY `gen_table_column_name` (`name_`) USING BTREE,
-  KEY `gen_table_column_sort` (`sort_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='业务表字段';
+  INDEX `gen_table_column_table_id`(`gen_table_id`) USING BTREE,
+  INDEX `gen_table_column_name`(`name_`) USING BTREE,
+  INDEX `gen_table_column_sort`(`sort_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '业务表字段' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for gen_table_t
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_table_t`;
-CREATE TABLE `gen_table_t` (
-  `id_` varchar(64) NOT NULL COMMENT '编号',
-  `name_` varchar(200) DEFAULT NULL COMMENT '名称',
-  `comments` varchar(500) DEFAULT NULL COMMENT '描述',
-  `class_name` varchar(100) DEFAULT NULL COMMENT '实体类名称',
-  `parent_table` varchar(200) DEFAULT NULL COMMENT '关联父表',
-  `parent_table_fk` varchar(100) DEFAULT NULL COMMENT '关联父表外键',
-  `status_` char(2) DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
-  `version_` int(11) DEFAULT '0' COMMENT '默认0，必填，离线乐观锁',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
+CREATE TABLE `gen_table_t`  (
+  `id_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `name_` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `comments` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `class_name` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '实体类名称',
+  `parent_table` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联父表',
+  `parent_table_fk` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '关联父表外键',
+  `status_` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
+  `version_` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `gen_table_name` (`name_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='业务表';
+  INDEX `gen_table_name`(`name_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '业务表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of gen_table_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `gen_table_t` VALUES ('3d0ade4f56e5456b84491e77eb1e00c7', 'sys_area_t', '区域表', 'Area', NULL, NULL, '0', 0, NULL, '1', '2018-02-06 11:07:02', '1', '2018-02-06 11:07:02');
-INSERT INTO `gen_table_t` VALUES ('3f9bc3608aab4b4eb406d485ca0390cb', 'test_book', '测试书籍', 'TestBook', '', '', '0', 0, '', '1', '2018-03-02 16:29:22', '1', '2018-03-02 16:29:22');
+INSERT INTO `gen_table_t` VALUES ('3d0ade4f56e5456b84491e77eb1e00c7', 'sys_area_t', '区域表', 'Area', '', '', '0', 0, '', '1', '2018-07-27 15:03:49', '1', '2018-07-27 15:03:49');
+INSERT INTO `gen_table_t` VALUES ('3f9bc3608aab4b4eb406d485ca0390cb', 'test_book', '测试书籍', 'TestBook', '', '', '-1', 0, '', '1', '2018-08-08 10:28:54', '1', '2018-08-08 10:28:54');
 INSERT INTO `gen_table_t` VALUES ('86097ddda0de41249857ca43bef92587', 'sys_area_t', '区域表', 'Area', '', '', '-2', 4, '', '1', '2018-02-05 16:27:31', '1', '2018-02-05 16:27:31');
+INSERT INTO `gen_table_t` VALUES ('8c77be9ca17343c7b80b9c0edd9ff72c', 'sys_task_schedule_job_t', '计划任务表', 'TaskScheduleJob', '', '', '0', 0, '', '1', '2018-08-22 11:24:09', '1', '2018-08-22 11:24:09');
+INSERT INTO `gen_table_t` VALUES ('9baf568209ad4536a371a81d8a485d18', 'sys_file_data_t', '文件对象', 'FileData', '', '', '0', 0, '', '1', '2018-08-24 14:24:40', '1', '2018-08-24 14:24:40');
 INSERT INTO `gen_table_t` VALUES ('9ff7a79eb69a47739c182fcdd3326d16', 'test_user', 'test_user', 'TestUser', '', '', '-2', 11, '', '1', '2018-02-05 16:27:37', '1', '2018-02-05 16:27:37');
 INSERT INTO `gen_table_t` VALUES ('b83738d9645f4319b4d1d86a0b27635f', 'gen_scheme_t', '生成方案', 'GenSchemeT', NULL, NULL, '-2', 0, NULL, '1', '2018-01-31 14:46:50', '1', '2018-01-31 14:46:50');
 INSERT INTO `gen_table_t` VALUES ('c95323a8b03144b3ba86fded558543d5', 'sys_task_schedule_job_t', '计划任务表', 'TaskScheduleJob', NULL, NULL, '-2', 0, NULL, '1', '2018-02-05 16:27:34', '1', '2018-02-05 16:27:34');
-INSERT INTO `gen_table_t` VALUES ('fcff12cdacb148a39f0e840253c38c5d', 'test_tree', '测试树结构', 'TestTree', '', '', '0', 0, '', '1', '2018-03-04 09:23:32', '1', '2018-03-04 09:23:32');
-COMMIT;
+INSERT INTO `gen_table_t` VALUES ('fcff12cdacb148a39f0e840253c38c5d', 'test_tree', '测试树结构', 'TestTree', '', '', '0', 0, '', '1', '2018-07-27 15:47:09', '1', '2018-07-27 15:47:09');
 
 -- ----------------------------
 -- Table structure for gen_template_t
 -- ----------------------------
 DROP TABLE IF EXISTS `gen_template_t`;
-CREATE TABLE `gen_template_t` (
-  `id` varchar(64) NOT NULL COMMENT '编号',
-  `name` varchar(200) DEFAULT NULL COMMENT '名称',
-  `category` varchar(2000) DEFAULT NULL COMMENT '分类',
-  `file_path` varchar(500) DEFAULT NULL COMMENT '生成文件路径',
-  `file_name` varchar(200) DEFAULT NULL COMMENT '生成文件名',
-  `content` text COMMENT '内容',
-  `status_` char(2) DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
-  `version_` int(11) DEFAULT '0' COMMENT '默认0，必填，离线乐观锁',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
+CREATE TABLE `gen_template_t`  (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `category` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分类',
+  `file_path` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成文件路径',
+  `file_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '生成文件名',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
+  `status_` char(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态 -2 已删除 -1停用 0 正常',
+  `version_` int(11) NULL DEFAULT 0 COMMENT '默认0，必填，离线乐观锁',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='代码模板表';
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '代码模板表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jhi_authority
 -- ----------------------------
 DROP TABLE IF EXISTS `jhi_authority`;
-CREATE TABLE `jhi_authority` (
-  `name` varchar(50) NOT NULL,
+CREATE TABLE `jhi_authority`  (
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`name`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for jhi_persistent_audit_event
 -- ----------------------------
 DROP TABLE IF EXISTS `jhi_persistent_audit_event`;
-CREATE TABLE `jhi_persistent_audit_event` (
+CREATE TABLE `jhi_persistent_audit_event`  (
   `event_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `principal` varchar(50) NOT NULL,
-  `event_date` timestamp NULL DEFAULT NULL,
-  `event_type` varchar(255) DEFAULT NULL,
+  `principal` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `event_date` timestamp(0) NULL DEFAULT NULL,
+  `event_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`event_id`) USING BTREE,
-  KEY `idx_persistent_audit_event` (`principal`,`event_date`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=640 DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  INDEX `idx_persistent_audit_event`(`principal`, `event_date`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 990 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of jhi_persistent_audit_event
 -- ----------------------------
-BEGIN;
 INSERT INTO `jhi_persistent_audit_event` VALUES (263, 'admin', '2017-07-04 17:45:28', 'AUTHENTICATION_SUCCESS');
 INSERT INTO `jhi_persistent_audit_event` VALUES (264, 'admin', '2017-07-05 11:00:41', 'AUTHENTICATION_SUCCESS');
 INSERT INTO `jhi_persistent_audit_event` VALUES (265, 'admin', '2017-07-05 11:02:02', 'AUTHENTICATION_SUCCESS');
@@ -716,25 +742,311 @@ INSERT INTO `jhi_persistent_audit_event` VALUES (636, 'admin', '2018-03-02 09:19
 INSERT INTO `jhi_persistent_audit_event` VALUES (637, 'admin', '2018-03-02 14:24:01', 'AUTHENTICATION_SUCCESS');
 INSERT INTO `jhi_persistent_audit_event` VALUES (638, 'admin', '2018-03-02 17:21:06', 'AUTHENTICATION_SUCCESS');
 INSERT INTO `jhi_persistent_audit_event` VALUES (639, 'admin', '2018-03-04 09:08:48', 'AUTHENTICATION_SUCCESS');
-COMMIT;
+INSERT INTO `jhi_persistent_audit_event` VALUES (640, 'admin', '2018-03-07 17:01:17', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (641, 'user-jwt-controller-remember-me', '2018-03-13 11:37:36', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (642, 'user-jwt-controller', '2018-03-13 11:37:36', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (657, 'user-jwt-controller-remember-me', '2018-03-13 13:17:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (658, 'user-jwt-controller', '2018-03-13 13:17:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (659, 'user-jwt-controller-remember-me', '2018-03-13 13:26:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (660, 'user-jwt-controller', '2018-03-13 13:26:59', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (665, 'user-jwt-controller-remember-me', '2018-03-13 13:38:31', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (666, 'user-jwt-controller', '2018-03-13 13:38:32', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (671, 'admin', '2018-03-13 14:00:53', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (672, 'user-jwt-controller-remember-me', '2018-03-13 14:28:59', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (673, 'user-jwt-controller', '2018-03-13 14:29:00', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (678, 'admin', '2018-03-13 14:32:35', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (679, 'user-jwt-controller-remember-me', '2018-03-13 15:24:14', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (680, 'user-jwt-controller', '2018-03-13 15:24:15', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (685, 'user-jwt-controller-remember-me', '2018-03-13 16:13:15', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (686, 'user-jwt-controller', '2018-03-13 16:13:15', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (691, 'user-jwt-controller-remember-me', '2018-03-13 16:39:59', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (692, 'user-jwt-controller', '2018-03-13 16:40:00', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (697, 'user-jwt-controller-remember-me', '2018-03-13 16:54:45', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (698, 'user-jwt-controller', '2018-03-13 16:54:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (699, 'user-jwt-controller-remember-me', '2018-03-13 17:54:40', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (700, 'user-jwt-controller', '2018-03-13 17:54:40', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (705, 'user-jwt-controller-remember-me', '2018-03-14 10:03:20', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (706, 'user-jwt-controller', '2018-03-14 10:03:21', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (711, 'admin', '2018-03-14 10:04:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (712, 'admin', '2018-03-14 22:24:50', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (713, 'admin', '2018-03-15 09:25:29', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (714, 'admin', '2018-03-16 17:30:48', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (715, 'admin', '2018-03-19 08:56:20', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (716, 'admin', '2018-03-20 10:17:41', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (717, 'admin', '2018-03-20 10:39:59', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (718, 'admin', '2018-03-20 11:14:13', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (719, 'admin', '2018-03-20 11:21:01', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (720, 'admin', '2018-03-20 12:38:52', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (721, 'admin', '2018-03-21 10:05:32', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (722, 'admin', '2018-03-21 13:12:55', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (723, 'admin', '2018-03-21 17:04:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (732, 'admin', '2018-03-23 13:48:13', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (741, 'admin', '2018-04-11 15:12:29', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (742, 'admin', '2018-04-16 09:09:35', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (743, 'admin', '2018-05-18 15:50:32', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (744, 'admin', '2018-05-18 15:57:45', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (745, 'admin', '2018-05-18 15:57:52', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (746, 'admin', '2018-05-18 15:58:10', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (747, 'admin', '2018-05-18 15:58:13', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (748, 'admin', '2018-05-18 15:58:47', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (749, 'admin', '2018-05-18 16:01:10', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (750, 'admin', '2018-05-18 16:01:18', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (751, 'admin', '2018-05-18 16:05:18', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (752, 'admin', '2018-05-18 16:05:22', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (753, 'admin', '2018-05-18 16:05:39', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (754, 'admin', '2018-05-18 16:11:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (755, 'admin', '2018-05-18 16:12:47', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (756, 'admin', '2018-05-18 16:14:21', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (757, 'admin', '2018-05-18 16:14:26', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (758, 'admin', '2018-05-18 16:14:38', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (759, 'admin', '2018-05-18 16:16:33', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (760, 'admin', '2018-05-18 16:18:04', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (761, 'admin', '2018-05-18 16:18:43', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (762, 'admin', '2018-05-18 16:19:36', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (763, 'admin', '2018-05-18 16:19:39', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (764, 'admin', '2018-05-18 16:28:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (765, 'admin', '2018-05-18 16:29:03', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (766, 'admin', '2018-05-21 14:13:58', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (767, 'admin', '2018-05-21 14:14:10', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (768, 'admin', '2018-05-21 15:37:14', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (769, 'admin', '2018-05-21 15:37:19', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (770, 'admin', '2018-05-21 17:06:43', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (771, 'admin', '2018-05-21 17:07:06', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (772, 'admin', '2018-05-21 17:07:32', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (773, 'admin', '2018-05-21 17:07:34', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (774, 'admin', '2018-05-21 17:07:35', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (775, 'admin', '2018-05-21 17:08:44', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (776, 'admin', '2018-05-21 17:08:45', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (777, 'admin', '2018-05-21 17:08:46', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (778, 'admin', '2018-05-21 17:08:47', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (779, 'admin', '2018-05-21 17:08:47', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (780, 'admin', '2018-05-21 17:08:48', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (781, 'admin', '2018-05-21 17:08:48', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (782, 'admin', '2018-05-21 17:08:48', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (783, 'admin', '2018-05-21 17:08:48', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (784, 'admin', '2018-05-21 17:53:07', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (785, 'admin', '2018-05-21 17:54:33', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (786, 'admin', '2018-05-21 17:59:06', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (787, 'admin', '2018-05-21 17:59:10', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (788, 'admin', '2018-05-21 17:59:13', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (789, 'admin', '2018-05-21 17:59:20', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (790, 'admin', '2018-05-22 15:55:51', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (791, 'admin', '2018-05-22 15:55:57', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (792, 'admin', '2018-05-22 15:56:05', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (793, 'admin', '2018-06-04 10:51:37', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (794, 'admin', '2018-06-04 10:51:43', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (795, 'admin', '2018-06-04 11:05:19', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (796, 'admin', '2018-06-04 11:05:36', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (797, 'admin', '2018-06-04 11:05:43', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (798, 'admin', '2018-06-04 11:16:35', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (799, 'admin', '2018-06-04 11:16:39', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (800, 'admin', '2018-06-04 11:16:50', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (801, 'admin', '2018-06-04 11:28:48', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (802, 'admin', '2018-06-04 16:48:03', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (803, 'admin', '2018-06-04 16:48:08', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (804, 'admin', '2018-06-11 11:21:28', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (805, 'admin', '2018-06-12 09:31:49', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (806, 'admin', '2018-06-12 10:45:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (807, 'admin', '2018-06-12 14:12:07', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (808, 'admin', '2018-06-14 09:33:19', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (809, 'admin', '2018-06-17 11:22:00', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (810, 'admin', '2018-06-17 15:06:14', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (811, 'admin', '2018-06-17 15:06:23', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (812, 'admin', '2018-06-17 16:27:47', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (813, 'admin', '2018-06-17 16:32:08', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (814, 'admin', '2018-06-17 16:32:29', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (815, 'admin', '2018-06-17 16:32:32', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (816, 'admin', '2018-06-17 16:37:32', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (817, 'admin', '2018-06-17 16:37:36', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (818, 'admin', '2018-06-17 16:40:02', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (819, 'admin', '2018-06-17 16:42:14', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (820, 'admin', '2018-06-17 16:42:20', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (821, 'admin', '2018-06-17 16:42:24', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (822, 'admin', '2018-06-17 16:44:22', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (823, 'admin', '2018-06-17 16:45:01', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (824, 'admin', '2018-06-17 16:49:06', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (825, 'admin', '2018-06-17 16:51:18', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (826, 'admin', '2018-06-17 16:56:17', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (827, 'admin', '2018-06-17 16:56:44', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (828, 'admin', '2018-06-17 16:56:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (829, 'admin', '2018-06-17 16:58:50', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (830, 'admin', '2018-06-17 16:58:53', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (831, 'admin', '2018-06-17 17:02:56', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (832, 'admin', '2018-06-17 17:04:18', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (833, 'admin', '2018-06-17 17:12:33', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (834, 'admin', '2018-06-17 17:12:38', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (835, 'admin', '2018-06-17 17:12:44', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (836, 'admin', '2018-06-17 17:17:35', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (837, 'admin', '2018-06-17 17:17:39', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (838, 'admin', '2018-06-17 17:18:00', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (839, 'admin', '2018-06-17 17:18:04', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (840, 'admin', '2018-06-18 09:19:07', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (841, 'admin', '2018-06-18 09:36:15', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (842, 'admin', '2018-06-18 09:36:20', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (843, 'admin', '2018-06-18 10:48:16', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (844, 'admin', '2018-06-18 11:12:43', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (845, 'admin', '2018-06-18 11:27:37', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (846, 'admin', '2018-06-18 11:39:17', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (847, 'admin', '2018-06-18 11:40:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (848, 'admin', '2018-06-18 11:41:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (849, 'admin', '2018-06-18 11:43:51', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (850, 'admin', '2018-06-18 11:45:22', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (851, 'admin', '2018-06-18 11:49:41', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (852, 'admin', '2018-06-18 11:54:04', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (853, 'admin', '2018-06-18 14:03:38', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (854, 'admin', '2018-06-18 16:00:45', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (855, 'admin', '2018-06-18 16:01:18', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (856, 'admin', '2018-06-19 10:02:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (857, 'admin', '2018-06-19 11:00:11', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (858, 'admin', '2018-06-19 13:33:26', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (859, 'admin', '2018-06-19 16:42:45', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (860, 'admin', '2018-06-20 16:19:22', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (861, 'admin', '2018-06-20 18:58:51', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (862, 'admin', '2018-06-25 11:04:44', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (863, 'admin', '2018-06-25 17:25:05', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (864, 'admin', '2018-06-25 17:35:48', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (865, 'admin', '2018-06-25 17:39:04', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (866, 'admin', '2018-06-25 17:43:03', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (867, 'admin', '2018-06-25 17:54:49', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (868, 'admin', '2018-06-26 10:13:35', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (869, 'admin', '2018-06-29 13:35:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (870, 'admin', '2018-06-29 13:35:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (871, 'admin', '2018-06-29 16:29:07', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (872, 'admin', '2018-06-29 16:36:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (873, 'admin', '2018-06-29 16:40:55', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (874, 'admin', '2018-06-29 17:23:56', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (875, 'admin', '2018-07-02 09:22:19', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (876, 'admin', '2018-07-02 09:32:12', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (877, 'admin', '2018-07-03 11:21:33', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (878, 'admin', '2018-07-03 15:11:38', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (879, 'admin', '2018-07-04 17:22:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (880, 'admin', '2018-07-05 11:31:56', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (881, 'admin', '2018-07-05 11:31:56', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (882, 'admin', '2018-07-05 11:31:59', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (883, 'admin', '2018-07-05 15:07:47', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (884, 'admin', '2018-07-05 15:20:44', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (885, 'admin', '2018-07-05 16:38:19', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (886, 'admin', '2018-07-05 16:46:35', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (887, 'admin', '2018-07-05 16:46:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (888, 'admin', '2018-07-06 13:36:41', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (889, 'admin', '2018-07-06 13:36:41', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (890, 'admin', '2018-07-06 16:46:42', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (891, 'admin', '2018-07-18 09:49:42', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (892, 'admin', '2018-07-18 09:49:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (893, 'admin', '2018-07-18 10:52:48', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (894, 'admin', '2018-07-18 13:10:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (895, 'admin', '2018-07-18 15:37:20', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (896, 'admin', '2018-07-18 15:39:03', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (897, 'admin', '2018-07-26 11:37:31', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (898, 'admin', '2018-07-26 14:31:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (899, 'admin', '2018-07-26 14:31:47', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (900, 'admin', '2018-07-26 14:46:22', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (901, 'admin', '2018-07-26 14:54:05', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (902, 'admin', '2018-07-26 15:13:42', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (903, 'admin', '2018-07-26 15:58:38', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (904, 'admin', '2018-07-26 18:01:22', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (905, 'admin', '2018-07-27 14:10:17', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (906, 'admin', '2018-07-27 14:10:17', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (907, 'admin', '2018-07-27 14:37:18', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (908, 'admin', '2018-07-27 17:55:03', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (909, 'admin', '2018-08-08 10:28:39', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (910, 'admin', '2018-08-08 10:32:25', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (911, 'admin', '2018-08-20 14:19:05', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (912, 'admin', '2018-08-20 14:59:12', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (913, 'admin', '2018-08-21 09:49:39', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (914, 'admin', '2018-08-21 10:19:19', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (915, 'admin', '2018-08-21 10:19:21', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (916, 'admin', '2018-08-21 11:07:13', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (917, 'admin', '2018-08-21 11:11:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (918, 'admin', '2018-08-21 11:11:24', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (919, 'admin', '2018-08-21 11:12:26', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (920, 'admin', '2018-08-21 11:44:14', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (921, 'admin', '2018-08-22 09:15:13', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (922, 'admin', '2018-08-22 10:09:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (923, 'admin', '2018-08-22 10:37:16', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (924, 'admin', '2018-08-22 10:37:19', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (925, 'admin', '2018-08-22 10:37:20', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (926, 'admin', '2018-08-22 10:49:53', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (927, 'admin', '2018-08-22 10:52:51', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (928, 'admin', '2018-08-22 10:57:25', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (929, 'admin', '2018-08-22 11:00:50', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (930, 'admin', '2018-08-22 11:00:53', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (931, 'admin', '2018-08-22 11:00:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (932, 'admin', '2018-08-22 11:00:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (933, 'admin', '2018-08-22 11:00:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (934, 'admin', '2018-08-22 11:00:55', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (935, 'admin', '2018-08-22 11:00:55', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (936, 'admin', '2018-08-22 11:00:55', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (937, 'admin', '2018-08-22 11:07:42', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (938, 'admin', '2018-08-22 11:07:44', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (939, 'admin', '2018-08-22 11:07:45', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (940, 'admin', '2018-08-22 11:07:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (941, 'admin', '2018-08-22 11:08:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (942, 'admin', '2018-08-22 13:14:43', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (943, 'admin', '2018-08-22 13:14:45', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (944, 'admin', '2018-08-22 13:14:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (945, 'admin', '2018-08-22 13:15:01', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (946, 'admin', '2018-08-22 17:08:03', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (947, 'admin', '2018-08-22 17:57:23', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (948, 'admin', '2018-08-22 17:57:24', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (949, 'admin', '2018-08-22 17:57:25', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (950, 'admin', '2018-08-22 17:57:25', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (951, 'admin', '2018-08-22 17:57:25', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (952, 'admin', '2018-08-22 17:57:25', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (953, 'admin', '2018-08-23 15:03:30', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (954, 'admin', '2018-08-23 15:03:32', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (955, 'admin', '2018-08-23 15:03:33', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (956, 'admin', '2018-08-23 15:03:54', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (957, 'admin', '2018-08-23 15:03:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (958, 'admin', '2018-08-23 15:03:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (959, 'admin', '2018-08-23 15:03:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (960, 'admin', '2018-08-23 15:03:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (961, 'admin', '2018-08-23 15:05:06', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (962, 'admin', '2018-08-23 15:05:53', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (963, 'admin', '2018-08-23 16:26:35', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (964, 'admin', '2018-08-24 09:25:28', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (965, 'admin', '2018-08-24 10:13:54', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (966, 'admin', '2018-08-24 10:13:55', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (967, 'admin', '2018-08-24 10:13:56', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (968, 'admin', '2018-08-24 10:13:56', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (969, 'admin', '2018-08-24 10:13:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (970, 'admin', '2018-08-24 10:13:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (971, 'admin', '2018-08-24 10:13:57', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (972, 'admin', '2018-08-24 10:13:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (973, 'admin', '2018-08-24 10:13:58', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (974, 'admin', '2018-08-24 10:14:35', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (975, 'admin', '2018-08-24 10:14:46', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (976, 'admin', '2018-08-24 10:16:40', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (977, 'admin', '2018-08-24 11:07:32', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (978, 'admin', '2018-08-24 15:09:32', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (979, 'admin', '2018-08-24 16:18:04', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (980, 'admin', '2018-08-24 16:34:34', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (981, 'admin', '2018-08-24 16:36:45', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (982, 'admin', '2018-08-24 16:36:47', 'AUTHENTICATION_FAILURE');
+INSERT INTO `jhi_persistent_audit_event` VALUES (983, 'admin', '2018-08-24 16:36:52', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (984, 'admin', '2018-08-24 16:44:18', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (985, 'admin', '2018-08-24 17:01:11', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (986, 'admin', '2018-08-24 17:03:27', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (987, 'admin', '2018-08-24 17:03:48', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (988, 'admin', '2018-08-24 17:03:59', 'AUTHENTICATION_SUCCESS');
+INSERT INTO `jhi_persistent_audit_event` VALUES (989, 'admin', '2018-08-24 17:04:06', 'AUTHENTICATION_SUCCESS');
 
 -- ----------------------------
 -- Table structure for jhi_persistent_audit_evt_data
 -- ----------------------------
 DROP TABLE IF EXISTS `jhi_persistent_audit_evt_data`;
-CREATE TABLE `jhi_persistent_audit_evt_data` (
+CREATE TABLE `jhi_persistent_audit_evt_data`  (
   `event_id` bigint(20) NOT NULL,
-  `name` varchar(150) NOT NULL,
-  `value` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`event_id`,`name`) USING BTREE,
-  KEY `idx_persistent_audit_evt_data` (`event_id`) USING BTREE,
-  CONSTRAINT `jhi_persistent_audit_evt_data_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `jhi_persistent_audit_event` (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  `name` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`event_id`, `name`) USING BTREE,
+  INDEX `idx_persistent_audit_evt_data`(`event_id`) USING BTREE,
+  CONSTRAINT `jhi_persistent_audit_evt_data_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `jhi_persistent_audit_event` (`event_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of jhi_persistent_audit_evt_data
 -- ----------------------------
-BEGIN;
 INSERT INTO `jhi_persistent_audit_evt_data` VALUES (263, 'remoteAddress', '0:0:0:0:0:0:0:1');
 INSERT INTO `jhi_persistent_audit_evt_data` VALUES (263, 'sessionId', '0zrBAPPqGkbQQdESYqHTdrYfAAU43pjuM46Ry2_e');
 INSERT INTO `jhi_persistent_audit_evt_data` VALUES (353, 'remoteAddress', '0:0:0:0:0:0:0:1');
@@ -853,121 +1165,270 @@ INSERT INTO `jhi_persistent_audit_evt_data` VALUES (622, 'message', 'Bad credent
 INSERT INTO `jhi_persistent_audit_evt_data` VALUES (622, 'type', 'org.springframework.security.authentication.BadCredentialsException');
 INSERT INTO `jhi_persistent_audit_evt_data` VALUES (623, 'message', 'Bad credentials');
 INSERT INTO `jhi_persistent_audit_evt_data` VALUES (623, 'type', 'org.springframework.security.authentication.BadCredentialsException');
-COMMIT;
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (744, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (744, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (745, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (745, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (746, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (746, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (749, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (749, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (751, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (751, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (756, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (756, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (762, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (762, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (766, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (766, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (768, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (768, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (770, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (770, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (771, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (771, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (772, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (772, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (773, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (773, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (774, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (774, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (775, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (775, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (776, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (776, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (777, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (777, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (778, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (778, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (779, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (779, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (780, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (780, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (781, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (781, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (782, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (782, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (783, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (783, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (784, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (784, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (785, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (785, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (786, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (786, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (787, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (787, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (788, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (788, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (790, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (790, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (791, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (791, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (792, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (792, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (793, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (793, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (795, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (795, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (796, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (796, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (798, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (798, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (802, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (802, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (810, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (810, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (811, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (811, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (812, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (812, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (813, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (813, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (814, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (814, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (816, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (816, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (819, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (819, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (820, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (820, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (829, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (829, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (834, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (834, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (836, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (836, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (838, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (838, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (841, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (841, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (891, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (891, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (953, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (953, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (954, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (954, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (955, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (955, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (956, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (956, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (981, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (981, 'type', 'org.springframework.security.authentication.BadCredentialsException');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (982, 'message', 'Bad credentials');
+INSERT INTO `jhi_persistent_audit_evt_data` VALUES (982, 'type', 'org.springframework.security.authentication.BadCredentialsException');
 
 -- ----------------------------
 -- Table structure for jhi_persistent_token
 -- ----------------------------
 DROP TABLE IF EXISTS `jhi_persistent_token`;
-CREATE TABLE `jhi_persistent_token` (
-  `id_` varchar(32) NOT NULL,
-  `series_` varchar(76) NOT NULL,
-  `user_id` bigint(20) DEFAULT NULL,
-  `token_value` varchar(76) NOT NULL,
-  `token_date` date DEFAULT NULL,
-  `ip_address` varchar(39) DEFAULT NULL,
-  `user_agent` varchar(255) DEFAULT NULL,
+CREATE TABLE `jhi_persistent_token`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `series_` varchar(76) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `user_id` bigint(20) NULL DEFAULT NULL,
+  `token_value` varchar(76) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `token_date` date NULL DEFAULT NULL,
+  `ip_address` varchar(39) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `fk_user_persistent_token` (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  INDEX `fk_user_persistent_token`(`user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Table structure for job_execution_log
+-- ----------------------------
+DROP TABLE IF EXISTS `job_execution_log`;
+CREATE TABLE `job_execution_log`  (
+  `id` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `task_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `hostname` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sharding_item` int(11) NOT NULL,
+  `execution_source` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `failure_cause` varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `is_success` int(11) NOT NULL,
+  `start_time` timestamp(0) NULL DEFAULT NULL,
+  `complete_time` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for job_status_trace_log
+-- ----------------------------
+DROP TABLE IF EXISTS `job_status_trace_log`;
+CREATE TABLE `job_status_trace_log`  (
+  `id` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `job_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `original_task_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `task_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `slave_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `source` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `execution_type` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `sharding_item` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `state` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `message` varchar(4000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `creation_time` timestamp(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `TASK_ID_STATE_INDEX`(`task_id`, `state`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for logging_event
 -- ----------------------------
 DROP TABLE IF EXISTS `logging_event`;
-CREATE TABLE `logging_event` (
+CREATE TABLE `logging_event`  (
   `event_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `timestmp` bigint(20) NOT NULL COMMENT '创建时间',
-  `formatted_message` text NOT NULL COMMENT '内容',
-  `logger_name` varchar(254) NOT NULL COMMENT '名称',
-  `level_string` varchar(254) NOT NULL COMMENT '级别',
-  `thread_name` varchar(254) DEFAULT NULL COMMENT '线程',
-  `reference_flag` smallint(6) DEFAULT NULL COMMENT '引用标识',
-  `arg0` varchar(254) DEFAULT NULL COMMENT '参数0',
-  `arg1` varchar(254) DEFAULT NULL COMMENT '参数1',
-  `arg2` varchar(254) DEFAULT NULL COMMENT '参数2',
-  `arg3` varchar(254) DEFAULT NULL COMMENT '参数3',
-  `caller_filename` varchar(254) NOT NULL COMMENT '操作文件',
-  `caller_class` varchar(254) NOT NULL COMMENT '操作类名',
-  `caller_method` varchar(254) NOT NULL COMMENT '操作方法',
-  `caller_line` char(4) NOT NULL COMMENT '操作行',
+  `formatted_message` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '内容',
+  `logger_name` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+  `level_string` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '级别',
+  `thread_name` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '线程',
+  `reference_flag` smallint(6) NULL DEFAULT NULL COMMENT '引用标识',
+  `arg0` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数0',
+  `arg1` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数1',
+  `arg2` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数2',
+  `arg3` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数3',
+  `caller_filename` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作文件',
+  `caller_class` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作类名',
+  `caller_method` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作方法',
+  `caller_line` char(4) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作行',
   PRIMARY KEY (`event_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='日志表';
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '日志表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for logging_event_exception
 -- ----------------------------
 DROP TABLE IF EXISTS `logging_event_exception`;
-CREATE TABLE `logging_event_exception` (
+CREATE TABLE `logging_event_exception`  (
   `event_id` bigint(20) NOT NULL,
   `i` smallint(6) NOT NULL,
-  `trace_line` varchar(254) NOT NULL,
-  PRIMARY KEY (`event_id`,`i`) USING BTREE,
-  CONSTRAINT `logging_event_exception_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `logging_event` (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  `trace_line` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`event_id`, `i`) USING BTREE,
+  CONSTRAINT `logging_event_exception_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `logging_event` (`event_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for logging_event_property
 -- ----------------------------
 DROP TABLE IF EXISTS `logging_event_property`;
-CREATE TABLE `logging_event_property` (
+CREATE TABLE `logging_event_property`  (
   `event_id` bigint(20) NOT NULL,
-  `mapped_key` varchar(254) NOT NULL,
-  `mapped_value` text,
-  PRIMARY KEY (`event_id`,`mapped_key`) USING BTREE,
-  CONSTRAINT `logging_event_property_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `logging_event` (`event_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  `mapped_key` varchar(254) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `mapped_value` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  PRIMARY KEY (`event_id`, `mapped_key`) USING BTREE,
+  CONSTRAINT `logging_event_property_ibfk_1` FOREIGN KEY (`event_id`) REFERENCES `logging_event` (`event_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for sys_area_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_area_t`;
-CREATE TABLE `sys_area_t` (
+CREATE TABLE `sys_area_t`  (
   `id_` int(11) NOT NULL COMMENT '区域id',
-  `parent_ids` text NOT NULL COMMENT '所有上级区域节点',
-  `parent_id` int(11) DEFAULT NULL COMMENT '上级区域',
-  `name_` varchar(32) DEFAULT NULL COMMENT '区域名称',
-  `short_name` varchar(32) DEFAULT NULL COMMENT '区域简称',
+  `parent_ids` text CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '所有上级区域节点',
+  `parent_id` int(11) NULL DEFAULT NULL COMMENT '上级区域',
+  `name_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区域名称',
+  `short_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区域简称',
   `sort_` int(11) NOT NULL COMMENT '序号',
-  `level_` int(11) DEFAULT NULL COMMENT '区域等级(1省/2市/3区县)',
-  `code_` varchar(32) DEFAULT NULL COMMENT '区域编码',
-  `is_leaf` bit(1) DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
-  `created_by` varchar(32) DEFAULT NULL COMMENT '创建人',
-  `created_date` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_modified_by` varchar(32) DEFAULT NULL COMMENT '修改人',
-  `last_modified_date` datetime DEFAULT NULL COMMENT '修改时间',
-  `description_` varchar(225) DEFAULT NULL COMMENT '描述',
-  `status_` varchar(32) DEFAULT '0' COMMENT '状态',
-  `version_` int(11) NOT NULL DEFAULT '0' COMMENT '版本',
+  `level_` int(11) NULL DEFAULT NULL COMMENT '区域等级(1省/2市/3区县)',
+  `code_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '区域编码',
+  `is_leaf` bit(1) NULL DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
+  `created_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '创建人',
+  `created_date` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `last_modified_by` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改人',
+  `last_modified_date` datetime(0) NULL DEFAULT NULL COMMENT '修改时间',
+  `description_` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `status_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '状态',
+  `version_` int(11) NOT NULL DEFAULT 0 COMMENT '版本',
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='区域表';
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '区域表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_area_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_area_t` VALUES (1, '', 0, '全国', NULL, 0, 0, NULL, b'0', NULL, NULL, NULL, NULL, NULL, '0', 0);
-INSERT INTO `sys_area_t` VALUES (110000, '1,', 1, '北京市', NULL, 1, 1, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-06-30 15:01:29', NULL, '0', 4);
-INSERT INTO `sys_area_t` VALUES (110100, '1,110000,', 110000, '市辖区', '', 0, 2, '', b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', '', '0', 9);
-INSERT INTO `sys_area_t` VALUES (110101, '1,110000,110100,', 110100, '东城区', '', 150, 3, '', b'1', NULL, '2017-06-30 15:01:29', '1', '2017-11-24 11:01:43', '', '0', 5);
-INSERT INTO `sys_area_t` VALUES (110102, '1,110000,110100,', 110100, '西城区', NULL, 30, 3, NULL, b'1', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 6);
-INSERT INTO `sys_area_t` VALUES (110103, '1,110000,110100,', 110100, '崇文区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110104, '1,110000,110100,', 110100, '宣武区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110105, '1,110000,110100,', 110100, '朝阳区', 'ddd', 120, 3, NULL, b'1', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', 'sss', '0', 10);
-INSERT INTO `sys_area_t` VALUES (110106, '1,110000,110100,', 110100, '丰台区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110107, '1,110000,110100,', 110100, '石景山区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110108, '1,110000,110100,', 110100, '海淀区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110109, '1,110000,110100,', 110100, '门头沟区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110111, '1,110000,110100,', 110100, '房山区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110112, '1,110000,110100,', 110100, '通州区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110113, '1,110000,110100,', 110100, '顺义区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110114, '1,110000,110100,', 110100, '昌平区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110115, '1,110000,110100,', 110100, '大兴区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110116, '1,110000,110100,', 110100, '怀柔区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110117, '1,110000,110100,', 110100, '平谷区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2017-11-10 14:03:53', NULL, '0', 5);
-INSERT INTO `sys_area_t` VALUES (110200, '1,110000,', 110000, '县', NULL, 0, 2, NULL, b'0', NULL, NULL, NULL, '2016-12-14 15:01:33', NULL, '0', 2);
-INSERT INTO `sys_area_t` VALUES (110228, '1,110000,110200,', 110200, '密云县', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 15:01:33', NULL, '0', 2);
-INSERT INTO `sys_area_t` VALUES (110229, '1,110000,110200,', 110200, '延庆县', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 15:01:33', NULL, '0', 2);
+INSERT INTO `sys_area_t` VALUES (1, '', 0, '全国', NULL, 0, 0, NULL, b'0', NULL, '2018-03-21 13:28:04', '1', '2018-03-21 13:28:04', NULL, '0', 1);
+INSERT INTO `sys_area_t` VALUES (110000, '1,', 1, '北京市', '', 1, 1, '', b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', '', '0', 5);
+INSERT INTO `sys_area_t` VALUES (110100, '1,110000,', 110000, '市辖区', '', 0, 2, '', b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', '', '0', 10);
+INSERT INTO `sys_area_t` VALUES (110101, '1,110000,110100,', 110100, '东城区', '', 150, 3, '', b'1', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', '', '0', 6);
+INSERT INTO `sys_area_t` VALUES (110102, '1,110000,110100,', 110100, '西城区', NULL, 30, 3, NULL, b'1', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 7);
+INSERT INTO `sys_area_t` VALUES (110103, '1,110000,110100,', 110100, '崇文区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110104, '1,110000,110100,', 110100, '宣武区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110105, '1,110000,110100,', 110100, '朝阳区', 'ddd', 120, 3, NULL, b'1', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', 'sss', '0', 11);
+INSERT INTO `sys_area_t` VALUES (110106, '1,110000,110100,', 110100, '丰台区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110107, '1,110000,110100,', 110100, '石景山区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110108, '1,110000,110100,', 110100, '海淀区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110109, '1,110000,110100,', 110100, '门头沟区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110111, '1,110000,110100,', 110100, '房山区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110112, '1,110000,110100,', 110100, '通州区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110113, '1,110000,110100,', 110100, '顺义区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110114, '1,110000,110100,', 110100, '昌平区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110115, '1,110000,110100,', 110100, '大兴区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110116, '1,110000,110100,', 110100, '怀柔区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110117, '1,110000,110100,', 110100, '平谷区', NULL, 0, 3, NULL, b'0', NULL, '2017-06-30 15:01:29', '1', '2018-03-21 13:28:04', NULL, '0', 6);
+INSERT INTO `sys_area_t` VALUES (110200, '1,110000,', 110000, '县', NULL, 0, 2, NULL, b'0', NULL, '2018-03-21 13:28:04', '1', '2018-03-21 13:28:04', NULL, '0', 3);
+INSERT INTO `sys_area_t` VALUES (110228, '1,110000,110200,', 110200, '密云县', NULL, 0, 3, NULL, b'0', NULL, '2018-03-21 13:28:04', '1', '2018-03-21 13:28:04', NULL, '0', 3);
+INSERT INTO `sys_area_t` VALUES (110229, '1,110000,110200,', 110200, '延庆县', NULL, 0, 3, NULL, b'0', NULL, '2018-03-21 13:28:04', '1', '2018-03-21 13:28:04', NULL, '0', 3);
 INSERT INTO `sys_area_t` VALUES (120000, '1,', 1, '天津市', NULL, 2, 1, NULL, b'0', NULL, NULL, '1', '2018-02-06 16:30:01', NULL, '0', 2);
 INSERT INTO `sys_area_t` VALUES (120100, '1,120000,', 120000, '市辖区', NULL, 0, 2, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:36', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (120101, '1,120000,120100,', 120100, '和平区', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:36', NULL, '0', 1);
@@ -1337,7 +1798,7 @@ INSERT INTO `sys_area_t` VALUES (150121, '1,150000,150100,', 150100, '土默特�
 INSERT INTO `sys_area_t` VALUES (150122, '1,150000,150100,', 150100, '托克托县', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (150123, '1,150000,150100,', 150100, '和林格尔县', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (150124, '1,150000,150100,', 150100, '清水河县', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
-INSERT INTO `sys_area_t` VALUES (150125, '1,150000,150100,', 150100, '武川县', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
+INSERT INTO `sys_area_t` VALUES (150125, '1,150000,150100,', 150100, '武川县', '', 0, 3, '', b'1', NULL, NULL, '1', '2018-08-08 10:31:13', '', '0', 1);
 INSERT INTO `sys_area_t` VALUES (150200, '1,150000,', 150000, '包头市', NULL, 0, 2, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (150201, '1,150000,150200,', 150200, '市辖区', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (150202, '1,150000,150200,', 150200, '东河区', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 14:58:48', NULL, '0', 1);
@@ -4474,147 +4935,182 @@ INSERT INTO `sys_area_t` VALUES (659001, '1,650000,659000,', 659000, '石河子�
 INSERT INTO `sys_area_t` VALUES (659002, '1,650000,659000,', 659000, '阿拉尔市', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 15:00:13', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (659003, '1,650000,659000,', 659000, '图木舒克市', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 15:00:14', NULL, '0', 1);
 INSERT INTO `sys_area_t` VALUES (659004, '1,650000,659000,', 659000, '五家渠市', NULL, 0, 3, NULL, b'0', NULL, NULL, NULL, '2016-12-14 15:00:14', NULL, '0', 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_dict_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_dict_t`;
-CREATE TABLE `sys_dict_t` (
-  `id_` varchar(32) NOT NULL COMMENT '编号',
-  `name_` varchar(255) DEFAULT NULL COMMENT '字典名称',
-  `parent_id` varchar(32) DEFAULT NULL,
-  `parent_ids` varchar(2000) DEFAULT NULL,
-  `val_` varchar(255) DEFAULT NULL COMMENT '字典值',
-  `key_` varchar(225) DEFAULT NULL,
-  `code_` varchar(255) DEFAULT NULL COMMENT '字典唯一编码',
-  `is_leaf` bit(1) DEFAULT b'0' COMMENT '0 叶子节点 1 非叶子节点',
-  `sort_` int(11) DEFAULT '0' COMMENT '排序',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `status_` varchar(2) DEFAULT '0',
-  `show_name` varchar(255) DEFAULT NULL COMMENT '资源文件key',
-  `is_show` bit(1) DEFAULT b'1' COMMENT '0 叶子节点 1 非叶子节点',
-  `version_` int(11) DEFAULT '0',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
+CREATE TABLE `sys_dict_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `name_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典名称',
+  `parent_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `parent_ids` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `val_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典值',
+  `key_` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `code_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '字典唯一编码',
+  `is_leaf` bit(1) NULL DEFAULT b'0' COMMENT '0 叶子节点 1 非叶子节点',
+  `sort_` int(11) NULL DEFAULT 0 COMMENT '排序',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0',
+  `show_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '资源文件key',
+  `is_show` bit(1) NULL DEFAULT b'1' COMMENT '0 叶子节点 1 非叶子节点',
+  `version_` int(11) NULL DEFAULT 0,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` datetime(0) NULL DEFAULT NULL,
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `val_` (`val_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  INDEX `val_`(`val_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_dict_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_dict_t` VALUES ('01738aa7fd884849b2631402b8159ebd', '业务消息', 'a73c99c35bd84d5baea21549c05e9493', '0,1,5ea249bb780348eb8ea6a0efade684a6,a73c99c35bd84d5baea21549c05e9493,', '1', NULL, 'sys_message_type_1', b'1', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', '1', '2016-12-28 17:42:37');
-INSERT INTO `sys_dict_t` VALUES ('04df64d859bc4073ac91a54d6b238501', '一级', '8040c72a95f541a49734bbe1c47547ca', '0,1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '1', NULL, 'sys_org_grade_1', b'0', 4, NULL, '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('05655dc0210a4dc9840c3a22ab96cee3', '已删除', '36adfd803e3f4b48b6fa829c96b26959', '0,1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '-2', NULL, 'sys_status_delete', b'1', 0, '', '0', NULL, b'0', 7, '', '2016-12-05 11:31:22', '1', '2016-12-29 13:15:08');
-INSERT INTO `sys_dict_t` VALUES ('0857ed8ed2e44bac8434c524ab8f467a', '是', 'ed6bc6b03a2a4afbbdc9e35957aa0440', '0,1,5ea249bb780348eb8ea6a0efade684a6,ed6bc6b03a2a4afbbdc9e35957aa0440,', '1', NULL, 'sys_no', b'0', 0, '', '0', NULL, b'1', 10, '', '2016-12-05 11:31:22', '1', '2018-01-30 10:31:56');
-INSERT INTO `sys_dict_t` VALUES ('0f77deaad18c48d4a1394093cd72f7f3', '请求方法类型', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_request_method', b'0', 30, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:48:05', '1', '2016-12-28 17:48:58');
-INSERT INTO `sys_dict_t` VALUES ('1', '数据字典', '0', '0,', NULL, NULL, 'base', b'0', 0, NULL, '0', NULL, b'1', 7, '', '2016-12-05 11:31:22', '1', '2017-11-08 18:13:00');
-INSERT INTO `sys_dict_t` VALUES ('14c8d7b3fc56455db298a0cff97d0601', '系统管理', '1c7261a0576b4844be71a1a6f4238d49', '0,1,5ea249bb780348eb8ea6a0efade684a6,1c7261a0576b4844be71a1a6f4238d49,', '1', NULL, 'sys_staff_type_1', b'0', 10, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('1c7261a0576b4844be71a1a6f4238d49', '用户类型', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '1', NULL, 'sys_staff_type', b'0', 10, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('1ef7c3f1ec58470f9187dc607f61399e', '省份、直辖市', '43c66dd855b84a4489e40a05141472db', '0,1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '1', NULL, 'sys_area_type_2', b'0', 20, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('24dc1071aefb47a1be1c0544062e99f9', '否', 'ed6bc6b03a2a4afbbdc9e35957aa0440', '0,1,5ea249bb780348eb8ea6a0efade684a6,ed6bc6b03a2a4afbbdc9e35957aa0440,', '0', NULL, 'sys_yes', b'0', 10, '', '0', NULL, b'1', 10, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('25958fb362674775b84050e8e2bbda56', '仅本人数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '0,1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '4', NULL, 'sys_role_scope_4', b'0', 10, '', '0', NULL, b'1', 6, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('28a368fdbbd44a7a99af28d01b12c089', '基础数据', '1', '0,1,', '', NULL, 'ser', b'1', 10, '', '-1', NULL, b'1', 29, '', '2016-12-05 11:31:22', '1', '2018-03-04 09:20:10');
-INSERT INTO `sys_dict_t` VALUES ('2a325c1dcb95412faebd7118ed0e6110', 'WARN', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '0,1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'WARN', NULL, 'sys_log_level_warn', b'1', 90, '', '0', NULL, b'1', 0, '1', '2017-01-03 15:04:12', '1', '2017-01-03 15:04:12');
-INSERT INTO `sys_dict_t` VALUES ('2a41ef6aa47b40a5b15c899be205e0f1', '可见', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', 'show_hide', NULL, 'show_hide', b'0', 10, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('2c6b8b7ba127449d8588ba2ea8d7c856', '加油站管理', '1c7261a0576b4844be71a1a6f4238d49', '0,1,5ea249bb780348eb8ea6a0efade684a6,1c7261a0576b4844be71a1a6f4238d49,', '2', NULL, 'sys_staff_type_2', b'0', 0, '', '0', NULL, b'1', 7, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('2d778a9832084c4ba246d1b042e9b4ea', '模块类型', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_module_type', b'0', 0, NULL, '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', '1', '2018-01-30 13:30:38');
-INSERT INTO `sys_dict_t` VALUES ('36adfd803e3f4b48b6fa829c96b26959', '数据状态', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_status', b'0', 0, '', '0', NULL, b'1', 8, '', '2016-12-05 11:31:22', '1', '2016-12-29 13:15:08');
-INSERT INTO `sys_dict_t` VALUES ('37d4968b75534f8abf7358fb9d21358b', '审核', '36adfd803e3f4b48b6fa829c96b26959', '0,1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '1', NULL, 'sys_status_audit', b'0', 99, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('43c66dd855b84a4489e40a05141472db', '区域类型', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_area_type', b'0', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('47ca009b782c4fffa467f1eeadf23906', '站内消息', 'a73c99c35bd84d5baea21549c05e9493', '0,1,5ea249bb780348eb8ea6a0efade684a6,a73c99c35bd84d5baea21549c05e9493,', '0', NULL, 'sys_message_type_0', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('4c48895ca2754715ab127f387d556048', 'PUT', '0f77deaad18c48d4a1394093cd72f7f3', '0,1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'PUT', NULL, 'sys_request_method_3', b'1', 90, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:49:46', '1', '2016-12-28 17:55:18');
-INSERT INTO `sys_dict_t` VALUES ('50664a812d6849d18ae438e884b3670d', '二级', '8040c72a95f541a49734bbe1c47547ca', '0,1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '2', NULL, 'sys_org_grade_2', b'0', 3, NULL, '0', NULL, b'1', 15, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('51594fc1aa1d4b14a8b00ad06e235f39', '失效', '36adfd803e3f4b48b6fa829c96b26959', '0,1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '-1', NULL, 'sys_status_unable', b'0', -2, '', '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('594e00eb4366445cb5c27a414ff28cba', '菜单模块', '2d778a9832084c4ba246d1b042e9b4ea', '0,1,5ea249bb780348eb8ea6a0efade684a6,2d778a9832084c4ba246d1b042e9b4ea,', '1', NULL, 'sys_module_type_1', b'1', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', '1', '2018-01-30 13:30:38');
-INSERT INTO `sys_dict_t` VALUES ('5b9742fc0acd4a108b2ab661dc85269c', '所有数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '0,1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '1', NULL, 'sys_role_scope_1', b'0', 50, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('5ea249bb780348eb8ea6a0efade684a6', '系统参数', '1', '0,1,', '', NULL, 'sys', b'0', 8, '', '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', '1', '2018-01-30 12:59:29');
-INSERT INTO `sys_dict_t` VALUES ('640537def76740f5872298c0e1935c70', 'DELETE', '0f77deaad18c48d4a1394093cd72f7f3', '0,1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'DELETE', NULL, 'sys_request_method_4', b'1', 120, '', '0', NULL, b'1', 0, '1', '2016-12-29 09:39:55', '1', '2016-12-29 09:39:55');
-INSERT INTO `sys_dict_t` VALUES ('662789515c2f4c3bac817622f1a7949f', '国家', '43c66dd855b84a4489e40a05141472db', '0,1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '0', NULL, 'sys_area_type_1', b'0', 1, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('74f6376829c54419b89ea3d37260f29e', '区县', '43c66dd855b84a4489e40a05141472db', '0,1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '3', NULL, 'sys_area_type_4', b'0', 40, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('7a265834873548e797578f2f79bebe1d', '隐藏', '2a41ef6aa47b40a5b15c899be205e0f1', '0,1,5ea249bb780348eb8ea6a0efade684a6,2a41ef6aa47b40a5b15c899be205e0f1,', '1', NULL, 'show_hide_1', b'0', 20, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('7a4c9a3ee0a74f0d932212defdd9b27d', '部门', '8725bc528472472cae9cd79d8a3526f7', '0,1,5ea249bb780348eb8ea6a0efade684a6,8725bc528472472cae9cd79d8a3526f7,', '2', NULL, 'sys_org_type_2', b'0', 20, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('7f51aaef298a4d24b4d3d993caa9a09f', 'ERROR', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '0,1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'ERROR', NULL, 'sys_log_level_error', b'1', 150, '', '0', NULL, b'1', 0, '1', '2017-01-03 15:04:22', '1', '2017-01-03 15:04:22');
-INSERT INTO `sys_dict_t` VALUES ('8040c72a95f541a49734bbe1c47547ca', '机构等级', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_org_grade', b'0', 10, NULL, '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', '1', '2017-11-08 17:56:50');
-INSERT INTO `sys_dict_t` VALUES ('80dcac9baced499580380a249e4c2e6c', 'POST', '0f77deaad18c48d4a1394093cd72f7f3', '0,1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'POST', NULL, 'sys_request_method_2', b'1', 60, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:49:25', '1', '2016-12-28 17:49:25');
-INSERT INTO `sys_dict_t` VALUES ('8725bc528472472cae9cd79d8a3526f7', '机构类型', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_org_type', b'0', 0, NULL, '0', NULL, b'1', 7, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('943a3aa818614527a077f7f1fb53f8fd', '地市', '43c66dd855b84a4489e40a05141472db', '0,1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '2', NULL, 'sys_area_type_3', b'0', 30, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('97f1b5ad8a5a4d10a72693247c9187d9', '显示', '2a41ef6aa47b40a5b15c899be205e0f1', '0,1,5ea249bb780348eb8ea6a0efade684a6,2a41ef6aa47b40a5b15c899be205e0f1,', '0', NULL, 'show_hide_0', b'0', 10, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('9a68b88d9d1542528761684536932fc8', '已处理', 'c2b4aadd1c184dcbbab22fa9785e09c2', '0,1,5ea249bb780348eb8ea6a0efade684a6,c2b4aadd1c184dcbbab22fa9785e09c2,', '1', NULL, 'sys_message_status_1', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('a0d3943b46154244bfeb0bee9b59ab38', '系统常量', '1', '0,1,', '', NULL, 'constant', b'0', 12, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', '1', '2018-02-05 09:55:07');
-INSERT INTO `sys_dict_t` VALUES ('a35b86dadd8744c4b8db1873725fe886', 'DEBUG', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '0,1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'DEBUG', NULL, 'sys_log_level_debug', b'1', 0, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', '1', '2017-01-03 15:03:28');
-INSERT INTO `sys_dict_t` VALUES ('a73c99c35bd84d5baea21549c05e9493', '消息类型', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_message_type', b'0', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('a83bbdd9168f4864a527dfe1fe95d1a3', '公司', '8725bc528472472cae9cd79d8a3526f7', '0,1,5ea249bb780348eb8ea6a0efade684a6,8725bc528472472cae9cd79d8a3526f7,', '1', NULL, 'sys_org_type_1', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('aec4a6b7cfd6475ea0d97714c13003fe', '数据范围', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_role_scope', b'0', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('af4bd1c0c57e423c878711383b59eb04', '按明细设置', 'aec4a6b7cfd6475ea0d97714c13003fe', '0,1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '5', NULL, 'sys_role_scope_5', b'0', 0, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('b6c116e3688e40868c7291812f856e6e', '代码生成ui路径', 'a0d3943b46154244bfeb0bee9b59ab38', '0,1,a0d3943b46154244bfeb0bee9b59ab38,', '../../albedo-boot-ui-angular/', NULL, 'sys_gen_code_ui_path', b'1', 10, '代码生成ui文件存放相对位置', '0', NULL, b'1', 0, '1', '2018-02-05 10:12:22', '1', '2018-02-05 11:24:01');
-INSERT INTO `sys_dict_t` VALUES ('bca52f7429fb4814b144d96e1f4e79df', 'GET', '0f77deaad18c48d4a1394093cd72f7f3', '0,1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'GET', NULL, 'sys_request_method_1', b'1', 30, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:48:58', '1', '2016-12-28 17:48:58');
-INSERT INTO `sys_dict_t` VALUES ('bde92fc6fdc44a2491658a9903634155', '权限模块', '2d778a9832084c4ba246d1b042e9b4ea', '0,1,5ea249bb780348eb8ea6a0efade684a6,2d778a9832084c4ba246d1b042e9b4ea,', '2', NULL, 'sys_module_type_2', b'1', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', '1', '2018-01-30 13:30:38');
-INSERT INTO `sys_dict_t` VALUES ('c2b4aadd1c184dcbbab22fa9785e09c2', '消息状态', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_message_status', b'0', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('cebc6c3c990d4322bc703be667a27cba', '系统油站管理', '1c7261a0576b4844be71a1a6f4238d49', '0,1,5ea249bb780348eb8ea6a0efade684a6,1c7261a0576b4844be71a1a6f4238d49,', '4', NULL, 'sys_staff_type_4', b'1', 40, '', '0', NULL, b'1', 0, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('cf92bd9bc2a64ac9a37776f3ec8cce24', '日志级别', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_log_level', b'0', 0, '', '0', NULL, b'1', 6, '', '2016-12-05 11:31:22', '1', '2017-01-03 15:02:38');
-INSERT INTO `sys_dict_t` VALUES ('d5697906556a4ec8b4164534836a3d9a', 'INFO', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '0,1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'INFO', NULL, 'sys_log_level_info', b'1', 30, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', '1', '2017-01-03 15:03:51');
-INSERT INTO `sys_dict_t` VALUES ('d99f1efd57bc4a5bafbe3c5f79aee103', '四级', '8040c72a95f541a49734bbe1c47547ca', '0,1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '4', NULL, 'sys_org_grade_4', b'1', 10, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', '1', '2016-12-28 17:42:17');
-INSERT INTO `sys_dict_t` VALUES ('da22436573c4424fbf13a1987faeb529', '三级', '8040c72a95f541a49734bbe1c47547ca', '0,1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '3', '', 'sys_org_grade_3', b'1', 40, '', '1', NULL, b'1', 6, '', '2016-12-05 11:31:22', '1', '2017-11-08 17:56:50');
-INSERT INTO `sys_dict_t` VALUES ('e7f773681d574e7bb90c85386eaa489a', '未处理', 'c2b4aadd1c184dcbbab22fa9785e09c2', '0,1,5ea249bb780348eb8ea6a0efade684a6,c2b4aadd1c184dcbbab22fa9785e09c2,', '0', NULL, 'sys_message_status_0', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('e81024b1d2a24442bbdc551d10250a0b', '正常', '36adfd803e3f4b48b6fa829c96b26959', '0,1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '0', NULL, 'sys_status_normal', b'0', 10, '', '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('ed6bc6b03a2a4afbbdc9e35957aa0440', '状态', '5ea249bb780348eb8ea6a0efade684a6', '0,1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_yes_no', b'0', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('f64edd136e80465e8d78f66c008aaaf1', '所在机构及以下数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '0,1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '2', NULL, 'sys_role_scope_2', b'0', 30, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-INSERT INTO `sys_dict_t` VALUES ('fcf6a12e6f0e4db98be49a1eefbd5a85', '所在机构数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '0,1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '3', NULL, 'sys_role_scope_3', b'0', 20, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
-COMMIT;
+INSERT INTO `sys_dict_t` VALUES ('01738aa7fd884849b2631402b8159ebd', '业务消息', 'a73c99c35bd84d5baea21549c05e9493', '1,5ea249bb780348eb8ea6a0efade684a6,a73c99c35bd84d5baea21549c05e9493,', '1', NULL, 'sys_message_type_1', b'1', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', '1', '2016-12-28 17:42:37');
+INSERT INTO `sys_dict_t` VALUES ('04df64d859bc4073ac91a54d6b238501', '一级', '8040c72a95f541a49734bbe1c47547ca', '1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '1', NULL, 'sys_org_grade_1', b'0', 4, NULL, '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('05655dc0210a4dc9840c3a22ab96cee3', '已删除', '36adfd803e3f4b48b6fa829c96b26959', '1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '-2', NULL, 'sys_status_delete', b'1', 0, '', '0', NULL, b'0', 7, '', '2016-12-05 11:31:22', '1', '2016-12-29 13:15:08');
+INSERT INTO `sys_dict_t` VALUES ('0857ed8ed2e44bac8434c524ab8f467a', '是', 'ed6bc6b03a2a4afbbdc9e35957aa0440', '1,5ea249bb780348eb8ea6a0efade684a6,ed6bc6b03a2a4afbbdc9e35957aa044', '1', NULL, 'sys_no', b'0', 0, '', '0', NULL, b'1', 10, '', '2016-12-05 11:31:22', '1', '2018-01-30 10:31:56');
+INSERT INTO `sys_dict_t` VALUES ('0f77deaad18c48d4a1394093cd72f7f3', '请求方法类型', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_request_method', b'0', 30, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:48:05', '1', '2016-12-28 17:48:58');
+INSERT INTO `sys_dict_t` VALUES ('1', '数据字典', NULL, '', NULL, NULL, 'base', b'0', 0, NULL, '0', NULL, b'1', 7, '', '2016-12-05 11:31:22', '1', '2017-11-08 18:13:00');
+INSERT INTO `sys_dict_t` VALUES ('14c8d7b3fc56455db298a0cff97d0601', '系统管理', '1c7261a0576b4844be71a1a6f4238d49', '1,5ea249bb780348eb8ea6a0efade684a6,1c7261a0576b4844be71a1a6f4238d49,', '1', NULL, 'sys_staff_type_1', b'0', 10, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('1c7261a0576b4844be71a1a6f4238d49', '用户类型', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '1', NULL, 'sys_staff_type', b'0', 10, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('1ef7c3f1ec58470f9187dc607f61399e', '省份、直辖市', '43c66dd855b84a4489e40a05141472db', '1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '1', NULL, 'sys_area_type_2', b'0', 20, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('24dc1071aefb47a1be1c0544062e99f9', '否', 'ed6bc6b03a2a4afbbdc9e35957aa0440', '1,5ea249bb780348eb8ea6a0efade684a6,ed6bc6b03a2a4afbbdc9e35957aa044', '0', NULL, 'sys_yes', b'0', 10, '', '0', NULL, b'1', 10, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('25958fb362674775b84050e8e2bbda56', '仅本人数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '4', NULL, 'sys_role_scope_4', b'0', 10, '', '0', NULL, b'1', 6, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('28a368fdbbd44a7a99af28d01b12c089', '基础数据', '1', '1,', '', NULL, 'ser', b'1', 10, '', '0', '', b'1', 29, '', '2016-12-05 11:31:22', '1', '2018-08-22 14:25:21');
+INSERT INTO `sys_dict_t` VALUES ('2a325c1dcb95412faebd7118ed0e6110', 'WARN', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'WARN', NULL, 'sys_log_level_warn', b'1', 90, '', '0', NULL, b'1', 0, '1', '2017-01-03 15:04:12', '1', '2017-01-03 15:04:12');
+INSERT INTO `sys_dict_t` VALUES ('2a41ef6aa47b40a5b15c899be205e0f1', '可见', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', 'show_hide', NULL, 'show_hide', b'0', 10, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('2c6b8b7ba127449d8588ba2ea8d7c856', '加油站管理', '1c7261a0576b4844be71a1a6f4238d49', '1,5ea249bb780348eb8ea6a0efade684a6,1c7261a0576b4844be71a1a6f4238d49,', '2', NULL, 'sys_staff_type_2', b'0', 0, '', '0', NULL, b'1', 7, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('2d778a9832084c4ba246d1b042e9b4ea', '模块类型', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_module_type', b'0', 0, NULL, '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', '1', '2018-01-30 13:30:38');
+INSERT INTO `sys_dict_t` VALUES ('36adfd803e3f4b48b6fa829c96b26959', '数据状态', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_status', b'0', 0, '', '0', NULL, b'1', 8, '', '2016-12-05 11:31:22', '1', '2016-12-29 13:15:08');
+INSERT INTO `sys_dict_t` VALUES ('37d4968b75534f8abf7358fb9d21358b', '审核', '36adfd803e3f4b48b6fa829c96b26959', '1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '1', NULL, 'sys_status_audit', b'0', 99, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('43c66dd855b84a4489e40a05141472db', '区域类型', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_area_type', b'0', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('47ca009b782c4fffa467f1eeadf23906', '站内消息', 'a73c99c35bd84d5baea21549c05e9493', '1,5ea249bb780348eb8ea6a0efade684a6,a73c99c35bd84d5baea21549c05e9493,', '0', NULL, 'sys_message_type_0', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('4c48895ca2754715ab127f387d556048', 'PUT', '0f77deaad18c48d4a1394093cd72f7f3', '1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'PUT', NULL, 'sys_request_method_3', b'1', 90, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:49:46', '1', '2016-12-28 17:55:18');
+INSERT INTO `sys_dict_t` VALUES ('50664a812d6849d18ae438e884b3670d', '二级', '8040c72a95f541a49734bbe1c47547ca', '1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '2', NULL, 'sys_org_grade_2', b'0', 3, NULL, '0', NULL, b'1', 15, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('51594fc1aa1d4b14a8b00ad06e235f39', '失效', '36adfd803e3f4b48b6fa829c96b26959', '1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '-1', NULL, 'sys_status_unable', b'0', -2, '', '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('594e00eb4366445cb5c27a414ff28cba', '菜单模块', '2d778a9832084c4ba246d1b042e9b4ea', '1,5ea249bb780348eb8ea6a0efade684a6,2d778a9832084c4ba246d1b042e9b4ea,', '1', NULL, 'sys_module_type_1', b'1', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', '1', '2018-01-30 13:30:38');
+INSERT INTO `sys_dict_t` VALUES ('5b9742fc0acd4a108b2ab661dc85269c', '所有数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '1', NULL, 'sys_role_scope_1', b'0', 50, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('5ea249bb780348eb8ea6a0efade684a6', '系统参数', '1', '1,', '', NULL, 'sys', b'0', 8, '', '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', '1', '2018-01-30 12:59:29');
+INSERT INTO `sys_dict_t` VALUES ('640537def76740f5872298c0e1935c70', 'DELETE', '0f77deaad18c48d4a1394093cd72f7f3', '1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'DELETE', NULL, 'sys_request_method_4', b'1', 120, '', '0', '', b'1', 0, '1', '2016-12-29 09:39:55', '1', '2018-07-05 18:00:37');
+INSERT INTO `sys_dict_t` VALUES ('662789515c2f4c3bac817622f1a7949f', '国家', '43c66dd855b84a4489e40a05141472db', '1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '0', NULL, 'sys_area_type_1', b'0', 1, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('74f6376829c54419b89ea3d37260f29e', '区县', '43c66dd855b84a4489e40a05141472db', '1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '3', NULL, 'sys_area_type_4', b'0', 40, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('7a265834873548e797578f2f79bebe1d', '隐藏', '2a41ef6aa47b40a5b15c899be205e0f1', '1,5ea249bb780348eb8ea6a0efade684a6,2a41ef6aa47b40a5b15c899be205e0f1,', '1', NULL, 'show_hide_1', b'0', 20, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('7a4c9a3ee0a74f0d932212defdd9b27d', '部门', '8725bc528472472cae9cd79d8a3526f7', '1,5ea249bb780348eb8ea6a0efade684a6,8725bc528472472cae9cd79d8a3526f7,', '2', NULL, 'sys_org_type_2', b'0', 20, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('7f51aaef298a4d24b4d3d993caa9a09f', 'ERROR', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'ERROR', NULL, 'sys_log_level_error', b'1', 150, '', '0', '', b'1', 0, '1', '2017-01-03 15:04:22', '1', '2018-07-05 17:58:27');
+INSERT INTO `sys_dict_t` VALUES ('8040c72a95f541a49734bbe1c47547ca', '机构等级', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_org_grade', b'0', 10, NULL, '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', '1', '2017-11-08 17:56:50');
+INSERT INTO `sys_dict_t` VALUES ('80dcac9baced499580380a249e4c2e6c', 'POST', '0f77deaad18c48d4a1394093cd72f7f3', '1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'POST', NULL, 'sys_request_method_2', b'1', 60, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:49:25', '1', '2016-12-28 17:49:25');
+INSERT INTO `sys_dict_t` VALUES ('8725bc528472472cae9cd79d8a3526f7', '机构类型', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_org_type', b'0', 0, NULL, '0', NULL, b'1', 7, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('943a3aa818614527a077f7f1fb53f8fd', '地市', '43c66dd855b84a4489e40a05141472db', '1,5ea249bb780348eb8ea6a0efade684a6,43c66dd855b84a4489e40a05141472db,', '2', NULL, 'sys_area_type_3', b'0', 30, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('97f1b5ad8a5a4d10a72693247c9187d9', '显示', '2a41ef6aa47b40a5b15c899be205e0f1', '1,5ea249bb780348eb8ea6a0efade684a6,2a41ef6aa47b40a5b15c899be205e0f1,', '0', NULL, 'show_hide_0', b'0', 10, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('9a68b88d9d1542528761684536932fc8', '已处理', 'c2b4aadd1c184dcbbab22fa9785e09c2', '1,5ea249bb780348eb8ea6a0efade684a6,c2b4aadd1c184dcbbab22fa9785e09c2,', '1', NULL, 'sys_message_status_1', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('a0d3943b46154244bfeb0bee9b59ab38', '系统常量', '1', '1,', '', NULL, 'constant', b'0', 12, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', '1', '2018-02-05 09:55:07');
+INSERT INTO `sys_dict_t` VALUES ('a35b86dadd8744c4b8db1873725fe886', 'DEBUG', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'DEBUG', NULL, 'sys_log_level_debug', b'1', 0, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', '1', '2017-01-03 15:03:28');
+INSERT INTO `sys_dict_t` VALUES ('a73c99c35bd84d5baea21549c05e9493', '消息类型', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_message_type', b'0', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('a83bbdd9168f4864a527dfe1fe95d1a3', '公司', '8725bc528472472cae9cd79d8a3526f7', '1,5ea249bb780348eb8ea6a0efade684a6,8725bc528472472cae9cd79d8a3526f7,', '1', NULL, 'sys_org_type_1', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('aec4a6b7cfd6475ea0d97714c13003fe', '数据范围', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_role_scope', b'0', 0, '', '0', NULL, b'1', 3, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('af4bd1c0c57e423c878711383b59eb04', '按明细设置', 'aec4a6b7cfd6475ea0d97714c13003fe', '1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '5', NULL, 'sys_role_scope_5', b'0', 0, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('b6c116e3688e40868c7291812f856e61', '代码生成ui路径', 'a0d3943b46154244bfeb0bee9b59ab38', '1,a0d3943b46154244bfeb0bee9b59ab38,', '../../albedo-boot-ui-vue/', NULL, 'sys_gen_code_ui_path', b'1', 30, '代码生成ui文件存放相对位置', '0', '', b'1', 0, '1', '2018-02-05 10:12:22', '1', '2018-07-05 18:00:54');
+INSERT INTO `sys_dict_t` VALUES ('b6c116e3688e40868c7291812f856e6e', '代码生成ui路径', 'a0d3943b46154244bfeb0bee9b59ab38', '1,a0d3943b46154244bfeb0bee9b59ab38,', '../../albedo-boot-ui-angular/', NULL, 'sys_gen_code_ui_path', b'1', 10, '代码生成ui文件存放相对位置', '-2', NULL, b'1', 0, '1', '2018-02-05 10:12:22', '1', '2018-07-05 17:58:37');
+INSERT INTO `sys_dict_t` VALUES ('bca52f7429fb4814b144d96e1f4e79df', 'GET', '0f77deaad18c48d4a1394093cd72f7f3', '1,5ea249bb780348eb8ea6a0efade684a6,0f77deaad18c48d4a1394093cd72f7f3,', 'GET', NULL, 'sys_request_method_1', b'1', 30, '', '0', NULL, b'1', 0, '1', '2016-12-28 17:48:58', '1', '2016-12-28 17:48:58');
+INSERT INTO `sys_dict_t` VALUES ('bde92fc6fdc44a2491658a9903634155', '权限模块', '2d778a9832084c4ba246d1b042e9b4ea', '1,5ea249bb780348eb8ea6a0efade684a6,2d778a9832084c4ba246d1b042e9b4ea,', '2', NULL, 'sys_module_type_2', b'1', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', '1', '2018-01-30 13:30:38');
+INSERT INTO `sys_dict_t` VALUES ('c2b4aadd1c184dcbbab22fa9785e09c2', '消息状态', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_message_status', b'0', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('cebc6c3c990d4322bc703be667a27cba', '系统油站管理', '1c7261a0576b4844be71a1a6f4238d49', '1,5ea249bb780348eb8ea6a0efade684a6,1c7261a0576b4844be71a1a6f4238d49,', '4', NULL, 'sys_staff_type_4', b'1', 40, '', '0', NULL, b'1', 0, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('cf92bd9bc2a64ac9a37776f3ec8cce24', '日志级别', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '', NULL, 'sys_log_level', b'0', 0, '', '0', NULL, b'1', 6, '', '2016-12-05 11:31:22', '1', '2017-01-03 15:02:38');
+INSERT INTO `sys_dict_t` VALUES ('d5697906556a4ec8b4164534836a3d9a', 'INFO', 'cf92bd9bc2a64ac9a37776f3ec8cce24', '1,5ea249bb780348eb8ea6a0efade684a6,cf92bd9bc2a64ac9a37776f3ec8cce24,', 'INFO', NULL, 'sys_log_level_info', b'1', 30, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', '1', '2017-01-03 15:03:51');
+INSERT INTO `sys_dict_t` VALUES ('d99f1efd57bc4a5bafbe3c5f79aee103', '四级', '8040c72a95f541a49734bbe1c47547ca', '1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '4', NULL, 'sys_org_grade_4', b'1', 10, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', '1', '2016-12-28 17:42:17');
+INSERT INTO `sys_dict_t` VALUES ('da22436573c4424fbf13a1987faeb529', '三级', '8040c72a95f541a49734bbe1c47547ca', '1,5ea249bb780348eb8ea6a0efade684a6,8040c72a95f541a49734bbe1c47547ca,', '3', '', 'sys_org_grade_3', b'1', 40, '', '1', NULL, b'1', 6, '', '2016-12-05 11:31:22', '1', '2017-11-08 17:56:50');
+INSERT INTO `sys_dict_t` VALUES ('e7f773681d574e7bb90c85386eaa489a', '未处理', 'c2b4aadd1c184dcbbab22fa9785e09c2', '1,5ea249bb780348eb8ea6a0efade684a6,c2b4aadd1c184dcbbab22fa9785e09c2,', '0', NULL, 'sys_message_status_0', b'0', 0, '', '0', NULL, b'1', 4, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('e81024b1d2a24442bbdc551d10250a0b', '正常', '36adfd803e3f4b48b6fa829c96b26959', '1,5ea249bb780348eb8ea6a0efade684a6,36adfd803e3f4b48b6fa829c96b26959,', '0', NULL, 'sys_status_normal', b'0', 10, '', '0', NULL, b'1', 13, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('ed6bc6b03a2a4afbbdc9e35957aa0440', '状态', '5ea249bb780348eb8ea6a0efade684a6', '1,5ea249bb780348eb8ea6a0efade684a6,', '0', NULL, 'sys_yes_no', b'0', 0, '', '0', NULL, b'1', 2, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('f64edd136e80465e8d78f66c008aaaf1', '所在机构及以下数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '2', NULL, 'sys_role_scope_2', b'0', 30, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+INSERT INTO `sys_dict_t` VALUES ('fcf6a12e6f0e4db98be49a1eefbd5a85', '所在机构数据', 'aec4a6b7cfd6475ea0d97714c13003fe', '1,5ea249bb780348eb8ea6a0efade684a6,aec4a6b7cfd6475ea0d97714c13003fe,', '3', NULL, 'sys_role_scope_3', b'0', 20, '', '0', NULL, b'1', 5, '', '2016-12-05 11:31:22', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for sys_file_data_t
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_file_data_t`;
+CREATE TABLE `sys_file_data_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `path_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
+  `size_` int(11) NOT NULL COMMENT '大小',
+  `type_` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '类型',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `status_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`id_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '文件对象' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_file_data_t
+-- ----------------------------
+INSERT INTO `sys_file_data_t` VALUES ('03bd92168d5e4823b4ddd12001e592a4', 'ECharts.png', '/2018/8/24/8c9fc6b88e4e4ebeba81ab3d7d583ace.png', 31266, 'png', '1', '2018-08-24 16:33:54', '1', '2018-08-24 16:33:54', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('09d07e4d2b7c4460afcc4a0ea1726fda', 'ECharts.png', '/2018/8/24/4a41a8e55f3b41f48e8994ab6c7a904c.png', 31266, 'png', '1', '2018-08-24 16:17:53', '1', '2018-08-24 16:17:53', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('1000dd89dd1a47f491d85a9b6de9b223', 'uploadFile.png', '/2018/8/24/dda66d40c0b24da6b2eccdfa0cc20903.png', 6742, 'png', '1', '2018-08-24 15:05:14', '1', '2018-08-24 15:05:14', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('20a65424b75f4f76b9445cb3fa0d84f7', 'ECharts.png', '/2018/8/24/888e4102a8a54423b85ed1e8b47dab74.png', 31266, 'png', '1', '2018-08-24 16:34:40', '1', '2018-08-24 16:34:40', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('3eb7a534778948e2acbf67115deddf83', 'uploadFile.png', '/2018/8/24/c0a43c3461134766b5b4dc0684c4e4d8.png', 6742, 'png', '1', '2018-08-24 14:51:17', '1', '2018-08-24 14:51:17', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('4130ecba8a714788b348185779ce2069', 'uploadFile.png', '/2018/8/24/e7f1b2f923d94b699ad2f984d8ddfd40.png', 6742, 'png', '1', '2018-08-24 14:52:55', '1', '2018-08-24 14:52:55', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('5fdd8c745a4047349d878a19c20e41fb', 'ECharts.png', '/2018/8/24/15e536dddceb4434a5ecc8cadb076e0f.png', 31266, 'png', '1', '2018-08-24 16:13:11', '1', '2018-08-24 16:13:11', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('6180432d986148bfabb138bbea301a73', 'uploadFile.png', '/2018/8/24/c93f05ad918a4c77a93d1b0777086b7b.png', 6742, 'png', '1', '2018-08-24 15:33:59', '1', '2018-08-24 15:33:59', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('7f0dd0fa36284eafa6fdb2e0721b996e', 'uploadFile.png', '/2018/8/24/93c3fe601eb74db19a3c9d7a315a03d4.png', 146931, 'png', '1', '2018-08-24 15:09:52', '1', '2018-08-24 15:09:52', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('b84265078dee45a49f37c044490cfbc7', 'uploadFile.png', '/2018/8/24/d9712b24154445d795ac18cbe76e2189.png', 146931, 'png', '1', '2018-08-24 15:07:23', '1', '2018-08-24 15:07:23', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('bdf94ae11050451c81efbec0a1e71706', 'uploadFile.png', '/2018/8/24/cfce6b7492f347868572d39ba7897fcc.png', 6742, 'png', '1', '2018-08-24 14:50:50', '1', '2018-08-24 14:50:50', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('be689403f4ac4e73bb25020ed419a893', 'ECharts.png', '/2018/8/24/a3e780dc0d6e44d1a490a3ee049cbd91.png', 31266, 'png', '1', '2018-08-24 16:24:03', '1', '2018-08-24 16:24:03', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('ce5e7bb707eb4591934f511142db7750', 'uploadFile.png', '/2018/8/24/0847cebbc5fb4f7c86347947021f5382.png', 6742, 'png', '1', '2018-08-24 15:07:42', '1', '2018-08-24 15:07:42', 0, NULL, 0);
+INSERT INTO `sys_file_data_t` VALUES ('e7d3c88afe8848f7bd28979ae788ae01', 'ECharts.png', '/2018/8/24/a33c9440833e4ad4b3c056f445480095.png', 31266, 'png', '1', '2018-08-24 16:14:51', '1', '2018-08-24 16:14:51', 0, NULL, 0);
 
 -- ----------------------------
 -- Table structure for sys_log_login_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log_login_t`;
-CREATE TABLE `sys_log_login_t` (
-  `id_` varchar(32) NOT NULL DEFAULT '0',
-  `staff_id` varchar(32) DEFAULT NULL,
-  `login_id` varchar(50) DEFAULT NULL,
-  `remote_addr` varchar(255) DEFAULT NULL,
-  `session_id` varchar(255) DEFAULT NULL,
-  `enter_time` datetime DEFAULT NULL,
-  `leave_time` datetime DEFAULT NULL,
-  `total_time` int(11) DEFAULT NULL,
-  `login_flag` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
-  `status_` varchar(2) DEFAULT '0',
+CREATE TABLE `sys_log_login_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `staff_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `remote_addr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `session_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `enter_time` datetime(0) NULL DEFAULT NULL,
+  `leave_time` datetime(0) NULL DEFAULT NULL,
+  `total_time` int(11) NULL DEFAULT NULL,
+  `login_flag` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0',
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_log_operate_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log_operate_t`;
-CREATE TABLE `sys_log_operate_t` (
-  `id_` varchar(32) NOT NULL,
-  `title_` varchar(500) DEFAULT NULL,
-  `type_` char(1) DEFAULT '0' COMMENT '日志类型 0：接入日志；1：错误日志',
-  `staff_id` varchar(50) DEFAULT NULL,
-  `login_id` varchar(50) DEFAULT NULL,
-  `exception_` text,
-  `request_method` varchar(50) DEFAULT NULL COMMENT '请求方式',
-  `access_method` varchar(255) DEFAULT NULL COMMENT '请求方法',
-  `params_` varchar(2000) DEFAULT NULL,
-  `remote_addr` varchar(255) DEFAULT NULL,
-  `permissions` varchar(255) DEFAULT NULL COMMENT '权限标识',
-  `time_consuming` int(11) DEFAULT NULL,
-  `request_uri` varchar(2000) DEFAULT NULL COMMENT '耗时(毫秒)',
-  `user_agent` varchar(255) DEFAULT NULL,
-  `operate_time` datetime DEFAULT NULL COMMENT '操作时间',
-  `operate_des` varchar(255) DEFAULT NULL,
-  `status_` varchar(2) DEFAULT NULL,
+CREATE TABLE `sys_log_operate_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `title_` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `type_` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '日志类型 0：接入日志；1：错误日志',
+  `staff_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `exception_` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `request_method` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求方式',
+  `access_method` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求方法',
+  `params_` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `remote_addr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `permissions` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限标识',
+  `time_consuming` int(11) NULL DEFAULT NULL,
+  `request_uri` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '耗时(毫秒)',
+  `user_agent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `operate_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
+  `operate_des` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE = MyISAM CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log_operate_t
 -- ----------------------------
-BEGIN;
 INSERT INTO `sys_log_operate_t` VALUES ('5dffb37b158a4fabb93e35099ca2167d', '数据模块-系统设置-系统管理-操作日志', '0', '1', 'admin', '', 'GET', 'public java.lang.String com.albedo.modules.sys.controller.LogOperateController.list(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.Model)', '', '0:0:0:0:0:0:0:1', '@org.apache.shiro.authz.annotation.RequiresPermissions(logical=AND, value=[sys_logOperate_view])', 11, '/a/sys/logOperate/', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0', '2015-12-15 21:12:27', NULL, '0');
 INSERT INTO `sys_log_operate_t` VALUES ('763dc27054084291945d83999d006650', '数据模块-我的面板-个人信息-个人信息', '0', '1', 'admin', '', 'GET', 'public java.lang.String com.albedo.modules.sys.controller.StaffController.info(com.albedo.modules.sys.entity.Staff,org.springframework.ui.Model)', 'tabPageId=jerichotabiframe_0', '0:0:0:0:0:0:0:1', '@org.apache.shiro.authz.annotation.RequiresPermissions(logical=AND, value=[user])', 62, '/a/sys/staff/info', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0', '2015-12-15 21:12:31', NULL, '0');
 INSERT INTO `sys_log_operate_t` VALUES ('20b4dbdbddbf4b0fb02915c2ee9051c1', '数据模块-系统设置-代码生成-生成方案配置', '0', '1', 'admin', '', 'GET', 'public java.lang.String com.albedo.modules.gen.controller.GenSchemeController.list(com.albedo.modules.gen.entity.GenScheme,javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.Model)', 'tabPageId=jerichotabiframe_1', '0:0:0:0:0:0:0:1', '@org.apache.shiro.authz.annotation.RequiresPermissions(logical=AND, value=[gen_genScheme_view])', 14, '/a/gen/genScheme', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:42.0) Gecko/20100101 Firefox/42.0', '2015-12-15 21:12:33', NULL, '0');
@@ -4698,41 +5194,39 @@ INSERT INTO `sys_log_operate_t` VALUES ('9308b10af8d54df5a0d0825476517ee4', '数
 INSERT INTO `sys_log_operate_t` VALUES ('53ad4b49892c4224bd3d0f8b45511472', '数据模块-系统设置-系统管理-模块管理-查看列表模块', '0', '1', 'admin', '', 'POST', 'public java.lang.String com.albedo.modules.sys.controller.ModuleController.findList(com.albedo.common.domain.PageModel,com.albedo.modules.sys.entity.Module)', 'sortName=&nd=1480757466884&pageNo=1&sortOrder=asc&pageSize=20&parentId=ee5224dc13404267acfb8fc443dee4c3', '0:0:0:0:0:0:0:1', '@org.apache.shiro.authz.annotation.RequiresPermissions(logical=AND, value=[sys_module_view])', 22, '/a/sys/module/findList', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '2016-12-03 17:31:07', NULL, '0');
 INSERT INTO `sys_log_operate_t` VALUES ('ac8b1c39761049fdaa844edd90fa5f3f', '数据模块-系统设置-系统管理-模块管理-查看列表模块', '0', '1', 'admin', '', 'POST', 'public java.lang.String com.albedo.modules.sys.controller.ModuleController.findList(com.albedo.common.domain.PageModel,com.albedo.modules.sys.entity.Module)', 'sortName=&nd=1480757468114&pageNo=1&sortOrder=asc&pageSize=20&parentId=4715e01a290c447eac93ee47db6b9c81', '0:0:0:0:0:0:0:1', '@org.apache.shiro.authz.annotation.RequiresPermissions(logical=AND, value=[sys_module_view])', 29, '/a/sys/module/findList', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '2016-12-03 17:31:08', NULL, '0');
 INSERT INTO `sys_log_operate_t` VALUES ('164adebacc8e483c9aa000f409cd39d0', '数据模块-系统设置-系统管理-模块管理-查看列表模块', '0', '1', 'admin', '', 'POST', 'public java.lang.String com.albedo.modules.sys.controller.ModuleController.findList(com.albedo.common.domain.PageModel,com.albedo.modules.sys.entity.Module)', 'sortName=&nd=1480757469012&pageNo=1&sortOrder=asc&pageSize=20&parentId=3566c3b5c4114f77a5434c175b9f64c5', '0:0:0:0:0:0:0:1', '@org.apache.shiro.authz.annotation.RequiresPermissions(logical=AND, value=[sys_module_view])', 22, '/a/sys/module/findList', 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36', '2016-12-03 17:31:09', NULL, '0');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_menu_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_menu_t`;
-CREATE TABLE `sys_menu_t` (
-  `id_` varchar(50) NOT NULL COMMENT '模块编码',
-  `name_` varchar(255) DEFAULT '' COMMENT '名称',
-  `parent_id` varchar(50) DEFAULT NULL COMMENT '父module的id',
-  `parent_ids` varchar(2000) DEFAULT NULL,
-  `type_` varchar(50) DEFAULT NULL COMMENT '模块类型  0 菜单模块 1权限模块',
-  `microservice_` varchar(500) DEFAULT NULL,
-  `permission_` varchar(500) DEFAULT NULL COMMENT '权限标识',
-  `sort_` int(11) DEFAULT '0' COMMENT '排序',
-  `target_` varchar(255) DEFAULT NULL,
-  `url_` varchar(2000) DEFAULT NULL,
-  `request_method` varchar(64) DEFAULT NULL COMMENT '请求方法',
-  `status_` varchar(2) DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
-  `icon_cls` varchar(50) DEFAULT NULL,
-  `show_type` varchar(10) DEFAULT '0' COMMENT '针对顶层菜单，0 普通展示下级菜单， 1已树形结构展示',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
+CREATE TABLE `sys_menu_t`  (
+  `id_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模块编码',
+  `name_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '名称',
+  `parent_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父module的id',
+  `parent_ids` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `type_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模块类型  0 菜单模块 1权限模块',
+  `microservice_` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `permission_` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限标识',
+  `sort_` int(11) NULL DEFAULT 0 COMMENT '排序',
+  `target_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `url_` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `request_method` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求方法',
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
+  `icon_cls` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `show_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '针对顶层菜单，0 普通展示下级菜单， 1已树形结构展示',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `version_` int(11) NOT NULL,
-  `is_leaf` bit(1) DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
+  `is_leaf` bit(1) NULL DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` datetime(0) NULL DEFAULT NULL,
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='module表';
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'module表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_menu_t
 -- ----------------------------
-BEGIN;
 INSERT INTO `sys_menu_t` VALUES ('024d876a23424ff397c224de2e2939a8', '生成方案配置', 'ee5224dc13404267acfb8fc443dee4c3', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,', '1', 'albedobootcloudmicro/api', 'gen_genScheme', 10, '', '/gen/genScheme/list', NULL, '0', 'fa-reddit-square', '0', '', 9, b'1', '', '2016-12-05 11:29:48', NULL, NULL);
 INSERT INTO `sys_menu_t` VALUES ('0771998f75b444f8b2ec0631c69c644f', '字典管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'sys_dict', 30, '', '/sys/dict/list', 'GET', '0', 'fa-navicon', '0', '', 0, b'0', '1', '2016-12-29 14:27:37', '1', '2016-12-29 14:50:38');
 INSERT INTO `sys_menu_t` VALUES ('08bb2278416a4aaa86a1db7898252791', '编辑', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, 'sys_dict_edit', 40, NULL, '/sys/dict/,/sys/dict/form', 'GET,POST', '0', 'fa-pencil', '0', NULL, 0, b'1', '1', '2016-12-29 14:27:37', '1', '2016-12-29 14:27:37');
@@ -4785,26 +5279,24 @@ INSERT INTO `sys_menu_t` VALUES ('fc987e00a31246aea6d2e2a6afe8db36', '系统设�
 INSERT INTO `sys_menu_t` VALUES ('fcf49184c1854cc8958e4bb6de7b15b5', '业务中心', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, '', 20, '', '', NULL, '0', 'fa-lemon-o', '0', '', 0, b'0', '1', '2017-03-27 15:26:46', '1', '2017-03-27 15:27:09');
 INSERT INTO `sys_menu_t` VALUES ('fd8be39d8db44c60917633defe9996c0', '账户中心', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, '', 10, '', '', NULL, '0', 'fa-gear', '0', '', 15, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:00:51');
 INSERT INTO `sys_menu_t` VALUES ('fe5dcdbcc132480da84701173a3fb5f2', '查看', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, 'sys_user_view', 20, NULL, '/sys/user/', 'GET', '0', 'fa-info-circle', '0', NULL, 1, b'1', '1', '2016-12-29 14:54:14', '1', '2017-06-30 15:01:12');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_message_deal_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_message_deal_t`;
-CREATE TABLE `sys_message_deal_t` (
-  `id_` varchar(32) NOT NULL,
-  `message_id` varchar(32) NOT NULL DEFAULT '0',
-  `staff_id` varchar(32) NOT NULL,
-  `deal_time` datetime DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
-  `status_` varchar(2) DEFAULT NULL,
+CREATE TABLE `sys_message_deal_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `message_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `staff_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `deal_time` datetime(0) NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_message_deal_t
 -- ----------------------------
-BEGIN;
 INSERT INTO `sys_message_deal_t` VALUES ('07d4ff2bf38444f1827b28ab3929c2f9', 'e7f47c0b61464282af7fd6dd51398130', '28ef444985d145879e89ee8a757c9dc8', NULL, NULL, '0');
 INSERT INTO `sys_message_deal_t` VALUES ('08f100a0ce40443a8217e3f5ea306a71', 'e7f47c0b61464282af7fd6dd51398130', '26efce8f247e451b830322269bface41', NULL, NULL, '0');
 INSERT INTO `sys_message_deal_t` VALUES ('0de1187ee2db4b2b8d24bcac577d141f', 'e7f47c0b61464282af7fd6dd51398130', '383d07235e3a4bcb9cf1eb0d15844d57', NULL, NULL, '0');
@@ -4823,533 +5315,556 @@ INSERT INTO `sys_message_deal_t` VALUES ('ee09d960d333468bb2b1aef2bec0ca56', 'a6
 INSERT INTO `sys_message_deal_t` VALUES ('ee6d04983642479ba369648841611844', 'a6327bef6fd64b1087561a0d8d392c33', '2dfb5306b52b46af9544212364c27c13', NULL, NULL, '-2');
 INSERT INTO `sys_message_deal_t` VALUES ('f4e241fc7bb14a82b5a62883224c6d9f', 'd56e63ac4b15463caa8d2f17eba25022', '216ecd201faa429ca8eed65b219a9463', NULL, NULL, '-2');
 INSERT INTO `sys_message_deal_t` VALUES ('fa465da26da147bba4612e75a5e71636', 'a6327bef6fd64b1087561a0d8d392c33', '09471af5826b472790d440e04ab5df5d', NULL, NULL, '-2');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_message_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_message_t`;
-CREATE TABLE `sys_message_t` (
-  `id_` varchar(32) NOT NULL DEFAULT '0',
-  `type_` varchar(255) DEFAULT NULL,
-  `title_` varchar(255) DEFAULT NULL COMMENT '消息主题',
-  `content_` varchar(4000) DEFAULT NULL,
-  `attachment_` varchar(255) DEFAULT NULL,
-  `attach_path` varchar(255) DEFAULT NULL COMMENT '文件路径',
-  `message_flag` varchar(255) DEFAULT NULL,
-  `sender` varchar(64) DEFAULT NULL COMMENT '发件端',
-  `send_time` datetime DEFAULT NULL COMMENT '发送时间',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `reciver` varchar(64) DEFAULT NULL,
-  `deal_time` datetime DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
-  `status_` varchar(2) DEFAULT NULL,
+CREATE TABLE `sys_message_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `type_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `title_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消息主题',
+  `content_` varchar(4000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `attachment_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `attach_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '文件路径',
+  `message_flag` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sender` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '发件端',
+  `send_time` datetime(0) NULL DEFAULT NULL COMMENT '发送时间',
+  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
+  `reciver` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `deal_time` datetime(0) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `FKFBFB834A7A37E1A2` (`sender`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  INDEX `FKFBFB834A7A37E1A2`(`sender`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_message_t
 -- ----------------------------
-BEGIN;
 INSERT INTO `sys_message_t` VALUES ('a6327bef6fd64b1087561a0d8d392c33', '0', 'test', '&lt;p&gt;\r\n	testsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsevvtestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsevvtestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsevvtestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsevvtestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsevvtestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsetestsevv&lt;/p&gt;', NULL, '', '0', '1', '2015-04-20 15:04:54', '2015-04-20 15:04:54', NULL, NULL, NULL, NULL, '-2');
 INSERT INTO `sys_message_t` VALUES ('d56e63ac4b15463caa8d2f17eba25022', '0', '地对地导弹', '&lt;p&gt;\r\n	顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶的顶顶顶顶顶顶顶顶顶顶顶顶顶顶顶v&lt;/p&gt;', NULL, '', '0', '1', '2015-04-20 15:04:11', '2015-04-20 15:04:11', NULL, NULL, NULL, NULL, '-2');
 INSERT INTO `sys_message_t` VALUES ('e7f47c0b61464282af7fd6dd51398130', '0', 'testest', '&lt;p&gt;\r\n	&lt;span style=&quot;background-color:lime;&quot;&gt;tsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetsetse&lt;/span&gt;&lt;/p&gt;\r\n&lt;h1&gt;\r\n	&lt;span style=&quot;background-color:lime;&quot;&gt;dfsdfasdfsadfasdfasdf&lt;/span&gt;&lt;/h1&gt;\r\n&lt;p&gt;\r\n	&lt;span style=&quot;background-color:lime;&quot;&gt;dfasdfasdfasdfasd&lt;span style=&quot;background-color:yellow;&quot;&gt;&lt;span style=&quot;font-size:9px;&quot;&gt;sdfasdfasdfasdfsdfad&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;font-size:9px;&quot;&gt;sdfsadfsadfasdfsdfdfda&lt;/span&gt;&lt;/p&gt;', NULL, '', '0', '1', '2015-04-20 16:42:48', '2015-04-20 16:42:48', NULL, NULL, NULL, NULL, '0');
-COMMIT;
-
--- ----------------------------
--- Table structure for sys_module_child_t
--- ----------------------------
-DROP TABLE IF EXISTS `sys_module_child_t`;
-CREATE TABLE `sys_module_child_t` (
-  `id_` varchar(50) NOT NULL COMMENT '模块编码',
-  `module_id` varchar(255) DEFAULT '' COMMENT '名称',
-  `permission_` varchar(500) DEFAULT NULL COMMENT '权限标识',
-  `sort_` int(11) DEFAULT '0' COMMENT '排序',
-  `url_` varchar(2000) DEFAULT NULL,
-  `request_method` varchar(64) DEFAULT NULL COMMENT '请求方法',
-  `status_` varchar(2) DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
-  `version_` int(11) NOT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='module表';
 
 -- ----------------------------
 -- Table structure for sys_module_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_module_t`;
-CREATE TABLE `sys_module_t` (
-  `id_` varchar(50) NOT NULL COMMENT '模块编码',
-  `name_` varchar(255) DEFAULT '' COMMENT '名称',
-  `parent_id` varchar(50) DEFAULT NULL COMMENT '父module的id',
-  `parent_ids` varchar(2000) DEFAULT NULL,
-  `type_` varchar(50) DEFAULT NULL COMMENT '模块类型  0 菜单模块 1权限模块',
-  `microservice_` varchar(500) DEFAULT NULL,
-  `permission_` varchar(500) DEFAULT NULL COMMENT '权限标识',
-  `sort_` int(11) DEFAULT '0' COMMENT '排序',
-  `target_` varchar(255) DEFAULT NULL,
-  `url_` varchar(2000) DEFAULT NULL,
-  `request_method` varchar(64) DEFAULT NULL COMMENT '请求方法',
-  `status_` varchar(2) DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
-  `icon_cls` varchar(50) DEFAULT NULL,
-  `show_type` varchar(10) DEFAULT '0' COMMENT '针对顶层菜单，0 普通展示下级菜单， 1已树形结构展示',
-  `description_` varchar(255) DEFAULT NULL COMMENT '描述',
+CREATE TABLE `sys_module_t`  (
+  `id_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '模块编码',
+  `name_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '名称',
+  `parent_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '父module的id',
+  `parent_ids` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `type_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '模块类型  0 菜单模块 1权限模块',
+  `microservice_` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `component_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '前端组件',
+  `permission_` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '权限标识',
+  `sort_` int(11) NULL DEFAULT 0 COMMENT '排序',
+  `target_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `url_` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `request_method` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '请求方法',
+  `status_` varchar(2) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
+  `icon_cls` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `show_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '针对顶层菜单，0 普通展示下级菜单， 1已树形结构展示',
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '描述',
   `version_` int(11) NOT NULL,
-  `is_leaf` bit(1) DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
+  `is_leaf` bit(1) NULL DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` datetime(0) NULL DEFAULT NULL,
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='module表';
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'module表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_module_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_module_t` VALUES ('024d876a23424ff397c224de2e2939a8', '生成方案配置', 'ee5224dc13404267acfb8fc443dee4c3', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,', '1', 'albedobootcloudmicro/api', 'gen_genScheme,gen_genScheme_view', 370, '', '/gen/genScheme/list', '', '0', 'fa-reddit-square', '0', '', 9, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-02 16:08:53');
-INSERT INTO `sys_module_t` VALUES ('0771998f75b444f8b2ec0631c69c644f', '字典管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'sys_dict', 30, '', '/sys/dict/list', 'GET', '0', 'fa-navicon', '0', '', 0, b'0', '1', '2016-12-29 14:27:37', '1', '2016-12-29 14:50:38');
-INSERT INTO `sys_module_t` VALUES ('08bb2278416a4aaa86a1db7898252791', '编辑', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, 'sys_dict_edit', 40, NULL, '/sys/dict/', 'POST', '0', 'fa-pencil', '0', NULL, 0, b'1', '1', '2016-12-29 14:27:37', '1', '2018-02-11 16:10:10');
-INSERT INTO `sys_module_t` VALUES ('0a30a530481743bebd364c96687756f0', '删除', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, 'test_testBook_delete', 80, NULL, '/test/testBook/', 'DELETE', '0', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
-INSERT INTO `sys_module_t` VALUES ('15016930ee924d64a013b523b6b74384', '查看', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, 'test_testBook_view', 20, NULL, '/test/testBook/', 'GET', '0', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
-INSERT INTO `sys_module_t` VALUES ('1be9b1edb9f3480187c0c9a9838f0ebb', '操作权限', '8e21d10003694354822fe0ad44106ce0', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,8e21d10003694354822fe0ad44106ce0,', '2', '', 'gen_genTable_view,gen_genTable_edit,gen_genTable_lock,gen_genTable_delete', 300, '', '/gen/genTable/', 'GET,POST,PUT,DELETE', '0', 'fa-edit', '0', '', 0, b'1', '1', '2018-03-02 15:06:49', '1', '2018-03-04 09:24:42');
-INSERT INTO `sys_module_t` VALUES ('201305b309b0462ab8eb294ab1d42410', '用户管理', '714afd9e5d9f4c0697e502a43a4a2491', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,', '1', 'albedobootcloudmicro/api', 'sys_user', 120, '', '/sys/user/list', '', '0', 'fa-users', '0', '', 1, b'0', '1', '2016-12-29 14:54:14', '1', '2018-03-02 15:11:08');
-INSERT INTO `sys_module_t` VALUES ('223b8f1345114589ae09681be4744bbc', '系统日志', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', NULL, 'sys_logs', 30, '', '/sys/logs', 'GET', '0', 'fa-list-ul', '0', '', 0, b'0', '1', '2017-01-03 14:57:47', '1', '2018-02-12 09:57:09');
-INSERT INTO `sys_module_t` VALUES ('25a868347e8f4a6bb68b53925db95692', '编辑机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, 'sys_org_edit', 40, '', '/sys/org/', 'POST', '0', '', '0', '', 21, b'1', '', '2016-12-05 11:29:48', '1', '2018-02-11 16:05:00');
-INSERT INTO `sys_module_t` VALUES ('26b66bac9da64aa1a43fc3fbf104c98e', '操作权限', '024d876a23424ff397c224de2e2939a8', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,024d876a23424ff397c224de2e2939a8,', '2', '', 'gen_genScheme_edit,gen_genScheme_lock,gen_genScheme_delete', 240, '', '/gen/genTable', 'GET,POST,PUT,DELETE', '0', 'fa-edit', NULL, '', 0, b'1', '1', '2018-02-11 17:24:44', '1', '2018-03-04 09:25:14');
-INSERT INTO `sys_module_t` VALUES ('2d5f2af5e36349b5bb8dfbd5904900c8', '代码生成', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, '', 60, '', '', NULL, '0', 'fa-sliders', '0', '', 6, b'0', '', '2016-12-05 11:29:48', '1', '2017-03-27 15:26:05');
-INSERT INTO `sys_module_t` VALUES ('3566c3b5c4114f77a5434c175b9f64c5', '系统管理', 'fc987e00a31246aea6d2e2a6afe8db36', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,', '1', NULL, 'sys', 5, '', '', NULL, '0', 'fa-gear', '1', '_showTree', 24, b'0', '', '2016-12-05 11:29:48', NULL, NULL);
-INSERT INTO `sys_module_t` VALUES ('37ceac18a00b4a7ea45c8681035fe402', '模块管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'sys_module', 10, '', '/sys/module/list', 'GET', '0', 'fa-sitemap', '0', '', 24, b'0', '', '2016-12-05 11:29:48', '1', '2016-12-29 15:15:58');
-INSERT INTO `sys_module_t` VALUES ('3b7a4e5fefdb4fa293c2d972d4a5e747', '任务调度管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', NULL, 'sys_taskScheduleJob', 30, NULL, '/sys/taskScheduleJob/list', 'GET', '0', 'fa-file', '0', NULL, 0, b'0', '1', '2018-02-05 09:34:36', '1', '2018-02-05 13:46:01');
-INSERT INTO `sys_module_t` VALUES ('3ce4aa89b1c5483dbc538d3f3ae0a63f', '删除机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, 'sys_org_delete', 80, '', '/sys/org/', 'DELETE', '0', '', '0', '', 18, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:11');
-INSERT INTO `sys_module_t` VALUES ('3dc743ff54734668b45a95dd02276de5', '锁定', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, 'sys_dict_lock', 60, NULL, '/sys/dict/', 'PUT', '0', 'fa-lock', '0', NULL, 0, b'1', '1', '2016-12-29 14:27:37', '1', '2016-12-29 14:27:37');
-INSERT INTO `sys_module_t` VALUES ('429202d2fcd947a49e20b4410450d6ad', '保存', '87825137dec44ea5b04b9e43df1a1d5e', '4d32c49cc7f448dcbfb92ce9c4dde058,fd8be39d8db44c60917633defe9996c0,87825137dec44ea5b04b9e43df1a1d5e,', '2', '', 'account_change_password', 30, '', '/account/change-password', 'POST', '0', 'fa-save', '0', '', 0, b'1', '1', '2018-02-12 09:51:58', '1', '2018-02-12 09:51:58');
-INSERT INTO `sys_module_t` VALUES ('42baef661e504fa998a35d27b0daa3c4', '账户预览', 'fd8be39d8db44c60917633defe9996c0', '4d32c49cc7f448dcbfb92ce9c4dde058,fd8be39d8db44c60917633defe9996c0,', '1', '', '', 30, '_top', '/index', '', '0', 'fa-leaf', '0', '<p><br></p>', 5, b'1', '', '2016-12-05 11:29:48', '1', '2018-02-12 09:47:50');
-INSERT INTO `sys_module_t` VALUES ('452ea0f8d23247daa5f32751644aaba9', '配置管理', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', NULL, 'sys_configuration', 90, NULL, '/sys/configuration', 'GET', '0', 'fa-cog', '0', NULL, 0, b'0', '1', '2018-02-09 14:49:48', '1', '2018-02-12 10:01:24');
-INSERT INTO `sys_module_t` VALUES ('4715e01a290c447eac93ee47db6b9c81', '资源管理', 'fc987e00a31246aea6d2e2a6afe8db36', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,', '1', NULL, '', 30, '', '', NULL, '0', 'fa-book', '0', '', 18, b'0', '', '2016-12-05 11:29:48', '1', '2017-11-08 18:16:49');
-INSERT INTO `sys_module_t` VALUES ('4d32c49cc7f448dcbfb92ce9c4dde058', '数据模块', '', '', '1', NULL, 'root', 30, NULL, NULL, NULL, '0', ' fa-reorder', '0', NULL, 10, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:00:51');
-INSERT INTO `sys_module_t` VALUES ('5293bd1a28924276a236a4363af5dde8', '启用/停用机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, 'sys_org_lock', 60, '', '/sys/org/', 'PUT', '0', '', '0', '', 19, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('622f8e9876ed48f09927d0124054e1ab', '查看', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, 'sys_taskScheduleJob_view', 20, NULL, '/sys/taskScheduleJob/page', 'GET', '0', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-02-05 09:34:36', '1', '2018-02-05 09:34:36');
-INSERT INTO `sys_module_t` VALUES ('639435ab0bb248f0a573ea6a428e5a69', '锁定', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, 'test_testBook_lock', 60, NULL, '/test/testBook/', 'PUT', '0', 'fa-lock', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
-INSERT INTO `sys_module_t` VALUES ('714afd9e5d9f4c0697e502a43a4a2491', '机构用户', 'fc987e00a31246aea6d2e2a6afe8db36', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,', '1', '', '', 60, '', '', '', '0', 'fa-dot-circle-o', '0', '', 11, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-04 09:19:52');
-INSERT INTO `sys_module_t` VALUES ('7374c36138c94351a3bcfcc5411502eb', '测试树管理', 'fcf49184c1854cc8958e4bb6de7b15b5', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,', '1', 'albedobootcloudmicro/api', 'test_testTree', 150, '', '/test/testTree/list', '', '0', 'fa-file', '0', '', 0, b'0', '1', '2018-02-13 10:55:04', '1', '2018-03-04 09:20:03');
-INSERT INTO `sys_module_t` VALUES ('749160f6086f475da6f350543994608e', '查看', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, 'sys_area_view', 20, NULL, '/sys/area/', 'GET', '0', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2016-12-29 14:31:16');
-INSERT INTO `sys_module_t` VALUES ('75f58401461c486b875f851e18a8ee9d', '锁定', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, 'sys_module_lock', 60, '', '/sys/module/', 'PUT', '0', '', NULL, '', 22, b'0', '', '2016-12-05 11:29:48', '1', '2017-01-04 11:37:58');
-INSERT INTO `sys_module_t` VALUES ('7680646c74684d80b2e3d3595d6450e3', '锁定', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, 'sys_taskScheduleJob_lock', 60, NULL, '/sys/taskScheduleJob/lock', 'POST', '0', 'fa-lock', '0', NULL, 0, b'1', '1', '2018-02-05 09:34:36', '1', '2018-02-05 09:34:36');
-INSERT INTO `sys_module_t` VALUES ('7b3bb9006059412d9bfeb6d7dc3da87b', '查看', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '-1', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-02-13 10:55:04', '1', '2018-03-04 09:19:58');
-INSERT INTO `sys_module_t` VALUES ('7ff1ee3bd23845b8a1d7ef8df661bb0d', '编辑', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, 'sys_module_edit', 40, '', '/sys/module/', 'POST', '0', 'fa-pencil', '0', '', 27, b'1', '', '2016-12-05 11:29:48', '1', '2018-02-11 16:08:58');
-INSERT INTO `sys_module_t` VALUES ('826137d6389f4730abb0422d7d252b32', '服务状态', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', NULL, 'sys_health_view', 60, '', '/sys/health', 'GET', '0', 'fa-stack-exchange', '0', '', 0, b'0', '1', '2017-01-04 14:05:52', '1', '2018-02-12 09:58:21');
-INSERT INTO `sys_module_t` VALUES ('87825137dec44ea5b04b9e43df1a1d5e', '修改密码', 'fd8be39d8db44c60917633defe9996c0', '4d32c49cc7f448dcbfb92ce9c4dde058,fd8be39d8db44c60917633defe9996c0,', '1', '', '', 60, '', '/sys/password', '', '0', 'fa-lock', '0', '', 20, b'0', '', '2016-12-05 11:29:48', '1', '2018-02-12 09:51:58');
-INSERT INTO `sys_module_t` VALUES ('8d607e3d86ad436b89e3067323021168', '资源监控', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', NULL, 'sys_metrics', 0, '', '/sys/metrics', 'GET', '0', 'fa-drupal', NULL, '', 1, b'0', '', '2017-03-02 23:03:19', '1', '2018-03-02 14:20:52');
-INSERT INTO `sys_module_t` VALUES ('8e21d10003694354822fe0ad44106ce0', '业务表配置', 'ee5224dc13404267acfb8fc443dee4c3', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,', '1', 'albedobootcloudmicro/api', 'gen_genTable,gen_genTable_view', 310, '', '/gen/genTable/list', '', '0', 'fa-delicious', '0', '', 10, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-02 15:13:57');
-INSERT INTO `sys_module_t` VALUES ('8eae4c0c642a43eba9de678d36ca9186', '删除', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, 'sys_user_delete', 80, NULL, '/sys/user/', 'DELETE', '0', 'fa-trash-o', '0', NULL, 1, b'1', '1', '2016-12-29 14:54:15', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('902e7ed0be8b4357a3465618f971cc43', '锁定', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '-1', 'fa-lock', '0', NULL, 0, b'1', '1', '2018-02-13 10:55:04', '1', '2018-03-04 09:19:58');
-INSERT INTO `sys_module_t` VALUES ('95a093b48f1947818d50fe09eab72753', '编辑', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, 'sys_role_edit', 20, '', '/sys/role/', 'POST', '0', '', '0', '', 29, b'1', '', '2016-12-05 11:29:48', '1', '2018-02-11 16:07:05');
-INSERT INTO `sys_module_t` VALUES ('9fec2607b166460cb99d9ed2436be506', '接口管理', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', NULL, 'sys_docs', 120, '_blank', '/sys/docs', 'GET', '0', 'fa-file-o', '0', '', 5, b'0', '1', '2017-01-05 17:48:44', '1', '2018-02-12 10:04:00');
-INSERT INTO `sys_module_t` VALUES ('a747bcf467b044359794ee2c370c2fb3', '编辑', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, 'sys_taskScheduleJob_edit', 40, NULL, '/sys/taskScheduleJob/edit', 'GET,POST', '0', 'fa-pencil', '0', NULL, 0, b'1', '1', '2018-02-05 09:34:36', '1', '2018-02-05 09:34:36');
-INSERT INTO `sys_module_t` VALUES ('abd42541d2614a7d9f117ce857645382', '删除', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, 'sys_module_delete', 80, '', '/sys/module/', 'DELETE', '0', '', NULL, '', 20, b'0', '', '2016-12-05 11:29:48', '1', '2017-01-04 11:38:04');
-INSERT INTO `sys_module_t` VALUES ('ac57bbe888ba4879bb4ec7b1397c3ab3', '删除', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '-1', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2018-02-13 10:55:04', '1', '2018-03-04 09:19:58');
-INSERT INTO `sys_module_t` VALUES ('af6294af4db4487c930125b40212f6ac', '查看', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, 'sys_module_view', 20, '', '/sys/module/', 'GET', '0', 'fa-info-circle', '0', '', 29, b'0', '', '2016-12-05 11:29:48', '1', '2017-01-04 11:37:32');
-INSERT INTO `sys_module_t` VALUES ('b4dc5bb4a11149d78c765dbef12e13c7', '删除', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, 'sys_area_delete', 80, NULL, '/sys/area/', 'DELETE', '0', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2016-12-29 14:31:16');
-INSERT INTO `sys_module_t` VALUES ('b57911172bf74bceae6e22e706d83fb8', '锁定', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, 'sys_user_lock', 60, '', '/sys/user/', 'PUT', '0', 'fa-lock', NULL, '', 1, b'0', '1', '2017-03-02 22:25:04', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('b84f85fa6d4a4c17a3ea3f974b62e273', '编辑', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, 'test_testBook_edit', 40, NULL, '/test/testBook/', 'POST', '0', 'fa-pencil', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
-INSERT INTO `sys_module_t` VALUES ('b96b529a936e449e82f71cd4ec990f0b', '编辑', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '-1', 'fa-pencil', '0', NULL, 0, b'1', '1', '2018-02-13 10:55:04', '1', '2018-03-04 09:19:58');
-INSERT INTO `sys_module_t` VALUES ('badfe0b992fd4f79b1dfcc2494a47e76', '删除', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, 'sys_role_delete', 40, '', '/sys/role/', 'DELETE', '0', '', '0', '', 26, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('bc779f2d65da44ad8397a8ff5976ac65', '查看', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, 'sys_role_view', 10, '', '/sys/role/', 'GET', '0', '', '0', '', 28, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('bd7872df2fe748fb97bb1dcc629cdecb', '角色管理', '714afd9e5d9f4c0697e502a43a4a2491', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,', '1', 'albedobootcloudmicro/api', 'sys_role', 90, '', '/sys/role/list', 'GET', '0', 'fa-reorder', '0', '', 26, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('c3145033f56a41879c20dcdc1d1ad6f5', '审核管理', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', NULL, 'sys_audits', 120, NULL, '/sys/audits', 'GET', '0', 'fa-envira', '0', NULL, 0, b'0', '1', '2018-02-11 10:50:00', '1', '2018-02-12 16:10:25');
-INSERT INTO `sys_module_t` VALUES ('ccab7469d8df473c8ff769437f6bd393', '锁定', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, 'sys_role_lock', 30, '', '/sys/role/', 'PUT', '0', '', '0', '', 1, b'0', '1', '2016-12-28 16:53:19', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('ce4517a441dc4115a14921419b4d131a', '机构管理', '714afd9e5d9f4c0697e502a43a4a2491', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,', '1', 'albedobootcloudmicro/api', 'sys_org', 60, '', '/sys/org/list', 'GET', '0', 'fa-th-large', '0', '', 24, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('d40fcdec366f4038971f3d9bb68451eb', '编辑', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, 'sys_area_edit', 40, NULL, '/sys/area/,/sys/area/form', 'GET,POST', '0', 'fa-pencil', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2016-12-29 14:31:16');
-INSERT INTO `sys_module_t` VALUES ('d6814dcbdb624077afeb95d856ad76d0', '删除', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, 'sys_dict_delete', 80, NULL, '/sys/dict/', 'DELETE', '0', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2016-12-29 14:27:37', '1', '2016-12-29 14:27:37');
-INSERT INTO `sys_module_t` VALUES ('d7069653320643e89b3c93dcdfa5b2c6', '编辑', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, 'sys_user_edit', 40, NULL, '/sys/user/', 'POST', '0', 'fa-pencil', '0', NULL, 1, b'1', '1', '2016-12-29 14:54:15', '1', '2018-02-11 16:04:16');
-INSERT INTO `sys_module_t` VALUES ('e5223c949502447fa1a1f2b579203608', '锁定', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, 'sys_area_lock', 60, NULL, '/sys/area/', 'PUT', '0', 'fa-lock', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2016-12-29 14:31:16');
-INSERT INTO `sys_module_t` VALUES ('eaaff69aa81d448eb465d729bdad0508', '查看列表机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, 'sys_org_view', 20, '', '/sys/org/', 'GET', '0', 'frame/images/icons/32X32/consulting.gif', '0', '', 21, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('ee5224dc13404267acfb8fc443dee4c3', '代码生成', '2d5f2af5e36349b5bb8dfbd5904900c8', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,', '1', NULL, '', 30, '', '', NULL, '0', 'fa-ils', '0', '', 10, b'0', '', '2016-12-05 11:29:48', '1', '2017-11-24 11:00:54');
-INSERT INTO `sys_module_t` VALUES ('f28abde46cc7410ea972fb635e325878', '查看', '9fec2607b166460cb99d9ed2436be506', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,9fec2607b166460cb99d9ed2436be506,', '2', '', 'swagger_info', 30, '', '/swagger-ui/index.html', 'GET', '0', 'fa-info-circle', '0', '', 0, b'1', '1', '2018-02-12 10:04:00', '1', '2018-02-12 10:04:00');
-INSERT INTO `sys_module_t` VALUES ('f5dc958155df4deaba4947bd9989202d', '查看', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, 'sys_dict_view', 20, '', '/sys/dict/', 'GET', '0', 'fa-info-circle', '0', '', 0, b'0', '1', '2016-12-29 14:27:37', '1', '2016-12-29 16:48:30');
-INSERT INTO `sys_module_t` VALUES ('fa1cf28bbd424fb0b900cf11f10b1817', '区域管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'sys_area', 60, '', '/sys/area/list', 'GET', '0', 'fa-map', '0', '', 0, b'0', '1', '2016-12-29 14:31:16', '1', '2016-12-29 14:49:29');
-INSERT INTO `sys_module_t` VALUES ('fa4c8d5ce1e545169d1030a3f259c97c', '测试书籍管理', 'fcf49184c1854cc8958e4bb6de7b15b5', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,', '1', 'albedobootcloudmicro/api', 'test_testBook', 120, '', '/test/testBook/list', '', '0', 'fa-file', '0', '', 0, b'0', '1', '2018-02-12 16:21:02', '1', '2018-03-02 16:44:58');
-INSERT INTO `sys_module_t` VALUES ('fc987e00a31246aea6d2e2a6afe8db36', '系统设置', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, 'sm', 30, '', '', NULL, '0', 'fa-asterisk', '1', '', 27, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:01:11');
-INSERT INTO `sys_module_t` VALUES ('fcf49184c1854cc8958e4bb6de7b15b5', '业务中心', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, '', 20, '', '', NULL, '0', 'fa-lemon-o', '0', '', 0, b'0', '1', '2017-03-27 15:26:46', '1', '2017-03-27 15:27:09');
-INSERT INTO `sys_module_t` VALUES ('fd8be39d8db44c60917633defe9996c0', '账户中心', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, '', 10, '', '', NULL, '0', 'fa-gear', '0', '', 15, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:00:51');
-INSERT INTO `sys_module_t` VALUES ('fe5dcdbcc132480da84701173a3fb5f2', '查看', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, 'sys_user_view', 20, NULL, '/sys/user/', 'GET', '0', 'fa-info-circle', '0', NULL, 1, b'1', '1', '2016-12-29 14:54:14', '1', '2017-06-30 15:01:12');
-INSERT INTO `sys_module_t` VALUES ('fedce526bea94126897bb29bb2874dc2', '删除', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, 'sys_taskScheduleJob_delete', 80, NULL, '/sys/taskScheduleJob/delete', 'DELETE', '0', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2018-02-05 09:34:36', '1', '2018-02-05 09:34:36');
-COMMIT;
+INSERT INTO `sys_module_t` VALUES ('02438bacbc4d4b01b8e4f4fac3cdffd4', '删除', 'c12d9d63d66a452cb4011be25e3552c4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,c12d9d63d66a452cb4011be25e3552c4,', '2', NULL, NULL, 'test_testBook_delete', 80, NULL, '/test/testBook/', 'DELETE', '-2', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2018-08-21 09:52:17', '1', '2018-08-21 09:52:17');
+INSERT INTO `sys_module_t` VALUES ('024d876a23424ff397c224de2e2939a8', '生成方案配置', 'ee5224dc13404267acfb8fc443dee4c3', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,', '1', 'albedobootcloudmicro/api', 'views/modules/gen/genScheme/index', 'gen_genScheme,gen_genScheme_view', 370, '', '/gen/genScheme/list', '', '0', 'icon-api-fill', '0', '', 9, b'0', '', '2016-12-05 11:29:48', '1', '2018-08-22 14:12:24');
+INSERT INTO `sys_module_t` VALUES ('06b8c6cba2d44338b7b2bfc676cc09fb', '删除', '0f28b15c8a6d49cb89e8ab3bbfed51ec', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,0f28b15c8a6d49cb89e8ab3bbfed51ec,', '2', NULL, NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '0', NULL, '0', NULL, 0, b'1', '1', '2018-08-23 15:04:46', '1', '2018-08-23 15:04:46');
+INSERT INTO `sys_module_t` VALUES ('0771998f75b444f8b2ec0631c69c644f', '字典管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/dict/index', 'sys_dict', 30, '', '/sys/dict/list', '', '0', 'icon-golden-fill', '0', '', 0, b'0', '1', '2016-12-29 14:27:37', '1', '2018-08-22 14:10:58');
+INSERT INTO `sys_module_t` VALUES ('08bb2278416a4aaa86a1db7898252791', '编辑', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', '', '', 'sys_dict_edit', 40, '', '/sys/dict/', 'POST', '0', 'icon-right-square', '0', '', 0, b'1', '1', '2016-12-29 14:27:37', '1', '2018-08-22 14:10:58');
+INSERT INTO `sys_module_t` VALUES ('08d0f2920fd143fd823811ffe22a788f', '查看', 'd1377ec8ddb547aea4c162b1307e4feb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,d1377ec8ddb547aea4c162b1307e4feb,', '2', NULL, NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '-2', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-22 17:58:55', '1', '2018-08-22 17:58:55');
+INSERT INTO `sys_module_t` VALUES ('0a30a530481743bebd364c96687756f0', '删除', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', '', '', 'test_testBook_delete', 80, '', '/test/testBook/', 'DELETE,PUT', '-2', 'icon-right-square', '0', '', 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-07-05 13:24:01');
+INSERT INTO `sys_module_t` VALUES ('0f28b15c8a6d49cb89e8ab3bbfed51ec', '测试树管理', '9e577f27fb4c45ea82ed222db05aad17', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,', '1', NULL, 'views/modules/test/testTree/index', 'test_testTree', 30, NULL, '/test/testTree/list', 'GET', '-2', 'icon-right-square', '0', NULL, 0, b'0', '1', '2018-08-23 15:04:46', '1', '2018-08-24 16:45:10');
+INSERT INTO `sys_module_t` VALUES ('15016930ee924d64a013b523b6b74384', '查看', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, NULL, 'test_testBook_view', 20, NULL, '/test/testBook/', 'GET', '-2', 'icon-right-square', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
+INSERT INTO `sys_module_t` VALUES ('198590bb4b0f4739a57add3c1f05ed47', '锁定', 'd9b80f6e52da4fbfa79152eaef496ccf', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,d9b80f6e52da4fbfa79152eaef496ccf,', '2', NULL, NULL, 'test_testBook_lock', 60, NULL, '/test/testBook/', 'PUT', '-2', 'fa-lock', '0', NULL, 0, b'1', '1', '2018-08-21 10:34:15', '1', '2018-08-24 16:45:13');
+INSERT INTO `sys_module_t` VALUES ('1be9b1edb9f3480187c0c9a9838f0ebb', '操作权限', '8e21d10003694354822fe0ad44106ce0', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,8e21d10003694354822fe0ad44106ce0,', '2', '', NULL, 'gen_genTable_view,gen_genTable_edit,gen_genTable_lock,gen_genTable_delete', 300, '', '/gen/genTable/', 'GET,POST,PUT,DELETE', '0', 'icon-right-square', '0', '', 0, b'1', '1', '2018-03-02 15:06:49', '1', '2018-03-04 09:24:42');
+INSERT INTO `sys_module_t` VALUES ('201305b309b0462ab8eb294ab1d42410', '用户管理', '714afd9e5d9f4c0697e502a43a4a2491', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/user/index', 'sys_user', 30, '', '/sys/user/list', '', '0', 'icon-adduser', '0', '', 2, b'0', '1', '2016-12-29 14:54:14', '1', '2018-07-27 17:44:53');
+INSERT INTO `sys_module_t` VALUES ('223b8f1345114589ae09681be4744bbc', '系统日志', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', '', 'views/admin/logs/index', 'sys_logs', 30, '', '/sys/logs', '', '0', 'icon-border-outer', '0', '', 1, b'1', '1', '2017-01-03 14:57:47', '1', '2018-07-27 17:52:21');
+INSERT INTO `sys_module_t` VALUES ('25a868347e8f4a6bb68b53925db95692', '编辑机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, NULL, 'sys_org_edit', 40, '', '/sys/org/', 'POST', '0', 'icon-right-square', '0', '', 23, b'1', '', '2016-12-05 11:29:48', '1', '2018-03-21 13:36:12');
+INSERT INTO `sys_module_t` VALUES ('26b66bac9da64aa1a43fc3fbf104c98e', '操作权限', '024d876a23424ff397c224de2e2939a8', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,024d876a23424ff397c224de2e2939a8,', '2', '', NULL, 'gen_genScheme_edit,gen_genScheme_lock,gen_genScheme_delete', 240, '', '/gen/genTable', 'GET,POST,PUT,DELETE', '0', 'icon-right-square', NULL, '', 0, b'1', '1', '2018-02-11 17:24:44', '1', '2018-08-22 14:12:24');
+INSERT INTO `sys_module_t` VALUES ('28c287e9f919421e987fa38081c5286e', '锁定', '0f28b15c8a6d49cb89e8ab3bbfed51ec', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,0f28b15c8a6d49cb89e8ab3bbfed51ec,', '2', NULL, NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '0', NULL, '0', NULL, 0, b'1', '1', '2018-08-23 15:04:46', '1', '2018-08-23 15:04:46');
+INSERT INTO `sys_module_t` VALUES ('2bd03251f4704bc09f66b3355e5c3022', '测试树管理', '9e577f27fb4c45ea82ed222db05aad17', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,', '1', NULL, 'views/modules//test/testTree/index', 'test_testTree', 30, NULL, '/test/testTree/list', 'GET', '-2', 'icon-right-square', '0', NULL, 0, b'0', '1', '2018-08-22 17:56:53', '1', '2018-08-22 17:56:53');
+INSERT INTO `sys_module_t` VALUES ('2d5f2af5e36349b5bb8dfbd5904900c8', '代码生成', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, 'Layout', '', 60, '', '', NULL, '0', 'icon-right-square', '0', '', 6, b'0', '', '2016-12-05 11:29:48', '1', '2017-03-27 15:26:05');
+INSERT INTO `sys_module_t` VALUES ('3566c3b5c4114f77a5434c175b9f64c5', '系统管理', 'fc987e00a31246aea6d2e2a6afe8db36', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,', '1', '', '', 'sys', 60, '', '', '', '0', 'icon-setting', '1', '_showTree', 25, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:49:38');
+INSERT INTO `sys_module_t` VALUES ('36fa53b230c74ec590fca4fe2ef5851b', '锁定', 'd1377ec8ddb547aea4c162b1307e4feb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,d1377ec8ddb547aea4c162b1307e4feb,', '2', NULL, NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:58:55', '1', '2018-08-22 17:58:55');
+INSERT INTO `sys_module_t` VALUES ('37ceac18a00b4a7ea45c8681035fe402', '模块管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/module/index', 'sys_module', 10, '', '/sys/module/list', '', '0', 'icon-control', '0', '', 24, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:51:18');
+INSERT INTO `sys_module_t` VALUES ('3b7a4e5fefdb4fa293c2d972d4a5e747', '任务调度管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/taskScheduleJob/index', 'sys_taskScheduleJob', 30, '', '/sys/taskScheduleJob/list', '', '0', 'icon-tags-fill', '0', '', 1, b'0', '1', '2018-02-05 09:34:36', '1', '2018-07-27 17:51:29');
+INSERT INTO `sys_module_t` VALUES ('3ce4aa89b1c5483dbc538d3f3ae0a63f', '删除机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, NULL, 'sys_org_delete', 80, '', '/sys/org/', 'DELETE', '0', 'icon-right-square', '0', '', 20, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-21 13:36:12');
+INSERT INTO `sys_module_t` VALUES ('3dc743ff54734668b45a95dd02276de5', '锁定', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, NULL, 'sys_dict_lock', 60, NULL, '/sys/dict/', 'PUT', '0', 'icon-right-square', '0', NULL, 0, b'1', '1', '2016-12-29 14:27:37', '1', '2018-08-22 14:10:58');
+INSERT INTO `sys_module_t` VALUES ('429202d2fcd947a49e20b4410450d6ad', '保存', '87825137dec44ea5b04b9e43df1a1d5e', '4d32c49cc7f448dcbfb92ce9c4dde058,fd8be39d8db44c60917633defe9996c0,87825137dec44ea5b04b9e43df1a1d5e,', '2', '', NULL, 'account_change_password', 30, '', '/account/change-password', 'POST', '0', 'icon-right-square', '0', '', 0, b'1', '1', '2018-02-12 09:51:58', '1', '2018-03-14 17:11:24');
+INSERT INTO `sys_module_t` VALUES ('42baef661e504fa998a35d27b0daa3c4', '账户预览', 'fd8be39d8db44c60917633defe9996c0', '4d32c49cc7f448dcbfb92ce9c4dde058,fd8be39d8db44c60917633defe9996c0,', '1', '', 'page/wel', '', 30, '_top', '/wel/index', '', '0', 'icon-right-square', '0', '<p><br></p>', 5, b'1', '', '2016-12-05 11:29:48', '1', '2018-08-24 10:23:57');
+INSERT INTO `sys_module_t` VALUES ('452ea0f8d23247daa5f32751644aaba9', '配置管理', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', '', 'views/admin/configuration/index', 'sys_configuration', 90, '', '/sys/configuration', '', '0', 'icon-slack', '0', '', 1, b'1', '1', '2018-02-09 14:49:48', '1', '2018-07-27 17:52:31');
+INSERT INTO `sys_module_t` VALUES ('452f84011e9f4992a827d09cdfa960a6', '删除', '47901d0b38d7449da5cc56ab02e23ea4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,47901d0b38d7449da5cc56ab02e23ea4,', '2', NULL, NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:38:09', '1', '2018-08-22 17:38:09');
+INSERT INTO `sys_module_t` VALUES ('4715e01a290c447eac93ee47db6b9c81', '资源管理', 'fc987e00a31246aea6d2e2a6afe8db36', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,', '1', '', 'Layout', '', 90, '', '', '', '0', 'icon-detail', '0', '', 19, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:49:58');
+INSERT INTO `sys_module_t` VALUES ('47901d0b38d7449da5cc56ab02e23ea4', '测试树管理', '9e577f27fb4c45ea82ed222db05aad17', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,', '1', NULL, 'views/modules//test/testTree/index', 'test_testTree', 30, NULL, '/test/testTree/list', 'GET', '-2', 'icon-right-square', '0', NULL, 0, b'0', '1', '2018-08-22 17:38:09', '1', '2018-08-22 17:38:09');
+INSERT INTO `sys_module_t` VALUES ('4bbe48b8f1174663ae5719e142ac312f', '查看', '47901d0b38d7449da5cc56ab02e23ea4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,47901d0b38d7449da5cc56ab02e23ea4,', '2', NULL, NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '-2', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-22 17:38:09', '1', '2018-08-22 17:38:09');
+INSERT INTO `sys_module_t` VALUES ('4d32c49cc7f448dcbfb92ce9c4dde058', '数据模块', NULL, '', '1', NULL, NULL, 'root', 30, NULL, NULL, NULL, '0', 'icon-right-square', '0', NULL, 10, b'0', '', '2016-12-05 11:29:48', '1', '2017-06-30 15:00:51');
+INSERT INTO `sys_module_t` VALUES ('4e10bdac71e24b42941c248a26286c04', '测试树管理', '9e577f27fb4c45ea82ed222db05aad17', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,', '1', NULL, 'views/modules//test/testTree/index', 'test_testTree', 30, NULL, '/test/testTree/list', 'GET', '-2', 'icon-right-square', '0', NULL, 0, b'0', '1', '2018-08-22 17:37:06', '1', '2018-08-22 17:37:06');
+INSERT INTO `sys_module_t` VALUES ('507e01681609463da50e44bd4b762490', '编辑', '47901d0b38d7449da5cc56ab02e23ea4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,47901d0b38d7449da5cc56ab02e23ea4,', '2', NULL, NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:38:09', '1', '2018-08-22 17:38:09');
+INSERT INTO `sys_module_t` VALUES ('5293bd1a28924276a236a4363af5dde8', '启用/停用机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, NULL, 'sys_org_lock', 60, '', '/sys/org/', 'PUT', '0', 'icon-right-square', '0', '', 21, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-21 13:36:12');
+INSERT INTO `sys_module_t` VALUES ('622f8e9876ed48f09927d0124054e1ab', '查看', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, NULL, 'sys_taskScheduleJob_view', 20, NULL, '/sys/taskScheduleJob/page', 'GET', '0', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-05 09:34:36', '1', '2018-03-21 17:48:43');
+INSERT INTO `sys_module_t` VALUES ('63722e7194b2412180d8870befeab4f6', '删除', 'd9b80f6e52da4fbfa79152eaef496ccf', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,d9b80f6e52da4fbfa79152eaef496ccf,', '2', NULL, NULL, 'test_testBook_delete', 80, NULL, '/test/testBook/', 'DELETE', '-2', 'fa-trash-o', '0', NULL, 0, b'1', '1', '2018-08-21 10:34:15', '1', '2018-08-24 16:45:13');
+INSERT INTO `sys_module_t` VALUES ('639435ab0bb248f0a573ea6a428e5a69', '锁定', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, NULL, 'test_testBook_lock', 60, NULL, '/test/testBook/', 'PUT', '-2', 'icon-right-square', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
+INSERT INTO `sys_module_t` VALUES ('6398a42cfd344fd59875f23d11049acf', '查看', 'c12d9d63d66a452cb4011be25e3552c4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,c12d9d63d66a452cb4011be25e3552c4,', '2', NULL, NULL, 'test_testBook_view', 20, NULL, '/test/testBook/', 'GET', '-2', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-21 09:52:17', '1', '2018-08-21 09:52:17');
+INSERT INTO `sys_module_t` VALUES ('6a9ebbc8975e41259e9c47b3bf208610', '锁定', '2bd03251f4704bc09f66b3355e5c3022', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,2bd03251f4704bc09f66b3355e5c3022,', '2', NULL, NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:56:53', '1', '2018-08-22 17:56:53');
+INSERT INTO `sys_module_t` VALUES ('6c6717a6f76f49a6b1320d276a269658', '编辑', '2bd03251f4704bc09f66b3355e5c3022', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,2bd03251f4704bc09f66b3355e5c3022,', '2', NULL, NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:56:53', '1', '2018-08-22 17:56:53');
+INSERT INTO `sys_module_t` VALUES ('6deeff0baa904f9a8d109dad8cf2af9b', '编辑', '0f28b15c8a6d49cb89e8ab3bbfed51ec', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,0f28b15c8a6d49cb89e8ab3bbfed51ec,', '2', NULL, NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '0', NULL, '0', NULL, 0, b'1', '1', '2018-08-23 15:04:46', '1', '2018-08-23 15:04:46');
+INSERT INTO `sys_module_t` VALUES ('714afd9e5d9f4c0697e502a43a4a2491', '机构用户', 'fc987e00a31246aea6d2e2a6afe8db36', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,', '1', '', 'Layout', '', 10, '', '', '', '0', 'icon-codepen', '0', '', 14, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:50:47');
+INSERT INTO `sys_module_t` VALUES ('7374c36138c94351a3bcfcc5411502eb', '测试树管理', '9e577f27fb4c45ea82ed222db05aad17', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,', '1', 'albedobootcloudmicro/api', '', 'test_testTree', 150, '', '/test/testTree/list', '', '-2', 'icon-right-square', '0', '', 2, b'0', '1', '2018-02-13 10:55:04', '1', '2018-08-22 09:16:23');
+INSERT INTO `sys_module_t` VALUES ('749160f6086f475da6f350543994608e', '查看', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, NULL, 'sys_area_view', 20, NULL, '/sys/area/', 'GET', '0', 'icon-right-square', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('75f58401461c486b875f851e18a8ee9d', '锁定', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, NULL, 'sys_module_lock', 60, '', '/sys/module/', 'PUT', '0', 'icon-right-square', NULL, '', 22, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('7680646c74684d80b2e3d3595d6450e3', '锁定', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, NULL, 'sys_taskScheduleJob_lock', 60, NULL, '/sys/taskScheduleJob/lock', 'POST', '0', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-05 09:34:36', '1', '2018-03-21 17:48:43');
+INSERT INTO `sys_module_t` VALUES ('770043464aaa4d47ad01b9b07c03fcae', '查看', 'd9b80f6e52da4fbfa79152eaef496ccf', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,d9b80f6e52da4fbfa79152eaef496ccf,', '2', NULL, NULL, 'test_testBook_view', 20, NULL, '/test/testBook/', 'GET', '-2', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-21 10:34:15', '1', '2018-08-24 16:45:13');
+INSERT INTO `sys_module_t` VALUES ('7b3bb9006059412d9bfeb6d7dc3da87b', '查看', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '-2', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-13 10:55:04', '1', '2018-08-22 09:16:23');
+INSERT INTO `sys_module_t` VALUES ('7ff1ee3bd23845b8a1d7ef8df661bb0d', '编辑', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, NULL, 'sys_module_edit', 40, '', '/sys/module/', 'POST', '0', 'icon-right-square', '0', '', 27, b'1', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('826137d6389f4730abb0422d7d252b32', '服务状态', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', '', 'views/admin/health/index', 'sys_health_view', 60, '', '/sys/health', '', '0', 'icon-boxplot-fill', '0', '', 1, b'1', '1', '2017-01-04 14:05:52', '1', '2018-07-27 17:52:50');
+INSERT INTO `sys_module_t` VALUES ('8711a4d8fa05473a8a81e54ec1fc04ca', '锁定', '47901d0b38d7449da5cc56ab02e23ea4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,47901d0b38d7449da5cc56ab02e23ea4,', '2', NULL, NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:38:09', '1', '2018-08-22 17:38:09');
+INSERT INTO `sys_module_t` VALUES ('87825137dec44ea5b04b9e43df1a1d5e', '修改信息', 'fd8be39d8db44c60917633defe9996c0', '4d32c49cc7f448dcbfb92ce9c4dde058,fd8be39d8db44c60917633defe9996c0,', '1', '', 'views/modules/sys/user/info', '', 60, '', '/info/index', '', '0', 'icon-xiugaimima', '0', '', 20, b'0', '', '2016-12-05 11:29:48', '1', '2018-08-24 16:44:09');
+INSERT INTO `sys_module_t` VALUES ('8d607e3d86ad436b89e3067323021168', '资源监控', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', '', 'views/admin/metrics/index', 'sys_metrics', 0, '', '/sys/metrics', '', '0', 'icon-eye', '', '', 2, b'1', '', '2017-03-02 23:03:19', '1', '2018-07-27 17:53:08');
+INSERT INTO `sys_module_t` VALUES ('8e21d10003694354822fe0ad44106ce0', '业务表配置', 'ee5224dc13404267acfb8fc443dee4c3', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,ee5224dc13404267acfb8fc443dee4c3,', '1', 'albedobootcloudmicro/api', 'views/modules/gen/genTable/index', 'gen_genTable,gen_genTable_view', 310, '', '/gen/genTable/list', '', '0', 'icon-export', '0', '', 10, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:54:46');
+INSERT INTO `sys_module_t` VALUES ('8eae4c0c642a43eba9de678d36ca9186', '删除', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, NULL, 'sys_user_delete', 80, NULL, '/sys/user/', 'DELETE', '0', 'icon-right-square', '0', NULL, 2, b'1', '1', '2016-12-29 14:54:15', '1', '2018-03-21 13:35:07');
+INSERT INTO `sys_module_t` VALUES ('902e7ed0be8b4357a3465618f971cc43', '锁定', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '-2', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-13 10:55:04', '1', '2018-08-22 09:16:23');
+INSERT INTO `sys_module_t` VALUES ('939866de21344c569c85c93601329b97', '删除', '2bd03251f4704bc09f66b3355e5c3022', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,2bd03251f4704bc09f66b3355e5c3022,', '2', NULL, NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:56:53', '1', '2018-08-22 17:56:53');
+INSERT INTO `sys_module_t` VALUES ('95a093b48f1947818d50fe09eab72753', '编辑', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, NULL, 'sys_role_edit', 20, '', '/sys/role/', 'POST', '0', 'icon-right-square', '0', '', 29, b'1', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:46');
+INSERT INTO `sys_module_t` VALUES ('9e577f27fb4c45ea82ed222db05aad17', '测试模块', 'fcf49184c1854cc8958e4bb6de7b15b5', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,', '1', NULL, NULL, NULL, 30, NULL, NULL, '', '-2', 'icon-compass', '0', NULL, 0, b'0', '1', '2018-08-22 09:15:50', '1', '2018-08-24 16:45:10');
+INSERT INTO `sys_module_t` VALUES ('9fec2607b166460cb99d9ed2436be506', '接口管理', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', '', '', 'sys_docs', 120, '_blank', 'http://localhost:8061/swagger-ui/index.html', '', '0', 'icon-tags-fill', '0', '', 6, b'0', '1', '2017-01-05 17:48:44', '1', '2018-07-27 17:53:54');
+INSERT INTO `sys_module_t` VALUES ('a4d33c782351410fa27818bf76a7730c', '编辑', 'd9b80f6e52da4fbfa79152eaef496ccf', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,d9b80f6e52da4fbfa79152eaef496ccf,', '2', NULL, NULL, 'test_testBook_edit', 40, NULL, '/test/testBook/', 'POST', '-2', 'fa-pencil', '0', NULL, 0, b'1', '1', '2018-08-21 10:34:15', '1', '2018-08-24 16:45:13');
+INSERT INTO `sys_module_t` VALUES ('a747bcf467b044359794ee2c370c2fb3', '编辑', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, NULL, 'sys_taskScheduleJob_edit', 40, NULL, '/sys/taskScheduleJob/edit', 'GET,POST', '0', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-05 09:34:36', '1', '2018-03-21 17:48:43');
+INSERT INTO `sys_module_t` VALUES ('abd42541d2614a7d9f117ce857645382', '删除', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, NULL, 'sys_module_delete', 80, '', '/sys/module/', 'DELETE', '0', 'icon-right-square', NULL, '', 20, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('ac154de6d65f4330b286a037cab7757a', '查看', '4e10bdac71e24b42941c248a26286c04', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,4e10bdac71e24b42941c248a26286c04,', '2', NULL, NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '-2', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-22 17:37:06', '1', '2018-08-22 17:37:06');
+INSERT INTO `sys_module_t` VALUES ('ac42a586ae484f8694f056a68d9da1ae', '编辑', 'd1377ec8ddb547aea4c162b1307e4feb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,d1377ec8ddb547aea4c162b1307e4feb,', '2', NULL, NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:58:55', '1', '2018-08-22 17:58:55');
+INSERT INTO `sys_module_t` VALUES ('ac57bbe888ba4879bb4ec7b1397c3ab3', '删除', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '-2', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-13 10:55:04', '1', '2018-08-22 09:16:23');
+INSERT INTO `sys_module_t` VALUES ('af6294af4db4487c930125b40212f6ac', '查看', '37ceac18a00b4a7ea45c8681035fe402', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,37ceac18a00b4a7ea45c8681035fe402,', '2', NULL, NULL, 'sys_module_view', 20, '', '/sys/module/', 'GET', '0', 'icon-right-square', '0', '', 29, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('b4dc5bb4a11149d78c765dbef12e13c7', '删除', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, NULL, 'sys_area_delete', 80, NULL, '/sys/area/', 'DELETE', '0', 'icon-right-square', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('b57911172bf74bceae6e22e706d83fb8', '锁定', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, NULL, 'sys_user_lock', 60, '', '/sys/user/', 'PUT', '0', 'icon-right-square', NULL, '', 2, b'0', '1', '2017-03-02 22:25:04', '1', '2018-03-21 13:35:07');
+INSERT INTO `sys_module_t` VALUES ('b84f85fa6d4a4c17a3ea3f974b62e273', '编辑', 'fa4c8d5ce1e545169d1030a3f259c97c', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,fa4c8d5ce1e545169d1030a3f259c97c,', '2', NULL, NULL, 'test_testBook_edit', 40, NULL, '/test/testBook/', 'POST', '-2', 'icon-right-square', '0', NULL, 0, b'1', '1', '2018-02-12 16:21:03', '1', '2018-02-12 16:21:03');
+INSERT INTO `sys_module_t` VALUES ('b96b529a936e449e82f71cd4ec990f0b', '编辑', '7374c36138c94351a3bcfcc5411502eb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,7374c36138c94351a3bcfcc5411502eb,', '2', NULL, NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '-2', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-13 10:55:04', '1', '2018-08-22 09:16:23');
+INSERT INTO `sys_module_t` VALUES ('badfe0b992fd4f79b1dfcc2494a47e76', '删除', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, NULL, 'sys_role_delete', 40, '', '/sys/role/', 'DELETE', '0', 'icon-right-square', '0', '', 26, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:47');
+INSERT INTO `sys_module_t` VALUES ('bc779f2d65da44ad8397a8ff5976ac65', '查看', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, NULL, 'sys_role_view', 10, '', '/sys/role/', 'GET', '0', 'icon-right-square', '0', '', 28, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-14 17:11:47');
+INSERT INTO `sys_module_t` VALUES ('bcebb357a44b48e4baebe2cbed815ded', '锁定', 'c12d9d63d66a452cb4011be25e3552c4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,c12d9d63d66a452cb4011be25e3552c4,', '2', NULL, NULL, 'test_testBook_lock', 60, NULL, '/test/testBook/', 'PUT', '-2', 'fa-lock', '0', NULL, 0, b'1', '1', '2018-08-21 09:52:17', '1', '2018-08-21 09:52:17');
+INSERT INTO `sys_module_t` VALUES ('bd7872df2fe748fb97bb1dcc629cdecb', '角色管理', '714afd9e5d9f4c0697e502a43a4a2491', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/role/index', 'sys_role', 90, '', '/sys/role/list', '', '0', 'icon-trademark', '0', '', 26, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:45:35');
+INSERT INTO `sys_module_t` VALUES ('be075eeaca2e4b12a9218c8f523c47b9', '锁定', '4e10bdac71e24b42941c248a26286c04', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,4e10bdac71e24b42941c248a26286c04,', '2', NULL, NULL, 'test_testTree_lock', 60, NULL, '/test/testTree/', 'PUT', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:37:06', '1', '2018-08-22 17:37:06');
+INSERT INTO `sys_module_t` VALUES ('c12d9d63d66a452cb4011be25e3552c4', '测试书籍管理', 'fcf49184c1854cc8958e4bb6de7b15b5', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,', '1', NULL, NULL, 'test_testBook', 30, NULL, '/test/testBook/list', 'GET', '-2', 'fa-file', '0', NULL, 0, b'0', '1', '2018-08-21 09:52:17', '1', '2018-08-21 09:52:17');
+INSERT INTO `sys_module_t` VALUES ('c1315b8c902f4368b9ea8fb7f8883023', '查看', '2bd03251f4704bc09f66b3355e5c3022', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,2bd03251f4704bc09f66b3355e5c3022,', '2', NULL, NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '-2', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-22 17:56:53', '1', '2018-08-22 17:56:53');
+INSERT INTO `sys_module_t` VALUES ('c3145033f56a41879c20dcdc1d1ad6f5', '审核管理', '4715e01a290c447eac93ee47db6b9c81', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,', '1', '', 'views/admin/audits/index', 'sys_audits', 120, '', '/sys/audits', '', '0', 'icon-rocket-fill', '0', '', 1, b'1', '1', '2018-02-11 10:50:00', '1', '2018-07-27 17:54:08');
+INSERT INTO `sys_module_t` VALUES ('c8b8c444b8cc450eb51346c6215c57e7', '编辑', '4e10bdac71e24b42941c248a26286c04', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,4e10bdac71e24b42941c248a26286c04,', '2', NULL, NULL, 'test_testTree_edit', 40, NULL, '/test/testTree/', 'POST', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:37:06', '1', '2018-08-22 17:37:06');
+INSERT INTO `sys_module_t` VALUES ('c92978d9c92a4e4cbdb0a109de247df4', '删除', 'd1377ec8ddb547aea4c162b1307e4feb', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,d1377ec8ddb547aea4c162b1307e4feb,', '2', NULL, NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:58:55', '1', '2018-08-22 17:58:55');
+INSERT INTO `sys_module_t` VALUES ('ccab7469d8df473c8ff769437f6bd393', '锁定', 'bd7872df2fe748fb97bb1dcc629cdecb', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,bd7872df2fe748fb97bb1dcc629cdecb,', '2', NULL, NULL, 'sys_role_lock', 30, '', '/sys/role/', 'PUT', '0', 'icon-right-square', '0', '', 1, b'0', '1', '2016-12-28 16:53:19', '1', '2018-03-14 17:11:47');
+INSERT INTO `sys_module_t` VALUES ('ce4517a441dc4115a14921419b4d131a', '机构管理', '714afd9e5d9f4c0697e502a43a4a2491', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/org/index', 'sys_org', 60, '', '/sys/org/list', '', '0', 'icon-appstore', '0', '', 26, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-27 17:49:22');
+INSERT INTO `sys_module_t` VALUES ('d1377ec8ddb547aea4c162b1307e4feb', '测试树管理', '9e577f27fb4c45ea82ed222db05aad17', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,', '1', NULL, 'views/modules//test/testTree/index', 'test_testTree', 30, NULL, '/test/testTree/list', 'GET', '-2', 'icon-right-square', '0', NULL, 0, b'0', '1', '2018-08-22 17:58:46', '1', '2018-08-22 17:58:55');
+INSERT INTO `sys_module_t` VALUES ('d40fcdec366f4038971f3d9bb68451eb', '编辑', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, NULL, 'sys_area_edit', 40, NULL, '/sys/area/,/sys/area/form', 'GET,POST', '0', 'icon-right-square', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('d6814dcbdb624077afeb95d856ad76d0', '删除', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, NULL, 'sys_dict_delete', 80, NULL, '/sys/dict/', 'DELETE', '0', 'icon-right-square', '0', NULL, 0, b'1', '1', '2016-12-29 14:27:37', '1', '2018-08-22 14:10:58');
+INSERT INTO `sys_module_t` VALUES ('d7069653320643e89b3c93dcdfa5b2c6', '编辑', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d42410,', '2', NULL, NULL, 'sys_user_edit', 40, NULL, '/sys/user/', 'POST', '0', 'icon-right-square', '0', NULL, 2, b'1', '1', '2016-12-29 14:54:15', '1', '2018-03-21 13:35:07');
+INSERT INTO `sys_module_t` VALUES ('d70ef10740bc4135bc529f28898a83d8', '编辑', 'c12d9d63d66a452cb4011be25e3552c4', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,c12d9d63d66a452cb4011be25e3552c4,', '2', NULL, NULL, 'test_testBook_edit', 40, NULL, '/test/testBook/', 'POST', '-2', 'fa-pencil', '0', NULL, 0, b'1', '1', '2018-08-21 09:52:17', '1', '2018-08-21 09:52:17');
+INSERT INTO `sys_module_t` VALUES ('d9b80f6e52da4fbfa79152eaef496ccf', '测试书籍管理', 'fcf49184c1854cc8958e4bb6de7b15b5', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,', '1', '', 'views/modules/test/testBook/index', 'test_testBook', 30, '', '/test/testBook/list', '', '-2', 'icon-right-square', '0', '', 0, b'0', '1', '2018-08-21 10:34:15', '1', '2018-08-24 16:45:13');
+INSERT INTO `sys_module_t` VALUES ('dce35c41e60b43b38ed5e399464746db', '查看', '0f28b15c8a6d49cb89e8ab3bbfed51ec', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,0f28b15c8a6d49cb89e8ab3bbfed51ec,', '2', NULL, NULL, 'test_testTree_view', 20, NULL, '/test/testTree/', 'GET', '0', 'fa-info-circle', '0', NULL, 0, b'1', '1', '2018-08-23 15:04:46', '1', '2018-08-23 15:04:46');
+INSERT INTO `sys_module_t` VALUES ('e5223c949502447fa1a1f2b579203608', '锁定', 'fa1cf28bbd424fb0b900cf11f10b1817', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,fa1cf28bbd424fb0b900cf11f10b1817,', '2', NULL, NULL, 'sys_area_lock', 60, NULL, '/sys/area/', 'PUT', '0', 'icon-right-square', '0', NULL, 0, b'1', '1', '2016-12-29 14:31:16', '1', '2018-03-14 17:11:54');
+INSERT INTO `sys_module_t` VALUES ('eaaff69aa81d448eb465d729bdad0508', '查看列表机构', 'ce4517a441dc4115a14921419b4d131a', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,ce4517a441dc4115a14921419b4d131a,', '2', NULL, NULL, 'sys_org_view', 20, '', '/sys/org/', 'GET', '0', 'icon-right-square', '0', '', 23, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-21 13:36:12');
+INSERT INTO `sys_module_t` VALUES ('eb0d9b3c57f44456a4b421c7df4b963b', '删除', '4e10bdac71e24b42941c248a26286c04', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,9e577f27fb4c45ea82ed222db05aad17,4e10bdac71e24b42941c248a26286c04,', '2', NULL, NULL, 'test_testTree_delete', 80, NULL, '/test/testTree/', 'DELETE', '-2', NULL, '0', NULL, 0, b'1', '1', '2018-08-22 17:37:06', '1', '2018-08-22 17:37:06');
+INSERT INTO `sys_module_t` VALUES ('ee5224dc13404267acfb8fc443dee4c3', '代码配置', '2d5f2af5e36349b5bb8dfbd5904900c8', '4d32c49cc7f448dcbfb92ce9c4dde058,2d5f2af5e36349b5bb8dfbd5904900c8,', '1', '', 'Layout', '', 30, '', '', '', '0', 'icon-right-square', '0', '', 10, b'0', '', '2016-12-05 11:29:48', '1', '2018-08-24 11:07:19');
+INSERT INTO `sys_module_t` VALUES ('f28abde46cc7410ea972fb635e325878', '查看', '9fec2607b166460cb99d9ed2436be506', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,4715e01a290c447eac93ee47db6b9c81,9fec2607b166460cb99d9ed2436be506,', '2', '', NULL, 'swagger_info', 30, '', '/swagger-ui/index.html', 'GET', '0', 'icon-right-square', '0', '', 1, b'1', '1', '2018-02-12 10:04:00', '1', '2018-03-21 13:35:19');
+INSERT INTO `sys_module_t` VALUES ('f5dc958155df4deaba4947bd9989202d', '查看', '0771998f75b444f8b2ec0631c69c644f', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,0771998f75b444f8b2ec0631c69c644f,', '2', NULL, NULL, 'sys_dict_view', 20, '', '/sys/dict/', 'GET', '0', 'icon-right-square', '0', '', 0, b'0', '1', '2016-12-29 14:27:37', '1', '2018-08-22 14:10:58');
+INSERT INTO `sys_module_t` VALUES ('fa1cf28bbd424fb0b900cf11f10b1817', '区域管理', '3566c3b5c4114f77a5434c175b9f64c5', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,', '1', 'albedobootcloudmicro/api', 'views/modules/sys/area/index', 'sys_area', 60, '', '/sys/area/list', '', '0', 'icon-yuque', '0', '', 0, b'0', '1', '2016-12-29 14:31:16', '1', '2018-07-27 17:51:43');
+INSERT INTO `sys_module_t` VALUES ('fa4c8d5ce1e545169d1030a3f259c97c', '测试书籍管理', 'fcf49184c1854cc8958e4bb6de7b15b5', '4d32c49cc7f448dcbfb92ce9c4dde058,fcf49184c1854cc8958e4bb6de7b15b5,', '1', 'albedobootcloudmicro/api', '', 'test_testBook', 120, '', '/test/testBook/list', '', '-2', 'icon-right-square', '0', '', 0, b'0', '1', '2018-02-12 16:21:02', '1', '2018-07-05 16:34:42');
+INSERT INTO `sys_module_t` VALUES ('fc987e00a31246aea6d2e2a6afe8db36', '系统设置', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, NULL, 'sm', 30, '', '', NULL, '0', 'icon-right-square', '1', '', 28, b'0', '', '2016-12-05 11:29:48', '1', '2018-03-21 13:35:19');
+INSERT INTO `sys_module_t` VALUES ('fcf49184c1854cc8958e4bb6de7b15b5', '业务中心', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', NULL, 'Layout', '', 20, '', '', NULL, '0', 'icon-right-square', '0', '', 0, b'0', '1', '2017-03-27 15:26:46', '1', '2017-03-27 15:27:09');
+INSERT INTO `sys_module_t` VALUES ('fd8be39d8db44c60917633defe9996c0', '账户中心', '4d32c49cc7f448dcbfb92ce9c4dde058', '4d32c49cc7f448dcbfb92ce9c4dde058,', '1', '', 'Layout', '', 10, '', '', '', '0', 'icon-zhanghuzhongxin', '0', '', 15, b'0', '', '2016-12-05 11:29:48', '1', '2018-07-05 16:36:44');
+INSERT INTO `sys_module_t` VALUES ('fe5dcdbcc132480da84701173a3fb5f2', '查看', '201305b309b0462ab8eb294ab1d42410', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,714afd9e5d9f4c0697e502a43a4a2491,201305b309b0462ab8eb294ab1d4241', '2', NULL, NULL, 'sys_user_view', 20, NULL, '/sys/user/', 'GET', '0', 'icon-right-square', '0', NULL, 2, b'1', '1', '2016-12-29 14:54:14', '1', '2018-03-21 13:35:07');
+INSERT INTO `sys_module_t` VALUES ('fedce526bea94126897bb29bb2874dc2', '删除', '3b7a4e5fefdb4fa293c2d972d4a5e747', '4d32c49cc7f448dcbfb92ce9c4dde058,fc987e00a31246aea6d2e2a6afe8db36,3566c3b5c4114f77a5434c175b9f64c5,3b7a4e5fefdb4fa293c2d972d4a5e747,', '2', NULL, NULL, 'sys_taskScheduleJob_delete', 80, NULL, '/sys/taskScheduleJob/delete', 'DELETE', '0', 'icon-right-square', '0', NULL, 1, b'1', '1', '2018-02-05 09:34:36', '1', '2018-03-21 17:48:43');
+
+-- ----------------------------
+-- Table structure for sys_oauth_client_details
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_oauth_client_details`;
+CREATE TABLE `sys_oauth_client_details`  (
+  `client_id` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `resource_ids` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `client_secret` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `scope` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `authorized_grant_types` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `web_server_redirect_uri` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `authorities` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `access_token_validity` int(11) NULL DEFAULT NULL,
+  `refresh_token_validity` int(11) NULL DEFAULT NULL,
+  `additional_information` varchar(4096) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `autoapprove` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  PRIMARY KEY (`client_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_oauth_client_details
+-- ----------------------------
+INSERT INTO `sys_oauth_client_details` VALUES ('app', NULL, 'app', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `sys_oauth_client_details` VALUES ('pig', NULL, 'pig', 'server', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'false');
 
 -- ----------------------------
 -- Table structure for sys_org_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_org_t`;
-CREATE TABLE `sys_org_t` (
-  `id_` varchar(32) NOT NULL DEFAULT '0',
-  `name_` varchar(255) DEFAULT NULL,
-  `parent_id` varchar(32) DEFAULT NULL,
-  `parent_ids` varchar(2000) DEFAULT NULL,
-  `code_` varchar(64) DEFAULT NULL COMMENT '机构编码',
-  `grade_` varchar(255) DEFAULT NULL COMMENT '机构等级',
-  `is_leaf` bit(1) DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
-  `en_` varchar(255) DEFAULT NULL,
-  `sort_` int(11) DEFAULT '0' COMMENT '序号',
-  `type_` varchar(64) DEFAULT NULL COMMENT '组织类型',
-  `status_` int(11) DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
+CREATE TABLE `sys_org_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `name_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `parent_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `parent_ids` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `code_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机构编码',
+  `grade_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机构等级',
+  `is_leaf` bit(1) NULL DEFAULT b'0' COMMENT '1 叶子节点 0 非叶子节点',
+  `en_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sort_` int(11) NULL DEFAULT 0 COMMENT '序号',
+  `type_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织类型',
+  `status_` int(11) NULL DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` datetime(0) NULL DEFAULT NULL,
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` datetime(0) NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `FK2006A5E73CA88251` (`parent_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  INDEX `FK2006A5E73CA88251`(`parent_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_org_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_org_t` VALUES ('1', '平台', '0', '0,', '100000', '1', b'0', 'root', 30, '1', 0, '', '2016-12-12 16:32:48', '1', '2017-06-30 14:59:27', 1, NULL);
-INSERT INTO `sys_org_t` VALUES ('186eaa340c934cb49434765f807fdeff', '公司领导', '1', '0,1,', '100001', '1', b'1', NULL, 30, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-02-27 17:08:53', 1, '');
-INSERT INTO `sys_org_t` VALUES ('27db8e3b19364a279b1e9721b5a784c7', '人事部', '38c65b8630ff473aa9f618906401efa0', '0,1,38c65b8630ff473aa9f618906401efa0,', '100005', '1', b'1', NULL, 20, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-03-02 14:16:30', 0, '');
-INSERT INTO `sys_org_t` VALUES ('38c65b8630ff473aa9f618906401efa0', '综合部', '1', '0,1,', '100004', '1', b'0', NULL, 0, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-03-02 14:11:20', 2, '');
-INSERT INTO `sys_org_t` VALUES ('40cd4e7d47114a2a89ee6c3bc02e374d', '对对对', '38c65b8630ff473aa9f618906401efa0', '0,1,38c65b8630ff473aa9f618906401efa0,', '方法', '2', b'1', NULL, 80, '1', -2, '1', '2017-11-08 17:13:18', '1', '2017-11-08 17:17:03', 3, '');
-INSERT INTO `sys_org_t` VALUES ('588e010702d343fe9082416102e49def', 'fdsa', 'c5fe48b99ad24e83a2271405a43fb8b7', '0,1,c5fe48b99ad24e83a2271405a43fb8b7,', 'dsfas', '1', b'1', NULL, 0, '1', -2, '', '2016-12-12 16:32:48', '1', '2017-06-30 16:40:02', 1, '');
-INSERT INTO `sys_org_t` VALUES ('c4f84e7695d94b469d93405fb73060d0', 'dd', '38c65b8630ff473aa9f618906401efa0', '0,1,38c65b8630ff473aa9f618906401efa0,', '', '1', b'1', NULL, 30, '1', -2, '', '2017-03-02 22:23:11', '1', '2017-06-30 16:39:57', 1, '');
-INSERT INTO `sys_org_t` VALUES ('c5fe48b99ad24e83a2271405a43fb8b7', '技术部', '1', '0,1,', '100003', '1', b'0', NULL, 40, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-03-02 14:11:10', 0, NULL);
-INSERT INTO `sys_org_t` VALUES ('f93883513a034577a166b424beb93794', '研发部', '1', '0,1,', '100002', '4', b'1', NULL, 30, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-02-02 17:12:51', 1, NULL);
-COMMIT;
+INSERT INTO `sys_org_t` VALUES ('1', '平台', '0', '', '100000', '1', b'0', 'root', 30, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-08-22 17:07:02', 1, '');
+INSERT INTO `sys_org_t` VALUES ('186eaa340c934cb49434765f807fdeff', '公司领导', '1', '1,', '100001', '1', b'1', '', 30, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-07-03 11:25:24', 1, '');
+INSERT INTO `sys_org_t` VALUES ('27db8e3b19364a279b1e9721b5a784c7', '人事部', '38c65b8630ff473aa9f618906401efa0', '1,38c65b8630ff473aa9f618906401efa', '100005', '1', b'1', '', 20, '1', -1, '', '2016-12-12 16:32:48', '1', '2018-07-03 11:27:22', 0, '');
+INSERT INTO `sys_org_t` VALUES ('38c65b8630ff473aa9f618906401efa0', '综合部', '1', '1,', '100004', '1', b'0', NULL, 0, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-03-02 14:11:20', 2, '');
+INSERT INTO `sys_org_t` VALUES ('40cd4e7d47114a2a89ee6c3bc02e374d', '对对对', '38c65b8630ff473aa9f618906401efa0', '1,38c65b8630ff473aa9f618906401efa', '方法', '2', b'1', NULL, 80, '1', -2, '1', '2017-11-08 17:13:18', '1', '2017-11-08 17:17:03', 3, '');
+INSERT INTO `sys_org_t` VALUES ('588e010702d343fe9082416102e49def', 'fdsa', 'c5fe48b99ad24e83a2271405a43fb8b7', '1,c5fe48b99ad24e83a2271405a43fb8b7,', 'dsfas', '1', b'1', NULL, 0, '1', -2, '', '2016-12-12 16:32:48', '1', '2018-03-16 17:32:21', 1, '');
+INSERT INTO `sys_org_t` VALUES ('c4f84e7695d94b469d93405fb73060d0', 'dd', '38c65b8630ff473aa9f618906401efa0', '1,38c65b8630ff473aa9f618906401efa', '', '1', b'1', NULL, 30, '1', -2, '', '2017-03-02 22:23:11', '1', '2017-06-30 16:39:57', 1, '');
+INSERT INTO `sys_org_t` VALUES ('c5fe48b99ad24e83a2271405a43fb8b7', '技术部', '1', '1,', '100003', '1', b'0', NULL, 40, '1', 0, '', '2016-12-12 16:32:48', '1', '2018-03-16 17:32:20', 0, '');
+INSERT INTO `sys_org_t` VALUES ('f93883513a034577a166b424beb93794', '研发部', '1', '1,', '100002', '4', b'1', '', 30, '1', 1, '', '2016-12-12 16:32:48', '1', '2018-08-22 17:07:07', 1, '');
 
 -- ----------------------------
 -- Table structure for sys_role_module_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_module_t`;
-CREATE TABLE `sys_role_module_t` (
-  `role_id` varchar(255) NOT NULL,
-  `module_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`role_id`,`module_id`) USING BTREE,
-  KEY `FK_6eloh5l1ylo4pteqj5n1viu3c` (`module_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `sys_role_module_t`  (
+  `role_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `module_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`role_id`, `module_id`) USING BTREE,
+  INDEX `FK_6eloh5l1ylo4pteqj5n1viu3c`(`module_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_role_module_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', '');
 INSERT INTO `sys_role_module_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', '');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '024d876a23424ff397c224de2e2939a8');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '0771998f75b444f8b2ec0631c69c644f');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '08bb2278416a4aaa86a1db7898252791');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '201305b309b0462ab8eb294ab1d42410');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '223b8f1345114589ae09681be4744bbc');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '25a868347e8f4a6bb68b53925db95692');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '26b66bac9da64aa1a43fc3fbf104c98e');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '2d5f2af5e36349b5bb8dfbd5904900c8');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '3566c3b5c4114f77a5434c175b9f64c5');
 INSERT INTO `sys_role_module_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', '3566c3b5c4114f77a5434c175b9f64c5');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '3b7a4e5fefdb4fa293c2d972d4a5e747');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '3ce4aa89b1c5483dbc538d3f3ae0a63f');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '3dc743ff54734668b45a95dd02276de5');
+INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '429202d2fcd947a49e20b4410450d6ad');
 INSERT INTO `sys_role_module_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', '42baef661e504fa998a35d27b0daa3c4');
 INSERT INTO `sys_role_module_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', '42baef661e504fa998a35d27b0daa3c4');
 INSERT INTO `sys_role_module_t` VALUES ('931ea939caaa4451833a9e5f2426a951', '42baef661e504fa998a35d27b0daa3c4');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '452ea0f8d23247daa5f32751644aaba9');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '4715e01a290c447eac93ee47db6b9c81');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', '4d32c49cc7f448dcbfb92ce9c4dde058');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '4d32c49cc7f448dcbfb92ce9c4dde058');
 INSERT INTO `sys_role_module_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', '4d32c49cc7f448dcbfb92ce9c4dde058');
 INSERT INTO `sys_role_module_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', '4d32c49cc7f448dcbfb92ce9c4dde058');
 INSERT INTO `sys_role_module_t` VALUES ('931ea939caaa4451833a9e5f2426a951', '4d32c49cc7f448dcbfb92ce9c4dde058');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '5293bd1a28924276a236a4363af5dde8');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '622f8e9876ed48f09927d0124054e1ab');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', '714afd9e5d9f4c0697e502a43a4a2491');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '714afd9e5d9f4c0697e502a43a4a2491');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '7374c36138c94351a3bcfcc5411502eb');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '749160f6086f475da6f350543994608e');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '7680646c74684d80b2e3d3595d6450e3');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '7b3bb9006059412d9bfeb6d7dc3da87b');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '826137d6389f4730abb0422d7d252b32');
+INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '87825137dec44ea5b04b9e43df1a1d5e');
 INSERT INTO `sys_role_module_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', '87825137dec44ea5b04b9e43df1a1d5e');
 INSERT INTO `sys_role_module_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', '87825137dec44ea5b04b9e43df1a1d5e');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '8d607e3d86ad436b89e3067323021168');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '8e21d10003694354822fe0ad44106ce0');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '8eae4c0c642a43eba9de678d36ca9186');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '902e7ed0be8b4357a3465618f971cc43');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', '95a093b48f1947818d50fe09eab72753');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '95a093b48f1947818d50fe09eab72753');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '9fec2607b166460cb99d9ed2436be506');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'a747bcf467b044359794ee2c370c2fb3');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'ac57bbe888ba4879bb4ec7b1397c3ab3');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'b4dc5bb4a11149d78c765dbef12e13c7');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'b57911172bf74bceae6e22e706d83fb8');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'b96b529a936e449e82f71cd4ec990f0b');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', 'badfe0b992fd4f79b1dfcc2494a47e76');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'badfe0b992fd4f79b1dfcc2494a47e76');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', 'bc779f2d65da44ad8397a8ff5976ac65');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'bc779f2d65da44ad8397a8ff5976ac65');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', 'bd7872df2fe748fb97bb1dcc629cdecb');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'bd7872df2fe748fb97bb1dcc629cdecb');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'c3145033f56a41879c20dcdc1d1ad6f5');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'ccab7469d8df473c8ff769437f6bd393');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'ce4517a441dc4115a14921419b4d131a');
 INSERT INTO `sys_role_module_t` VALUES ('931ea939caaa4451833a9e5f2426a951', 'cfd37cfb27fc42daa6366cba9f257e6f');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'd40fcdec366f4038971f3d9bb68451eb');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'd6814dcbdb624077afeb95d856ad76d0');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'd7069653320643e89b3c93dcdfa5b2c6');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'e5223c949502447fa1a1f2b579203608');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'eaaff69aa81d448eb465d729bdad0508');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'ee5224dc13404267acfb8fc443dee4c3');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'f28abde46cc7410ea972fb635e325878');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'f5dc958155df4deaba4947bd9989202d');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'fa1cf28bbd424fb0b900cf11f10b1817');
 INSERT INTO `sys_role_module_t` VALUES ('14330c13c78243658d824fc5b8def161', 'fc987e00a31246aea6d2e2a6afe8db36');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'fc987e00a31246aea6d2e2a6afe8db36');
 INSERT INTO `sys_role_module_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', 'fc987e00a31246aea6d2e2a6afe8db36');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'fcf49184c1854cc8958e4bb6de7b15b5');
 INSERT INTO `sys_role_module_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', 'fd8be39d8db44c60917633defe9996c0');
 INSERT INTO `sys_role_module_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', 'fd8be39d8db44c60917633defe9996c0');
 INSERT INTO `sys_role_module_t` VALUES ('931ea939caaa4451833a9e5f2426a951', 'fd8be39d8db44c60917633defe9996c0');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'fe5dcdbcc132480da84701173a3fb5f2');
-INSERT INTO `sys_role_module_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', 'fedce526bea94126897bb29bb2874dc2');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_role_org_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_org_t`;
-CREATE TABLE `sys_role_org_t` (
-  `role_id` varchar(32) NOT NULL DEFAULT '0',
-  `org_id` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`role_id`,`org_id`) USING BTREE,
-  KEY `FK4C18BAB12A44C67D` (`org_id`) USING BTREE,
-  KEY `FK4C18BAB1B90B46FD` (`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `sys_role_org_t`  (
+  `role_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `org_id` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`role_id`, `org_id`) USING BTREE,
+  INDEX `FK4C18BAB12A44C67D`(`org_id`) USING BTREE,
+  INDEX `FK4C18BAB1B90B46FD`(`role_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_role_org_t
 -- ----------------------------
-BEGIN;
 INSERT INTO `sys_role_org_t` VALUES ('1', '1');
 INSERT INTO `sys_role_org_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', '186eaa340c934cb49434765f807fdeff');
 INSERT INTO `sys_role_org_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', 'c5fe48b99ad24e83a2271405a43fb8b7');
 INSERT INTO `sys_role_org_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', 'f93883513a034577a166b424beb93794');
 INSERT INTO `sys_role_org_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', '27db8e3b19364a279b1e9721b5a784c7');
 INSERT INTO `sys_role_org_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', '38c65b8630ff473aa9f618906401efa0');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_role_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_t`;
-CREATE TABLE `sys_role_t` (
-  `id_` varchar(32) NOT NULL DEFAULT '0',
-  `name_` varchar(100) DEFAULT NULL,
-  `org_id` varchar(32) DEFAULT NULL,
-  `sys_data` char(1) DEFAULT NULL COMMENT '是否系统数据',
-  `data_scope` int(11) DEFAULT NULL COMMENT '数据范围',
-  `status_` varchar(64) DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
-  `sort_` int(11) DEFAULT '0' COMMENT '序号',
-  `type_` varchar(225) DEFAULT NULL COMMENT '对应activiti中的group表',
-  `en_` varchar(225) DEFAULT NULL,
-  `description_` varchar(225) DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
+CREATE TABLE `sys_role_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `name_` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `org_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `sys_data` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否系统数据',
+  `data_scope` int(11) NULL DEFAULT NULL COMMENT '数据范围',
+  `status_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否删除  0正常 1不可用',
+  `sort_` int(11) NULL DEFAULT 0 COMMENT '序号',
+  `type_` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '对应activiti中的group表',
+  `en_` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `description_` varchar(225) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `FKE5C4B49D852279D7` (`org_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  INDEX `FKE5C4B49D852279D7`(`org_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_role_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_role_t` VALUES ('14330c13c78243658d824fc5b8def161', '普通角色', '1', '1', 1, '0', NULL, NULL, NULL, '', 4, '', '2017-03-02 22:21:40', '1', '2017-11-08 17:17:10');
-INSERT INTO `sys_role_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '管理员', '1', '1', 1, '0', 0, NULL, NULL, '', 6, '', '2018-03-04 09:19:38', '1', '2018-03-04 09:19:39');
+INSERT INTO `sys_role_t` VALUES ('14330c13c78243658d824fc5b8def161', '普通角色', '1', '1', 1, '0', NULL, '', '', '', 4, '', '2018-07-02 17:20:14', '1', '2018-07-02 17:20:15');
+INSERT INTO `sys_role_t` VALUES ('43186a6c08d247c098ea357e28cc75f4', '管理员', '1', '1', 1, '-1', 0, '', '', '', 7, '', '2018-07-02 17:39:02', '1', '2018-07-02 17:39:02');
 INSERT INTO `sys_role_t` VALUES ('5faa80a30a374148b5e0943f2a6fcb47', 'test', '38c65b8630ff473aa9f618906401efa0', '1', 5, '0', NULL, NULL, NULL, '', 11, '1', '2018-02-27 10:59:33', '1', '2018-02-27 10:59:33');
 INSERT INTO `sys_role_t` VALUES ('656d05c1a13f4c759e84a5819e9bb07a', 'asdad', '27db8e3b19364a279b1e9721b5a784c7', '1', 5, '-2', NULL, NULL, NULL, 'asfsd', 1, '1', '2017-11-06 17:29:24', '1', '2017-11-06 17:29:31');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_task_schedule_job_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_task_schedule_job_t`;
-CREATE TABLE `sys_task_schedule_job_t` (
-  `id_` varchar(32) NOT NULL,
-  `name_` varchar(255) DEFAULT NULL COMMENT '名称',
-  `group_` varchar(255) DEFAULT NULL COMMENT '分组',
-  `job_status` varchar(255) DEFAULT NULL COMMENT '任务状态',
-  `cron_expression` varchar(255) NOT NULL COMMENT 'cron表达式',
-  `bean_class` varchar(255) DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
-  `is_concurrent` varchar(255) DEFAULT NULL COMMENT '任务是否有状态',
-  `spring_id` varchar(255) DEFAULT NULL COMMENT 'spring bean',
-  `source_id` varchar(32) DEFAULT NULL,
-  `method_name` varchar(255) NOT NULL COMMENT '任务调用的方法名',
-  `method_params` varchar(512) DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
-  `status_` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
+CREATE TABLE `sys_task_schedule_job_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `name_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `group_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '分组',
+  `job_status` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务状态',
+  `cron_expression` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'cron表达式',
+  `bean_class` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务执行时调用哪个类的方法 包名+类名',
+  `is_concurrent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '任务是否有状态',
+  `spring_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'spring bean',
+  `source_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `method_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '任务调用的方法名',
+  `method_params` varchar(512) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `status_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  UNIQUE KEY `name_group` (`name_`,`group_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='计划任务表';
+  UNIQUE INDEX `name_group`(`name_`, `group_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '计划任务表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_task_schedule_job_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_task_schedule_job_t` VALUES ('d8a104a6c4e540918742bf16e894aec6', 'test', NULL, '0', '*/4 * * * * ?', NULL, '1', 'sampleService', NULL, 'hello', NULL, '1', '2018-02-05 15:31:25', '1', '2018-02-05 15:31:25', 0, NULL, 0);
+INSERT INTO `sys_task_schedule_job_t` VALUES ('d8a104a6c4e540918742bf16e894aec6', 'test', 'test', '0', '*/4 * * * * ?', '', '1', 'sampleService', '', 'hello', '', '1', '2018-08-22 17:12:53', '1', '2018-08-22 17:12:54', -1, '', 0);
 INSERT INTO `sys_task_schedule_job_t` VALUES ('e864d607c3374f059903eb037c46c49c', 'sample', 'test', '0', '*/4 * * * * ?', '', '1', 'sampleService', '', 'hello', '', '1', '2018-02-05 15:00:24', '1', '2018-02-05 15:00:24', -2, '', 1);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_user_role_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role_t`;
-CREATE TABLE `sys_user_role_t` (
-  `user_id` varchar(255) NOT NULL,
-  `role_id` varchar(255) NOT NULL,
-  PRIMARY KEY (`user_id`,`role_id`) USING BTREE,
-  KEY `FK_k7q8xbl92flmkhwupf64o6ii5` (`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+CREATE TABLE `sys_user_role_t`  (
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `role_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`user_id`, `role_id`) USING BTREE,
+  INDEX `FK_k7q8xbl92flmkhwupf64o6ii5`(`role_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_user_role_t
 -- ----------------------------
-BEGIN;
 INSERT INTO `sys_user_role_t` VALUES ('2', '14330c13c78243658d824fc5b8def161');
 INSERT INTO `sys_user_role_t` VALUES ('285398b3ad4f417787842cde87774515', '14330c13c78243658d824fc5b8def161');
 INSERT INTO `sys_user_role_t` VALUES ('4', '14330c13c78243658d824fc5b8def161');
+INSERT INTO `sys_user_role_t` VALUES ('5', '14330c13c78243658d824fc5b8def161');
+INSERT INTO `sys_user_role_t` VALUES ('97c96fb4c489440ea02800d05014a23e', '14330c13c78243658d824fc5b8def161');
 INSERT INTO `sys_user_role_t` VALUES ('d5d80950e4fb4790a2342cfbe663ac5c', '14330c13c78243658d824fc5b8def161');
 INSERT INTO `sys_user_role_t` VALUES ('fff43e1b172544e890a86f7b38fe6138', '14330c13c78243658d824fc5b8def161');
-INSERT INTO `sys_user_role_t` VALUES ('5', '43186a6c08d247c098ea357e28cc75f4');
 INSERT INTO `sys_user_role_t` VALUES ('fff43e1b172544e890a86f7b38fe6138', '43186a6c08d247c098ea357e28cc75f4');
 INSERT INTO `sys_user_role_t` VALUES ('2', '5faa80a30a374148b5e0943f2a6fcb47');
 INSERT INTO `sys_user_role_t` VALUES ('285398b3ad4f417787842cde87774515', '5faa80a30a374148b5e0943f2a6fcb47');
 INSERT INTO `sys_user_role_t` VALUES ('2f8cb62e75064592b6cc053e46e78ace', '5faa80a30a374148b5e0943f2a6fcb47');
 INSERT INTO `sys_user_role_t` VALUES ('d5d80950e4fb4790a2342cfbe663ac5c', '5faa80a30a374148b5e0943f2a6fcb47');
-COMMIT;
 
 -- ----------------------------
 -- Table structure for sys_user_t
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_t`;
-CREATE TABLE `sys_user_t` (
-  `id_` varchar(32) NOT NULL,
-  `org_id` varchar(32) DEFAULT NULL,
-  `login_id` varchar(50) NOT NULL,
-  `password_hash` varchar(60) DEFAULT NULL,
-  `name_` varchar(50) DEFAULT NULL,
-  `email_` varchar(100) DEFAULT NULL,
-  `phone_` varchar(32) DEFAULT NULL,
+CREATE TABLE `sys_user_t`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `org_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password_hash` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `avatar_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '头像',
+  `name_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `email_` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `phone_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `activated_` bit(1) NOT NULL,
-  `lang_key` varchar(5) DEFAULT NULL,
-  `activation_key` varchar(20) DEFAULT NULL,
-  `reset_key` varchar(20) DEFAULT NULL,
-  `reset_date` timestamp NULL DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
-  `status_` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
+  `lang_key` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `activation_key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reset_key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reset_date` timestamp(0) NULL DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `status_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  UNIQUE KEY `login` (`login_id`) USING BTREE,
-  UNIQUE KEY `idx_user_login` (`login_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  UNIQUE INDEX `login`(`login_id`) USING BTREE,
+  UNIQUE INDEX `idx_user_login`(`login_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of sys_user_t
 -- ----------------------------
-BEGIN;
-INSERT INTO `sys_user_t` VALUES ('1', NULL, 'admin', '$2a$10$LqPGl3Eg4y8Y18cg8ZmBZ.neox2ldzwYOUl7kpGhhL0F8Q80gev5W', 'Administrator', 'admin@localhost', NULL, b'1', 'zh-cn', NULL, NULL, NULL, 'system', '2018-02-25 17:03:12', '1', '2018-02-25 17:03:12', 0, NULL, 0);
-INSERT INTO `sys_user_t` VALUES ('2', '1', 'dddd', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', NULL, 'anonymous@localhost12', NULL, b'1', 'zh-cn', NULL, '85353579875386817547', '2018-01-15 15:33:50', 'system', '2018-02-12 14:37:44', '1', '2018-01-15 16:54:52', -2, '<p>fdsfg</p>', 0);
-INSERT INTO `sys_user_t` VALUES ('285398b3ad4f417787842cde87774515', '38c65b8630ff473aa9f618906401efa0', 'admin3', '$2a$10$UdGQBYBItSU1TYz8s9Y7CuWRNh1OG6jZtYGdCxPssStma/pcU30Ne', NULL, '837152234@qq.com', '', b'1', 'zh-cn', NULL, '33032757251150379993', '2018-02-28 10:53:31', 'admin', '2018-02-28 10:53:31', '1', '2018-02-28 10:53:31', 0, 'dddsadfasd', 0);
-INSERT INTO `sys_user_t` VALUES ('2f8cb62e75064592b6cc053e46e78ace', 'c5fe48b99ad24e83a2271405a43fb8b7', 'test111', '$2a$10$NrFMurnFzOR0QP.eVcdLXOKgLl//.aLDdMqvPuDvzIohysDzkFC9C', NULL, '', '', b'1', 'zh-cn', NULL, '66573808359762634145', '2018-03-04 09:19:33', '1', '2018-03-04 09:19:33', '1', '2018-03-04 09:19:33', 0, '<p>fff</p>', 0);
-INSERT INTO `sys_user_t` VALUES ('4', '27db8e3b19364a279b1e9721b5a784c7', 'user', '$2a$10$kAv1VmeU1blU96Z/VMx9Y.tP5UD8Fgi9VM6F7AhJuTjVwWVIZlq9u', NULL, 'user@localhost', NULL, b'1', 'zh-cn', NULL, '46465910393772523338', '2018-01-15 16:46:14', 'system', '2018-01-15 17:49:39', '1', '2018-01-15 17:49:39', -2, '<p>dsafad烦烦烦1111</p>', 0);
-INSERT INTO `sys_user_t` VALUES ('5', '27db8e3b19364a279b1e9721b5a784c7', 'system', '$2a$10$wNUgp.f03cfFE2WzvfwH/.GzM/D4pUS7GI9Jys8sA7G33cKYJbOgi', NULL, 'system@localhost', '', b'1', 'zh-cn', NULL, '17188415752176914948', '2018-03-02 13:20:08', 'system', '2018-03-02 13:20:14', '1', '2018-03-02 13:20:14', 0, '', 0);
-INSERT INTO `sys_user_t` VALUES ('d5d80950e4fb4790a2342cfbe663ac5c', '38c65b8630ff473aa9f618906401efa0', 'test', '$2a$10$CjKDfR6R0hB0aiiyLHXKcefXZotau9RhBXD5qr.QDVAEp64YR0Hdu', NULL, '', '', b'1', 'zh-cn', NULL, '09564615115454364255', '2017-11-06 17:06:27', '1', '2017-11-06 17:06:17', '1', '2017-11-06 17:06:34', -2, '<p>dsaf</p>', 3);
-INSERT INTO `sys_user_t` VALUES ('fff43e1b172544e890a86f7b38fe6138', 'c5fe48b99ad24e83a2271405a43fb8b7', 'dddddd', '$2a$10$VCjkV5/7x3.1BBNRMQhDE.NgZUW8xPUWdDd4IeG8sN9saGFTv.jb2', NULL, '', '', b'1', 'zh-cn', NULL, '31795165398433312757', '2017-07-05 15:03:58', '1', '2017-07-05 11:07:40', '1', '2017-11-06 16:50:27', -2, NULL, 5);
-COMMIT;
+INSERT INTO `sys_user_t` VALUES ('1', NULL, 'admin', '$2a$10$7y2TfJ.jCrQzmqvjInK/tuolO56RWgmczeN1TzG3dVuz.eOUn/jn.', '20a65424b75f4f76b9445cb3fa0d84f7', 'Administrator', 'admin@localhost', NULL, b'1', 'zh-cn', NULL, NULL, NULL, 'system', '2018-08-24 16:36:33', '1', '2018-08-24 16:36:34', 0, NULL, 0);
+INSERT INTO `sys_user_t` VALUES ('2', '1', 'dddd', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', NULL, NULL, 'anonymous@localhost12', NULL, b'1', 'zh-cn', NULL, '85353579875386817547', '2018-01-15 15:33:50', 'system', '2018-02-12 14:37:44', '1', '2018-01-15 16:54:52', -2, '<p>fdsfg</p>', 0);
+INSERT INTO `sys_user_t` VALUES ('285398b3ad4f417787842cde87774515', '38c65b8630ff473aa9f618906401efa0', 'admin3', '$2a$10$UdGQBYBItSU1TYz8s9Y7CuWRNh1OG6jZtYGdCxPssStma/pcU30Ne', '6180432d986148bfabb138bbea301a73', '', '837152234@qq.com', '', b'1', 'zh-cn', '', '74725433872435636301', '2018-08-24 15:34:10', 'admin', '2018-08-24 15:34:10', '1', '2018-08-24 15:34:10', 1, 'dddsadfasd', 0);
+INSERT INTO `sys_user_t` VALUES ('2f8cb62e75064592b6cc053e46e78ace', 'c5fe48b99ad24e83a2271405a43fb8b7', 'test111', '$2a$10$NrFMurnFzOR0QP.eVcdLXOKgLl//.aLDdMqvPuDvzIohysDzkFC9C', '', '', '', '13212345214', b'1', 'zh-cn', '', '50507784305319640075', '2018-07-05 14:38:47', '1', '2018-07-05 14:38:47', '1', '2018-07-05 14:38:47', -1, '<p>fff</p>', 0);
+INSERT INTO `sys_user_t` VALUES ('4', '27db8e3b19364a279b1e9721b5a784c7', 'user', '$2a$10$kAv1VmeU1blU96Z/VMx9Y.tP5UD8Fgi9VM6F7AhJuTjVwWVIZlq9u', NULL, NULL, 'user@localhost', NULL, b'1', 'zh-cn', NULL, '46465910393772523338', '2018-01-15 16:46:14', 'system', '2018-01-15 17:49:39', '1', '2018-01-15 17:49:39', -2, '<p>dsafad烦烦烦1111</p>', 0);
+INSERT INTO `sys_user_t` VALUES ('5', '27db8e3b19364a279b1e9721b5a784c7', 'system', '$2a$10$wNUgp.f03cfFE2WzvfwH/.GzM/D4pUS7GI9Jys8sA7G33cKYJbOgi', '', '', 'system@localhost', '', b'1', 'zh-cn', '', '59208875560081971183', '2018-06-29 17:30:06', 'system', '2018-06-29 17:30:06', '1', '2018-06-29 17:30:06', 0, '', 0);
+INSERT INTO `sys_user_t` VALUES ('97c96fb4c489440ea02800d05014a23e', '186eaa340c934cb49434765f807fdeff', '111', '$2a$10$bqMGJxsKC8z3V4ffYieXm.QOm1tILuJNktl7lAx0U9aHgcWLH9sWS', '', '', '', '', b'1', 'zh-cn', '', '54111123178757855422', '2018-06-26 16:32:57', '1', '2018-06-26 16:34:07', '1', '2018-06-26 16:34:08', -2, '', 0);
+INSERT INTO `sys_user_t` VALUES ('d5d80950e4fb4790a2342cfbe663ac5c', '38c65b8630ff473aa9f618906401efa0', 'test', '$2a$10$CjKDfR6R0hB0aiiyLHXKcefXZotau9RhBXD5qr.QDVAEp64YR0Hdu', NULL, NULL, '', '', b'1', 'zh-cn', NULL, '09564615115454364255', '2017-11-06 17:06:27', '1', '2017-11-06 17:06:17', '1', '2017-11-06 17:06:34', -2, '<p>dsaf</p>', 3);
+INSERT INTO `sys_user_t` VALUES ('fff43e1b172544e890a86f7b38fe6138', 'c5fe48b99ad24e83a2271405a43fb8b7', 'dddddd', '$2a$10$VCjkV5/7x3.1BBNRMQhDE.NgZUW8xPUWdDd4IeG8sN9saGFTv.jb2', NULL, NULL, '', '', b'1', 'zh-cn', NULL, '31795165398433312757', '2017-07-05 15:03:58', '1', '2017-07-05 11:07:40', '1', '2017-11-06 16:50:27', -2, NULL, 5);
+
+-- ----------------------------
+-- Table structure for sys_userconnection
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_userconnection`;
+CREATE TABLE `sys_userconnection`  (
+  `userId` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `providerId` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `providerUserId` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `rank` int(11) NOT NULL,
+  `displayName` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `profileUrl` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `imageUrl` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `accessToken` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `secret` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `refreshToken` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `expireTime` bigint(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`userId`, `providerId`, `providerUserId`) USING BTREE,
+  UNIQUE INDEX `UserConnectionRank`(`userId`, `providerId`, `rank`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_userconnection
+-- ----------------------------
+INSERT INTO `sys_userconnection` VALUES ('B86F3FDF72CD481F4AA094A2345BF446', 'qq', 'B86F3FDF72CD481F4AA094A2345BF446', 1, '冷冷', NULL, 'http://q.qlogo.cn/qqapp/101322838/B86F3FDF72CD481F4AA094A2345BF446/40', 'E09B51404CDC276F463D05DF1C573514', NULL, 'B30A1C7C8601259F220807DD2EAA412E', 1524300218147);
+
+-- ----------------------------
+-- Table structure for sys_zuul_route
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_zuul_route`;
+CREATE TABLE `sys_zuul_route`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'router Id',
+  `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '路由路径',
+  `service_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '服务名称',
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'url代理',
+  `strip_prefix` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '转发去掉前缀',
+  `retryable` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '是否重试',
+  `enabled` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '1' COMMENT '是否启用',
+  `sensitiveHeaders_list` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '敏感请求头',
+  `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp(0) NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
+  `del_flag` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '0' COMMENT '删除标识（0-正常,1-删除）',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '动态路由配置表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_zuul_route
+-- ----------------------------
+INSERT INTO `sys_zuul_route` VALUES (1, 'test', 'test', 'tsest', '1', '1', '1', '0', '2018-05-16 07:28:43', '2018-05-16 07:35:08', '1');
+INSERT INTO `sys_zuul_route` VALUES (2, 'sdfg', 'we', 'jjj', '1', '1', '1', 'jj', '2018-05-16 07:35:43', '2018-05-17 13:56:14', '1');
+INSERT INTO `sys_zuul_route` VALUES (3, '/demo/**', 'pig-demo-service', '', '1', '1', '1', '', '2018-05-17 14:09:06', '2018-05-17 14:32:36', '0');
+INSERT INTO `sys_zuul_route` VALUES (4, '/admin/**', 'pig-upms-service', '', '1', '1', '1', '', '2018-05-21 11:40:38', NULL, '0');
+INSERT INTO `sys_zuul_route` VALUES (5, '/auth/**', 'pig-auth', '', '1', '1', '1', '', '2018-05-21 11:41:08', NULL, '0');
 
 -- ----------------------------
 -- Table structure for test_book
 -- ----------------------------
 DROP TABLE IF EXISTS `test_book`;
-CREATE TABLE `test_book` (
-  `id_` varchar(32) NOT NULL,
-  `title_` varchar(32) DEFAULT NULL COMMENT '标题',
-  `author_` varchar(50) NOT NULL COMMENT '作者',
-  `name_` varchar(50) DEFAULT NULL COMMENT '名称',
-  `email_` varchar(100) DEFAULT NULL COMMENT '邮箱',
-  `phone_` varchar(32) DEFAULT NULL COMMENT '手机',
+CREATE TABLE `test_book`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `title_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '标题',
+  `author_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '作者',
+  `name_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `email_` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '邮箱',
+  `phone_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '手机',
   `activated_` bit(1) NOT NULL,
-  `lang_key` varchar(5) DEFAULT NULL COMMENT 'key',
-  `activation_key` varchar(20) DEFAULT NULL,
-  `reset_key` varchar(20) DEFAULT NULL,
-  `reset_date` timestamp NULL DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
-  `status_` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
+  `lang_key` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'key',
+  `activation_key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reset_key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reset_date` timestamp(0) NULL DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `status_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  UNIQUE KEY `email` (`email_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='测试书籍';
+  UNIQUE INDEX `email`(`email_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试书籍' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of test_book
 -- ----------------------------
-BEGIN;
 INSERT INTO `test_book` VALUES ('1', '', 'admin', 'Administrator', 'admin@localhost', '', b'1', 'zh-cn', '', '', NULL, 'system', '2018-02-12 16:34:32', '1', '2018-02-12 16:34:32', 0, '', 0);
-INSERT INTO `test_book` VALUES ('2', '1', 'anonymoususer', '', 'anonymous@localhost1', '', b'1', 'zh-cn', '', '62504648923202974259', '2017-03-02 23:14:34', 'system', '2018-03-02 17:43:21', '1', '2018-03-02 17:43:21', 0, '', 0);
+INSERT INTO `test_book` VALUES ('2', '1', 'anonymoususer', '', 'anonymous@localhost1', '', b'1', 'zh-cn', '', '62504648923202974259', '2017-03-02 11:14:34', 'system', '2018-03-02 17:43:21', '1', '2018-03-21 10:15:20', 0, '', 1);
 INSERT INTO `test_book` VALUES ('285398b3ad4f417787842cde87774515', '38c65b8630ff473aa9f618906401efa0', 'admin3', NULL, '', '', b'1', 'zh-cn', NULL, '07324724558601162589', '2017-06-30 14:54:23', 'admin', '2017-07-04 15:44:38', '1', '2017-07-04 15:44:37', 0, 'ddd', 3);
 INSERT INTO `test_book` VALUES ('4', '27db8e3b19364a279b1e9721b5a784c7', 'user', '', 'user@localhost', '', b'1', 'zh-cn', '', '80201723640854367683', NULL, 'system', '2018-02-12 16:40:40', '1', '2018-02-12 16:40:40', 0, '', 3);
 INSERT INTO `test_book` VALUES ('5', '27db8e3b19364a279b1e9721b5a784c7', 'system', '', 'system@localhost', '', b'1', 'zh-cn', '', '31774354561297199692', '2017-07-04 15:45:01', 'system', '2018-02-12 16:33:57', '1', '2018-02-12 16:33:57', 0, '', 0);
-COMMIT;
 
 -- ----------------------------
 -- Table structure for test_tree
 -- ----------------------------
 DROP TABLE IF EXISTS `test_tree`;
-CREATE TABLE `test_tree` (
-  `id_` varchar(32) NOT NULL DEFAULT '0',
-  `name_` varchar(255) DEFAULT NULL,
-  `parent_id` varchar(32) DEFAULT NULL COMMENT '名称',
-  `parent_ids` varchar(2000) DEFAULT NULL,
-  `code_` varchar(64) DEFAULT NULL COMMENT '机构编码',
-  `grade_` varchar(255) DEFAULT NULL COMMENT '机构等级',
-  `is_leaf` bit(1) DEFAULT b'0' COMMENT '节点类型 1 叶子节点 0 非叶子节点',
-  `en_` varchar(255) DEFAULT NULL COMMENT '英文',
-  `sort_` int(11) DEFAULT '0' COMMENT '序号',
-  `type_` varchar(64) DEFAULT NULL COMMENT '组织类型',
-  `status_` int(11) DEFAULT NULL,
-  `default_data` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '默认日期',
-  `created_by` varchar(50) NOT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` datetime DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
+CREATE TABLE `test_tree`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0',
+  `name_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `parent_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '名称',
+  `parent_ids` varchar(2000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `code_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机构编码',
+  `grade_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '机构等级',
+  `is_leaf` bit(1) NULL DEFAULT b'0' COMMENT '节点类型 1 叶子节点 0 非叶子节点',
+  `en_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '英文',
+  `sort_` int(11) NULL DEFAULT 0 COMMENT '序号',
+  `type_` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '组织类型',
+  `status_` int(11) NULL DEFAULT NULL,
+  `default_data` timestamp(0) NOT NULL ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '默认日期',
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` datetime(0) NULL DEFAULT NULL,
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` datetime(0) NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  KEY `FK2006A5E73CA88251` (`parent_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT COMMENT='测试树结构';
+  INDEX `FK2006A5E73CA88251`(`parent_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '测试树结构' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of test_tree
 -- ----------------------------
-BEGIN;
-INSERT INTO `test_tree` VALUES ('1', '平台', '0', '0,', '100000', '1', b'0', 'root', 30, '1', 0, '2018-02-13 10:52:54', '', '2016-12-12 16:32:48', '1', '2017-06-30 14:59:27', 1, NULL);
+INSERT INTO `test_tree` VALUES ('1', '平台', '0', '0,', '100000', '1', b'0', 'root', 30, '1', 0, '2018-08-23 16:32:37', '', '2016-12-12 16:32:48', '1', '2018-08-23 16:32:37', 2, '');
 INSERT INTO `test_tree` VALUES ('186eaa340c934cb49434765f807fdeff', '公司领导', '1', '0,1,', '100001', '1', b'1', '', 30, '1', -1, '2018-02-25 09:16:08', '', '2016-12-12 16:32:48', '1', '2018-02-25 09:16:08', 1, '');
 INSERT INTO `test_tree` VALUES ('27db8e3b19364a279b1e9721b5a784c7', '人事部', '38c65b8630ff473aa9f618906401efa0', '0,1,38c65b8630ff473aa9f618906401efa0,', '100005', '1', b'1', '', 20, '1', 0, '2018-03-02 17:15:12', '', '2016-12-12 16:32:48', '1', '2018-03-02 17:15:12', 0, '');
 INSERT INTO `test_tree` VALUES ('38c65b8630ff473aa9f618906401efa0', '综合部', '1', '0,1,', '100004', '1', b'0', '', 0, '1', 0, '2018-02-25 10:10:40', '', '2016-12-12 16:32:48', '1', '2018-02-25 10:10:40', 2, '');
@@ -5357,49 +5872,116 @@ INSERT INTO `test_tree` VALUES ('40cd4e7d47114a2a89ee6c3bc02e374d', '对对对',
 INSERT INTO `test_tree` VALUES ('588e010702d343fe9082416102e49def', 'fdsa', 'c5fe48b99ad24e83a2271405a43fb8b7', '0,1,c5fe48b99ad24e83a2271405a43fb8b7,', 'dsfas', '1', b'1', NULL, 0, '1', -2, '2018-02-13 10:52:54', '', '2016-12-12 16:32:48', '1', '2017-06-30 16:40:02', 1, '');
 INSERT INTO `test_tree` VALUES ('c4f84e7695d94b469d93405fb73060d0', 'dd', '38c65b8630ff473aa9f618906401efa0', '0,1,38c65b8630ff473aa9f618906401efa0,', '', '1', b'1', NULL, 30, '1', 0, '2018-02-25 10:10:40', '', '2017-03-02 22:23:11', '1', '2018-02-25 10:10:40', 1, '');
 INSERT INTO `test_tree` VALUES ('c5fe48b99ad24e83a2271405a43fb8b7', '技术部', '1', '0,1,', '100003', '1', b'0', '', 40, '1', 0, '2018-02-13 11:33:48', '', '2016-12-12 16:32:48', '1', '2018-02-13 11:33:48', 0, '');
-INSERT INTO `test_tree` VALUES ('f93883513a034577a166b424beb93794', '研发部', '1', '0,1,', '100002', '4', b'1', '', 30, '1', 0, '2018-03-02 17:43:12', '', '2016-12-12 16:32:48', '1', '2018-03-02 17:43:12', 1, '');
-COMMIT;
+INSERT INTO `test_tree` VALUES ('f93883513a034577a166b424beb93794', '研发部', '1', '0,1,', '100002', '4', b'1', '', 30, '1', 0, '2018-03-02 05:43:12', '', '2016-12-12 16:32:48', '1', '2018-03-21 10:16:47', 2, '');
 
 -- ----------------------------
 -- Table structure for test_user
 -- ----------------------------
 DROP TABLE IF EXISTS `test_user`;
-CREATE TABLE `test_user` (
-  `id_` varchar(32) NOT NULL,
-  `org_id` varchar(32) DEFAULT NULL,
-  `login_id` varchar(50) NOT NULL,
-  `password_hash` varchar(60) DEFAULT NULL,
-  `name_` varchar(50) DEFAULT NULL,
-  `email_` varchar(100) DEFAULT NULL,
-  `phone_` varchar(32) DEFAULT NULL,
+CREATE TABLE `test_user`  (
+  `id_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `org_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `password_hash` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `name_` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `email_` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `phone_` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `activated_` bit(1) NOT NULL,
-  `lang_key` varchar(5) DEFAULT NULL,
-  `activation_key` varchar(20) DEFAULT NULL,
-  `reset_key` varchar(20) DEFAULT NULL,
-  `reset_date` timestamp NULL DEFAULT NULL,
-  `created_by` varchar(50) NOT NULL,
-  `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `last_modified_by` varchar(50) DEFAULT NULL,
-  `last_modified_date` timestamp NULL DEFAULT NULL,
-  `status_` int(11) DEFAULT NULL,
-  `description_` varchar(255) DEFAULT NULL,
-  `version_` int(11) DEFAULT NULL,
+  `lang_key` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `activation_key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reset_key` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `reset_date` timestamp(0) NULL DEFAULT NULL,
+  `created_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `created_date` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `last_modified_by` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_modified_date` timestamp(0) NULL DEFAULT NULL,
+  `status_` int(11) NULL DEFAULT NULL,
+  `description_` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `version_` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id_`) USING BTREE,
-  UNIQUE KEY `login` (`login_id`) USING BTREE,
-  UNIQUE KEY `idx_user_login` (`login_id`) USING BTREE,
-  UNIQUE KEY `email` (`email_`) USING BTREE,
-  UNIQUE KEY `idx_user_email` (`email_`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+  UNIQUE INDEX `login`(`login_id`) USING BTREE,
+  UNIQUE INDEX `idx_user_login`(`login_id`) USING BTREE,
+  UNIQUE INDEX `email`(`email_`) USING BTREE,
+  UNIQUE INDEX `idx_user_email`(`email_`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of test_user
 -- ----------------------------
-BEGIN;
 INSERT INTO `test_user` VALUES ('1', NULL, 'admin', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'Administrator', 'admin@localhost', NULL, b'1', 'zh-cn', NULL, NULL, NULL, 'system', '2017-06-30 14:49:34', 'system', NULL, 0, NULL, 0);
 INSERT INTO `test_user` VALUES ('2', '1', 'anonymoususer', '$2a$10$j8S5d7Sr7.8VTOYNviDPOeWX8KcYILUVJBsYV83Y5NtECayypx9lO', NULL, 'anonymous@localhost1', '', b'1', 'zh-cn', NULL, '62504648923202974259', '2017-03-02 23:14:34', 'system', '2017-03-02 23:14:35', '1', '2017-03-02 23:14:35', 0, '', 0);
 INSERT INTO `test_user` VALUES ('285398b3ad4f417787842cde87774515', '38c65b8630ff473aa9f618906401efa0', 'admin3', '$2a$10$Pvyd3WhtnZc1mNanBv6Lbem2/kSdAx3rHiI/bQZkxajmFNPRaFeuq', NULL, '', '', b'1', 'zh-cn', NULL, '07324724558601162589', '2017-06-30 14:54:23', 'admin', '2017-07-04 15:44:38', '1', '2017-07-04 15:44:37', 0, 'ddd', 3);
 INSERT INTO `test_user` VALUES ('4', '27db8e3b19364a279b1e9721b5a784c7', 'user', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', NULL, 'user@localhost', '', b'1', 'zh-cn', NULL, '80201723640854367683', '2017-06-30 14:49:39', 'system', '2017-06-30 14:49:39', '1', '2017-06-30 14:49:44', 0, '', 3);
 INSERT INTO `test_user` VALUES ('5', '27db8e3b19364a279b1e9721b5a784c7', 'system', '$2a$10$5CgTzmdgk9dolbvfhUfTSeEZz5hc4p/YtEMxZoGOeFmq/RhAIIyJC', NULL, 'system@localhost', '', b'1', 'zh-cn', NULL, '31774354561297199692', '2017-07-04 15:45:01', 'system', '2017-07-04 15:45:01', '1', '2017-07-04 15:45:01', 0, NULL, 0);
-COMMIT;
+
+-- ----------------------------
+-- Table structure for zipkin_annotations
+-- ----------------------------
+DROP TABLE IF EXISTS `zipkin_annotations`;
+CREATE TABLE `zipkin_annotations`  (
+  `trace_id_high` bigint(20) NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+  `trace_id` bigint(20) NOT NULL COMMENT 'coincides with zipkin_spans.trace_id',
+  `span_id` bigint(20) NOT NULL COMMENT 'coincides with zipkin_spans.id',
+  `a_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT 'BinaryAnnotation.key or Annotation.value if type == -1',
+  `a_value` blob NULL COMMENT 'BinaryAnnotation.value(), which must be smaller than 64KB',
+  `a_type` int(11) NOT NULL COMMENT 'BinaryAnnotation.type() or -1 if Annotation',
+  `a_timestamp` bigint(20) NULL DEFAULT NULL COMMENT 'Used to implement TTL; Annotation.timestamp or zipkin_spans.timestamp',
+  `endpoint_ipv4` int(11) NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null',
+  `endpoint_ipv6` binary(16) NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null, or no IPv6 address',
+  `endpoint_port` smallint(6) NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null',
+  `endpoint_service_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'Null when Binary/Annotation.endpoint is null',
+  UNIQUE INDEX `trace_id_high`(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) USING BTREE COMMENT 'Ignore insert on duplicate',
+  UNIQUE INDEX `trace_id_high_4`(`trace_id_high`, `trace_id`, `span_id`, `a_key`, `a_timestamp`) USING BTREE COMMENT 'Ignore insert on duplicate',
+  INDEX `trace_id_high_2`(`trace_id_high`, `trace_id`, `span_id`) USING BTREE COMMENT 'for joining with zipkin_spans',
+  INDEX `trace_id_high_3`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTraces/ByIds',
+  INDEX `endpoint_service_name`(`endpoint_service_name`) USING BTREE COMMENT 'for getTraces and getServiceNames',
+  INDEX `a_type`(`a_type`) USING BTREE COMMENT 'for getTraces',
+  INDEX `a_key`(`a_key`) USING BTREE COMMENT 'for getTraces',
+  INDEX `trace_id`(`trace_id`, `span_id`, `a_key`) USING BTREE COMMENT 'for dependencies job',
+  INDEX `trace_id_high_5`(`trace_id_high`, `trace_id`, `span_id`) USING BTREE COMMENT 'for joining with zipkin_spans',
+  INDEX `trace_id_high_6`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTraces/ByIds',
+  INDEX `endpoint_service_name_2`(`endpoint_service_name`) USING BTREE COMMENT 'for getTraces and getServiceNames',
+  INDEX `a_type_2`(`a_type`) USING BTREE COMMENT 'for getTraces',
+  INDEX `a_key_2`(`a_key`) USING BTREE COMMENT 'for getTraces',
+  INDEX `trace_id_2`(`trace_id`, `span_id`, `a_key`) USING BTREE COMMENT 'for dependencies job'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
+
+-- ----------------------------
+-- Table structure for zipkin_dependencies
+-- ----------------------------
+DROP TABLE IF EXISTS `zipkin_dependencies`;
+CREATE TABLE `zipkin_dependencies`  (
+  `day` date NOT NULL,
+  `parent` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `child` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `call_count` bigint(20) NULL DEFAULT NULL,
+  UNIQUE INDEX `day`(`day`, `parent`, `child`) USING BTREE,
+  UNIQUE INDEX `day_2`(`day`, `parent`, `child`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
+
+-- ----------------------------
+-- Table structure for zipkin_spans
+-- ----------------------------
+DROP TABLE IF EXISTS `zipkin_spans`;
+CREATE TABLE `zipkin_spans`  (
+  `trace_id_high` bigint(20) NOT NULL DEFAULT 0 COMMENT 'If non zero, this means the trace uses 128 bit traceIds instead of 64 bit',
+  `trace_id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `parent_id` bigint(20) NULL DEFAULT NULL,
+  `debug` bit(1) NULL DEFAULT NULL,
+  `start_ts` bigint(20) NULL DEFAULT NULL COMMENT 'Span.timestamp(): epoch micros used for endTs query and to implement TTL',
+  `duration` bigint(20) NULL DEFAULT NULL COMMENT 'Span.duration(): micros used for minDuration and maxDuration query',
+  UNIQUE INDEX `trace_id_high`(`trace_id_high`, `trace_id`, `id`) USING BTREE COMMENT 'ignore insert on duplicate',
+  UNIQUE INDEX `trace_id_high_4`(`trace_id_high`, `trace_id`, `id`) USING BTREE COMMENT 'ignore insert on duplicate',
+  INDEX `trace_id_high_2`(`trace_id_high`, `trace_id`, `id`) USING BTREE COMMENT 'for joining with zipkin_annotations',
+  INDEX `trace_id_high_3`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTracesByIds',
+  INDEX `name`(`name`) USING BTREE COMMENT 'for getTraces and getSpanNames',
+  INDEX `start_ts`(`start_ts`) USING BTREE COMMENT 'for getTraces ordering and range',
+  INDEX `trace_id_high_5`(`trace_id_high`, `trace_id`, `id`) USING BTREE COMMENT 'for joining with zipkin_annotations',
+  INDEX `trace_id_high_6`(`trace_id_high`, `trace_id`) USING BTREE COMMENT 'for getTracesByIds',
+  INDEX `name_2`(`name`) USING BTREE COMMENT 'for getTraces and getSpanNames',
+  INDEX `start_ts_2`(`start_ts`) USING BTREE COMMENT 'for getTraces ordering and range'
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compressed;
 
 SET FOREIGN_KEY_CHECKS = 1;

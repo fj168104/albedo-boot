@@ -57,7 +57,7 @@ public class OrgResource extends TreeVoResource<OrgService, OrgVo> {
             throw new RuntimeMsgException(PublicUtil.toAppendStr("查询失败，原因：无法查找到编号组织"));
         }
         if (PublicUtil.isEmpty(orgVo.getId()) && PublicUtil.isNotEmpty(orgVo.getParentId())) {
-            service.findOneById(orgVo.getParentId()).ifPresent(item -> orgVo.setParentName(item.getName()));
+            service.findById(orgVo.getParentId()).ifPresent(item -> orgVo.setParentName(item.getName()));
             service.findOptionalTopByParentId(orgVo.getParentId()).ifPresent(item -> orgVo.setSort(item.getSort() + 30));
         }
         if (orgVo.getSort() == null) {
@@ -76,7 +76,7 @@ public class OrgResource extends TreeVoResource<OrgService, OrgVo> {
         // Lowercase the org login before comparing with database
         if (!checkByProperty(Reflections.createObj(OrgVo.class, Lists.newArrayList(OrgVo.F_ID, OrgVo.F_CODE),
                 orgVo.getId(), orgVo.getCode()))) {
-            throw new RuntimeMsgException(HttpStatus.BAD_REQUEST, "名称已存在");
+            throw new RuntimeMsgException(HttpStatus.BAD_REQUEST, "编码已存在");
         }
         service.save(orgVo);
         SecurityUtil.clearUserJedisCache();

@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 
 /**
@@ -45,7 +45,7 @@ public class GenScheme extends IdEntity<GenScheme, String> {
      */
     public static final String CATEGORY_TREETABLE = "treeTable";
     private static final long serialVersionUID = 1L;
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     @TableField("name_")
     private String name; // 名称
     @TableField("category_")

@@ -15,6 +15,7 @@ import com.albedo.java.util.spring.SpringContextHolder;
 import com.albedo.java.vo.gen.GenSchemeVo;
 import com.albedo.java.vo.gen.GenTableColumnVo;
 import com.albedo.java.vo.gen.GenTableVo;
+import com.albedo.java.vo.gen.GenTemplateVo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.apache.commons.io.Charsets;
@@ -99,6 +100,7 @@ public class GenUtil {
 
             if (StringUtil.equalsIgnoreCase(column.getJavaField(), DataEntity.F_DESCRIPTION)) {
                 column.setIsEdit(SystemConfig.YES);
+                column.setTitle("备注");
             }
             // 查询字段
             if (StringUtil.equalsIgnoreCase(column.getJavaField(), TreeEntity.F_NAME) || StringUtil.equalsIgnoreCase(column.getJavaField(), "title")) {
@@ -238,8 +240,8 @@ public class GenUtil {
      * @param isChildTable 是否是子表
      * @return
      */
-    public static List<GenTemplate> getTemplateList(GenConfig config, String category, boolean isChildTable) {
-        List<GenTemplate> templateList = Lists.newArrayList();
+    public static List<GenTemplateVo> getTemplateList(GenConfig config, String category, boolean isChildTable) {
+        List<GenTemplateVo> templateList = Lists.newArrayList();
         if (config != null && config.getCategoryList() != null && category != null) {
             for (GenCategory e : config.getCategoryList()) {
                 if (category.equals(e.getVal())) {
@@ -254,7 +256,7 @@ public class GenUtil {
                             if (StringUtil.startsWith(s, GenCategory.CATEGORY_REF)) {
                                 templateList.addAll(getTemplateList(config, StringUtil.replace(s, GenCategory.CATEGORY_REF, ""), false));
                             } else {
-                                GenTemplate template = fileToObject(s, GenTemplate.class);
+                                GenTemplateVo template = fileToObject(s, GenTemplateVo.class);
                                 if (template != null) {
                                     templateList.add(template);
                                 }
@@ -277,8 +279,15 @@ public class GenUtil {
     public static Map<String, Object> getDataModel(GenSchemeVo genScheme) {
         Map<String, Object> model = Maps.newHashMap();
         String applicationId = SpringContextHolder.getApplicationContext().getId();
-        String applicationName = SpringContextHolder.getApplicationContext().getBean(applicationId.substring(0, applicationId.indexOf(":"))).getClass().getName();
-        model.put("applicationName", applicationName);
+        if(PublicUtil.isNotEmpty(applicationId)){
+            String substring = applicationId.substring(0, applicationId.indexOf(":"));
+            try{
+                String applicationName = SpringContextHolder.getApplicationContext().getBean(substring).getClass().getName();
+                model.put("applicationName", applicationName);
+            }catch (Exception e){
+                model.put("applicationName", substring);
+            }
+        }
         model.put("packageName", StringUtil.lowerCase(genScheme.getPackageName()));
         model.put("lastPackageName", StringUtil.substringAfterLast((String) model.get("packageName"), "."));
         model.put("moduleName", StringUtil.lowerCase(genScheme.getModuleName()));
@@ -311,7 +320,7 @@ public class GenUtil {
      * @param isReplaceFile
      * @return
      */
-    public static String generateToFile(GenTemplate tpl, Map<String, Object> model, boolean isReplaceFile) {
+    public static String generateToFile(GenTemplateVo tpl, Map<String, Object> model, boolean isReplaceFile) {
         // 获取生成文件 "c:\\temp\\"//
         String realFileName = FreeMarkers.renderString(tpl.getFileName(), model),fileName = StringUtil.getProjectPath(realFileName, DictUtil.getCodeItemVal("sys_gen_code_ui_path")) + File.separator
                 + StringUtil.replaceEach(FreeMarkers.renderString(tpl.getFilePath() + "/", model), new String[]{"//", "/", "."}, new String[]{File.separator, File.separator, File.separator})

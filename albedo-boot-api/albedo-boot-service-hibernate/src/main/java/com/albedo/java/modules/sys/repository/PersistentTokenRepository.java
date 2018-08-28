@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,9 +17,9 @@ public interface PersistentTokenRepository extends JpaRepository<PersistentToken
 
     List<PersistentToken> findByUser(User user);
 
-    List<PersistentToken> findByTokenDateBefore(LocalDate localDate);
+    List<PersistentToken> findByTokenDateBefore(Date localDate);
 
-    Optional<PersistentToken> findOneById(String id);
+    PersistentToken findOneById(String id);
 
     PersistentToken findOneBySeries(String presentedSeries);
 

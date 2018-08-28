@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public class ModuleTreeQuery {
 
+    private String extId;
     private String type;
     private String all;
     private Boolean root = false;

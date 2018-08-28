@@ -51,13 +51,15 @@ spring:
 #       port: 6379
     web:
         root:
-            prefix: albedo-boot-ui-angular/target/www/app/
+            prefix: albedo-boot-ui-vue/target/dist/
 
 
 server:
-    port: 8060
+    port: 8061
 #    jsp-servlet:
 #        class-name: org.apache.jasper.servlet.JspServlet
+
+
 
 # ===================================================================
 # Albedo specific properties

@@ -12,7 +12,6 @@ import com.albedo.java.util.Json;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.QueryCondition;
 import com.albedo.java.vo.sys.OrgVo;
-import com.baomidou.mybatisplus.mapper.Condition;
 import com.google.common.collect.Lists;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +52,7 @@ public class OrgResourceIntTest {
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
+    private static final String UPDATED_CODE = "BBBBBBBBBB1";
 
     private static final String DEFAULT_EN = "AAAAAAAAAA";
     private static final String UPDATED_EN = "BBBBBBBBBB";
@@ -132,7 +131,7 @@ public class OrgResourceIntTest {
     @Test
     @Transactional
     public void createOrg() throws Exception {
-        int databaseSizeBeforeCreate = orgService.findAll().size();
+        long databaseSizeBeforeCreate = orgService.findCount();
         OrgVo orgVo = orgService.copyBeanToVo(org);
         // Create the Org
         restOrgMockMvc.perform(post(DEFAULT_API_URL)
@@ -140,9 +139,12 @@ public class OrgResourceIntTest {
             .content(TestUtil.convertObjectToJsonBytes(orgVo)))
             .andExpect(status().isOk());
         ;
+        long databaseSizeAfterCreate = orgService.findCount();
+        assertThat(databaseSizeBeforeCreate).isEqualTo(databaseSizeAfterCreate - 1);
+        SpecificationDetail<Org> orgSpecificationDetail = new SpecificationDetail<>();
+        orgSpecificationDetail.orderASC(Org.F_CREATEDDATE);
         // Validate the Org in the database new Sort(Sort.Direction.ASC, Org.F_CREATEDDATE)
-        List<Org> orgList = orgService.findAll(Condition.create().orderBy(Org.F_SQL_CREATEDDATE, true));
-        assertThat(orgList).hasSize(databaseSizeBeforeCreate + 1);
+        List<Org> orgList = orgService.findAll(orgSpecificationDetail);
         Org testOrg = orgList.get(orgList.size() - 1);
         assertThat(testOrg.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testOrg.getCode()).isEqualTo(DEFAULT_CODE);
@@ -378,13 +380,14 @@ public class OrgResourceIntTest {
     @Test
     @Transactional
     public void updateOrg() throws Exception {
+//        orgService.deleteAll();
         // Initialize the database
         orgService.save(org);
-
-        int databaseSizeBeforeUpdate = orgService.findAll().size();
+        List<Org> all = orgService.findAll();
+        long databaseSizeBeforeUpdate = orgService.findCount();
 
         // Update the org
-        Org updatedOrg = orgService.findOne(org.getId());
+        Org updatedOrg = orgService.findOneById(org.getId());
         // Disconnect from session so that the updates on updatedOrg are not directly saved in db
 //        em.detach(updatedOrg);
         Reflections.updateObj(updatedOrg, Lists.newArrayList(
@@ -399,7 +402,8 @@ public class OrgResourceIntTest {
 
         // Validate the Org in the database
         List<Org> orgList = orgService.findAll();
-        assertThat(orgList).hasSize(databaseSizeBeforeUpdate);
+        long databaseSizeAfterUpdate = orgService.findCount();
+        assertThat(databaseSizeAfterUpdate).isEqualTo(databaseSizeBeforeUpdate);
 
 
         Org testOrg = orgList.stream().filter(item->org.getId().equals(item.getId())).findAny().get();
@@ -421,8 +425,8 @@ public class OrgResourceIntTest {
         orgService.save(org);
         SpecificationDetail<Org> spec = DynamicSpecifications.bySearchQueryCondition(
             QueryCondition.ne(BaseEntity.F_STATUS, BaseEntity.FLAG_DELETE));
-        spec.setPersistentClass(Org.class);
-        int databaseSizeBeforeDelete = orgService.findAll(spec).size();
+//        spec.setPersistentClass(Org.class);
+        long databaseSizeBeforeDelete = orgService.findCount(spec);
 
         // Get the org
         restOrgMockMvc.perform(delete(DEFAULT_API_URL+"{id}", org.getId())
@@ -430,8 +434,8 @@ public class OrgResourceIntTest {
             .andExpect(status().isOk());
 
         // Validate the database is empty
-        List<Org> orgList = orgService.findAll(spec);
-        assertThat(orgList).hasSize(databaseSizeBeforeDelete - 1);
+        long databaseSizeAfterDelete = orgService.findCount(spec);
+        assertThat(databaseSizeBeforeDelete).isEqualTo(databaseSizeAfterDelete+1);
     }
 
     @Test

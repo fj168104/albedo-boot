@@ -9,8 +9,8 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.google.common.collect.Lists;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -27,7 +27,7 @@ import java.util.List;
 @DynamicInsert
 @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class GenTableColumn extends IdEntity {
+public class GenTableColumn extends IdEntity<String> {
 
     private static final long serialVersionUID = 1L;
     @Column(name = "gen_table_id")
@@ -36,7 +36,7 @@ public class GenTableColumn extends IdEntity {
     @JoinColumn(name = "gen_table_id", nullable = true, updatable = false, insertable = false)
     @NotFound(action = NotFoundAction.IGNORE)
     private GenTable genTable; // 归属表
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     @Column(name = "name_")
     private String name; // 列名
 
@@ -455,7 +455,7 @@ public class GenTableColumn extends IdEntity {
         ;
         if (javaType.endsWith(SystemConfig.TYPE_STRING)) {
             Integer size = jdbcType.equals("text") ? 65535 : Integer.valueOf(jdbcType.substring(jdbcType.indexOf("(") + 1, jdbcType.length() - 1));
-            result = (new StringBuilder()).append(result).append(String.format("@Length(max=%s)", new Object[]{size})).toString();
+            result = (new StringBuilder()).append(result).append(String.format("@Size(max=%s)", new Object[]{size})).toString();
         }
         if (javaType.endsWith(SystemConfig.TYPE_LONG) || javaType.endsWith(SystemConfig.TYPE_INTEGER) || javaType.endsWith(SystemConfig.TYPE_SHORT) || javaType.endsWith("Byte")) {
             if (javaType.toLowerCase().indexOf("short") >= 0)

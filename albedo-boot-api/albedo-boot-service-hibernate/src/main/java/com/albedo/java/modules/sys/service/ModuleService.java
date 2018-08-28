@@ -99,13 +99,16 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<TreeResult> findTreeData(ModuleTreeQuery moduleTreeQuery, List<Module> moduleList) {
-        String type = moduleTreeQuery != null ? moduleTreeQuery.getType() : null,
+
+        String extId = moduleTreeQuery != null ? moduleTreeQuery.getExtId() : null,
+         type = moduleTreeQuery != null ? moduleTreeQuery.getType() : null,
                 all = moduleTreeQuery != null ? moduleTreeQuery.getAll() : null;
         Collections.sort(moduleList, Comparator.comparing(Module::getSort));
         List<TreeResult> mapList = Lists.newArrayList();
         for (Module e : moduleList) {
-            TreeResult treeResult = null;
-            if ((all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
+            TreeResult treeResult;
+            if ((PublicUtil.isEmpty(extId)|| PublicUtil.isEmpty(e.getParentIds()) || (PublicUtil.isNotEmpty(extId) && !extId.equals(e.getId()) && e.getParentIds() != null && e.getParentIds().indexOf("," + extId + ",") == -1))
+                && (all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))) {
 
                 if ("menu".equals(type) && !Module.TYPE_MENU.equals(e.getType())) {
                     continue;
@@ -133,13 +136,21 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
 //    }
 
     public void generatorModuleData(String moduleName, String parentModuleId, String url) {
-        Module currentModule = repository.findOne(DynamicSpecifications.bySearchQueryCondition(QueryCondition.eq(Module.F_NAME, moduleName)));
-        if (currentModule != null) {
-            baseRepository.execute("delete Module where id=:p1 or parentId=:p1", currentModule.getId());
+
+        String permission = url.replace("/", "_").substring(1), permissionLike = permission.substring(0,permission.length()-1)+"%";
+        List<Module> currentModuleList = repository.findAll(
+            DynamicSpecifications.bySearchQueryCondition(
+                QueryCondition.eq(Module.F_NAME, moduleName),
+                QueryCondition.like(Module.F_PERMISSION, permissionLike)
+                    ));
+        for(Module currentModule : currentModuleList){
+            if (currentModule != null) {
+                baseRepository.execute("update Module set status=:p1 where (id=:p2 or parentId=:p2) and permission like :p3", Module.FLAG_DELETE, currentModule.getId(), permissionLike);
+            }
         }
-        Module parentModule = repository.findOne(parentModuleId);
+        Module parentModule = repository.findOneById(parentModuleId);
         Assert.assertIsTrue(parentModule != null, PublicUtil.toAppendStr("根据模块id[", parentModuleId, "无法查询到模块信息]"));
-        String permission = url.replace("/", "_").substring(1);
+
 
         Module module = new Module();
         module.setPermission(permission.substring(0, permission.length() - 1));
@@ -147,8 +158,9 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         module.setParentId(parentModule.getId());
         module.setType(Module.TYPE_MENU);
         module.setRequestMethod(RequestMethod.GET);
-        module.setIconCls("fa-file");
+        module.setIconCls("icon-right-square");
         module.setUrl(url + "list");
+        module.setComponent("views/modules"+url+"index");
         save(module);
 
         Module moduleView = new Module();
@@ -165,7 +177,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         Module moduleEdit = new Module();
         moduleEdit.setParent(module);
         moduleEdit.setName("编辑");
-        moduleEdit.setIconCls("fa-pencil");
+//        moduleEdit.setIconCls("icon-edit-fill");
         moduleEdit.setPermission(permission + "edit");
         moduleEdit.setParentId(module.getId());
         moduleEdit.setType(Module.TYPE_OPERATE);
@@ -176,7 +188,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         Module moduleLock = new Module();
         moduleLock.setParent(module);
         moduleLock.setName("锁定");
-        moduleLock.setIconCls("fa-lock");
+//        moduleLock.setIconCls("fa-lock");
         moduleLock.setPermission(permission + "lock");
         moduleLock.setParentId(module.getId());
         moduleLock.setType(Module.TYPE_OPERATE);
@@ -187,7 +199,7 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
         Module moduleDelete = new Module();
         moduleDelete.setParent(module);
         moduleDelete.setName("删除");
-        moduleDelete.setIconCls("fa-trash-o");
+//        moduleDelete.setIconCls("fa-trash-o");
         moduleDelete.setPermission(permission + "delete");
         moduleDelete.setParentId(module.getId());
         moduleDelete.setType(Module.TYPE_OPERATE);

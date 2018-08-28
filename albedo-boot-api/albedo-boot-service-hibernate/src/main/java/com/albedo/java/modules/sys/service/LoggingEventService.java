@@ -30,7 +30,7 @@ public class LoggingEventService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public LoggingEvent findOne(String id) {
-        return loggingEventRepository.findOne(id);
+        return loggingEventRepository.findOneById(id);
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

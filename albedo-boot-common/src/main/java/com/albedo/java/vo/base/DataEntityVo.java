@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class DataEntityVo<PK extends Serializable> extends GeneralEntityVo {
 
     private PK id;
-    private String status = GeneralEntityVo.FLAG_NORMAL;
+    private Integer status = GeneralEntityVo.FLAG_NORMAL;
     private String description;
 
 }

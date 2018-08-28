@@ -51,6 +51,8 @@ public class Module extends TreeEntity<Module> {
     /*** 链接地址 */
     @Column(name = "url_")
     private String url;
+    @Column(name = "component_")
+    private String component;
     /*** 图标class */
     @Column(name = "icon_cls")
     private String iconCls;
@@ -110,6 +112,22 @@ public class Module extends TreeEntity<Module> {
     public String getHrefName() {
         String temp = getHref();
         return StringUtil.toCamelCase(temp, '/');
+    }
+
+    public String getComponent() {
+        return component;
+    }
+
+    public void setComponent(String component) {
+        this.component = component;
+    }
+
+    public String getMicroservice() {
+        return microservice;
+    }
+
+    public void setMicroservice(String microservice) {
+        this.microservice = microservice;
     }
 
     public String getRequestMethod() {

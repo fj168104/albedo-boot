@@ -45,4 +45,15 @@ public class TaskScheduleJobService extends DataService<TaskScheduleJobRepositor
     }
 
 
+    public List<TaskScheduleJob> findByStatusAndJobStatus(Integer status, String jobStatus) {
+        return repository.findByStatusAndJobStatus(status, jobStatus);
+    }
+
+    public TaskScheduleJob findTopBySourceIdAndStatusNot(String sourceId, Integer status) {
+        return repository.findTopBySourceIdAndStatusNot(sourceId, status);
+    }
+
+    public List<TaskScheduleJob> findAllBySourceId(String sourceId) {
+        return repository.findAllBySourceId(sourceId);
+    }
 }

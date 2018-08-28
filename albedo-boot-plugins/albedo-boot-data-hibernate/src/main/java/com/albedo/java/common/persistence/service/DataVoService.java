@@ -43,7 +43,7 @@ public class DataVoService<Repository extends DataRepository<T, PK>,
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public V findOneVo(PK id) {
-        return copyBeanToVo(findOne(id));
+        return copyBeanToVo(findOneById(id));
     }
 
     public boolean doCheckByProperty(V entityForm) {
@@ -98,7 +98,7 @@ public class DataVoService<Repository extends DataRepository<T, PK>,
     public void save(V form) {
         T entity = null;
         try {
-            entity = PublicUtil.isNotEmpty(form.getId()) ? repository.findOne((PK) form.getId()) :
+            entity = PublicUtil.isNotEmpty(form.getId()) ? repository.findOneById((PK) form.getId()) :
                     getPersistentClass().newInstance();
             copyVoToBean(form, entity);
         } catch (Exception e) {

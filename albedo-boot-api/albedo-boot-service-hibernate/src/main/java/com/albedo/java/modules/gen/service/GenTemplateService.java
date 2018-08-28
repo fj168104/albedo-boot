@@ -20,6 +20,7 @@ public class GenTemplateService extends DataService<GenTemplateRepository, GenTe
         String> {
 
 
+    @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<GenTemplate> findAll() {
         return repository.findAll(DynamicSpecifications.bySearchQueryCondition(QueryCondition.ne(GenTable.F_STATUS, GenTable.FLAG_DELETE)));

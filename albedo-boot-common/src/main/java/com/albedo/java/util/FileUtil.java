@@ -1,5 +1,6 @@
 package com.albedo.java.util;
 
+import org.apache.commons.lang3.reflect.FieldUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
  * @author Lijie
  * @version 2013-06-21
  */
-public class FileUtil extends org.apache.commons.io.FileUtils {
+public class FileUtil extends FieldUtils {
 
     private static Logger log = LoggerFactory.getLogger(FileUtil.class);
 
@@ -373,7 +374,7 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
     /**
      * 获取待压缩文件在ZIP文件中entry的名字，即相对于跟目录的相对路径名
      *
-     * @param dirPat 目录名
+     * @param dirPath 目录名
      * @param file   entry文件名
      * @return
      */
@@ -447,30 +448,25 @@ public class FileUtil extends org.apache.commons.io.FileUtils {
 
     /**
      * 写入文件
-     *
-     * @param file 要写入的文件
+     * @param fileName
+     * @param content
+     * @param append
      */
     public static void writeToFile(String fileName, String content, boolean append) {
-        try {
-            FileUtil.write(new File(fileName), content, "utf-8", append);
-            log.debug("文件 " + fileName + " 写入成功!");
-        } catch (IOException e) {
-            log.debug("文件 " + fileName + " 写入失败! " + e.getMessage());
-        }
+        FileUtil.writeToFile(fileName, content, "utf-8", append);
+        log.debug("文件 " + fileName + " 写入成功!");
     }
 
     /**
      * 写入文件
-     *
-     * @param file 要写入的文件
+     * @param fileName
+     * @param content
+     * @param encoding
+     * @param append
      */
     public static void writeToFile(String fileName, String content, String encoding, boolean append) {
-        try {
-            FileUtil.write(new File(fileName), content, encoding, append);
-            log.debug("文件 " + fileName + " 写入成功!");
-        } catch (IOException e) {
-            log.debug("文件 " + fileName + " 写入失败! " + e.getMessage());
-        }
+        FileUtil.writeToFile(fileName, content, encoding, append);
+        log.debug("文件 " + fileName + " 写入成功!");
     }
 
 }

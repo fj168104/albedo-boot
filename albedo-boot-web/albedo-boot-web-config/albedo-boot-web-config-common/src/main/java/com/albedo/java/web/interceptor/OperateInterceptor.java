@@ -6,8 +6,10 @@ import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.annotation.ParamNotNull;
 import com.albedo.java.util.base.Reflections;
+import com.albedo.java.web.filter.CustomHttpServletRequestWrapper;
 import com.albedo.java.web.rest.base.BaseResource;
 import com.albedo.java.web.rest.util.RequestUtil;
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.slf4j.Logger;
@@ -35,17 +37,12 @@ public class OperateInterceptor implements HandlerInterceptor {
     private boolean isTokenInterceptor;
     private String freeURL;
 
-    /**
-     * 同一session客户端 访问根地址 免验证次数记录map
-     */
-    // private Map<String, Integer> sessionPassCountMap = Maps.newHashMap();
     public OperateInterceptor(AlbedoProperties albedoProperties) {
         isTokenInterceptor = albedoProperties.getIsTokenInterceptor();
         freeURL = albedoProperties.getFreeURL();
     }
-
+    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // Long checkTime = new Date().getTime();
         boolean flag = false;
         if (isTokenInterceptor) {
             String msg = "{\"_success\" : false,\"_operationMsg\": \"非正常访问，属于非法客户端!\"}";
@@ -100,8 +97,10 @@ public class OperateInterceptor implements HandlerInterceptor {
         } else {
             flag = true;
         }
-        long beginTime = System.currentTimeMillis();// 1、开始时间
-        startTimeThreadLocal.set(beginTime); // 线程绑定变量（该数据只有当前请求的线程可见）
+        // 1、开始时间
+        long beginTime = System.currentTimeMillis();
+        // 线程绑定变量（该数据只有当前请求的线程可见）
+        startTimeThreadLocal.set(beginTime);
         if (flag) {
             if (handler instanceof HandlerMethod) {
                 HandlerMethod handlerMethod = (HandlerMethod) handler;
@@ -119,8 +118,9 @@ public class OperateInterceptor implements HandlerInterceptor {
                     }
                 }
             }
-            if (logger.isDebugEnabled())
+            if (logger.isDebugEnabled()) {
                 logger.info("开始计时: {}  URI: {}", new SimpleDateFormat("hh:mm:ss.SSS").format(beginTime), request.getRequestURI());
+            }
         } else {
             writeUrl(request, response, "/");
         }
@@ -134,7 +134,7 @@ public class OperateInterceptor implements HandlerInterceptor {
         path.append(url).append("'</script>").toString();
         response.getWriter().println(path.toString());
     }
-
+    @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         // if (modelAndView != null) {
         // String viewName = modelAndView.getViewName();
@@ -145,19 +145,34 @@ public class OperateInterceptor implements HandlerInterceptor {
         // }
     }
 
+    @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         long beginTime = startTimeThreadLocal.get();// 得到线程绑定的局部变量（开始时间）
         long endTime = System.currentTimeMillis(); // 2、结束时间
         // 保存日志
 //		LogUtil.saveLog(request, handler, ex, endTime - beginTime, null);
         // 打印JVM信息。
-        Map<String, String> params = Maps.newHashMap();
-        Enumeration<String> keys = request.getParameterNames();
-        String key;
-        while (keys.hasMoreElements()) {
-            key = keys.nextElement();
-            params.put(key, StringUtil.abbr(StringUtil.endsWithIgnoreCase(key, "password") ? "" : request.getParameter(key), 100));
+        Map<String, Object> params = Maps.newHashMap();
+        if(request instanceof CustomHttpServletRequestWrapper) {
+            String body = ((CustomHttpServletRequestWrapper) request).getRequestBody();
+            logger.info("request body:{} url:{} method:{}", body, request.getRequestURI(), request.getMethod());
+            if (PublicUtil.isNotEmpty(body)) {
+                try {
+                    params = JSON.parseObject(body);
+                } catch (Exception e) {
+                    logger.warn("{}", e);
+                }
+            }
         }
+        if(PublicUtil.isEmpty(params)){
+            Enumeration<String> keys = request.getParameterNames();
+            String key;
+            while (keys.hasMoreElements()) {
+                key = keys.nextElement();
+                params.put(key, StringUtil.abbr(StringUtil.endsWithIgnoreCase(key, "password") ? "" : request.getParameter(key), 100));
+            }
+        }
+
         logger.info("IP：{} 计时结束：{}  耗时：{}  URI: {} params: {} ", RequestUtil.getRemoteAddr(request), new SimpleDateFormat("hh:mm:ss.SSS").format(endTime), DateUtil.formatDateTime(endTime - beginTime), request.getRequestURI(), params);
     }
 }

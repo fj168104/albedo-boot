@@ -207,7 +207,7 @@ public class ExportExcel {
         this.sheet = wb.createSheet("Export");
         this.styles = createStyles(wb);
         // Create title
-        if (StringUtils.isNotBlank(title)) {
+        if (PublicUtil.isNotEmpty(title)) {
             Row titleRow = sheet.createRow(rownum++);
             titleRow.setHeightInPoints(30);
             Cell titleCell = titleRow.createCell(0);
@@ -407,7 +407,7 @@ public class ExportExcel {
                         Map map = (Map) e;
                         val = map.get(((Field) os[1]).getName());
                     } else {
-                        if (StringUtils.isNotBlank(ef.value())) {
+                        if (PublicUtil.isNotEmpty(ef.value())) {
                             val = Reflections.invokeGetter(e, ef.value());
                         } else {
                             if (os[1] instanceof Field) {
@@ -418,7 +418,7 @@ public class ExportExcel {
                         }
                     }
                     // If is dict, get dict label
-                    if (StringUtils.isNotBlank(ef.dictType())) {
+                    if (PublicUtil.isNotEmpty(ef.dictType())) {
                         String code = ef.dictType(), val_ = (val == null ? "" : val.toString());
                         List<Dict> listTemp = (List<Dict>) dataDictMap.get(code);
                         if (listTemp == null) {

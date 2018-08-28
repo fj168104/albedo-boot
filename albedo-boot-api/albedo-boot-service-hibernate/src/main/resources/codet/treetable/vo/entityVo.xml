@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 /**
@@ -69,15 +69,9 @@ public class ${ClassName}Vo extends TreeEntityVo {
 
 <#macro generateCompositeIdConstructorIfis>
 
-	<#if table.compositeId>
-	public ${ClassName}Vo(${ClassName}Id id) {
-		this.id = id;
-	}
-	<#else>
 	public ${ClassName}Vo(${table.pkJavaType} id) {
-		this.id = id;
+		this.setId(id);
 	}
-	</#if>
 </#macro>
 ]]>
     </content>

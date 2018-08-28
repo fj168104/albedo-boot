@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -30,14 +31,12 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     @Resource
     private AuditEventConverter auditEventConverter;
 
-    @Override
     public List<AuditEvent> find(Date after) {
         Iterable<PersistentAuditEvent> persistentAuditEvents =
             persistenceAuditEventService.findByAuditEventDateAfter(after);
         return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
     }
 
-    @Override
     public List<AuditEvent> find(String principal, Date after) {
         Iterable<PersistentAuditEvent> persistentAuditEvents;
         if (principal == null && after == null) {
@@ -48,13 +47,6 @@ public class CustomAuditEventRepository implements AuditEventRepository {
             persistentAuditEvents =
                 persistenceAuditEventService.findByPrincipalAndAuditEventDateAfter(principal, after);
         }
-        return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
-    }
-
-    @Override
-    public List<AuditEvent> find(String principal, Date after, String type) {
-        Iterable<PersistentAuditEvent> persistentAuditEvents =
-            persistenceAuditEventService.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal, after, type);
         return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
     }
 
@@ -70,7 +62,15 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 //            Instant instant = Instant.ofEpochMilli(event.getTimestamp().getTime());
             persistentAuditEvent.setAuditEventDate(PublicUtil.getCurrentDate());
             persistentAuditEvent.setData(auditEventConverter.convertDataToStrings(event.getData()));
-            persistenceAuditEventService.insert(persistentAuditEvent);
+            persistenceAuditEventService.save(persistentAuditEvent);
         }
+    }
+
+    @Override
+    public List<AuditEvent> find(String principal, Instant after, String type) {
+        Date date = new Date(after.getEpochSecond());
+        Iterable<PersistentAuditEvent> persistentAuditEvents =
+            persistenceAuditEventService.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal, date, type);
+        return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
     }
 }

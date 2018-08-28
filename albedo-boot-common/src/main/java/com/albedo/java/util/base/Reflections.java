@@ -1,5 +1,6 @@
 package com.albedo.java.util.base;
 
+import com.albedo.java.util.BeanVoUtil;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.config.SystemConfig;
@@ -9,7 +10,6 @@ import javassist.*;
 import javassist.bytecode.CodeAttribute;
 import javassist.bytecode.LocalVariableAttribute;
 import javassist.bytecode.MethodInfo;
-import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
@@ -161,7 +161,7 @@ public class Reflections {
     public static void setProperty(final Object obj, final String propertyName, final Object value)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         if (PublicUtil.isNotEmpty(value)) {
-            PropertyDescriptor p = PropertyUtils.getPropertyDescriptor(obj, propertyName);
+            PropertyDescriptor p = BeanVoUtil.getPropertyDescriptor(obj.getClass(), propertyName);
             setProperty(obj, p, value);
         }
     }
@@ -401,8 +401,9 @@ public class Reflections {
      * @return
      */
     public static <T extends Annotation> T getAnnotation(Object obj, String pName, Class<T> annotationClass) {
-        if (annotationClass == null || obj == null)
+        if (annotationClass == null || obj == null) {
             throw new NullPointerException();
+        }
         T an = null;
         Class<?> temp = obj.getClass();
         while (an == null && checkClassIsBase(temp.toString())) {
@@ -412,9 +413,10 @@ public class Reflections {
                 // logger.debug(e.getMessage());
             }
             try {
-                if (an == null)
+                if (an == null) {
                     an = temp.getDeclaredMethod(PublicUtil.toAppendStr(GETTER_PREFIX, StringUtil.capitalize(pName)))
                             .getAnnotation(annotationClass);
+                }
             } catch (Exception e) {
                 // logger.debug(e.getMessage());
             }
@@ -481,8 +483,9 @@ public class Reflections {
      */
     public static <T extends Annotation> T getClassAnnotation(Class<?> objClass, String pName,
                                                               Class<T> annotationClass) {
-        if (annotationClass == null || objClass == null)
+        if (annotationClass == null || objClass == null) {
             throw new NullPointerException();
+        }
         T an = null;
         Class<?> temp = objClass;
         while (an == null && !temp.toString().contains("java.lang.Object")) {
@@ -492,9 +495,10 @@ public class Reflections {
                 // logger.debug(e.getMessage());
             }
             try {
-                if (an == null)
+                if (an == null) {
                     an = temp.getDeclaredMethod(PublicUtil.toAppendStr(GETTER_PREFIX, StringUtil.capitalize(pName)))
                             .getAnnotation(annotationClass);
+                }
             } catch (Exception e) {
                 // logger.debug(e.getMessage());
             }
@@ -965,9 +969,9 @@ public class Reflections {
 
                 if (map.containsKey(key)) {
                     Object value = map.get(key);
-                    if (value != null) {
-                        value = ConvertUtils.convert(value, property.getPropertyType());//类型转换,引用类型需要在监听器里面注册转换
-                    }
+//                    if (value != null) {
+//                        value = ConvertUtils.convert(value, property.getPropertyType());//类型转换,引用类型需要在监听器里面注册转换
+//                    }
                     // 得到property对应的setter方法
                     Method setter = property.getWriteMethod();
                     setter.invoke(obj, value);

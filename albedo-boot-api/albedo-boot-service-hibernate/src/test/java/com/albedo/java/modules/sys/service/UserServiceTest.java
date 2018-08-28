@@ -29,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
 import java.util.*;
 
 import static org.hamcrest.Matchers.*;
@@ -213,10 +212,10 @@ public class UserServiceTest {
         assertThat(user3.getId(), is(notNullValue()));
         assertThat(user4.getId(), is(notNullValue()));
         getSession().flush();
-        assertThat(userRepository.exists(id), is(true));
-        assertThat(userRepository.exists(user2.getId()), is(true));
-        assertThat(userRepository.exists(user3.getId()), is(true));
-        assertThat(userRepository.exists(user4.getId()), is(true));
+        assertThat(userRepository.findById(id).isPresent(), is(true));
+        assertThat(userRepository.findById(user2.getId()).isPresent(), is(true));
+        assertThat(userRepository.findById(user3.getId()).isPresent(), is(true));
+        assertThat(userRepository.findById(user4.getId()).isPresent(), is(true));
         getSession().getTransaction().commit();
     }
 
@@ -256,7 +255,7 @@ public class UserServiceTest {
 
         flushTestUsers();
 
-        User foundPerson = userRepository.findOne(id);
+        User foundPerson = userRepository.findOneById(id);
         assertThat(user1.getName(), is(foundPerson.getName()));
     }
 
@@ -265,13 +264,13 @@ public class UserServiceTest {
 
         flushTestUsers();
 
-        assertThat(userRepository.findOne(id + 27), is(nullValue()));
+        assertThat(userRepository.findOneById(id + 27), is(nullValue()));
     }
 
     @Test
     public void savesCollectionCorrectly() throws Exception {
 
-        List<User> result = userRepository.save(Arrays.asList(user1, user2, user3));
+        List<User> result = userRepository.saveAll(Arrays.asList(user1, user2, user3));
         assertThat(result, is(notNullValue()));
         assertThat(result.size(), is(3));
         assertThat(result, hasItems(user1, user2, user3));
@@ -280,7 +279,7 @@ public class UserServiceTest {
     @Test
     public void savingNullCollectionIsNoOp() throws Exception {
 
-        List<User> result = userRepository.save((Collection<User>) null);
+        List<User> result = userRepository.saveAll((Collection<User>) null);
         assertThat(result, is(notNullValue()));
         assertThat(result.isEmpty(), is(true));
     }
@@ -288,7 +287,7 @@ public class UserServiceTest {
     @Test
     public void savingEmptyCollectionIsNoOp() throws Exception {
 
-        List<User> result = userRepository.save(new ArrayList<User>());
+        List<User> result = userRepository.saveAll(new ArrayList<User>());
         assertThat(result, is(notNullValue()));
         assertThat(result.isEmpty(), is(true));
     }
@@ -298,10 +297,10 @@ public class UserServiceTest {
 
         flushTestUsers();
 
-        User foundPerson = userRepository.findOne(id);
+        User foundPerson = userRepository.findOneById(id);
         foundPerson.setName("Schlicht");
         userRepository.save(foundPerson);
-        User updatedPerson = userRepository.findOne(id);
+        User updatedPerson = userRepository.findOneById(id);
         assertThat(updatedPerson.getName(), is(foundPerson.getName()));
     }
 
@@ -309,8 +308,8 @@ public class UserServiceTest {
     public void existReturnsWhetherAnEntityCanBeLoaded() throws Exception {
 
         flushTestUsers();
-        assertThat(userRepository.exists(id), is(true));
-        assertThat(userRepository.exists(id + 27), is(false));
+        assertThat(userRepository.findById(id).isPresent(), is(true));
+        assertThat(userRepository.findById(id + 27).isPresent(), is(false));
     }
 
     @Test
@@ -320,10 +319,10 @@ public class UserServiceTest {
         if(!getSession().isJoinedToTransaction()){
             getSession().beginTransaction();
         }
-        userRepository.delete(user1.getId());
+        userRepository.deleteById(user1.getId());
         getSession().flush();
-        assertThat(userRepository.exists(id), is(false));
-        assertThat(userRepository.findOne(id), is(nullValue()));
+        assertThat(userRepository.findById(id).isPresent(), is(false));
+        assertThat(userRepository.findOneById(id), is(nullValue()));
 
         getSession().getTransaction().commit();
     }
@@ -337,8 +336,8 @@ public class UserServiceTest {
         }
         userRepository.delete(user1);
         getSession().flush();
-        assertThat(userRepository.exists(id), is(false));
-        assertThat(userRepository.findOne(id), is(nullValue()));
+        assertThat(userRepository.findById(id).isPresent(), is(false));
+        assertThat(userRepository.findOneById(id), is(nullValue()));
 
         getSession().getTransaction().commit();
     }
@@ -381,10 +380,10 @@ public class UserServiceTest {
         }
         long before = userRepository.count();
 
-        userRepository.delete(Arrays.asList(user1, user2));
+        userRepository.deleteAll(Arrays.asList(user1, user2));
         getSession().flush();
-        assertThat(userRepository.exists(user1.getId()), is(false));
-        assertThat(userRepository.exists(user2.getId()), is(false));
+        assertThat(userRepository.findById(user1.getId()).isPresent(), is(false));
+        assertThat(userRepository.findById(user2.getId()).isPresent(), is(false));
         assertThat(userRepository.count(), is(before - 2));
 
         getSession().getTransaction().commit();
@@ -412,7 +411,7 @@ public class UserServiceTest {
         if(!getSession().isJoinedToTransaction()){
             getSession().beginTransaction();
         }
-        userRepository.delete(userRepository.findAll(
+        userRepository.deleteAll(userRepository.findAll(
                 DynamicSpecifications.bySearchQueryCondition(
                         QueryCondition.ne(User.F_ID, "1"))
         ));
@@ -493,7 +492,7 @@ public class UserServiceTest {
         }
         long count = userRepository.count();
 
-        userRepository.delete(collection);
+        userRepository.deleteAll(collection);
         getSession().flush();
         assertThat(userRepository.count(), is(count));
         getSession().getTransaction().commit();

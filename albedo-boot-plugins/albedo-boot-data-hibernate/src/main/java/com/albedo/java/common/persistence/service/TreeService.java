@@ -74,7 +74,7 @@ public class TreeService<Repository extends TreeRepository<T, PK>, T extends Tre
     public void deleteByParentIds(PK id, String lastModifiedBy) {
         Assert.assertNotNull(id, "id 信息为空，操作失败");
         Assert.assertNotNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
-        T entity = repository.findOne(id);
+        T entity = repository.findOneById(id);
         operateStatusById(id, PublicUtil.toAppendStr(entity.getParentIds(), entity.getId(),","), TreeEntity.FLAG_DELETE, lastModifiedBy);
     }
     /**
@@ -87,7 +87,7 @@ public class TreeService<Repository extends TreeRepository<T, PK>, T extends Tre
     public void lockOrUnLockByParentIds(PK id, String lastModifiedBy) {
         Assert.assertNotNull(id, "id 信息为空，操作失败");
         Assert.assertNotNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
-            T entity = repository.findOne(id);
+            T entity = repository.findOneById(id);
             Assert.assertNotNull(entity, "对象 " + id + " 信息为空，操作失败");
             operateStatusById(id, PublicUtil.toAppendStr(entity.getParentIds(), entity.getId(),","), TreeEntity.FLAG_NORMAL.equals(entity.getStatus()) ? TreeEntity.FLAG_UNABLE : TreeEntity.FLAG_NORMAL, lastModifiedBy);
             log.debug("LockOrUnLock Entity: {}", entity);
@@ -122,7 +122,7 @@ public class TreeService<Repository extends TreeRepository<T, PK>, T extends Tre
         // 获取修改前的parentIds，用于更新子节点的parentIds
         String oldParentIds = entity.getParentIds();
         if (entity.getParentId() != null) {
-            T parent = repository.findOne((PK) entity.getParentId());
+            T parent = repository.findOneById((PK) entity.getParentId());
 //            if (parent == null || PublicUtil.isEmpty(parent.getId()))
 //                throw new RuntimeMsgException("无法获取模块的父节点，插入失败");
             if (parent != null) {
@@ -141,10 +141,12 @@ public class TreeService<Repository extends TreeRepository<T, PK>, T extends Tre
         entity = repository.save(entity);
         // 更新子节点 parentIds
         List<T> list = repository.findAllByParentIdsLike(PublicUtil.toAppendStr("%,", entity.getId(), ",%"));
-        for (T e : list) {
-            e.setParentIds(e.getParentIds().replace(oldParentIds, entity.getParentIds()));
+        if(PublicUtil.isNotEmpty(list)){
+            for (T e : list) {
+                e.setParentIds(e.getParentIds().replace(oldParentIds, entity.getParentIds()));
+            }
+            repository.saveAll(list);
         }
-        repository.save(list);
         log.debug("Save Information for T: {}", entity);
         return entity;
     }

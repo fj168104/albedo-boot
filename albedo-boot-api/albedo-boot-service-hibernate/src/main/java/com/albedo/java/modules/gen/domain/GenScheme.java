@@ -4,7 +4,7 @@ import com.albedo.java.common.persistence.domain.IdEntity;
 import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
-import org.hibernate.validator.constraints.Length;
+import javax.validation.constraints.Size;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @DynamicInsert
 @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-public class GenScheme extends IdEntity {
+public class GenScheme extends IdEntity<String> {
 
     /**
      * @Fields CATEGORY_CURD : 增删改查（单表）
@@ -43,7 +43,7 @@ public class GenScheme extends IdEntity {
      */
     public static final String CATEGORY_TREETABLE = "treeTable";
     private static final long serialVersionUID = 1L;
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     @Column(name = "name_")
     private String name; // 名称
     @Column(name = "category_")

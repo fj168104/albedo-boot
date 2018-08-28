@@ -37,32 +37,31 @@ spring:
         basename: i18n/messages
 #    thymeleaf:
 #        mode: XHTML
-
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+        database: MYSQL
+        show-sql: true
+        properties:
+            hibernate.id.new_generator_mappings: true
+            hibernate.cache.use_second_level_cache: true
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: true
+            hibernate.cache.region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
 security:
     basic:
         enabled: false
 
-#mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
-mybatis-plus:
-  mapper-locations: classpath*:/mappings/modules/*/*Mapper.xml
-  typeAliasesPackage: com.albedo.java.modules.*.domain
-  global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 3
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 1
-    #驼峰下划线转换
-    db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    logic-delete-value: -2
-    logic-not-delete-value: 0
-    #数据库大写下划线转换
-    #capital-mode: true
-#    meta-object-handler: com.albedo.java.common.persistence.handler.EntityMetaObjectHandler
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: true
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
 
 # ===================================================================
 # Albedo specific properties
@@ -81,13 +80,13 @@ albedo:
         corePoolSize: 2
         maxPoolSize: 50
         queueCapacity: 10000
-    #cors: #By default CORS are not enabled. Uncomment to enable.
-        #allowed-origins: "*"
-        #allowed-methods: GET, PUT, POST, DELETE, OPTIONS
-        #allowed-headers: "*"
-        #exposed-headers:
-        #allow-credentials: true
-        #max-age: 1800
+    cors: #By default CORS are not enabled. Uncomment to enable.
+        allowed-origins: "*"
+        allowed-methods: GET, PUT, POST, DELETE, OPTIONS
+        allowed-headers: "*"
+        exposed-headers:
+        allow-credentials: true
+        max-age: 1800
     mail:
         from: albedoBootWebApp@localhost
     swagger:

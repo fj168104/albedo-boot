@@ -9,7 +9,7 @@
  */
 package ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>;
 
-import TreeEntity;
+import com.albedo.java.common.persistence.domain.TreeEntity;
 import com.albedo.java.util.annotation.DictType;
 import com.albedo.java.util.annotation.SearchField;
 import lombok.AllArgsConstructor;
@@ -20,8 +20,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import javax.persistence.Column;
@@ -55,24 +55,13 @@ public class ${ClassName} extends TreeEntity<${ClassName}> {
 	<@generateFields/>
 	<@generateCompositeIdConstructorIfis/>
 
-
 	@Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ${ClassName} idEntity = (${ClassName}) o;
-        if (idEntity.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), idEntity.getId());
+        return super.equals(o);
     }
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return super.hashCode();
     }
 }
 <#macro generateFields>
@@ -104,15 +93,9 @@ public class ${ClassName} extends TreeEntity<${ClassName}> {
 </#macro>
 <#macro generateCompositeIdConstructorIfis>
 
-	<#if table.compositeId>
-	public ${ClassName}(${ClassName}Id id) {
-		this.id = id;
-	}
-	<#else>
 	public ${ClassName}(${table.pkJavaType} id) {
-		this.id = id;
+		this.setId(id);
 	}
-	</#if>
 </#macro>
 <#macro generatePkProperties>
 

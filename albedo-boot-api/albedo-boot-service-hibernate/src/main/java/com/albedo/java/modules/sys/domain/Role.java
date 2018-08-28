@@ -29,7 +29,7 @@ import java.util.Set;
 @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @ToString
-public class Role extends IdEntity {
+public class Role extends IdEntity<String> {
 
     public static final String F_SORT = "sort";
     public static final String F_NAME = "name";
@@ -62,6 +62,7 @@ public class Role extends IdEntity {
     private Integer sysData;
     /*** 可查看的数据范围 */
     @Column(name = "data_scope")
+    @DictType(name = "sys_role_scope")
     private Integer dataScope;
     @Column(name = "sort_")
     private Integer sort;

@@ -10,7 +10,6 @@ import com.albedo.java.util.domain.QueryCondition.Operator;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,8 +42,9 @@ public class QueryUtil {
                         "] is not json or other error", e.getMessage()));
             }
         }
-        if (list == null)
+        if (list == null) {
             list = Lists.newArrayList();
+        }
 
         return list;
     }
@@ -96,14 +96,16 @@ public class QueryUtil {
                                                     Map<String, Object> paramMap, boolean isAnd) {
         StringBuffer sb = new StringBuffer();
         if (PublicUtil.isNotEmpty(queryConditionList)) {
-            if (paramMap == null)
+            if (paramMap == null) {
                 paramMap = Maps.newHashMap();
+            }
             java.util.Collections.sort(queryConditionList);
             //前缀解析
             String argStr = PublicUtil.isNotEmpty(argList) ? Collections3.convertToString(argList, ".") + "." : "", operate = null;
             for (QueryCondition queryCondition : queryConditionList) {
-                if (queryCondition.isIngore())
+                if (queryCondition.isIngore()) {
                     continue;
+                }
                 operate = queryCondition.getOperate().getOperator();
                 if (queryCondition.getValue() instanceof String) { //字符串编码处理
                     String tempStr = queryCondition.getValue().toString();
@@ -121,8 +123,9 @@ public class QueryUtil {
                 }
                 //sql合法性检查
                 if (queryCondition != null && queryCondition.legalityCheck()) {
-                    if (PublicUtil.isEmpty(operate))
+                    if (PublicUtil.isEmpty(operate)) {
                         queryCondition.setOperate(Operator.eq.getOperator());
+                    }
                     sb.append(" ").append(isAnd ? SystemConfig.CONDITION_AND : SystemConfig.CONDITION_OR)
                             .append(SystemConfig.SPACE).append(argStr + queryCondition.getFieldName()).append(" ")
                             .append(operate);
@@ -130,8 +133,9 @@ public class QueryUtil {
                             && !Operator.isNull.equals(queryCondition.getOperate())) {
                         String paramFieldName = PublicUtil.toAppendStr(argStr, queryCondition.getFieldName())
                                 .replace(".", "_");
-                        if (paramFieldName.contains(","))
+                        if (paramFieldName.contains(",")) {
                             paramFieldName = PublicUtil.getRandomString(6);
+                        }
                         switch (operate) {
                             case SystemConfig.CONDITION_IN:
                             case SystemConfig.CONDITION_NOTIN:
@@ -204,8 +208,9 @@ public class QueryUtil {
 
     public static Object getQueryValue(QueryCondition queryCondition, Object val) {
         String type = queryCondition.getAttrType();
-        if (val == null)
+        if (val == null) {
             val = queryCondition.getValue();
+        }
         if (PublicUtil.isNotEmpty(type) && PublicUtil.isNotEmpty(val)) {
             if (SystemConfig.TYPE_INTEGER.equalsIgnoreCase(type) || SystemConfig.TYPE_INT.equalsIgnoreCase(type)) {
                 val = PublicUtil.parseInt(val, 0);
@@ -297,11 +302,11 @@ public class QueryUtil {
                     } else {
                         obj = objItem;
                     }
-                    PropertyDescriptor[] ps = PropertyUtils.getPropertyDescriptors(obj);
+                    PropertyDescriptor[] ps = BeanVoUtil.getPropertyDescriptors(obj.getClass());
                     for (PropertyDescriptor p : ps) {
                         key = p.getName();
                         try {
-                            val = PropertyUtils.getProperty(obj, key);
+                            val = Reflections.getFieldValue(obj, key);
                             an = Reflections.getAnnotation(obj, key, SearchField.class);
                         } catch (Exception e) {
                             logger.info("key:{} exception:{} ", key, e.getMessage());
@@ -313,8 +318,9 @@ public class QueryUtil {
                                 paramEntityList.add(Lists.newArrayList(val, Lists.newArrayList(argList)));
                                 argList.remove(key);
                             } else {
-                                if (PublicUtil.isNotEmpty(argList))
+                                if (PublicUtil.isNotEmpty(argList)) {
                                     key = PublicUtil.toAppendStr(Collections3.convertToString(argList, "."), ".", key);
+                                }
                                 list.add(new QueryCondition(key,
                                         PublicUtil.isNotEmpty(operateMap) && PublicUtil.isNotEmpty(operateMap.get(key))
                                                 ? operateMap.get(key) : an.op(),

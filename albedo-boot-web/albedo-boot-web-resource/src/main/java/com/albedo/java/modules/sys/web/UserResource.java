@@ -1,6 +1,7 @@
 package com.albedo.java.modules.sys.web;
 
 import com.albedo.java.common.security.SecurityUtil;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.service.ModuleService;
 import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.util.JsonUtil;
@@ -9,7 +10,10 @@ import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.Globals;
 import com.albedo.java.util.domain.PageModel;
+import com.albedo.java.util.excel.ExportExcel;
+import com.albedo.java.util.excel.ImportExcel;
 import com.albedo.java.util.exception.RuntimeMsgException;
+import com.albedo.java.vo.sys.UserExcelVo;
 import com.albedo.java.vo.sys.UserVo;
 import com.albedo.java.web.rest.ResultBuilder;
 import com.albedo.java.web.rest.base.DataVoResource;
@@ -18,13 +22,19 @@ import com.codahale.metrics.annotation.Timed;
 import com.google.common.collect.Lists;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -171,6 +181,57 @@ public class UserResource extends DataVoResource<UserService, UserVo> {
         SecurityUtil.clearUserJedisCache();
         SecurityUtil.clearUserLocalCache();
         return ResultBuilder.buildOk("操作成功");
+    }
+
+    @PostMapping(value = "/uploadData")
+    @Timed
+    public ResponseEntity uploadData(@RequestParam("uploadFile") MultipartFile dataFile, HttpServletResponse response) throws IOException, InvalidFormatException, IllegalAccessException, InstantiationException {
+        if(dataFile.isEmpty()){
+            return ResultBuilder.buildFailed("上传文件为空");
+        }
+        ImportExcel importExcel = new ImportExcel(dataFile, 1, 0);
+        List<UserExcelVo> dataList = importExcel.getDataList(UserExcelVo.class);
+        for(UserExcelVo userExcelVo : dataList){
+            if(userExcelVo.getPhone().length()!=11){
+                BigDecimal bd = new BigDecimal(userExcelVo.getPhone());
+                userExcelVo.setPhone(bd.toPlainString());
+            }
+            if (!checkByProperty(Reflections.createObj(UserVo.class, Lists.newArrayList(UserVo.F_LOGINID),
+                userExcelVo.getLoginId()))) {
+                throw new RuntimeMsgException("登录Id"+userExcelVo.getLoginId()+"已存在");
+            }
+            if (PublicUtil.isNotEmpty(userExcelVo.getPhone()) && !checkByProperty(Reflections.createObj(UserVo.class,
+                Lists.newArrayList(UserVo.F_PHONE), userExcelVo.getPhone()))) {
+                throw new RuntimeMsgException("手机"+userExcelVo.getPhone()+"已存在");
+            }
+            if (PublicUtil.isNotEmpty(userExcelVo.getEmail()) && !checkByProperty(Reflections.createObj(UserVo.class,
+                Lists.newArrayList(UserVo.F_EMAIL), userExcelVo.getEmail()))) {
+                throw new RuntimeMsgException("邮箱"+userExcelVo.getEmail()+"已存在");
+            }
+            //初始密码
+            userExcelVo.setPassword(passwordEncoder.encode("123456"));
+            service.save(userExcelVo);
+        }
+        return ResultBuilder.buildOk("操作成功");
+
+    }
+    @GetMapping(value = "/importTemplate")
+    @Timed
+    public void importTemplate(HttpServletResponse response) throws IOException {
+
+        response.setContentType("multipart/form-data");
+        String fileName = /*creatUUID()*/"用户信息导入模板" + ".xlsx";
+        // 2.设置文件头：最后一个参数是设置下载文件名
+        response.setHeader("Content-Disposition",
+            "attachment;fileName=" + java.net.URLEncoder.encode(fileName, "UTF-8"));
+        response.setCharacterEncoding("utf-8");
+
+        ExportExcel exportExcel = new ExportExcel("用户信息", UserExcelVo.class);
+        UserVo userVo = service.findExcelOneVo();
+        if(userVo!=null){
+            exportExcel.setDataList(Lists.newArrayList(userVo));
+        }
+        exportExcel.write(response.getOutputStream()).dispose();
     }
 
 }

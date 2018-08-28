@@ -111,8 +111,8 @@ public class ${ClassName}Service extends DataVoService<${ClassName}Repository, $
 	}
 
 	@Transactional(readOnly=true)
-	public ${ClassName} findOne(String id) {
-		return ${className}Repository.findOne(id);
+	public ${ClassName} findOneById(String id) {
+		return ${className}Repository.findOneById(id);
 	}
 
 	@Transactional(readOnly=true)

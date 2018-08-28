@@ -8,7 +8,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.ToString;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.*;
-import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -36,7 +35,7 @@ public class Org extends TreeEntity<Org> {
     /*** 组织编码 */
     @Column(name = "code_")
     @SearchField
-    @NotBlank
+//    @NotBlank
     private String code;
 
     /*** 拼音简码 */

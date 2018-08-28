@@ -15,19 +15,19 @@ import java.util.List;
  * @author admin
  * @version 2017-01-01
  */
-public interface TreeRepository<T extends BaseEntity, PK extends Serializable> extends DataRepository<T, PK> {
+public interface TreeRepository<T extends TreeEntity, PK extends Serializable> extends DataRepository<T, PK> {
 
     T findFirstByParentId(String parentId);
 
     List<T> findAllByParentIdsLike(String parentIds);
 
-    List<T> findAllByParentIdAndStatusNot(String parentId, String status);
+    List<T> findAllByParentIdAndStatusNot(String parentId, Integer status);
 
     List<T> findAllByStatusNotOrderBySort(Integer status);
 
-    <T extends TreeEntity<T>> T findTopByParentIdAndStatusNotOrderBySortDesc(String parentId, Integer status);
+    T findTopByParentIdAndStatusNotOrderBySortDesc(String parentId, Integer status);
 
-    <T extends TreeEntity<T>> List<T> findTop1ByParentIdAndStatusNotOrderBySortDesc(String parentId, Integer flagDelete);
+    List<T> findTop1ByParentIdAndStatusNotOrderBySortDesc(String parentId, Integer flagDelete);
 
     Long countByParentIdAndStatusNot(String parentId, Integer flagDelete);
 }

@@ -5,6 +5,7 @@ import com.albedo.java.common.security.SecurityAuthUtil;
 import com.albedo.java.common.security.SecurityConstants;
 import com.albedo.java.common.security.SecurityUtil;
 import com.albedo.java.common.security.jwt.TokenProvider;
+import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.base.Assert;
@@ -75,7 +76,7 @@ public class AccoutResource extends BaseResource {
     public ResponseEntity getAccount() {
         String id = SecurityUtil.getCurrentUserId();
         if(PublicUtil.isNotEmpty(id)){
-            Optional<UserVo> userVo = userService.findOneById(id)
+            Optional<UserVo> userVo = userService.findById(id)
                 .map(item -> userService.copyBeanToVo(item));
             userVo.get().setAuthorities(SecurityUtil.getCurrentUserAuthorities());
             return ResultBuilder.buildOk(userVo);
@@ -152,7 +153,8 @@ public class AccoutResource extends BaseResource {
         Assert.assertIsTrue(passwordEncoder.matches(passwordChangeVo.getOldPassword(), SecurityUtil.getCurrentUser().getPassword()),
             "输入原密码有误");
 
-        userService.changePassword(SecurityAuthUtil.getCurrentUserLogin(), passwordEncoder.encode(passwordChangeVo.getNewPassword()));
+        userService.changePassword(SecurityAuthUtil.getCurrentUserLogin(),
+            passwordEncoder.encode(passwordChangeVo.getNewPassword()), passwordChangeVo.getAvatar());
         return ResultBuilder.buildOk("修改成功");
     }
 

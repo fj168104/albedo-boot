@@ -2,6 +2,7 @@ package com.albedo.java.modules.sys.service;
 
 import com.albedo.java.common.persistence.DynamicSpecifications;
 import com.albedo.java.common.persistence.SpecificationDetail;
+import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.common.persistence.service.TreeVoService;
 import com.albedo.java.modules.sys.domain.Dict;
 import com.albedo.java.modules.sys.repository.DictRepository;
@@ -29,11 +30,13 @@ public class DictService extends TreeVoService<DictRepository, Dict, String, Dic
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public List<DictTreeResult> findTreeData(DictTreeQuery dictTreeQuery, List<Dict> dictList) {
-        String type = dictTreeQuery != null ? dictTreeQuery.getType() : null, all = dictTreeQuery != null ? dictTreeQuery.getAll() : null;
+        String extId = dictTreeQuery != null ? dictTreeQuery.getExtId() : null, all = dictTreeQuery != null ? dictTreeQuery.getAll() : null;
         List<DictTreeResult> mapList = Lists.newArrayList();
         Collections.sort(dictList, Comparator.comparing(Dict::getSort).reversed());
         for (Dict e : dictList) {
-            if ((all != null || (all == null && Dict.FLAG_NORMAL.equals(e.getStatus())))) {
+            if ((PublicUtil.isEmpty(extId)|| PublicUtil.isEmpty(e.getParentIds()) ||
+                (PublicUtil.isNotEmpty(extId) && !extId.equals(e.getId()) && e.getParentIds() != null && e.getParentIds().indexOf("," + extId + ",") == -1))
+                && (all != null || (all == null && BaseEntity.FLAG_NORMAL.equals(e.getStatus())))){
                 DictTreeResult dictTreeResult = new DictTreeResult();
                 dictTreeResult.setId(e.getId());
                 dictTreeResult.setPid(PublicUtil.isEmpty(e.getParentId()) ? "0" : e.getParentId());
@@ -46,10 +49,9 @@ public class DictService extends TreeVoService<DictRepository, Dict, String, Dic
         return mapList;
     }
 
-    @Override
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public Dict findOne(String id) {
-        return repository.findOne(id);
+        return repository.findOneById(id);
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)

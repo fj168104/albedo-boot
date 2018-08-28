@@ -1,14 +1,13 @@
 package com.albedo.java.common.persistence.domain;
 
-import com.albedo.java.common.persistence.pk.IdGen;
 import com.albedo.java.util.annotation.SearchField;
-import com.alibaba.fastjson.annotation.JSONField;
+import com.albedo.java.util.domain.QueryCondition.Operator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import java.util.Objects;
+import javax.persistence.*;
 
 /**
  * 数据TreeEntity类
@@ -16,60 +15,100 @@ import java.util.Objects;
  * @author somewhere version 2013-12-27 下午12:27:10
  */
 @MappedSuperclass
-public abstract class TreeEntity<T extends DataEntity> extends TreeDataEntity<T> {
+public abstract class TreeEntity<T extends TreeEntity> extends IdEntity<String> {
 
-    /*** ID */
-    public static final String F_ID = "id";
     private static final long serialVersionUID = 1L;
-    @Id
-    @Column(name = "id_")
+    public static final String ROOT = "1";
+    public static final String F_NAME = "name";
+    public static final String F_PARENTID = "parentId";
+    public static final String F_PARENTIDS = "parentIds";
+    public static final String F_ISLEAF = "isLeaf";
+    public static final String F_SORT = "sort";
+    public static final String F_PARENT = "parent";
+    /*** 组织名称 */
+    @Size(min = 1, max = 100)
+    @Column(name = "name_")
     @SearchField
-    protected String id; // 编号
+    @NotBlank
+    protected String name;
+    /*** 上级组织 */
+    @Size( max = 64)
+    @Column(name = "parent_id")
+    @SearchField
+    protected String parentId;
+    /*** 所有父编号 */
+    @Size(max = 2000)
+    @Column(name = "parent_ids")
+    @SearchField(op = Operator.like)
+    protected String parentIds;
+    /*** 上级组织 */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id", insertable = false, updatable = false)
+    @NotFound(action = NotFoundAction.IGNORE)
+    protected T parent;
+    /*** 序号 */
+    @Column(name = "sort_")
+    protected Integer sort = 30;
+    /*** 1 叶子节点 0非叶子节点 */
+    @Column(name = "is_leaf")
+    private boolean isLeaf = false;
 
     public TreeEntity() {
         super();
+        this.sort = 30;
     }
 
-    public static boolean isRoot(String id) {
-        return id != null && id.equals("1");
+    public T getParent() {
+        return parent;
     }
 
-    @PrePersist
-    public void prePersist() {
-        if (this.id != ROOT) {
-            this.id = IdGen.uuid();
-        }
+    public void setParent(T parent) {
+        this.parent = parent;
     }
 
-    public String getId() {
-        return id;
+    public String getParentIds() {
+        return parentIds;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setParentIds(String parentIds) {
+        this.parentIds = parentIds;
     }
 
-    @JSONField(serialize = false)
-    public boolean isRoot() {
-        return isRoot(this.id);
+    public String getName() {
+        return name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        TreeEntity treeEntity = (TreeEntity) o;
-        if (treeEntity.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), treeEntity.getId());
+    public void setName(String name) {
+        this.name = name;
     }
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
+
+
+    public Integer getSort() {
+        return sort;
     }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
+    }
+
+    public String getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
+
+    public boolean isLeaf() {
+        return isLeaf;
+    }
+
+    public void setLeaf(boolean isLeaf) {
+        this.isLeaf = isLeaf;
+    }
+
+    protected boolean getIsLeaf() {
+        return isLeaf;
+    }
+
 }

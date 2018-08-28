@@ -16,5 +16,10 @@ import java.util.Optional;
  */
 public interface DataRepository<T extends BaseEntity, PK extends Serializable> extends BaseRepository<T, PK> {
 
-    Optional<T> findOneById(String id);
+    /**
+     * 查询主键
+     * @param id
+     * @return
+     */
+    T findOneById(PK id);
 }

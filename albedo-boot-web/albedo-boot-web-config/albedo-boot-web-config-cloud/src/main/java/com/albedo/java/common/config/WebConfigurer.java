@@ -3,6 +3,7 @@ package com.albedo.java.common.config;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.domain.Globals;
 import com.albedo.java.util.spring.DefaultProfileUtil;
+import com.albedo.java.web.filter.BodyFilter;
 import com.albedo.java.web.filter.CachingHttpHeadersFilter;
 import com.albedo.java.web.interceptor.OperateInterceptor;
 import com.albedo.java.web.listener.ContextInitListener;
@@ -13,26 +14,29 @@ import io.undertow.UndertowOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.MimeMappings;
-import org.springframework.boot.context.embedded.undertow.UndertowEmbeddedServletContainerFactory;
+import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
+import org.springframework.boot.web.server.MimeMappings;
+import org.springframework.boot.web.server.WebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.annotation.Resource;
 import javax.servlet.*;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.EnumSet;
 
@@ -43,7 +47,7 @@ import java.util.EnumSet;
  * @author somewhere
  */
 @Configuration
-public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
+public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory>, WebMvcConfigurer {
 
     private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
     @Resource
@@ -78,27 +82,26 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
             initCachingHttpHeadersFilter(servletContext, disps);
         }
 
-
+        log.debug("Registering bodyFilter");
+        FilterRegistration.Dynamic bodyFilter = servletContext.addFilter(
+            "bodyFilter",
+            new BodyFilter(albedoProperties));
+        bodyFilter.addMappingForUrlPatterns(disps, true,
+            albedoProperties.getAdminPath("/*"));
+        bodyFilter.setAsyncSupported(true);
         log.info("Web application fully configured");
     }
-
 
 
     /**
      * Customize the Servlet engine: Mime types, the document root, the cache.
      */
     @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
-        // IE issue, see https://github.com/albedo/generator-albedo/pull/711
-        mappings.add("html", "text/html;charset=utf-8");
-        // CloudFoundry issue, see
-        // https://github.com/cloudfoundry/gorouter/issues/64
-        mappings.add("json", "text/html;charset=utf-8");
-        container.setMimeMappings(mappings);
+    public void customize(WebServerFactory server) {
+        setMimeMappings(server);
         // When running in an IDE or with ./mvnw spring-boot:run, set location
         // of the static web assets.
-        setLocationForStaticAssets(container);
+        setLocationForStaticAssets(server);
 
         /*
          * Enable HTTP/2 for Undertow - https://twitter.com/ankinson/status/829256167700492288
@@ -107,25 +110,36 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
          * for more information.
          */
         if (albedoProperties.getHttp().getVersion().equals(AlbedoProperties.Http.Version.V_2_0) &&
-                container instanceof UndertowEmbeddedServletContainerFactory) {
-
-            ((UndertowEmbeddedServletContainerFactory) container)
-                    .addBuilderCustomizers(builder ->
-                            builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
+            server instanceof UndertowServletWebServerFactory) {
+            ((UndertowServletWebServerFactory) server)
+                .addBuilderCustomizers(builder ->
+                    builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
         }
 
     }
-
-    private void setLocationForStaticAssets(ConfigurableEmbeddedServletContainer container) {
-        File root;
-        String prefixPath = env.getProperty(DefaultProfileUtil.SPRING_WEB_ROOT_PREFIX);
-        if (PublicUtil.isEmpty(prefixPath)) {
-            prefixPath = DefaultProfileUtil.resolvePathPrefix(this.getClass()) + "src/main/webapp/";
+    private void setMimeMappings(WebServerFactory server) {
+        if (server instanceof ConfigurableServletWebServerFactory) {
+            MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
+            // IE issue, see https://github.com/jhipster/generator-jhipster/pull/711
+            mappings.add("html", MediaType.TEXT_HTML_VALUE + ";charset=" + StandardCharsets.UTF_8.name().toLowerCase());
+            // CloudFoundry issue, see https://github.com/cloudfoundry/gorouter/issues/64
+            mappings.add("json", MediaType.TEXT_HTML_VALUE + ";charset=" + StandardCharsets.UTF_8.name().toLowerCase());
+            ConfigurableServletWebServerFactory servletWebServer = (ConfigurableServletWebServerFactory) server;
+            servletWebServer.setMimeMappings(mappings);
         }
-        root = new File(prefixPath);
-        if (root.exists() && root.isDirectory()) {
-            log.info("root {}", root.getAbsolutePath());
-            container.setDocumentRoot(root);
+    }
+    private void setLocationForStaticAssets(WebServerFactory server) {
+        if (server instanceof ConfigurableServletWebServerFactory) {
+            ConfigurableServletWebServerFactory servletWebServer = (ConfigurableServletWebServerFactory) server;
+            File root;
+            String prefixPath = env.getProperty(DefaultProfileUtil.SPRING_WEB_ROOT_PREFIX);
+            if (PublicUtil.isEmpty(prefixPath)) {
+                prefixPath = DefaultProfileUtil.resolvePathPrefix(this.getClass()) + "src/main/webapp/";
+            }
+            root = new File(prefixPath);
+            if (root.exists() && root.isDirectory()) {
+                servletWebServer.setDocumentRoot(root);
+            }
         }
     }
 
@@ -188,6 +202,7 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
         if (config.getAllowedOrigins() != null && !config.getAllowedOrigins().isEmpty()) {
             log.debug("Registering CORS filter");
             source.registerCorsConfiguration(albedoProperties.getAdminPath("/**"), config);
+            source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v2/api-docs", config);
         }
         return new CorsFilter(source);
@@ -202,7 +217,6 @@ public class WebConfigurer extends WebMvcConfigurerAdapter implements ServletCon
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName(PublicUtil.isEmpty(albedoProperties.getDefaultView()) ? "/index.html" : albedoProperties.getDefaultView());
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        super.addViewControllers(registry);
     }
     @Bean public RequestContextListener requestContextListener(){
         return new RequestContextListener();

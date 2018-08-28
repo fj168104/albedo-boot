@@ -12,6 +12,7 @@ import lombok.ToString;
 @ToString
 public class DictTreeQuery {
 
+    private String extId;
     private String type;
     private String all;
 

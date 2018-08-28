@@ -51,20 +51,20 @@ AlbedoBoot 提供了常用工具进行封装，包括日志工具、缓存工具
           │  │  └─albedo-boot-web-config-single (单体配置)
           │  ├─albedo-boot-web-resource (web resource)
           │  └─albedo-boot-web-resource-base (web resource 基础 cloud 版依赖) 
-          └─albedo-boot-ui-angular `(基于angular js 5 的前端实现, 使用metronic脚手架:4201)`
-              ├─build (项目构建配置)
-              ├─src
-              │  ├─main
-              │  │  ├─webapp
-              │  │  │  ├─app  (ts文件)
-              │  │  │  │  ├─auth  (权限)
-              │  │  │  │  ├─directives  (metronic组件)
-              │  │  │  │  ├─intercepter  (拦截器)
-              │  │  │  │  ├─shared  (基础公用)
-              │  │  │  │  ├─theme  (页面)
-              │  │  │  ├─assets (静态资源)
-              └─────environments (环境)
-
+          ├─albedo-boot-ui-angular `(基于angular js 5 的前端实现, 使用metronic脚手架:4201)`
+          │  ├─build (项目构建配置)
+          │  ├─src
+          │  │  ├─main
+          │  │  │  ├─webapp
+          │  │  │  │  ├─app  (ts文件)
+          │  │  │  │  │  ├─auth  (权限)
+          │  │  │  │  │  ├─directives  (metronic组件)
+          │  │  │  │  │  ├─intercepter  (拦截器)
+          │  │  │  │  │  ├─shared  (基础公用)
+          │  │  │  │  │  ├─theme  (页面)
+          │  │  │  │  ├─assets (静态资源)
+          │  └─────environments (环境)
+          └─albedo-boot-ui-vue `(基于vue 的前端实现, 使用element UI脚手架:8000)`
 
 
 ## 内置功能
@@ -156,14 +156,14 @@ AlbedoBoot 提供了常用工具进行封装，包括日志工具、缓存工具
 
 ## 启动篇
 
-### 1.1.0 SNAPSHOT 发布了! :tada::tada::tada:
+### 1.3.0 SNAPSHOT 发布了! :tada::tada::tada:
 
-引入 angularjs5 ，基于 METRONIC [模版](https://github.com/somewhereMrli/metronic.git) 快速启动(依赖nodejs环境，更新至最新版)
+引入 VUE ，基于 ELEMENT [模版](http://element-cn.eleme.io/#/zh-CN) 快速启动(依赖nodejs环境，更新至最新版)
 
 ### 调试模式
-1.  进入 albedo-boot-ui-angular 目录 运行 npm install , 可根据需要修改 proxy.conf.json 配置转发
+1.  进入 albedo-boot-ui-vue 目录 运行 npm install , 可根据需要修改 config/env.js 配置转发
 2.  启动albedo-boot-web/albedo-boot-web-starter AlbedoBootWebApp
-3.  启动 npm start 访问 http://localhost:4201
+3.  启动 npm run dev 访问 http://localhost:8000
 
 ### 单体应用 启动
  1.	启动redis 默认本地 127.0.0.1:6379

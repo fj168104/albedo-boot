@@ -1,6 +1,7 @@
 package com.albedo.java.common.persistence.repository;
 
 import com.albedo.java.common.persistence.domain.BaseEntity;
+import com.albedo.java.common.persistence.domain.GeneralEntity;
 import com.albedo.java.util.domain.ComboSearch;
 import com.albedo.java.util.domain.ComboData;
 import com.albedo.java.util.domain.PageModel;
@@ -11,7 +12,7 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public interface JpaCustomeRepository<T extends BaseEntity> {
+public interface JpaCustomeRepository<T extends GeneralEntity> {
 
     /* (非 Javadoc)
     * <p>Title: getSession</p>

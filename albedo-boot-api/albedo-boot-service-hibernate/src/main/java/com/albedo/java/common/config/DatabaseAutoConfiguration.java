@@ -14,8 +14,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.query.QueryLookupStrategy.Key;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import java.util.Date;
-
 @Configuration
 @EntityScan(basePackages = {"com.albedo.java.modules.*.domain"}, basePackageClasses = {JSR310PersistenceConverters.class})
 @EnableJpaRepositories(value = {"com.albedo.java.modules.*.repository"}, queryLookupStrategy = Key.CREATE_IF_NOT_FOUND)
@@ -25,8 +23,9 @@ public class DatabaseAutoConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(DatabaseAutoConfiguration.class);
 
-    /*
+    /**
      * Support for Hibernate types in Jackson.
+     * @return
      */
     @Bean
     public Hibernate5Module hibernate5Module() {
@@ -36,12 +35,7 @@ public class DatabaseAutoConfiguration {
     @Bean
     @ConditionalOnMissingClass
     public AuditorAware<String> springSecurityAuditorAware() {
-        return new AuditorAware<String>() {
-            @Override
-            public String getCurrentAuditor() {
-                return "1";
-            }
-        };
+        return  () -> java.util.Optional.of("1");
     }
 
 

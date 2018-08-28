@@ -13,8 +13,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -103,87 +103,87 @@ public class LoggingEvent extends GeneralEntity<LoggingEvent> {
      * formattedMessage 内容
      */
     @NotBlank
-    @Length(max = 65535)
+    @Size(max = 65535)
     @TableField("formatted_message")
     private String formattedMessage;
     /**
      * loggerName 名称
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("logger_name")
     private String loggerName;
     /**
      * levelString 级别
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("level_string")
     @DictType(name = "sys_log_level")
     private String levelString;
     /**
      * threadName 线程
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("thread_name")
     private String threadName;
     /**
      * referenceFlag 引用标识
      */
-    @Length(max = 6)
+    @Size(max = 6)
     @TableField("reference_flag")
     @DictType(name = "sys_yes_no")
     private String referenceFlag;
     /**
      * arg0 参数0
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("arg0")
     private String arg0;
     /**
      * arg1 参数1
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("arg1")
     private String arg1;
     /**
      * arg2 参数2
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("arg2")
     private String arg2;
     /**
      * arg3 参数3
      */
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("arg3")
     private String arg3;
     /**
      * callerFilename 操作文件
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("caller_filename")
     private String callerFilename;
     /**
      * callerClass 操作类名
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("caller_class")
     private String callerClass;
     /**
      * callerMethod 操作方法
      */
     @NotBlank
-    @Length(max = 254)
+    @Size(max = 254)
     @TableField("caller_method")
     private String callerMethod;
     /**
      * callerLine 操作行
      */
     @NotBlank
-    @Length(max = 4)
+    @Size(max = 4)
     @TableField("caller_line")
     private String callerLine;
 

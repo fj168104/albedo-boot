@@ -85,7 +85,7 @@ public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchem
         return ResultBuilder.buildOk("保存", genSchemeVo.getName(), "成功");
     }
 
-    @DeleteMapping(value = "/{ids:" + Globals.LOGIN_REGEX
+    @PutMapping(value = "/{ids:" + Globals.LOGIN_REGEX
             + "}")
     @Timed
     public ResponseEntity lockOrUnLock(@PathVariable String ids) {
@@ -95,7 +95,7 @@ public class GenSchemeResource extends DataVoResource<GenSchemeService, GenSchem
         return ResultBuilder.buildOk("操作成功");
     }
 
-    @PutMapping(value = "/{ids:" + Globals.LOGIN_REGEX
+    @DeleteMapping(value = "/{ids:" + Globals.LOGIN_REGEX
             + "}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)

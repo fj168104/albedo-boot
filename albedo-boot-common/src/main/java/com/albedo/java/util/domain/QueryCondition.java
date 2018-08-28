@@ -92,6 +92,12 @@ public class QueryCondition implements Comparable<QueryCondition>, java.io.Seria
         this.operate = operate;
         this.value = value;
     }
+    public QueryCondition(String fieldName, Operator operate, Object value, Object endValue) {
+        this.fieldName = fieldName;
+        this.operate = operate;
+        this.value = value;
+        this.endValue = endValue;
+    }
 
     /**
      * 返回等于筛选
@@ -103,7 +109,16 @@ public class QueryCondition implements Comparable<QueryCondition>, java.io.Seria
     public static QueryCondition eq(String property, Object value) {
         return new QueryCondition(property, QueryCondition.Operator.eq, value);
     }
-
+    /**
+     * 返回不等于筛选
+     *
+     * @param property 属性
+     * @param value    值
+     * @return 不等于筛选
+     */
+    public static QueryCondition between(String property, Object value, Object endValue) {
+        return new QueryCondition(property, Operator.between, value, endValue);
+    }
     /**
      * 返回不等于筛选
      *

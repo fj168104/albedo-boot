@@ -4,10 +4,7 @@ import com.albedo.java.common.config.AlbedoProperties;
 import com.albedo.java.common.persistence.domain.BaseEntity;
 import com.albedo.java.modules.sys.domain.*;
 import com.albedo.java.modules.sys.repository.UserRepository;
-import com.albedo.java.modules.sys.service.AreaService;
-import com.albedo.java.modules.sys.service.ModuleService;
-import com.albedo.java.modules.sys.service.OrgService;
-import com.albedo.java.modules.sys.service.RoleService;
+import com.albedo.java.modules.sys.service.*;
 import com.albedo.java.util.JedisUtil;
 import com.albedo.java.util.Json;
 import com.albedo.java.util.PublicUtil;
@@ -54,7 +51,7 @@ public final class SecurityUtil {
     /*** 当前用户拥有 角色集合 */
     public static final String CACHE_ROLE_LIST = "cachaRoleList";
     public static final String STAFF_PRINCIPAL = "principal";
-    public static UserRepository userRepository = SpringContextHolder.getBean(UserRepository.class);
+    public static UserService userService = SpringContextHolder.getBean(UserService.class);
     public static AreaService areaService = SpringContextHolder.getBean(AreaService.class);
     public static RoleService roleService = SpringContextHolder.getBean(RoleService.class);
     public static OrgService orgService = SpringContextHolder.getBean(OrgService.class);
@@ -109,7 +106,7 @@ public final class SecurityUtil {
         }
         if (user == null || isSearch || PublicUtil.isEmpty(user.getRoles()) ||
                 user.getRoles().size() != user.getRoleIdList().size()) {
-            user = userRepository.selectById(userId);
+            user = userService.findOneById(userId);
 
             if (user == null) {
                 throw new UsernameNotFoundException("User " + userId + " was not found in the database");
@@ -130,11 +127,8 @@ public final class SecurityUtil {
     public static User getByLoginId(final String loginId) {
         User user = JedisUtil.getJson(USER_CACHE, USER_CACHE_LOGIN_NAME_ + loginId, User.class);
         if (user == null||PublicUtil.isEmpty(user.getId())) {
-            user = Optional.of(userRepository.selectUserByLoginId(loginId)).map(u -> {
-                if(PublicUtil.isEmpty(u.getId())){
-                    SpringContextHolder.getBean(CacheManager.class).getCache(UserRepository.USERS_BY_LOGIN_CACHE).evict(loginId);
-                    u = userRepository.selectUserByLoginId(loginId);
-                }
+            user = userService.findOneByLoginId(loginId).map(u -> {
+
                 if(!BaseEntity.FLAG_NORMAL.equals(u.getStatus())){
                     throw new RuntimeMsgException("用户 " + loginId + " 登录信息已被锁定");
                 }

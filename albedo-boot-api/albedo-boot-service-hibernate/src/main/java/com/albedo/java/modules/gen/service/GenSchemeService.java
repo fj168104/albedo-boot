@@ -16,6 +16,7 @@ import com.albedo.java.util.config.SystemConfig;
 import com.albedo.java.util.domain.QueryCondition;
 import com.albedo.java.vo.gen.GenSchemeVo;
 import com.albedo.java.vo.gen.GenTableVo;
+import com.albedo.java.vo.gen.GenTemplateVo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import org.springframework.stereotype.Service;
@@ -55,8 +56,8 @@ public class GenSchemeService extends DataVoService<GenSchemeRepository,
         genSchemeVo.setViewType(genSchemeVo.getCategory().indexOf("modal")!=-1 ? SystemConfig.YES : SystemConfig.NO);
 
         // 获取模板列表
-        List<GenTemplate> templateList = GenUtil.getTemplateList(config, genSchemeVo.getCategory(), false);
-        List<GenTemplate> childTableTemplateList = GenUtil.getTemplateList(config, genSchemeVo.getCategory(), true);
+        List<GenTemplateVo> templateList = GenUtil.getTemplateList(config, genSchemeVo.getCategory(), false);
+        List<GenTemplateVo> childTableTemplateList = GenUtil.getTemplateList(config, genSchemeVo.getCategory(), true);
 
         // 如果有子表模板，则需要获取子表列表
         if (childTableTemplateList.size() > 0) {
@@ -69,7 +70,7 @@ public class GenSchemeService extends DataVoService<GenSchemeRepository,
                 childTable.setCategory(genSchemeVo.getCategory());
                 genSchemeVo.setGenTable(childTable);
                 Map<String, Object> childTableModel = GenUtil.getDataModel(genSchemeVo);
-                for (GenTemplate tpl : childTableTemplateList) {
+                for (GenTemplateVo tpl : childTableTemplateList) {
                     result.append(GenUtil.generateToFile(tpl, childTableModel, genSchemeVo.getReplaceFile()));
                 }
             }
@@ -79,7 +80,7 @@ public class GenSchemeService extends DataVoService<GenSchemeRepository,
         // 生成主表模板代码
         genSchemeVo.setGenTable(genTableVo);
         Map<String, Object> model = GenUtil.getDataModel(genSchemeVo);
-        for (GenTemplate tpl : templateList) {
+        for (GenTemplateVo tpl : templateList) {
             result.append(GenUtil.generateToFile(tpl, model, genSchemeVo.getReplaceFile()));
         }
         return result.toString();
@@ -99,8 +100,8 @@ public class GenSchemeService extends DataVoService<GenSchemeRepository,
         GenConfig config = GenUtil.getConfig();
         map.put("config", config);
 
-        map.put("categoryList", PublicUtil.convertComboDataList(config.getCategoryList(), Dict.F_VAL, Dict.F_NAME));
-        map.put("viewTypeList", PublicUtil.convertComboDataList(config.getViewTypeList(), Dict.F_VAL, Dict.F_NAME));
+        map.put("categoryList", PublicUtil.convertSelectDataList(config.getCategoryList(), Dict.F_VAL, Dict.F_NAME));
+        map.put("viewTypeList", PublicUtil.convertSelectDataList(config.getViewTypeList(), Dict.F_VAL, Dict.F_NAME));
 
         List<GenTable> tableList = genTableService.findAll(), list = Lists.newArrayList();
         List<GenScheme> schemeList = findAll(genSchemeVo.getId());
@@ -111,7 +112,7 @@ public class GenSchemeService extends DataVoService<GenSchemeRepository,
                 list.add(table);
             }
         }
-        map.put("tableList", PublicUtil.convertComboDataList(list, GenTable.F_ID, GenTable.F_NAMESANDTITLE));
+        map.put("tableList", PublicUtil.convertSelectDataList(list, GenTable.F_ID, GenTable.F_NAMESANDTITLE));
 return map;
     }
 }

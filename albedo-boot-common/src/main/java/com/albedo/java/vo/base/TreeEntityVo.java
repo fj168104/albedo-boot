@@ -1,8 +1,9 @@
 package com.albedo.java.vo.base;
 
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.annotation.BeanField;
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotBlank;
 
 /**
  * 通常的数据基类 copyright 2014 albedo all right reserved author somewhere created on 2014年12月31日 下午1:57:09

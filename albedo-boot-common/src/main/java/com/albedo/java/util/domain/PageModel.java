@@ -123,15 +123,17 @@ public class PageModel<T> implements Pageable, Serializable {
         this.page = page;
     }
     public void setPage(Integer page) {
-        if(page!=null)
-        this.page = page;
+        if(page!=null) {
+            this.page = page;
+        }
     }
     public int getSize() {
         return size;
     }
     public void setSize(Integer size) {
-        if(size!=null)
-        this.size = size;
+        if(size!=null) {
+            this.size = size;
+        }
     }
     public void setSize(int size) {
         this.size = size;
@@ -160,52 +162,33 @@ public class PageModel<T> implements Pageable, Serializable {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getPageSize()
-     */
+    @Override
     @JSONField(serialize = false)
     public int getPageSize() {
         return size;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getPageNumber()
-     */
+    @Override
     @JSONField(serialize = false)
     public int getPageNumber() {
         return page;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#getOffset()
-     */
-    public int getOffset() {
+    @Override
+    public long getOffset() {
         return (page - 1) * size;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#hasPrevious()
-     */
+    @Override
     public boolean hasPrevious() {
         return page > 0;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#previousOrFirst()
-     */
+    @Override
     public Pageable previousOrFirst() {
         return hasPrevious() ? previous() : first();
     }
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode() {
 
@@ -239,6 +222,9 @@ public class PageModel<T> implements Pageable, Serializable {
 
     @Override
     public Sort getSort() {
+        if(sort == null){
+            sort=Sort.unsorted();
+        }
         return sort;
     }
 
@@ -246,26 +232,17 @@ public class PageModel<T> implements Pageable, Serializable {
         this.sort = sort;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#next()
-     */
+    @Override
     public Pageable next() {
         return new PageRequest(getPageNumber() + 1, getPageSize(), getSort());
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.AbstractPageRequest#previous()
-     */
+
     public PageModel previous() {
         return getPageNumber() == 0 ? this : new PageModel(getPageNumber() - 1, getPageSize(), getSort());
     }
 
-    /*
-     * (non-Javadoc)
-     * @see org.springframework.data.domain.Pageable#first()
-     */
+    @Override
     public Pageable first() {
         return new PageRequest(0, getPageSize(), getSort());
     }

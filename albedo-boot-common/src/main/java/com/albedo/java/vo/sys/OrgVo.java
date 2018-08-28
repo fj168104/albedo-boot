@@ -1,10 +1,8 @@
 package com.albedo.java.vo.sys;
 
-import com.albedo.java.util.annotation.SearchField;
 import com.albedo.java.vo.base.TreeEntityVo;
 import lombok.Data;
 import lombok.ToString;
-import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Created by somewhere on 2017/8/1.

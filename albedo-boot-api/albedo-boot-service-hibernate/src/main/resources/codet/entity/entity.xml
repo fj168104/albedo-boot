@@ -9,8 +9,7 @@
  */
 package ${packageName}.${moduleName}.domain<#if subModuleName != "">.${subModuleName}</#if>;
 
-import DataEntity;
-import com.albedo.java.common.data.persistence.pk.IdGen;
+import com.albedo.java.common.persistence.domain.IdEntity;
 import com.albedo.java.util.annotation.DictType;
 import com.albedo.java.util.annotation.SearchField;
 import lombok.AllArgsConstructor;
@@ -21,8 +20,8 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Email;
 import javax.validation.constraints.NotNull;
 
@@ -42,7 +41,7 @@ import java.util.Objects;
 @DynamicInsert @DynamicUpdate
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Data @ToString @NoArgsConstructor @AllArgsConstructor
-public class ${ClassName} extends IdEntity<${ClassName}> {
+public class ${ClassName} extends IdEntity<${table.pkColumn.javaType}> {
 
 	private static final long serialVersionUID = 1L;
 	<#list table.columnList as column>
@@ -61,29 +60,14 @@ public class ${ClassName} extends IdEntity<${ClassName}> {
 
 	<@generateFields/>
 	<@generateCompositeIdConstructorIfis/>
-	@PrePersist
-	public void prePersist() {
-		<#if table.pkJavaType = 'String'>
-		this.id = IdGen.uuid();
-		</#if>
-	}
+
 	@Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ${ClassName} idEntity = (${ClassName}) o;
-        if (idEntity.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), idEntity.getId());
+        return super.equals(o);
     }
     @Override
     public int hashCode() {
-        return Objects.hashCode(getId());
+        return super.hashCode();
     }
 }
 <#macro generateFields>
@@ -115,15 +99,9 @@ public class ${ClassName} extends IdEntity<${ClassName}> {
 </#macro>
 <#macro generateCompositeIdConstructorIfis>
 
-	<#if table.compositeId>
-	public ${ClassName}(${ClassName}Id id) {
-		this.id = id;
-	}
-	<#else>
 	public ${ClassName}(${table.pkJavaType} id) {
-		this.id = id;
+		this.setId(id);
 	}
-	</#if>
 </#macro>
 <#macro generatePkProperties>
 	<#if table.compositeId>

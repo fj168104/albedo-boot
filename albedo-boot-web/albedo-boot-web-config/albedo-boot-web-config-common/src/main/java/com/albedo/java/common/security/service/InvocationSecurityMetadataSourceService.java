@@ -150,46 +150,28 @@ public class InvocationSecurityMetadataSourceService
     // 根据URL，找到相关的权限配置。
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-
-        // object 是一个URL，被用户请求的url。 /swagger-ui/index.html "/swagger-ui/index.html-GET" -> " size = 1"
+        // object 是一个URL，被用户请求的url。
         FilterInvocation filterInvocation = (FilterInvocation) object;
         HttpServletRequest request = filterInvocation.getHttpRequest();
-
-        try {
-            HandlerExecutionChain handlerExecutionChain = requestMappingHandlerMapping.getHandler(request);
-            if(handlerExecutionChain!=null){
-                Object handler = handlerExecutionChain.getHandler();
-                if (handler instanceof HandlerMethod) {
-                    HandlerMethod handlerMethod = (HandlerMethod) handler;
-                    RequiresPermissions requiresPermissions = handlerMethod.getMethodAnnotation(RequiresPermissions.class);
-                    if(requiresPermissions!=null && PublicUtil.isNotEmpty(requiresPermissions.value())){
-                        Collection<ConfigAttribute> atts = Lists.newArrayList();
-                        for(String permission: requiresPermissions.value()){
-                            atts.add(new SecurityConfig(permission));
-                        }
-                        return atts;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            log.info("{}",e);
-        }
-        Map<String, Collection<ConfigAttribute>> resourceMap = getResourceMap();
-        Iterator<String> ite = resourceMap.keySet().iterator();
+        String contextPath = request.getContextPath();
+        Iterator<String> ite = getResourceMap().keySet().iterator();
         String url;
         while (ite.hasNext()) {
             url = ite.next();
             if (PublicUtil.isNotEmpty(url)) {
-                if (isMatchRequest(url, request)) {
+                if (new AntPathRequestMatcher(PublicUtil.toAppendStr(contextPath, albedoProperties.getAdminPath(), url))
+                    .matches(request)) {
                     SecurityConstants.setCurrentUrl(url);
-                    return resourceMap.get(url);
+                    return getResourceMap().get(PublicUtil.toAppendStr(url, "-", request.getMethod().toUpperCase()));
                 }
             }
 
         }
+        String rqurl = request.getRequestURI();
+
         if (new AntPathRequestMatcher(albedoProperties.getAdminPath(SecurityConstants.loginUrl)).matches(request)
-                || new AntPathRequestMatcher(albedoProperties.getAdminPath(SecurityConstants.authLogin)).matches(request)
-                || new AntPathRequestMatcher(albedoProperties.getAdminPath(SecurityConstants.logoutUrl)).matches(request)) {
+            || new AntPathRequestMatcher(albedoProperties.getAdminPath(SecurityConstants.authLogin)).matches(request)
+            || new AntPathRequestMatcher(albedoProperties.getAdminPath(SecurityConstants.logoutUrl)).matches(request)) {
             return null;
         }
 
@@ -198,11 +180,16 @@ public class InvocationSecurityMetadataSourceService
                 return null;
             }
         }
-        for (int i = 0; i < SecurityConstants.authorize.length; i++) {
-            if (new AntPathRequestMatcher(SecurityConstants.authorize[i]).matches(request)) {
-                return Lists.newArrayList(new SecurityConfig("user"));
+        for (int i = 0; i < SecurityConstants.authorizeAdminPermitAll.length; i++) {
+            if (new AntPathRequestMatcher(albedoProperties.getAdminPath(SecurityConstants.authorizeAdminPermitAll[i])).matches(request)) {
+                return null;
             }
         }
+
+        if (rqurl.startsWith(contextPath+albedoProperties.getAdminPath())) {
+            return Lists.newArrayList(new SecurityConfig("user"));
+        }
+
         return null;
 
     }

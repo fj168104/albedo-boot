@@ -1,5 +1,6 @@
 package com.albedo.java.util.mapper;
 
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.exception.Exceptions;
 import com.albedo.java.util.exception.RuntimeMsgException;
@@ -105,7 +106,7 @@ public class JaxbMapper {
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-            if (StringUtils.isNotBlank(encoding)) {
+            if (PublicUtil.isNotEmpty(encoding)) {
                 marshaller.setProperty(Marshaller.JAXB_ENCODING, encoding);
             }
 

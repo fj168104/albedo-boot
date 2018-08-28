@@ -9,8 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import javax.validation.constraints.NotBlank;
 import org.springframework.data.annotation.Transient;
 
 /**
@@ -36,7 +36,7 @@ public class GenTableColumn extends IdEntity<GenTableColumn, String> implements 
     @ManyToOne
     @TableField(exist = false)
     private GenTable genTable; // 归属表
-    @Length(min = 1, max = 200)
+    @Size(min = 1, max = 200)
     @TableField("name_")
     private String name; // 列名
     @TableField("title_")

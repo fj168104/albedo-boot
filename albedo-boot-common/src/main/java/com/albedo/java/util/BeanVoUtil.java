@@ -2,6 +2,8 @@ package com.albedo.java.util;
 
 import com.albedo.java.util.annotation.BeanField;
 import com.albedo.java.util.base.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.FatalBeanException;
@@ -9,6 +11,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
@@ -21,6 +24,7 @@ import java.util.List;
  */
 public class BeanVoUtil extends BeanUtils {
 
+    private static Logger log = LoggerFactory.getLogger(BeanVoUtil.class);
     public static void copyProperties(Object source, Object target, boolean ignoreNull, String... ignoreProperties) throws BeansException {
         Assert.notNull(source, "Source must not be null");
         Assert.notNull(target, "Target must not be null");
@@ -36,35 +40,59 @@ public class BeanVoUtil extends BeanUtils {
             PropertyDescriptor targetPd = var7[var9];
             Method writeMethod = targetPd.getWriteMethod();
             if (writeMethod != null && (ignoreList == null || !ignoreList.contains(targetPd.getName()))) {
-                PropertyDescriptor sourcePd = getPropertyDescriptor(source.getClass(), targetPd.getName());
-                BeanField annotation = Reflections.getAnnotation(source.getClass(), targetPd.getName(), BeanField.class);
+                BeanField annotation = Reflections.getAnnotationByClazz(source.getClass(), targetPd.getName(), BeanField.class);
                 if(annotation!=null && annotation.ingore()){
                     continue;
                 }
-                if (sourcePd != null) {
-
-                    Method readMethod = sourcePd.getReadMethod();
-                    if (readMethod != null && ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())) {
-                        try {
+                BeanField writeAnnotation = Reflections.getAnnotationByClazz(target.getClass(), targetPd.getName(), BeanField.class);
+                if(writeAnnotation!=null && writeAnnotation.ingore()){
+                    continue;
+                }
+                Object value = null;
+                if(writeAnnotation!=null && PublicUtil.isNotEmpty(writeAnnotation.writeProperty())){
+                    value = Reflections.invokeGetter(source, writeAnnotation.writeProperty());
+                }else{
+                    PropertyDescriptor sourcePd = getPropertyDescriptor(source.getClass(), targetPd.getName());
+                    if (sourcePd != null) {
+                        Method readMethod = sourcePd.getReadMethod();
+                        if (readMethod != null && ClassUtils.isAssignable(writeMethod.getParameterTypes()[0], readMethod.getReturnType())) {
                             if (!Modifier.isPublic(readMethod.getDeclaringClass().getModifiers())) {
                                 readMethod.setAccessible(true);
                             }
-
-                            Object value = readMethod.invoke(source);
+                            try {
+                                value = readMethod.invoke(source);
+                            } catch (Throwable var15) {
+                                throw new FatalBeanException("Could not copy property '" + targetPd.getName() + "' from source to target", var15);
+                            }
                             if (!Modifier.isPublic(writeMethod.getDeclaringClass().getModifiers())) {
                                 writeMethod.setAccessible(true);
                             }
-                            if (ignoreNull && value!=null || !ignoreNull) {
-                                writeMethod.invoke(target, value);
-                            }
-                        } catch (Throwable var15) {
-                            throw new FatalBeanException("Could not copy property '" + targetPd.getName() + "' from source to target", var15);
                         }
                     }
                 }
+                try {
+                    if (ignoreNull && value!=null || !ignoreNull) {
+                        writeMethod.invoke(target, value);
+                    }
+                } catch (Throwable var15) {
+                    throw new FatalBeanException("Could not copy property '" + targetPd.getName() + "' from source to target", var15);
+                }
+
             }
         }
 
+    }
+
+
+    public static <T> T copyPropertiesByClass(Object source, Class<T> requiredType){
+        T target = null;
+        try {
+            target = requiredType.newInstance();
+        } catch (Exception e) {
+            log.error("{}",e);
+        }
+        copyProperties(source, target, true);
+        return target;
     }
 
 }

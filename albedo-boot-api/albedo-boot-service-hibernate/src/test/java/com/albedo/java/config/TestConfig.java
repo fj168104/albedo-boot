@@ -74,12 +74,7 @@ public class TestConfig implements ResourceLoaderAware {
 
     @Bean
     public AuditorAware<String> auditorAware() {
-        return new AuditorAware<String>() {
-            @Override
-            public String getCurrentAuditor() {
-                return "1";
-            }
-        };
+        return () -> java.util.Optional.of("1");
     }
 
 

@@ -15,7 +15,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -409,7 +408,7 @@ public class JsonUtil {
                     throw new RuntimeMsgException("自定义class为空,无法正常解析对象");
                 }
                 // Get annotation field
-                PropertyDescriptor[] ps = PropertyUtils.getPropertyDescriptors(obj);
+                PropertyDescriptor[] ps = BeanVoUtil.getPropertyDescriptors(obj.getClass());
                 Object val = null, objTemp = null, objVal = null;
                 String key = null;
                 for (PropertyDescriptor p : ps) {
@@ -429,11 +428,11 @@ public class JsonUtil {
                     } catch (Exception e) {
                     }
                     try {
-                        PropertyUtils.getProperty(obj, key);
+                        Reflections.getFieldValue(obj, key);
                     } catch (Exception e) {
                         continue;
                     }
-                    val = PropertyUtils.getProperty(obj, key);
+                    val = Reflections.getFieldValue(obj, key);
 //					if (val instanceof PersistentBag)
 //						continue;
                     if (PublicUtil.isNotEmpty(clsName)) {

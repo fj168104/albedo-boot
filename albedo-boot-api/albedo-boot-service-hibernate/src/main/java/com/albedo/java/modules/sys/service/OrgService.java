@@ -58,12 +58,12 @@ public class OrgService extends TreeVoService<OrgRepository, Org, String, OrgVo>
 
     }
 
-    @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public Page<Org> findAll(PageModel<Org> pm) {
-        SpecificationDetail<Org> spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(),
-                QueryCondition.ne(Org.F_STATUS, Org.FLAG_DELETE));
-        return repository.findAll(spec, pm);
-    }
+//    @Transactional(readOnly = true, rollbackFor = Exception.class)
+//    public Page<Org> findAll(PageModel<Org> pm) {
+//        SpecificationDetail<Org> spec = DynamicSpecifications.buildSpecification(pm.getQueryConditionJson(),
+//                QueryCondition.ne(Org.F_STATUS, Org.FLAG_DELETE));
+//        return repository.findAll(spec, pm);
+//    }
 
 //    @Override
 //    @Transactional(readOnly = true, rollbackFor = Exception.class)

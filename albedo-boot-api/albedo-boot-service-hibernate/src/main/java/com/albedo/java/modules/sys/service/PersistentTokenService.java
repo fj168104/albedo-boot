@@ -34,7 +34,7 @@ public class PersistentTokenService {
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
     public PersistentToken findOne(String id) {
-        return persistentTokenRepository.findOne(id);
+        return persistentTokenRepository.findOneById(id);
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
@@ -46,7 +46,7 @@ public class PersistentTokenService {
 
     public void delete(List<String> ids) {
         ids.forEach(id -> {
-            persistentTokenRepository.findOneById(id).map(u -> {
+            persistentTokenRepository.findById(id).map(u -> {
                 log.debug("Deleted Persistent: {}", u);
                 persistentTokenRepository.delete(u);
                 return u;

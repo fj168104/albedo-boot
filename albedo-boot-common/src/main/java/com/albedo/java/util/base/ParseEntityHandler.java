@@ -3,7 +3,7 @@ package com.albedo.java.util.base;
 import com.albedo.java.util.PublicUtil;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.apache.commons.beanutils.PropertyUtils;
+import org.springframework.beans.BeanUtils;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -32,8 +32,9 @@ public class ParseEntityHandler {
         if (ph == null) {
             ph = new ParseEntityHandler();
         }
-        if (PublicUtil.isNotEmpty(symbolMap))
+        if (PublicUtil.isNotEmpty(symbolMap)) {
             ph.symbolMap = symbolMap;
+        }
         return ph;
     }
 
@@ -60,9 +61,7 @@ public class ParseEntityHandler {
     /**
      * 获取对象的公共属性
      *
-     * @param fields
      * @param obj
-     * @param params
      */
     private void checkObj(Object obj) {
         tempMap.clear();
@@ -73,9 +72,8 @@ public class ParseEntityHandler {
 
     /**
      * 判断对象entity是否存在用户自定义对象
-     *
      * @param entity
-     * @param field
+     * @param p
      * @return
      */
     private Boolean equals(Object entity, PropertyDescriptor p) {
@@ -84,13 +82,10 @@ public class ParseEntityHandler {
     }
 
     /**
-     * invoke
      *
-     * @param proxy  代理的实例
-     * @param method 被拦截类所调用的方法
-     * @param args   被拦截类所调用的方法的参数
+     * @param entity
+     * @param params
      * @return
-     * @throws Throwable
      */
     public String invoke(Object entity, Map<String, Object> params) {
         Object val = null;
@@ -105,12 +100,13 @@ public class ParseEntityHandler {
                 if (recurrenceMaxCount >= recurrenceCount || recurrenceMaxCount < 0) {
                     for (Object obj : tempList) {
                         checkObj(obj);
-                        PropertyDescriptor[] ps = PropertyUtils.getPropertyDescriptors(obj);
+                        PropertyDescriptor[] ps = BeanUtils.getPropertyDescriptors(obj.getClass());
                         for (PropertyDescriptor p : ps) {
-                            if (freeFilterList.contains(p.getName()) || tempMap.containsKey(p.getName()))
+                            if (freeFilterList.contains(p.getName()) || tempMap.containsKey(p.getName())) {
                                 continue;
+                            }
                             try {
-                                val = PropertyUtils.getProperty(obj, p.getName());
+                                val = Reflections.getFieldValue(obj, p.getName());
                             } catch (Exception e) {
                                 continue;
                             }

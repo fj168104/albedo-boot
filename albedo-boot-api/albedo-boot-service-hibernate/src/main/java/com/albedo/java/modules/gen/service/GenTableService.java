@@ -83,7 +83,7 @@ public class GenTableService extends DataVoService<GenTableRepository,
 
     public void delete(List<String> ids, String currentAuditor) {
         ids.forEach(id -> {
-            GenTable entity = repository.findOne(id);
+            GenTable entity = repository.findOneById(id);
             Assert.assertNotNull(entity, "对象 " + id + " 信息为空，删除失败");
             deleteById(id);
             genTableColumnService.deleteByTableId(id, currentAuditor);
@@ -235,7 +235,7 @@ public class GenTableService extends DataVoService<GenTableRepository,
     public Map<String, Object> findFormData(GenTableFormVo genTableFormVo) {
         Map<String, Object> map = Maps.newHashMap();
         //父表表名
-        map.put("tableList", PublicUtil.convertComboDataList(findTableListFormDb(new GenTableVo()), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
+        map.put("tableList", PublicUtil.convertSelectDataList(findTableListFormDb(new GenTableVo()), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
         // 验证参数缺失
         if (StringUtil.isBlank(genTableFormVo.getId()) && StringUtil.isBlank(genTableFormVo.getName())) {
             throw new RuntimeMsgException(PublicUtil.toAppendStr("参数缺失！"));
@@ -251,17 +251,16 @@ public class GenTableService extends DataVoService<GenTableRepository,
         // 获取物理表字段
         genTableVo = getTableFormDb(genTableVo);
         //当前表外键
-        map.put("columnList", PublicUtil.convertComboDataList(genTableVo.getColumnList(), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
+        map.put("columnList", PublicUtil.convertSelectDataList(genTableVo.getColumnList(), GenTable.F_NAME, GenTable.F_NAMESANDTITLE));
 
 
         map.put("genTableVo", genTableVo);
         GenConfig config = GenUtil.getConfig();
         map.put("config", config);
 
-        map.put("queryTypeList", PublicUtil.convertComboDataList(config.getQueryTypeList(), Dict.F_VAL, Dict.F_NAME));
-        map.put("showTypeList", PublicUtil.convertComboDataList(config.getShowTypeList(), Dict.F_VAL, Dict.F_NAME));
-        map.put("javaTypeList", PublicUtil.convertComboDataList(config.getJavaTypeList(), Dict.F_VAL, Dict.F_NAME));
-
+        map.put("queryTypeList", PublicUtil.convertSelectDataList(config.getQueryTypeList(), Dict.F_VAL, Dict.F_NAME));
+        map.put("showTypeList", PublicUtil.convertSelectDataList(config.getShowTypeList(), Dict.F_VAL, Dict.F_NAME));
+        map.put("javaTypeList", PublicUtil.convertSelectDataList(config.getJavaTypeList(), Dict.F_VAL, Dict.F_NAME));
 
         return map;
     }

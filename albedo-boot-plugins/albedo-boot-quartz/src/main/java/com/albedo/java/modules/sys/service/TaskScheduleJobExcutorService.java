@@ -7,6 +7,7 @@ import com.albedo.java.common.base.BaseInit;
 import com.albedo.java.common.persistence.service.DataVoService;
 import com.albedo.java.modules.sys.domain.TaskScheduleJob;
 import com.albedo.java.modules.sys.repository.TaskScheduleJobRepository;
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.config.SystemConfig;
 import com.albedo.java.util.domain.Globals;
@@ -15,7 +16,6 @@ import com.albedo.java.util.domain.QueryCondition;
 import com.albedo.java.util.exception.RuntimeMsgException;
 import com.albedo.java.util.spring.SpringContextHolder;
 import com.albedo.java.vo.sys.TaskScheduleJobVo;
-import org.apache.commons.lang.StringUtils;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,14 +74,13 @@ public class TaskScheduleJobExcutorService extends DataVoService<TaskScheduleJob
      * lang.String)
      */
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    @Override
     public TaskScheduleJob findOne(String id) {
-        return taskScheduleJobService.findOne(id);
+        return taskScheduleJobService.findOneById(id);
     }
 
     @Transactional(readOnly = true, rollbackFor = Exception.class)
-    public TaskScheduleJob findOneBySourceId(String soruceId) {
-        return taskScheduleJobService.findTopBySourceIdAndStatusNot(soruceId, TaskScheduleJob.FLAG_DELETE);
+    public TaskScheduleJob findOneBySourceId(String sourceId) {
+        return taskScheduleJobService.findTopBySourceIdAndStatusNot(sourceId, TaskScheduleJob.FLAG_DELETE);
     }
 
     /*
@@ -128,7 +127,7 @@ public class TaskScheduleJobExcutorService extends DataVoService<TaskScheduleJob
         }
         Object obj = null;
         try {
-            if (StringUtils.isNotBlank(scheduleJob.getSpringId())) {
+            if (PublicUtil.isNotEmpty(scheduleJob.getSpringId())) {
                 obj = SpringContextHolder.getBean(scheduleJob.getSpringId());
             } else {
                 Class<?> clazz = Class.forName(scheduleJob.getBeanClass());
@@ -172,7 +171,7 @@ public class TaskScheduleJobExcutorService extends DataVoService<TaskScheduleJob
      * java.lang.String)
      */
     public TaskScheduleJob getTaskById(String jobId) {
-        return taskScheduleJobService.findOne(jobId);
+        return taskScheduleJobService.findOneById(jobId);
     }
 
     /*

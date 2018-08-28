@@ -1,6 +1,7 @@
 package com.albedo.java.util.excel;
 
 import com.albedo.java.util.DictUtil;
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.annotation.ExcelField;
 import com.albedo.java.util.base.Reflections;
 import com.google.common.collect.Lists;
@@ -274,7 +275,7 @@ public class ImportExcel {
                 if (val != null) {
                     ExcelField ef = (ExcelField) os[0];
                     // If is dict type, get dict value
-                    if (StringUtils.isNotBlank(ef.dictType())) {
+                    if (PublicUtil.isNotEmpty(ef.dictType())) {
                         val = DictUtil.getValByName(ef.dictType(), val.toString());
                         // log.debug("Dictionary type value: ["+i+","+colunm+"] " + val);
                     }

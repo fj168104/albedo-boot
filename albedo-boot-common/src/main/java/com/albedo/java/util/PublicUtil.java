@@ -2,6 +2,7 @@ package com.albedo.java.util;
 
 import com.albedo.java.util.base.Reflections;
 import com.albedo.java.util.domain.ComboData;
+import com.albedo.java.vo.base.SelectResult;
 import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -663,5 +664,12 @@ public class PublicUtil {
         dataList.forEach(item -> comboDataList.add(new ComboData(PublicUtil.toStrString(Reflections.getFieldValue(item, idFieldName)),
             PublicUtil.toStrString(Reflections.invokeGetter(item, nameFieldName)))));
         return comboDataList;
+    }
+
+    public static List<SelectResult> convertSelectDataList(List<?> dataList, String idFieldName, String nameFieldName) {
+        List<SelectResult> selectResultList = Lists.newArrayList();
+        dataList.forEach(item -> selectResultList.add(new SelectResult(PublicUtil.toStrString(Reflections.getFieldValue(item, idFieldName)),
+            PublicUtil.toStrString(Reflections.invokeGetter(item, nameFieldName)))));
+        return selectResultList;
     }
 }// class end

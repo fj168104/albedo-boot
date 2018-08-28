@@ -2,19 +2,18 @@ package com.albedo.java.common.persistence.injector;
 
 import com.albedo.java.common.persistence.annotation.ManyToOne;
 import com.albedo.java.common.persistence.domain.TreeEntity;
+import com.albedo.java.util.BeanVoUtil;
 import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.StringUtil;
 import com.albedo.java.util.base.Reflections;
 import com.baomidou.mybatisplus.entity.GlobalConfiguration;
 import com.baomidou.mybatisplus.entity.TableFieldInfo;
 import com.baomidou.mybatisplus.entity.TableInfo;
-import com.baomidou.mybatisplus.mapper.AutoSqlInjector;
 import com.baomidou.mybatisplus.mapper.LogicSqlInjector;
 import com.baomidou.mybatisplus.toolkit.GlobalConfigUtils;
 import com.baomidou.mybatisplus.toolkit.SqlReservedWords;
 import com.baomidou.mybatisplus.toolkit.StringUtils;
 import com.baomidou.mybatisplus.toolkit.TableInfoHelper;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.ibatis.builder.MapperBuilderAssistant;
 import org.apache.ibatis.mapping.SqlSource;
 
@@ -77,7 +76,7 @@ public class EntityMetaSqlInjector extends LogicSqlInjector {
     public void injectFindRelationList(SqlTreeMethod sqlMethod, Class<?> mapperClass, Class<?> modelClass, TableInfo table) {
         String tableNameAlias = StringUtil.toFirstLowerCase(modelClass.getSimpleName()), tempNameAlias;
         TableInfo tableAlias;
-        PropertyDescriptor[] ps = PropertyUtils.getPropertyDescriptors(modelClass);
+        PropertyDescriptor[] ps = BeanVoUtil.getPropertyDescriptors(modelClass);
         StringBuffer sbSelectCoumns = new StringBuffer(sqlSelectColumns(table, false, tableNameAlias, null)),
         sbLeftJoin = new StringBuffer(table.getTableName()).append(" ").append(tableNameAlias);
         for (PropertyDescriptor p : ps) {
@@ -176,6 +175,7 @@ public class EntityMetaSqlInjector extends LogicSqlInjector {
         return columns.toString();
     }
 
+    @Override
     protected String sqlWordConvert(String convertStr) {
         GlobalConfiguration globalConfig = GlobalConfigUtils.getGlobalConfig(this.configuration);
         return SqlReservedWords.convertQuote(globalConfig, convertStr);
@@ -253,6 +253,7 @@ public class EntityMetaSqlInjector extends LogicSqlInjector {
      * @param table 表信息
      * @return sql and 片段
      */
+    @Override
     public String getLogicDeleteSql(TableInfo table) {
         return getLogicDeleteSql(table, null);
     }

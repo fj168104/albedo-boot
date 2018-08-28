@@ -10,9 +10,9 @@
 package ${packageName}.${moduleName}.web<#if subModuleName != "">.${subModuleName}</#if>;
 
 import com.albedo.java.common.config.AlbedoProperties;
-import BaseEntity;
-import DynamicSpecifications;
-import SpecificationDetail;
+import com.albedo.java.common.persistence.DynamicSpecifications;
+import com.albedo.java.common.persistence.SpecificationDetail;
+import com.albedo.java.common.persistence.domain.BaseEntity;
 import ${packageName}.${moduleName}.domain.${ClassName};
 import ${packageName}.${moduleName}.domain.vo<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Vo;
 import ${packageName}.${moduleName}.repository<#if subModuleName != "">.${subModuleName}</#if>.${ClassName}Repository;
@@ -68,7 +68,7 @@ public class ${ClassName}ResourceIntTest {
     private String DEFAULT_API_URL;
     <#list table.columnList as column>
 		<#if column.isEdit?? && column.isEdit == 1 && ((column.isNotBaseField && column.isNotBaseTreeField) || column.simpleJavaField == 'name' || column.simpleJavaField == 'sort' || column.simpleJavaField == 'parentId' || column.simpleJavaField == 'description')>
-		<#if column.simpleJavaType == "Integer">
+		<#if column.simpleJavaType == "Integer" || column.simpleJavaField == 'sort'>
 	/** DEFAULT_${column.constantJavaField} ${column.nameAndTitle} */
 	private static final int DEFAULT_${column.constantJavaField} = 0;
 	/** UPDATED_${column.constantJavaField} ${column.nameAndTitle} */
@@ -90,9 +90,9 @@ public class ${ClassName}ResourceIntTest {
     private static final long UPDATED_${column.constantJavaField} = 1;
 		<#elseif column.simpleJavaType == "Date">
 	/** DEFAULT_${column.constantJavaField} ${column.nameAndTitle} */
-	private static final ${column.simpleJavaType} DEFAULT_${column.constantJavaField} = PublicUtil.getCurrentDate();
+	private static final ${column.simpleJavaType} DEFAULT_${column.constantJavaField} = PublicUtil.parseDate(PublicUtil.fmtDate(PublicUtil.getCurrentDate()));
 	/** UPDATED_${column.constantJavaField} ${column.nameAndTitle} */
-    private static final ${column.simpleJavaType} UPDATED_${column.constantJavaField} = DateUtil.addDays(PublicUtil.getCurrentDate(), 1);
+    private static final ${column.simpleJavaType} UPDATED_${column.constantJavaField} = DateUtil.addDays(DEFAULT_${column.constantJavaField}, 1);
 		<#else>
 	/** DEFAULT_${column.constantJavaField} ${column.nameAndTitle} */
 	private static final ${column.simpleJavaType} DEFAULT_${column.constantJavaField} = <#if column.name?contains('mail')>"1@albedo.com"<#else>"A"</#if>;
@@ -429,7 +429,7 @@ public class ${ClassName}ResourceIntTest {
         int databaseSizeBeforeUpdate = ${className}Repository.findAll().size();
 
         // Update the ${className}
-        ${ClassName} updated${ClassName} = ${className}Repository.findOne(${className}.getId());
+        ${ClassName} updated${ClassName} = ${className}Repository.findOneById(${className}.getId());
         // Disconnect from session so that the updates on updated${ClassName} are not directly saved in db
         em.detach(updated${ClassName});
         Reflections.updateObj(updated${ClassName}, Lists.newArrayList(

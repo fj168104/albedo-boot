@@ -26,7 +26,7 @@ public class DataResource<Service extends DataService, T extends DataEntity> ext
         String path = request.getRequestURI();
         if (path != null && !path.contains(Globals.URL_CHECKBY) && !path.contains(Globals.URL_FIND) &&
                 PublicUtil.isNotEmpty(id)) {
-            return (T) service.findOne(id);
+            return (T) service.findOneById(id);
         } else {
             return (T) service.getPersistentClass().newInstance();
         }

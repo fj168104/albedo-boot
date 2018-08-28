@@ -1,9 +1,9 @@
 export class ComboData {
 
     // 下拉列表隐藏值
-    public id?: string
+    public value?: string
     // 下拉列表显示值
-    public name: string
+    public label: string
     public pId?: string
     constructor() {
     }
