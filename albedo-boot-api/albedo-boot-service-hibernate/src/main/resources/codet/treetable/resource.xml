@@ -77,7 +77,7 @@ public class ${ClassName}Resource extends TreeVoResource<${ClassName}Service, ${
             throw new RuntimeMsgException(PublicUtil.toAppendStr("查询失败，原因：无法查找到编号${functionNameSimple}"));
         }
         if (PublicUtil.isEmpty(${className}Vo.getId()) && PublicUtil.isNotEmpty(${className}Vo.getParentId())) {
-            service.findOneById(${className}Vo.getParentId()).ifPresent(item -> ${className}Vo.setParentName(item.getName()));
+            service.findById(${className}Vo.getParentId()).ifPresent(item -> ${className}Vo.setParentName(item.getName()));
             service.findOptionalTopByParentId(${className}Vo.getParentId()).ifPresent(item -> ${className}Vo.setSort(item.getSort() + 30));
         }
         if (${className}Vo.getSort() == null) {

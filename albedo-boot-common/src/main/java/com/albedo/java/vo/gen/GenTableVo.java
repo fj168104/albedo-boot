@@ -172,7 +172,7 @@ public class GenTableVo extends DataEntityVo<String> {
     @JSONField(serialize = false)
     public List<String> getImportList() {
         List<String> importList = Lists.newArrayList("com.albedo.java.util.PublicUtil",
-            "com.baomidou.mybatisplus.annotations.*",
+            "com.baomidou.mybatisplus.annotation.*",
                 "com.albedo.java.util.annotation.SearchField"); // 引用列表
         if ("treeTable".equalsIgnoreCase(getCategory())) {
             importList.add("com.albedo.java.common.persistence.domain.TreeEntity");
@@ -210,13 +210,13 @@ public class GenTableVo extends DataEntityVo<String> {
                 }
             }
             if (!SystemConfig.YES.equals(column.getIsPk()) && !SystemConfig.YES.equals(column.getIsNull()) && column.getJavaType().endsWith(SystemConfig.TYPE_STRING)) {
-                addNoRepeatList(importList, "org.hibernate.validator.constraints.NotBlank");
+                addNoRepeatList(importList, "javax.validation.constraints.NotBlank");
             }
             if (PublicUtil.isNotEmpty(column.getDictType())) {
                 addNoRepeatList(importList, "com.albedo.java.util.annotation.DictType");
             }
             if (column.getName().indexOf("mail") != -1) {
-                addNoRepeatList(importList, "org.hibernate.validator.constraints.Email");
+                addNoRepeatList(importList, "javax.validation.constraints.Email");
             }
 
             if (column.getUnique()) {

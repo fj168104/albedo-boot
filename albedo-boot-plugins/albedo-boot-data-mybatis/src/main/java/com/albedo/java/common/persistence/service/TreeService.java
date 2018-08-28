@@ -98,8 +98,12 @@ public abstract class TreeService<Repository extends TreeRepository<T, PK>, T ex
         Assert.assertNotNull(status, "status 信息为空，操作失败");
         Assert.assertNotNull(lastModifiedBy, "lastModifiedBy 信息为空，操作失败");
         for (T entity : entityList) {
-            entity.setStatus(status);
-            repository.updateById(entity);
+            if(BaseEntity.FLAG_DELETE.equals(status)){
+                repository.deleteById(entity.getId());
+            }else{
+                repository.updateById(entity);
+            }
+
         }
         return entityList!=null ? entityList.size() : 0;
     }

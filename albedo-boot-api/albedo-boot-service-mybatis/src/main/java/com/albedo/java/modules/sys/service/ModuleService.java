@@ -89,9 +89,10 @@ public class ModuleService extends TreeVoService<ModuleRepository, Module, Strin
 
 
     public void generatorModuleData(String moduleName, String parentModuleId, String url) {
-        Module currentModule = repository.selectOne(new QueryWrapper<Module>().eq(Module.F_NAME, moduleName));
+        Module currentModule = repository.selectOne(new QueryWrapper<Module>().eq(Module.F_SQL_NAME, moduleName));
         if (currentModule != null) {
-            repository.delete(new QueryWrapper<Module>().eq(Module.F_ID, currentModule.getId()).or().eq(Module.F_PARENTID, currentModule.getId()));
+            repository.delete(new QueryWrapper<Module>().eq(Module.F_SQL_ID, currentModule.getId()).or()
+                .eq(Module.F_SQL_PARENTID, currentModule.getId()));
         }
         Module parentModule = repository.selectById(parentModuleId);
         if (parentModule == null) {

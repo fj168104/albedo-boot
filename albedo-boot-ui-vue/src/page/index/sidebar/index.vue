@@ -41,6 +41,7 @@ export default {
     // console.log(this.menu)
     // if (validateNull(this.menu)) {
       this.$store.dispatch("GetMenu").then(data => {
+        console.log(data)
         initMenu(this.$router, data);
       });
     // }

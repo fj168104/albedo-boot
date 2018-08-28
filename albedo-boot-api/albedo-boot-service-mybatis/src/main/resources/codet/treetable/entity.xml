@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 
-import org.hibernate.validator.constraints.*;
+import javax.validation.constraints.*;
 <#list table.importList as i>
 import ${i};
 </#list>

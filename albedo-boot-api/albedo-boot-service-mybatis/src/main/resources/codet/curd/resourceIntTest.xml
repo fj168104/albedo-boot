@@ -45,7 +45,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
-import com.baomidou.mybatisplus.mapper.Condition;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import java.util.Date;
 import java.util.List;
@@ -173,7 +173,7 @@ public class ${ClassName}ResourceIntTest {
         ;
         // Validate the ${ClassName} in the database
         List<${ClassName}> ${className}List = ${className}Service.findAll(
-            Condition.create().orderBy(${ClassName}.F_CREATEDDATE, true)
+            new QueryWrapper<${ClassName}>().orderByAsc(${ClassName}.F_CREATEDDATE)
         );
         assertThat(${className}List).hasSize(databaseSizeBeforeCreate + 1);
         ${ClassName} test${ClassName} = ${className}List.get(${className}List.size() - 1);

@@ -45,6 +45,8 @@ public class Module extends TreeEntity<Module> {
     /*** 链接地址 */
     @TableField("url_")
     private String url;
+    @TableField("component_")
+    private String component;
     /*** 图标class */
     @TableField("icon_cls")
     private String iconCls;

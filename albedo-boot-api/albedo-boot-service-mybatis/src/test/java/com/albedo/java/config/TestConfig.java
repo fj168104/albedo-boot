@@ -212,7 +212,7 @@ public class TestConfig extends MybatisPlusAutoConfiguration {
 //
 //    @Bean
 //    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) {
-//        return sqlSessionFactory("mysql-config.xml", dataSource);
+//        return sqlSessionFactory("mysql-config-back.xml", dataSource);
 //    }
 //
 //    public SqlSessionFactory sqlSessionFactory(String configXml, DataSource dataSource) {
