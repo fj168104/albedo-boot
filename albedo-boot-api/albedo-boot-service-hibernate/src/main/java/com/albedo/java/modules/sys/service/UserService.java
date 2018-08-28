@@ -197,7 +197,7 @@ public class UserService extends DataVoService<UserRepository, User, String, Use
     }
 
     public Optional<User> findOneByLoginId(String loginId) {
-        return repository.findOneByLoginId(loginId);
+        return repository.getOneByLoginId(loginId);
     }
 
     public void save(@Valid UserExcelVo userExcelVo) {
