@@ -9,6 +9,7 @@ import com.albedo.java.modules.sys.domain.User;
 import com.albedo.java.modules.sys.repository.UserRepository;
 import com.albedo.java.modules.sys.service.UserService;
 import com.albedo.java.modules.sys.web.UserResource;
+import com.albedo.java.util.PublicUtil;
 import com.albedo.java.util.domain.Globals;
 import com.albedo.java.vo.account.LoginVo;
 import org.junit.Before;
@@ -44,31 +45,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = AlbedoBootWebApp.class)
 public class AccoutResourceIntTest {
 
-    @Autowired
-    private HttpMessageConverter[] httpMessageConverters;
-
+    public final static String DEFAULT_LOGINID="user-jwt-controller";
+    public final static String DEFAULT_PASSWORD="test11";
     @Mock
     private UserService userService;
 
     @Mock
     private MailService mockMailService;
 
-    @Mock
-    private AlbedoProperties albedoProperties;
-    @Autowired
-    private TokenProvider tokenProvider;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     private MockMvc mockMvc;
-
 
     @Autowired
     protected WebApplicationContext webApplicationContext;
@@ -90,6 +78,14 @@ public class AccoutResourceIntTest {
             .build();
 
     }
+    @Before
+    public void initTest() {
+        User user = new User();
+        user.setLoginId(DEFAULT_LOGINID);
+        user.setPassword(passwordEncoder.encode(DEFAULT_PASSWORD));
+
+        userService.save(user);
+    }
 
 
     @Test
@@ -103,18 +99,11 @@ public class AccoutResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void testAuthorize() throws Exception {
-        User user = new User();
-        user.setLoginId("user-jwt-controller");
-        user.setEmail("user-jwt-controller@example.com");
-        user.setPassword(passwordEncoder.encode("test11"));
-
-        userService.save(user);
 
         LoginVo login = new LoginVo();
-        login.setUsername("user-jwt-controller");
-        login.setPassword("test11");
+        login.setUsername(DEFAULT_LOGINID);
+        login.setPassword(DEFAULT_PASSWORD);
         mockMvc.perform(post("/api/authenticate")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(login)))
@@ -122,7 +111,6 @@ public class AccoutResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void testAuthorizeWithRememberMe() throws Exception {
         User user = new User();
         user.setLoginId("user-jwt-controller-remember-me");
@@ -143,7 +131,6 @@ public class AccoutResourceIntTest {
     }
 
     @Test
-    @Transactional
     public void testAuthorizeFails() throws Exception {
         LoginVo login = new LoginVo();
         login.setUsername("wrong-user");
@@ -154,5 +141,15 @@ public class AccoutResourceIntTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.data").isEmpty());
     }
-
+    @Test
+    public void testAuthorizeSuccess() throws Exception {
+        LoginVo login = new LoginVo();
+        login.setUsername("admin");
+        login.setPassword("111111");
+        mockMvc.perform(post("/api/authenticate")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(login)))
+            .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.data").isEmpty());
+    }
 }
