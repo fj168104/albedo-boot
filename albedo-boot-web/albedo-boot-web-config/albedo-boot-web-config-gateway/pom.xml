@@ -10,21 +10,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>albedo-boot-web-config-gateway</artifactId>
-    <properties>
-        <!-- Spring properties -->
-        <bucket4j.version>3.0.1</bucket4j.version>
-    </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
 
@@ -46,10 +31,6 @@
             <version>0.10.1</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-zuul</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-core</artifactId>
             <version>${bucket4j.version}</version>
@@ -58,46 +39,6 @@
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-jcache</artifactId>
             <version>${bucket4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-ribbon</artifactId>
-            <!-- netty's native is pulled, but is useless unless you explicitly add the native binary dependency.
-                 Having it in the classpath without the binary can cause warnings -->
-            <exclusions>
-                <exclusion>
-                    <groupId>io.netty</groupId>
-                    <artifactId>netty-transport-native-epoll</artifactId>
-                </exclusion>
-                <exclusion>
-                	<groupId>com.netflix.servo</groupId>
-                	<artifactId>servo-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-spectator</artifactId>
-            <exclusions>
-            	<exclusion>
-            		<groupId>com.netflix.servo</groupId>
-            		<artifactId>servo-core</artifactId>
-            	</exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-            <exclusions>
-            	<exclusion>
-            		<groupId>com.netflix.servo</groupId>
-            		<artifactId>servo-core</artifactId>
-            	</exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-cloud-connectors</artifactId>
         </dependency>
 
         <dependency>

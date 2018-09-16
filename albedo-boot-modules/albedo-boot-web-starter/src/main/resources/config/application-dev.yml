@@ -33,13 +33,6 @@ spring:
                 prepStmtCacheSize: 250
                 prepStmtCacheSqlLimit: 2048
                 useServerPrepStmts: true
-    mail:
-        host: localhost
-        port: 25
-        username:
-        password:
-    messages:
-        cache-seconds: 1
     mvc:
 #        view:
 #            prefix: /WEB-INF/views/

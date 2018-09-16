@@ -13,7 +13,7 @@
 
     <properties>
         <!-- Spring properties -->
-        <spring-cloud.version>Dalston.RELEASE</spring-cloud.version>
+        <spring-cloud.version>Finchley.SR1</spring-cloud.version>
 
     </properties>
 

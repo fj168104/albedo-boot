@@ -11,55 +11,70 @@
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
 
-eureka:
-    client:
-        enabled: true
-        healthcheck:
-            enabled: true
-        fetch-registry: true
-        register-with-eureka: true
-        instance-info-replication-interval-seconds: 10
-        registry-fetch-interval-seconds: 10
-    instance:
-        appname: AlbedoBootCloudMicro
-        instanceId: AlbedoBootCloudMicro:${spring.application.instance-id:${random.value}}
-        lease-renewal-interval-in-seconds: 5
-        lease-expiration-duration-in-seconds: 10
-        status-page-url-path: ${management.context-path}/info
-        health-check-url-path: ${management.context-path}/health
-        metadata-map:
-            zone: primary # This is needed for the load balancer
-            profile: ${spring.profiles.active}
-            version: ${info.project.version}
-ribbon:
-    eureka:
-        enabled: true
-# See https://github.com/Netflix/Hystrix/wiki/Configuration
-#hystrix:
-#    command:
-#        default:
-#            execution:
-#                isolation:
-#                    thread:
-#                        timeoutInMilliseconds: 10000
-feign:
-    hystrix:
-        enabled: true
+ eureka:
+     client:
+         enabled: true
+         healthcheck:
+             enabled: true
+         fetch-registry: true
+         register-with-eureka: true
+         instance-info-replication-interval-seconds: 10
+         registry-fetch-interval-seconds: 10
+     instance:
+         appname: AlbedoBootCloudMicro
+         instanceId: AlbedoBootCloudMicro:${spring.application.instance-id:${random.value}}
+         lease-renewal-interval-in-seconds: 5
+         lease-expiration-duration-in-seconds: 10
+         status-page-url-path: ${management.endpoints.web.base-path}/info
+         health-check-url-path: ${management.endpoints.web.base-path}/health
+         metadata-map:
+             zone: primary # This is needed for the load balancer
+             profile: ${spring.profiles.active}
+             version: ${info.project.version:}
+             git-version: ${git.commit.id.describe:}
+             git-commit: ${git.commit.id.abbrev:}
+             git-branch: ${git.branch:}
+ ribbon:
+     eureka:
+         enabled: true
+ feign:
+     hystrix:
+         enabled: true
+ #    client:
+ #        config:
+ #            default:
+ #                connectTimeout: 5000
+ #                readTimeout: 5000
 
-hystrix:
-    share-security-context: true
+ # See https://github.com/Netflix/Hystrix/wiki/Configuration
+ hystrix:
+     command:
+         default:
+             execution:
+                 isolation:
+                     strategy: SEMAPHORE
+     # See https://github.com/spring-cloud/spring-cloud-netflix/issues/1330
+     #                    thread:
+     #                        timeoutInMilliseconds: 10000
+     shareSecurityContext: true
 
-management:
-    security:
-#      enabled: false
-        roles: ADMIN
-    context-path: /management
-    info:
-        git:
-            mode: full
-    health:
-        mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true
+ management:
+     endpoints:
+         web:
+             base-path: /management
+             exposure:
+                 include: ["configprops", "env", "health", "info", "threaddump"]
+     endpoint:
+         health:
+             show-details: when_authorized
+     info:
+         git:
+             mode: full
+     health:
+         mail:
+             enabled: false # When using the MailService, configure an SMTP server and set this to true
+     metrics:
+         enabled: false # http://micrometer.io/ is disabled by default, as we use http://metrics.dropwizard.io/ instead
 spring:
     application:
         name: AlbedoBootCloudMicro
@@ -81,40 +96,21 @@ spring:
         hibernate:
             ddl-auto: none
             naming:
-                strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+                physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+                implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     messages:
         basename: i18n/messages
 #    thymeleaf:
 #        mode: XHTML
-
-security:
-    basic:
-        enabled: false
 server:
-    session:
-        cookie:
-            http-only: true
-#mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
-mybatis-plus:
-  mapper-locations: classpath*:/mappings/modules/*/*Mapper.xml
-  typeAliasesPackage: com.albedo.java.modules.*.domain
-  global-config:
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 3
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 1
-    #驼峰下划线转换
-    db-column-underline: true
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    logic-delete-value: -2
-    logic-not-delete-value: 0
-    #数据库大写下划线转换
-    #capital-mode: true
-#    meta-object-handler: com.albedo.java.common.persistence.handler.EntityMetaObjectHandler
-  configuration:
-    map-underscore-to-camel-case: true
-    cache-enabled: true
+    servlet:
+        session:
+            cookie:
+                http-only: true
+ # Properties to be exposed on the /info management endpoint
+info:
+    # Comma separated list of profiles that will trigger the ribbon to show
+    display-ribbon-on-profiles: "dev"
 # ===================================================================
 # Albedo specific properties
 # ===================================================================

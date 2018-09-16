@@ -70,8 +70,8 @@ public class UserResourceIntTest {
     private static final String DEFAULT_LANGKEY = "en";
     private static final String UPDATED_LANGKEY = "fr";
 
-    @Autowired
-    private MailService mailService;
+//    @Autowired
+//    private MailService mailService;
 
     @Autowired
     private UserService userService;

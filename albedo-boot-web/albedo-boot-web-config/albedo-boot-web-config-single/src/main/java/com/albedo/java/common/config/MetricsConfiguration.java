@@ -77,10 +77,10 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
         metricRegistry.register(PROP_METRIC_REG_JVM_ATTRIBUTE_SET, new JvmAttributeGaugeSet());
 
 //        metricRegistry.register(PROP_METRIC_REG_JCACHE_STATISTICS, new JCacheGaugeSet());
-        if (hikariDataSource != null) {
-            log.debug("Monitoring the datasource");
-            hikariDataSource.setMetricRegistry(metricRegistry);
-        }
+//        if (hikariDataSource != null) {
+//            log.debug("Monitoring the datasource");
+//            hikariDataSource.setMetricRegistry(metricRegistry);
+//        }
         if (albedoProperties.getMetrics().getJmx().isEnabled()) {
             log.debug("Initializing Metrics JMX reporting");
             JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry).build();

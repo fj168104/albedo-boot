@@ -50,8 +50,8 @@ public class AccoutResourceIntTest {
     @Mock
     private UserService userService;
 
-    @Mock
-    private MailService mockMailService;
+//    @Mock
+//    private MailService mockMailService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -64,7 +64,7 @@ public class AccoutResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        doNothing().when(mockMailService).sendActivationEmail(anyObject());
+//        doNothing().when(mockMailService).sendActivationEmail(anyObject());
 
 //        AccoutResource accountResource =
 //            new AccoutResource(tokenProvider, authenticationManager);

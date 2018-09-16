@@ -12,15 +12,17 @@
 # ===================================================================
 
 management:
-    security:
-        roles: ADMIN
-    context-path: /management
-    health:
-        mail:
-            enabled: false # When using the MailService, configure an SMTP server and set this to true # When using the MailService, configure an SMTP server and set this to true
+    endpoints:
+        web:
+            exposure:
+                include: "*"
 spring:
     application:
         name: albedoBootWebApp
+    boot:
+        admin:
+            client:
+                url: "http://localhost:8762"
     mvc:
         throw-exception-if-no-handler-found: true
 #    resources:
@@ -47,9 +49,7 @@ spring:
             hibernate.cache.use_query_cache: false
             hibernate.generate_statistics: true
             hibernate.cache.region.factory_class: org.hibernate.cache.jcache.JCacheRegionFactory
-security:
-    basic:
-        enabled: false
+
 
 # ===================================================================
 # Spring Boot configuration for the "dev" profile.
