@@ -15,7 +15,7 @@
         <module>albedo-boot-cloud-micro</module>
         <module>albedo-boot-cloud-gateway</module>
         <module>albedo-boot-web-starter</module>
-        <module>albedo-boot-registry</module>
+        <module>jhipster-registry</module>
         <module>albedo-boot-admin-server</module>
     </modules>
 
